@@ -1212,3 +1212,5 @@ abbr.ab:focus-visible{outline:2px solid var(--cold);outline-offset:1px;border-ra
 .ab-tbl{max-height:560px;overflow:auto}
 .ab-tbl td:first-child{white-space:nowrap;font-family:var(--f-mono);font-size:.8rem}
 abbr.ab-t{border-bottom-style:dotted;border-bottom-color:color-mix(in srgb,var(--cold) 55%,transparent)}
+
+.hy-off{opacity:.42}.hy-off input,.hy-off select{cursor:not-allowed}.hy-offn{display:block;color:var(--muted);margin-top:2px}

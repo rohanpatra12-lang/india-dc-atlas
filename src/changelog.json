@@ -2,7 +2,7 @@
  {
   "version": "v35",
   "date": "2026-10-28",
-  "changes": "Training time in 14.6. The design check now has a training campaign setting: how many months a year the training hall is busy, and how much power it draws while idle between runs (about 20% of rated). Runs per year now count only busy months, while energy, water and carbon include the idle months. A new example design, \"300 MW remote training campus\", sets up a training-only site in an inland renewable zone in Andhra Pradesh: 100% training, N redundancy, B300 GPUs, warm-water liquid cooling with dry coolers, 85% renewable power and cheap land. A new city option, \"Remote renewable zone\", carries its climate, tariff and grid water."
+  "changes": "Training time in 14.6. The design check now has a training campaign setting: how many months a year the training hall is busy, and how much power it draws while idle between runs (about 20% of rated). Runs per year now count only busy months, while energy, water and carbon include the idle months. A new example design, \"300 MW remote training campus\", sets up a training-only site in an inland renewable zone in Andhra Pradesh: 100% training, N redundancy, B300 GPUs, warm-water liquid cooling with dry coolers, 85% renewable power and cheap land. A new city option, \"Remote renewable zone\", carries its climate, tariff and grid water. In 14.6, settings for a zone with no capacity are now greyed out (a training-only design shows its inference and general-purpose settings as not used), and the Visakhapatnam example is renamed \"200 MW AI hub (75% training)\" because it deliberately mixes training, inference and general-purpose halls."
  },
  {
   "version": "v34",

@@ -187,6 +187,11 @@ function syncIn(except){
   const L=LOC[S.loc],n=$h('hy-loc-n');if(n)n.textContent=`${L.st} · ${CLIM[L.c].toLowerCase()} · design day ${L.tDes} °C · water stress ${L.stress.toLowerCase()} · ${L.src}`;
   const g=$h('hy-gpu-n');if(g)g.textContent=GPU[S.gpu].src;
   $h('hy-pre').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.p===pre));
+  /* grey out the controls of a zone that has no capacity, so a training-only design shows no inference or general-purpose settings in use */
+  {const rT=Math.max(0,S.shT),rI=Math.max(0,S.shI),sh={T:rT,I:rI,G:Math.max(0,100-rT-rI)},NM={T:'training',I:'inference',G:'general-purpose'};
+   const ZK={T:['uT','cmp','idl','dT','cT','run','eRun'],I:['uI','dI','cI','tps','der','tpq'],G:['uG','dG','cG']};
+   for(const z in ZK)ZK[z].forEach(k=>{const el=$h('hy-in').querySelector(`[data-hy="${k}"]`);if(!el)return;const box=el.closest('.ctrl,.opt');if(!box)return;const off=sh[z]<=0;
+     box.classList.toggle('hy-off',off);el.disabled=off;let n=box.querySelector('.hy-offn');if(off&&!n){n=document.createElement('span');n.className='hy-offn xs';box.appendChild(n)}if(n){n.textContent=off?`Not used: this design has no ${NM[z]} capacity (share 0%).`:'';n.hidden=!off}})}
 }
 const msg=t=>{const m=$h('hy-msg');if(m){m.textContent=t;clearTimeout(msg.t);msg.t=setTimeout(()=>m.textContent='',4000)}};
 $h('hy-in').addEventListener('input',e=>{const el=e.target,k=el.dataset&&el.dataset.hy;if(!k)return;
