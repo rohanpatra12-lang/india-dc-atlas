@@ -1,5 +1,10 @@
 [
  {
+  "version": "v34",
+  "date": "2026-10-28",
+  "changes": "Easier to read. Every abbreviation and technical term is defined where it is first used in each section: about 270 short forms (PUE, CGWB, W40, NVL72, FY25…) and 40 terms (blowdown, wet-bulb, open access, colocation…) are underlined with dots; hover, tap or tab to one for its meaning. The Reference page has a searchable list of all of them. Sixty-eight tables and fact panels that had no explanation now have a \"How to read this\" guide saying what the table shows, how to read it, what it tells you and what to be careful about, so every chart, table and calculator in the atlas now carries an interpretation."
+ },
+ {
   "version": "v33",
   "date": "2026-10-28",
   "changes": "Open source. The atlas is now built from editable source files (src/: one file per chapter, per script module and for the standards register) with a one-command build (python3 tools/build.py) that reproduces the published pages exactly, a browser check of every page, and open data downloads of the standards register and chip records (data/standards.csv, data/chips.csv). Code is MIT-licensed; text, data and research are CC BY 4.0. Report 14 is identified as the least-water power model (16.2)."

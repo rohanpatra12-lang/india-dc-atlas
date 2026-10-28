@@ -15,7 +15,7 @@ An open, interactive atlas of how India's data centres are built, powered, coole
 | Folder | What it holds |
 |---|---|
 | `site/` | The built atlas: nine self-contained pages (Start, Parts I–V, Growth explorer, Reference, Changelog) plus `data/`. This folder is what GitHub Pages serves. |
-| `src/` | The editable source. One file per chapter (`src/page/`), one per script module (`src/scripts/main/`), the stylesheet, the changelog, the growth explorer, and **`src/data/standards.js`, the one place every shared number lives**. |
+| `src/` | The editable source. One file per chapter (`src/page/`), one per script module (`src/scripts/main/`), the stylesheet, the changelog, the growth explorer, and **`src/data/standards.js`, the one place every shared number lives, and `src/scripts/05-abbreviations.js`, the definitions of every abbreviation and term**. |
 | `tools/` | The build (`build.py`), the page check (`check.js`), the open-data export, and the optimisation model behind Chapter 16.2 (`tools/models/karnataka_dc_model.py`). |
 | `research/` | The 32 research reports and four related studies, in Markdown, each with its numbered source list ([index](research/README.md)). |
 | `archive/` | Earlier outputs kept for the record. They carry values from before the October 2026 corrections; do not cite them. |

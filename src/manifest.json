@@ -105,6 +105,7 @@
 "scripts/main/065-guided-walk-through-drives-the-data-cent.js",
 "scripts/main/066-standards-prose-follows-the-module.js",
 "scripts/main/067-detail-panels-shadow-prices-climate-hori.js",
+"scripts/main/067b-reading-guides-tables-and-reference-panels.js",
 "scripts/main/068-reading-guides-how-to-read-this-on-every.js",
 "scripts/main/069-audit-headline-claims-must-match-the-sta.js",
 "scripts/main/070-14-6-design-check-merged-with-the-hybrid.js",
@@ -137,6 +138,10 @@
 "text": "</script>\n<script>"
 },
 "scripts/04-block.js",
+{
+"text": "</script>\n<script>"
+},
+"scripts/05-abbreviations.js",
 {
 "text": "</script>\n"
 }

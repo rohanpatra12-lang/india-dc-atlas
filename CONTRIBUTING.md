@@ -15,6 +15,8 @@ Never edit `site/` by hand; the next build overwrites it.
 | "How to read this" guides | the `RG` object in `067-detail-panels-…js` (keys are the panel's `<h3>` title) |
 | The consistency checks | `036-single-source-of-standard-values-…js` (`ok(name, value, expected)`) and `069-audit-headline-claims-…js` |
 | Styles | `src/styles/atlas.css` |
+| Abbreviation and term definitions (dotted underlines, Reference list) | `src/scripts/05-abbreviations.js`: add a key to `AB` (case-sensitive short forms) or `TERMS` (plain-language terms) |
+| "How to read this" guides for tables and fact panels | `067b-reading-guides-tables-and-reference-panels.js` |
 | The changelog | `src/changelog.json` (newest first) |
 | The Growth explorer page | `src/growth/india-dc-growth.html` |
 

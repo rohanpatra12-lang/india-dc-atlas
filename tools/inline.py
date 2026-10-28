@@ -23,7 +23,7 @@ for f in os.listdir(S):
         name=m.group(1)
         return '<script>\n'+js[name]+'\n</script>'
     h,k=re.subn(r'<script src="((?:site|atlas-\d)\.js)"></script>',rep,h)
-    assert k==6,(f,k)
+    assert k==1+len([x for x in js if x.startswith("atlas-")]),(f,k)
     assert 'src="atlas-' not in h and 'href="atlas.css"' not in h
     open(O+f,'w').write(h)
     print(f,len(h))

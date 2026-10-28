@@ -1203,3 +1203,12 @@ details.hy-g{display:block}details.hy-g>summary{cursor:pointer;font-family:var(-
 #ctwin5 .aif-t tr.cur td{background:var(--cold-soft)}
 #ctwin5 .panel>*,#ctwin5 .cols>*{min-width:0}
 #ctwin5 .tbl{max-width:100%}
+
+/* abbreviations */
+abbr.ab{text-decoration:none;border-bottom:1px dotted color-mix(in srgb,var(--muted) 70%,transparent);cursor:help}
+abbr.ab:focus-visible{outline:2px solid var(--cold);outline-offset:1px;border-radius:2px}
+.ab-q{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin:4px 0 6px;font-size:.86rem}
+.ab-q input{flex:1 1 220px;max-width:360px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface,var(--bg));color:var(--ink);font:inherit}
+.ab-tbl{max-height:560px;overflow:auto}
+.ab-tbl td:first-child{white-space:nowrap;font-family:var(--f-mono);font-size:.8rem}
+abbr.ab-t{border-bottom-style:dotted;border-bottom-color:color-mix(in srgb,var(--cold) 55%,transparent)}
