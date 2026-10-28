@@ -1,0 +1,224 @@
+<section class="ch chw" id="cscope" data-n="9">
+  <div class="chq">
+    <div class="chq-n" aria-hidden="true">9</div>
+    <div class="chq-b"><h2 class="chq-t">Scope 1, 2 and 3 water: on site, at the power station, and in the supply chain</h2>
+      <p class="chq-q"><span>The question</span>If a data centre counted its water the way companies count carbon, how much would each scope be, and which one should India manage first?</p>
+      <p class="chq-a"><span>The short answer</span>Scope 2, the water evaporated at power stations to make the electricity, is 64–96% of the total in every case modelled for India (80–96% with dry or liquid cooling, 64–71% with towers). Scope 1, the site's own cooling, matters only with cooling towers (about 27–33%). Scope 3, the supply chain, is 3–5% even for a GPU-dense hall, and coal mining for the grid is larger than chip-making in it. So dry cooling is the right default, and clean power is the biggest lever: 90% clean power matched hour by hour cuts total water by 60–85%; annual contracts cut it by only 35–50%.</p>
+      <nav class="chq-subs" aria-label="In this chapter"><a href="#cscope1">9.1</a><a href="#cscope2">9.2</a><a href="#cscope3">9.3</a><a href="#cscope4">9.4</a><a href="#cscope5">9.5</a></nav>
+    </div>
+  </div>
+
+<div class="subch" id="cscope1">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">9.1</span><span class="eyebrow">Framework</span></div>
+    <h2>Three scopes, borrowed from carbon accounting</h2>
+    <p class="lede">The GHG Protocol's scopes translate directly to water. Each scope can be reported as withdrawal (water taken), discharge (water returned) and consumption (water evaporated or embodied, the difference).</p></div>
+  <div class="cols gap">
+    <div class="panel"><h3>What each scope includes</h3>
+      <div class="tbl"><table class="aif-t"><thead><tr><th>Scope</th><th>Included</th><th>Typical Indian sources</th></tr></thead><tbody>
+        <tr><td><b>1 · On site</b></td><td>Cooling-tower make-up (evaporation, drift, blowdown), adiabatic pads, indirect evaporative units, humidification, staff and canteen, landscaping, fire-system tests, generator radiators</td><td>BWSSB, MCGM, CMWSSB, HMWSSB supply; borewells under a CGWA permit; tankers; treated sewage</td></tr>
+        <tr><td><b>2 · Purchased energy</b></td><td>Water used at the power stations that make the electricity: thermal cooling, boiler make-up, ash handling, flue-gas desulphurisation, hydro reservoir evaporation, solar-panel cleaning; also bought chilled water</td><td>The state grid (DISCOM), green open-access contracts, captive renewables, certificates</td></tr>
+        <tr><td><b>3 · Value chain</b></td><td>Fabs for GPUs, memory and storage; servers and boards; copper, steel, concrete; construction water; batteries; diesel; coal mining and washing for the grid's coal; for colocation operators, the tenants' IT</td><td>Taiwan, Korea, Arizona, Malaysia fabs; Indian cement and steel belts; coalfields in Odisha, Chhattisgarh, Jharkhand</td></tr>
+      </tbody></table></div>
+      <p class="xs muted">Convention from Li, Yang, Islam and Ren, "Making AI Less Thirsty" (Communications of the ACM, 2025): on-site cooling is Scope 1, electricity is Scope 2 (location-based), server manufacturing is Scope 3. Embodied water is spread over each asset's life: IT 4–6 years, plant 15, building 25–30. <span class="ev r show" data-src="Li et al. 2025; GHG Protocol analogy">reported</span></p></div>
+    <div class="panel"><h3>Metrics and reporting frameworks</h3>
+      <div class="tbl"><table class="aif-t"><thead><tr><th>Metric or framework</th><th>Measures</th><th>Scopes</th></tr></thead><tbody>
+        <tr><td>The Green Grid WUE</td><td>Site water ÷ IT energy (L/kWh); an input, close to withdrawal</td><td>1</td></tr>
+        <tr><td>WUE<sub>source</sub></td><td>(site + energy-generation water) ÷ IT energy; rarely reported</td><td>1 + 2</td></tr>
+        <tr><td>EU Regulation 2024/1364 (EN 50600-4-9)</td><td>Water input ÷ IT energy, potable water separately; mandatory from 500 kW</td><td>1</td></tr>
+        <tr><td>SEBI BRSR, Principle 6</td><td>Withdrawal by source, consumption, discharge by treatment, intensity per ₹ turnover</td><td>1</td></tr>
+        <tr><td>GRI 303 · ESRS E3 · CDP Water</td><td>Withdrawal, discharge, consumption; share in water-stressed areas</td><td>1 (+3 narrative)</td></tr>
+        <tr><td>ISO 14046 · AWARE</td><td>Life-cycle water footprint weighted by local scarcity (0.1–100 per m³)</td><td>1 + 2 + 3</td></tr>
+      </tbody></table></div>
+      <p class="xs muted">Microsoft WUE 0.30 (FY24) and 0.27 L/kWh (FY25), "zero water for cooling" in new AI designs; Meta has started to publish Scope 2 water; Google's per-prompt 0.26 mL counts on-site water only. <span class="ev r show" data-src="Company reports 2024–25">reported</span></p></div>
+  </div>
+</div>
+
+<div class="subch" id="cscope2">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">9.2</span><span class="eyebrow">Model · Calculator</span></div>
+    <h2>Calculate all three scopes for a data centre</h2>
+    <p class="lede">Uses the atlas cooling reference for Scope 1, the atlas grid factors (or the research conventions for hydro) for Scope 2, and embodied-water factors for Scope 3. Switch between consumption and withdrawal.</p></div>
+  <div class="panel"><h3>Scope 1, 2 and 3 water calculator<span class="sub">kL a year; consumption = evaporated or embodied, withdrawal = taken from the source.</span></h3>
+    <div class="dt-presets"><span class="fieldlbl">Start from</span><div class="seg" id="sw-pre" role="group" aria-label="Presets"><button data-v="colo">10 MW colo, towers, Bengaluru</button><button data-v="colod">10 MW colo, air-cooled, Bengaluru</button><button data-v="ai" aria-pressed="true">50 MW AI, dry coolers, Bengaluru</button><button data-v="aim">50 MW AI, towers, Mumbai</button></div></div>
+    <div class="dt-grid">
+      <fieldset class="dt-fs"><legend>Site and hall</legend>
+        <div><label class="fieldlbl" for="sw-site">City</label><select id="sw-site"></select></div>
+        <div><span class="fieldlbl">Hardware</span><div class="seg" id="sw-hw" role="group" aria-label="Hardware"><button data-v="cpu">Conventional servers</button><button data-v="ai" aria-pressed="true">GPU racks</button></div></div>
+        <div class="ctrl"><label for="sw-mw">IT capacity</label><output id="sw-mw-o"></output><input id="sw-mw" type="range" min="1" max="500" step="1" value="50"></div>
+        <div class="ctrl"><label for="sw-u">Average load</label><output id="sw-u-o"></output><input id="sw-u" type="range" min="30" max="95" step="1" value="78"></div>
+      </fieldset>
+      <fieldset class="dt-fs"><legend>Scope 1: cooling</legend>
+        <div><label class="fieldlbl" for="sw-sys">Cooling system (atlas reference)</label><select id="sw-sys"></select></div>
+        <div class="ctrl" data-sw-tw><label for="sw-coc">Tower cycles of concentration</label><output id="sw-coc-o"></output><input id="sw-coc" type="range" min="2" max="8" step="1" value="4"></div>
+      </fieldset>
+      <fieldset class="dt-fs"><legend>Scope 2: electricity</legend>
+        <div><span class="fieldlbl">Grid factor</span><div class="seg" id="sw-basis" role="group" aria-label="Grid factor"><button data-v="std" aria-pressed="true">Atlas standard (national grid)</button><button data-v="state">State generation mix</button><button data-v="nat">National, by hydro convention</button></div></div>
+        <div data-sw-hy><span class="fieldlbl">Hydro reservoir evaporation</span><div class="seg" id="sw-hydro" role="group" aria-label="Hydro"><button data-v="0">Excluded</button><button data-v="1" aria-pressed="true">Allocated (10 L/kWh)</button><button data-v="2">High (26 L/kWh)</button></div></div>
+        <div class="ctrl"><label for="sw-clean">Clean power share</label><output id="sw-clean-o"></output><input id="sw-clean" type="range" min="0" max="100" step="5" value="0"></div>
+        <div><span class="fieldlbl">Clean-power matching</span><div class="seg" id="sw-match" role="group" aria-label="Matching"><button data-v="annual" aria-pressed="true">Annual</button><button data-v="hourly">Hourly</button></div></div>
+      </fieldset>
+      <fieldset class="dt-fs"><legend>Scope 3 and per prompt</legend>
+        <div class="ctrl"><label for="sw-ref">Hardware refresh</label><output id="sw-ref-o"></output><input id="sw-ref" type="range" min="3" max="8" step="1" value="5"></div>
+        <div class="ctrl" data-sw-ai><label for="sw-gpu">Embodied water per GPU</label><output id="sw-gpu-o"></output><input id="sw-gpu" type="range" min="1" max="10" step="0.1" value="2.6"></div>
+        <div class="ctrl"><label for="sw-wh">IT energy per prompt</label><output id="sw-wh-o"></output><input id="sw-wh" type="range" min="0.05" max="3" step="0.01" value="0.22"></div>
+        <div><span class="fieldlbl">Show</span><div class="seg" id="sw-view" role="group" aria-label="Basis"><button data-v="c" aria-pressed="true">Consumption</button><button data-v="w">Withdrawal</button></div></div>
+      </fieldset>
+    </div>
+    <div class="read" id="sw-r" style="margin-top:12px" aria-live="polite"></div>
+    <p class="small" id="sw-n" style="margin-top:8px"></p>
+    <div class="dt-sub">Where the water comes from and where it goes</div>
+    <div class="dt-svgw"><svg id="sw-sk" viewBox="0 0 760 360" class="sw-sk" role="img" aria-label="Sankey diagram of Scope 1, 2 and 3 water"></svg></div>
+    <div class="dt-sub">The same water, in everyday terms</div>
+    <div class="read" id="sw-conv"></div>
+    <ul class="clean xs muted" style="margin-top:10px">
+      <li><b>Scope 1:</b> IT energy × WUE from the atlas cooling reference (make-up at 4 cycles, rescaled for your cycles). Consumption = make-up × (cycles − 1) ÷ cycles for towers, 90% for adiabatic and evaporative systems, 80% for dry designs. Plus 300 m³ per MW a year for people, landscaping and fire systems, half consumed.</li>
+      <li><b>Scope 2:</b> facility energy × grid factor. The atlas standard is the India grid value at the meter (2.9 m³/MWh); each state's own generation mix (Karnataka 1.5 … Uttar Pradesh 3.3) is an option. The research factors give consumption with hydro reservoir evaporation excluded, net or gross (India 2.5 / 4.2 / 9.4; Karnataka 1.5 / 4.75 / 14.5) and withdrawal with hydro excluded (India 3.4). Clean power 0.05. Annual contracts physically cover only ~55% of their volume hour by hour; hourly matching covers all of it.</li>
+      <li><b>Scope 3:</b> GPU about 2.6 m³ each including its share of memory, CPU, rack and inputs (range 1–10); other servers 2.8 m³; building and plant 5,600 m³ per MW over 25 years; coal mining and washing 0.16 m³ per MWh of grid power; diesel 4 m³ per MW a year. Consumption is taken as half of this, because most fab water is recycled or discharged.</li>
+      <li><b>Stress weights</b> are atlas judgements, ordered by each district's groundwater stage (CGWB) and surface-water stress (on site: Bengaluru 70, Chennai 80, Delhi NCR 90, Hyderabad 60, Mumbai 40, Pune 50; grid 30; chips 15) until basin-level WULCA AWARE 2.0 factors are applied. <span class="ev e show" data-src="Scope 1/2/3 research, Oct 2026">estimate</span></li>
+    </ul>
+  </div>
+  <div class="panel gap"><h3>Follow one prompt<span class="sub">From the phone to the coal mine, with the water added at each step. Uses the calculator above.</span></h3>
+    <div class="seg" style="margin-bottom:8px"><button type="button" id="sw-play">▶ Play the journey</button><button type="button" id="sw-next">Next step →</button></div>
+    <div id="sw-st" class="sw-st" aria-live="polite"></div>
+    <p class="xs muted">Google's published 0.26 mL per Gemini prompt counts on-site water only; adding Scope 2 on India's coal-heavy grid makes an India-hosted prompt about four times that. Mistral's full life-cycle figure (45 mL per 400-token answer) also includes amortised training. <span class="ev r show" data-src="Google 2025; Mistral/Carbone 4 2025">reported</span></p>
+  </div>
+<div class="panel"><h3>Why per-prompt water figures differ 170×<span class="sub">They count different things. Each step down adds a source of water.</span></h3>
+      <div class="cti-ladder">
+        <div><span class="v">0.26 mL</span><span class="k"><b>Cooling water only</b>, Google Gemini median prompt</span></div>
+        <div><span class="v">~0.32 mL</span><span class="k">OpenAI's ChatGPT average (scope not stated)</span></div>
+        <div><span class="v">~15 mL</span><span class="k"><b>+ power-station water</b>, GPT-4-class prompt (Ren group, 2026; ~5 mL on site)</span></div>
+        <div><span class="v">19.7 mL</span><span class="k">GPT-3 request served in India, almost all at power stations (Li et al., 3.445 L/kWh)</span></div>
+        <div><span class="v">45 mL</span><span class="k"><b>+ making the hardware and building</b>, Mistral Large 2, 400-token reply (lifecycle study)</span></div>
+      </div>
+      <p class="small">The calculator and the journey above build your own figure step by step. Training water is smaller over a model's life but concentrated: one site, one season. GPT-3's training is estimated at 0.7 million litres on site and 5.4 million in total; a Llama 3.1 405B-scale run in India would carry roughly 115 million litres at power stations (5 L/kWh) plus 5–40 million on site.</p>
+      <p class="xs muted">Google (Aug 2025); OpenAI; Li, Yang, Islam &amp; Ren, "Making AI Less Thirsty"; Mistral AI with ADEME and Carbone 4 (2025). No credible per-GPU chip-factory water figure exists, so the atlas leaves it out. <span class="ev r show" data-src="Google; Mistral lifecycle study; Li et al.">reported</span></p></div>
+</div>
+
+<div class="subch" id="cscope3">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">9.3</span><span class="eyebrow">Scope 2 · Grid</span></div>
+    <h2>Why the grid's water depends on its mix, and on how hydro is counted</h2></div>
+  <div class="cols gap">
+    <div class="panel"><h3>State grid mixes and their water<span class="sub">Each dot is a state; lines join mixes with the same water per MWh. Hydro convention from the calculator.</span></h3>
+      <div class="dt-svgw"><svg id="sw-tern" viewBox="0 0 520 470" class="sw-ternsvg" role="img" aria-label="Ternary plot of state grid mixes"></svg></div>
+      <p class="xs muted">Shares are approximate and rounded (coal / hydro / everything else, including solar, wind, nuclear and gas), from CEA and Ember data; India FY2024-25 coal 73%. Water per source: coal 3.5 m³/MWh (MoEFCC limits and measured averages, including desulphurisation), other sources ~0.4, hydro 0 / 10 / 26 m³/MWh depending on convention. The same mixes and factors give the state values in the atlas standards and the calculator's state option. <span class="ev e show" data-src="CEA; Ember; research estimates">estimate</span></p></div>
+    <div class="panel"><h3>Factors behind Scope 2</h3>
+      <div class="tbl"><table class="aif-t"><thead><tr><th>Source</th><th>Consumption m³/MWh</th><th>Withdrawal</th></tr></thead><tbody>
+        <tr><td>Coal, cooling towers (India)</td><td>2.8–3.4 (norms 3.0–3.5); atlas fleet value 3.5 incl. desulphurisation</td><td>~4</td></tr>
+        <tr><td>+ flue-gas desulphurisation</td><td>+0.3</td><td>+0.3</td></tr>
+        <tr><td>Coal, once-through freshwater</td><td>~1</td><td>70–200</td></tr>
+        <tr><td>Coal, dry-cooled</td><td>0.45–0.65</td><td>≈ consumption</td></tr>
+        <tr><td>Coal or nuclear on seawater</td><td>~0 freshwater</td><td>~0 freshwater</td></tr>
+        <tr><td>Gas combined cycle, towers</td><td>~0.75</td><td>~1</td></tr>
+        <tr><td>Nuclear, towers</td><td>~2.5</td><td>~4</td></tr>
+        <tr><td>Hydro reservoir evaporation</td><td>0 excluded / 10 allocated to power (atlas standard, inside the 5.6–21.8 net range) / 26 high case (gross evaporation reaches 79–245)</td><td>not counted</td></tr>
+        <tr><td>Solar PV cleaning</td><td>0.02–0.15</td><td>≈ consumption</td></tr>
+      </tbody></table></div>
+      <p class="xs muted">MoEFCC 2015 and 2018 norms; CSE (2021) found 59 GW of 154 GW surveyed coal capacity non-compliant; Macknick et al. (NREL); Mekonnen and Hoekstra; Herath; Bakken et al. Indian tower-cooled coal uses about twice the world average. <span class="ev r show" data-src="MoEFCC; CSE; NREL; peer-reviewed">reported</span></p></div>
+  </div>
+  <div class="panel inst"><h3>Where the water goes: city and power plants<span class="sub">A data centre's own (Scope 1) water is evaporated in the city; its electricity's (Scope 2) water is evaporated hundreds of kilometres away at the thermal plants. Tap a city.</span></h3>
+    <div class="seg" id="vz-imap-d" role="group" aria-label="Design"><button data-v="colo" aria-pressed="true">Colocation, cooling towers</button><button data-v="ai" aria-pressed="false">AI, dry coolers</button></div>
+    <div class="vz-imc"><div class="vz-imap" id="vz-imap" role="img" aria-label="India map with arcs from data-centre cities to power plants"></div>
+      <div><div class="read" id="vz-imap-r"></div>
+        <ul class="clean xs" style="margin-top:12px"><li><b style="color:var(--hot)">●</b> circle: Scope 1 water evaporated on site (area ∝ volume)</li><li><b style="color:var(--cold)">—</b> arc: Scope 2 water, width ∝ volume, to the state's main coal plants (<span style="color:var(--cold)">■</span>)</li><li>◆ coalfields that feed them</li>
+          <li>State shading: groundwater use against recharge, state averages (CGWB 2023–24): <span style="color:var(--hot)">■</span> over-exploited or critical (Punjab, Rajasthan, Haryana, Delhi) · <span style="color:var(--warn)">■</span> semi-critical (Uttar Pradesh, Tamil Nadu) · <span style="color:var(--muted)">■</span> safe on average. Averages hide hotspots: Bengaluru Urban is at 187% and Chennai district at 128%.</li></ul>
+        <p class="xs muted">Per MW of IT at the atlas reference load (65% colocation, 78% AI). Plant links are illustrative of each state's coal fleet, not contracts; the arcs use each state's own generation mix (Chapter 9.3) to show where the water is evaporated. Accounting uses the India grid, 2.9 L/kWh. <span class="ev m show" data-src="Atlas grid water factors; CEA plant list; CGWB GWRA">model</span></p></div></div>
+  </div>
+</div>
+
+<div class="subch" id="cscope4">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">9.4</span><span class="eyebrow">Disclosure</span></div>
+    <h2>Who reports what</h2>
+    <p class="lede">Everything operators publish, in one place: water reporting by scope, published PUE and WUE, where operators sit against the global averages, what Indian operators say about their cooling, and the seven metrics every site should publish.</p></div>
+  <div class="panel"><h3>Water disclosure by operator<span class="sub">● reported · ◐ partly · ○ not found. Indian operators report Scope 1 at most.</span></h3>
+    <div class="tbl"><table class="aif-t sw-dis"><thead><tr><th>Operator</th><th>WUE</th><th>Site-level volumes</th><th>Withdrawal / consumption split</th><th>Scope 2 water</th><th>Scope 3 water</th><th>Assured</th><th>Note</th></tr></thead><tbody>
+      <tr><td><b>Nxtra (Airtel)</b></td><td>○</td><td>●</td><td>◐</td><td>○</td><td>○</td><td>●</td><td>124,306 kL consumption FY26 (large DCs 118,501); FY25 figure 216,357 kL looks like withdrawal</td></tr>
+      <tr><td><b>CtrlS</b></td><td>○</td><td>◐</td><td>○</td><td>○</td><td>○</td><td>○</td><td>409,037 kL company-wide (2023-24)</td></tr>
+      <tr><td><b>STT GDC India</b></td><td>●</td><td>○</td><td>○</td><td>○</td><td>○</td><td>○</td><td>WUE 0.73 (2024)</td></tr>
+      <tr><td><b>NTT India</b></td><td>●</td><td>○</td><td>○</td><td>○</td><td>○</td><td>○</td><td>0.72 portfolio, 1.42 at evaporative sites (2024)</td></tr>
+      <tr><td><b>Sify</b></td><td>◐</td><td>○</td><td>○</td><td>○</td><td>○</td><td>○</td><td>WUE ~1 reported in press</td></tr>
+      <tr><td><b>AdaniConneX</b></td><td>○</td><td>○</td><td>○</td><td>○</td><td>○</td><td>○</td><td>States air-based chillers</td></tr>
+      <tr><td><b>Yotta</b></td><td>○</td><td>○</td><td>○</td><td>○</td><td>○</td><td>○</td><td>Unlisted, outside BRSR</td></tr>
+      <tr><td><b>Microsoft</b></td><td>●</td><td>◐</td><td>◐</td><td>○</td><td>○</td><td>●</td><td>WUE 0.27 (FY25); zero-water cooling in new AI designs</td></tr>
+      <tr><td><b>Google</b></td><td>◐</td><td>●</td><td>●</td><td>○</td><td>○</td><td>●</td><td>Site consumption published; per-prompt 0.26 mL on site</td></tr>
+      <tr><td><b>Meta</b></td><td>●</td><td>●</td><td>●</td><td>●</td><td>○</td><td>●</td><td>WUE 0.18–0.22; began publishing Scope 2 water</td></tr>
+      <tr><td><b>Equinix</b></td><td>●</td><td>◐</td><td>◐</td><td>○</td><td>○</td><td>●</td><td>Global WUE 0.91 (2025), 1.41 at evaporative sites</td></tr>
+    </tbody></table></div>
+    <p class="xs muted">Down To Earth review; company sustainability and BRSR reports 2024–26. No Indian operator found reporting Scope 2 or Scope 3 water. <span class="ev r show" data-src="Down To Earth; company reports">reported</span></p>
+  </div>
+<div class="panel"><h3>Disclosed PUE and WUE<span class="sub">Definitions differ: withdrawal (AWS, Microsoft, NTT) vs consumption (Google). Single years move a lot.</span></h3>
+      <div class="tbl"><table class="aif-t"><thead><tr><th>Operator / site</th><th>PUE</th><th>WUE (L/kWh)</th><th>Note</th></tr></thead><tbody>
+        <tr><td>Google fleet (2024–25)</td><td>1.09</td><td>1.15 consumed</td><td>Uses water cooling "to improve energy efficiency in certain geographies"</td></tr>
+        <tr><td>Microsoft (FY2024 / 2025)</td><td>—</td><td>0.30 / 0.27 withdrawn</td><td>All new designs from Aug 2024 closed-loop, zero evaporation; expects PUE to rise</td></tr>
+        <tr><td>AWS (2025)</td><td>1.14</td><td>0.12 withdrawn</td><td>Evaporative cooling only part of the year</td></tr>
+        <tr><td>Equinix (2024 / 2025)</td><td>1.39</td><td>0.95 / 0.91 all sites; 1.55 / 1.41 evaporative</td><td>Colocation fleet</td></tr>
+        <tr><td>NTT GDC (2025 / 2026 reports)</td><td>—</td><td>0.72 / 0.38 all; 1.42 / 1.24 evaporative</td><td>NTT DATA evaporative-only: 2.93 (FY22) → 1.42 (FY24)</td></tr>
+        <tr><td>NTT UK campus, after RO (2023–24)</td><td>—</td><td>1.8 → 1.2</td><td>Reverse osmosis on tower make-up cut WUE a third</td></tr>
+        <tr><td>Equinix ME1/LD6 (Munters IEC)</td><td>1.2</td><td>—</td><td>Cooling pPUE 1.06 at 20 °C supply</td></tr>
+        <tr><td>Firmus at STT GDC Singapore (immersion)</td><td>pPUE &lt;1.02</td><td>~0</td><td>Vendor figure</td></tr>
+        <tr><td>Uptime survey 2025 (800+ sites)</td><td>1.54 average</td><td>—</td><td>Flat six years; 1.44 for sites ≥20 MW; &gt;80% have no rack above 30 kW</td></tr>
+        <tr><td>Indian operators</td><td>design 1.4–1.5</td><td>not published</td><td>Nxtra Chennai "&lt;1.5", CtrlS Kolkata 1.4; MeitY AI tenders require &lt;1.35</td></tr>
+      </tbody></table></div>
+      <p class="xs muted">Company sustainability reports 2024–26; DCD; Munters; Uptime Institute 2025; Down To Earth; SBI (Apr 2026). <span class="ev r show" data-src="Operator reports; Munters; Uptime 2025">reported</span></p></div>
+<div class="panel gap">
+    <h3>PUE: where each kind of operator sits<span class="sub">Lower is better. Hover or tap a dot for the figure and its status. Bands show how much of the bill is overhead rather than computing.</span></h3>
+    <div id="vs5" class="wpsvg" role="img" aria-label="PUE by operator type"></div>
+    <div id="vs5-d" class="small" aria-live="polite"></div>
+    <p class="note">The world average has barely moved in six years (1.58 → 1.54). Hyperscalers report 1.08–1.15. India's fleet runs nearer 1.5–1.75, and the IndiaAI GPU tender's 1.35 cap is the first national efficiency rule on AI compute. No operating PUE has been published for any of the big new AI campuses (Fairwater, Stargate Abilene, Prometheus, Colossus).</p>
+  </div>
+<div class="panel gap">
+    <h3>On-site water by cooling type, and what operators report<span class="sub">Bands are typical WUE ranges. Dots are published fleet or portfolio figures. Filled dots count water withdrawn; rings count water consumed (evaporated), about 25% less for the same site.</span></h3>
+    <div id="vs10" class="wpsvg" role="img" aria-label="WUE ranges by cooling technology with operator figures"></div>
+    <div id="vs10-d" class="small" aria-live="polite"></div>
+    <p class="note">Liquid cooling is not one number. On a closed loop with dry coolers it uses almost no water; on cooling towers it "consumes substantial amounts of water, like all evaporative cooling" (LBNL), which is why LBNL expects the US average WUE to rise, not fall, to 0.45–0.48 L/kWh by 2028.</p>
+  </div>
+<div class="panel"><h3>How Indian operators say they cool<span class="sub">Company statements reported by Down To Earth (2026) and project announcements. Few publish site-level detail.</span></h3>
+      <div class="tbl"><table class="aif-t"><thead><tr><th>Operator / project</th><th>Cooling stated</th></tr></thead><tbody>
+        <tr><td>Nxtra (Airtel), AdaniConneX</td><td>Air-based chillers</td></tr>
+        <tr><td>STT GDC India</td><td>Air-cooled systems preferred in water-scarce regions; Pune site reuses high-TDS water</td></tr>
+        <tr><td>NTT DATA</td><td>Liquid immersion "where feasible"</td></tr>
+        <tr><td>CtrlS</td><td>Switched water-cooled to air-cooled systems, saving 119,662 kL a year (number of sites not stated)</td></tr>
+        <tr><td>Yotta</td><td>"Air-cooled + liquid-cooled + closed-loop systems, not water-cooled towers"</td></tr>
+        <tr><td>Sify</td><td>Claims water-free cooling; no supporting data published</td></tr>
+        <tr><td>Reliance–Meta, Jamnagar (168 MW AI)</td><td>Desalinated seawater, renewable power</td></tr>
+        <tr><td>Google–AdaniConneX–Airtel, Visakhapatnam (~1 GW AI)</td><td>Not disclosed; Andhra Pradesh policy proposes seawater cooling</td></tr>
+      </tbody></table></div>
+      <p class="xs muted">Liquid-cooling equipment is still almost entirely imported (KPMG); Schneider Electric opened a liquid-cooling factory in Bengaluru in early 2026. <span class="ev r show" data-src="Down To Earth, India's digital thirst (2026); CRN Asia (Reliance–Meta); Climate Fact Checks (Vizag); KPMG Jul 2026; Schneider Electric Jul 2026">reported</span></p>
+    </div>
+<div class="panel">
+      <h3>Seven metrics every site should publish, monthly</h3>
+      <ol class="clean small">
+        <li>Withdrawal by source (potable, groundwater, tanker, treated, rain)</li>
+        <li>Consumption (withdrawal − discharge)</li>
+        <li>Discharge volume and quality</li>
+        <li>Site WUE, on both withdrawal and consumption basis</li>
+        <li>Source WUE, including power-station water</li>
+        <li>Scarcity-weighted footprint (AWARE version declared)</li>
+        <li>Seasonal profile: peak-day MLD, peak ÷ average, storage hours</li>
+      </ol>
+      <p class="note">Disclosure today: Sify's reported withdrawal fell 20× in a year with no explanation; NTT omitted water in 2025; AdaniConneX has no standalone report.</p>
+    </div>
+</div>
+
+<div class="subch" id="cscope5">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">9.5</span><span class="eyebrow">Use</span></div>
+    <h2>A reporting template, and what to do about each scope</h2></div>
+  <div class="cols gap">
+    <div class="panel"><h3>Per-site annual water report</h3>
+      <div class="tbl"><table class="aif-t"><thead><tr><th>Block</th><th>Fields</th></tr></thead><tbody>
+        <tr><td>Site</td><td>District, IT MW, IT and facility MWh, PUE, cooling architecture, cycles of concentration, stress weight and Aqueduct score</td></tr>
+        <tr><td>Scope 1</td><td>Withdrawal by source (municipal, groundwater with CGWA permit number, tanker, treated sewage, rainwater); potable vs non-potable; discharge by destination and treatment; consumption; WUE input and WUE consumption; non-cooling uses</td></tr>
+        <tr><td>Scope 2</td><td>Location-based factor (national and state), consumption and withdrawal, hydro convention stated; market-based factor with contract type and matching (annual, monthly, hourly); WUE<sub>source</sub></td></tr>
+        <tr><td>Scope 3</td><td>IT embodied water (method, factor, refresh years); building and plant over 25 years; upstream coal and diesel; tenants' IT flagged for colocation</td></tr>
+        <tr><td>Impact and intensity</td><td>Stress-weighted totals; share in high-stress basins; m³ per MWh of IT; kL per ₹ crore of revenue (BRSR); mL per prompt or per GPU-hour</td></tr>
+        <tr><td>Assurance</td><td>Meter class (EN 50600-4-9), assurance provider, restatements</td></tr>
+      </tbody></table></div></div>
+    <div class="panel"><h3>What to do about each scope</h3>
+      <ul class="clean small">
+        <li><b>Scope 1:</b> closed-loop direct-to-chip with dry coolers for AI halls; free-cooling air-cooled chillers for colocation. Where towers are unavoidable, run them on treated sewage or rainwater at six or more cycles, and recover blowdown with RO. Report consumption and withdrawal separately.</li>
+        <li><b>Scope 2, the biggest lever:</b> contract wind–solar hybrid or round-the-clock renewables through green open access and move to hourly matching. Each 10 points of clean share cuts about 170,000 kL a year for a 50 MW AI hall on the national grid. Prefer sites fed by seawater-cooled or dry-cooled plants.</li>
+        <li><b>Scope 3:</b> extend hardware life to six years where performance per watt allows; ask chip and server makers for ISO 14046 water data; use blended cement and recycled steel; count upstream coal water, which is larger than fab water.</li>
+        <li><b>Siting:</b> with stress weighting, coastal Chennai and Mumbai sites on dry cooling and clean power score best; Bengaluru and Delhi NCR sites on towers score worst.</li>
+      </ul>
+      <p class="xs muted"><b>Uncertainties:</b> hydro allocation (0 to over 245 m³/MWh), consumption vs withdrawal in operator reports, embodied chip water (no GPU maker publishes it; 0.1–10 m³ per GPU), the state mixes and the stress weights, which are atlas judgements until basin factors are applied.</p></div>
+  </div>
+</div>
+</section>

@@ -1,0 +1,46 @@
+<section class="ch" id="caveats">
+  <div class="ch-head">
+    <div class="ch-tag"><span class="ch-num" aria-hidden="true">!</span><span class="eyebrow">Read before citing</span></div>
+  <p class="small panel" style="padding:14px 18px">This page is the reference. The compiled report PDF and formula handbook from earlier versions are retired: they carried pre-v26 values. The first edition of the atlas remains available unchanged.</p>
+    <h2>Caveats and sources</h2>
+  </div>
+  <div class="cols">
+    <ul class="clean small">
+      <li>The worked cases (20 MW colo, 50 MW hyperscale, 100 MW AI) are bottom-up estimates built on published benchmarks, not audited project data. Water balances are modelled; real sites can differ ±30–50%.</li>
+      <li>There is no public national dataset of Indian data-centre PUE, WUE or clean-energy share. Bengaluru sector water estimates range from about 2 to 20 MLD.</li>
+      <li>Contested figures: GB300 rack price (US$3.7–6.5 m), GPU economic life (4–6 years), Rubin chip power, hydro water intensity, marginal emission factors, Karnataka's consumption-mix intensity, Andhra Pradesh's 70% renewable rule (a ministerial statement).</li>
+      <li>Scarcity weights and AWARE-style factors are illustrative; rankings hold, absolute values do not.</li>
+      <li>Several 2026 state policies are known from cabinet notes and press; gazette numbers were not located for Karnataka, UP and Gujarat 2026.</li>
+      <li>The state index, maturity levels, Karnataka hourly curve and city design temperatures are indicative tools for comparison, not published datasets.</li>
+      <li>Chapter 8: climate hours, peak factors and hourly curves are models built on approximate climate normals, not measurements; replace with ISHRAE typical-year data and metering. Several tariffs come from secondary summaries; MSEDCL's energy charge is disputed (₹7.48 in the MERC press note versus a reported ₹8.68).</li>
+      <li>Calculators simplify: they hold demand charges, overhead splits and other costs at each report's assumptions, so results can differ slightly from report tables.</li>
+    </ul>
+    <ul class="clean small">
+      <li>IEA, <i>Energy and AI</i> (Apr 2025); LBNL US Data Center Energy Usage Report (Dec 2024); Uptime Institute surveys 2024–25; Synergy Research; JLL, CBRE, Cushman &amp; Wakefield outlooks and cost guides; Turner &amp; Townsend DC Cost Index 2025</li>
+      <li>SBI sector report on data centres (Apr 2026); Houlihan Lokey India DC edition (Dec 2025); Dell'Oro liquid cooling; ASHRAE TC 9.9</li>
+      <li>CEA CO₂ database v22.0 (Aug 2026); Ember (GER 2026, India data); IPCC AR5 Annex III; UNECE LCA; CSE and WRI on thermal plant water; NERC Large Loads alert (May 2026)</li>
+      <li>BWSSB, CGWB / Karnataka groundwater assessments; KERC tariff and open-access orders; WELL Labs; Down To Earth; Newslaundry / The News Minute on Karnataka policy</li>
+      <li>CEEW &amp; SYSTEMIQ, <i>Scaling India's Data Centre Ecosystem</i> (Feb 2026); state orders incl. AP G.O.Ms.No.6 (14.11.2024), WB No. 490-ITE (06.09.2021), TN DC Policy 2021, Maharashtra GRs (Oct 2024, Jun 2026)</li>
+      <li>Report 12 (water and energy): LBNL 2024; Uptime Institute 2025 survey; Microsoft and Google efficiency pages; NTT DATA ESG data; Li et al. (ACM); CEEW; Down To Earth; MoEFCC S.O. 3305(E) and CSE on thermal plant water; NREL water factors; MNRE RE statistics 2024-25; IEX price data; SECI FDRE tenders; MERC, TGERC, KERC and TNERC tariff orders; GEOA Rules 2022; NERC large loads; NVIDIA DGX documentation</li>
+      <li>Report 13 (conventional vs AI): IEA Energy and AI (2025) and Key Questions update; LBNL 2024 US Data Center Energy Usage Report; Uptime Institute 2025 survey; Google Gemini inference paper (Aug 2025) and efficiency page; AWS, Microsoft, Meta, Equinix sustainability reports; Epoch AI; Li et al., "Making AI Less Thirsty"; Mistral / ADEME LCA; De Vries-Gao (Patterns 2025); NVIDIA, HPE, DCD on rack power; Microsoft Fairwater and zero-water design posts; MoEFCC thermal water norms, Down To Earth, CEA; Wood Mackenzie; S&amp;P Global; STT GDC India, Sify, Nxtra, CtrlS reports; Karnataka DC Policy 2026–31; MeitY IndiaAI tender corrigendum; SBI sector report (Apr 2026). Section 5 site comparisons are modelled, not measured.</li>
+      <li>Chapter 16 (least-water power model): karnataka_dc_model.py, an hourly linear programme solved with SciPy HiGHS; synthetic Karnataka-shaped solar (Pavagada/Tumakuru) and wind (Chitradurga/Gadag) profiles; 2026 Indian cost benchmarks (solar ₹3.8 cr/MW, wind ₹7.0 cr/MW, BESS ₹3.5 lakh/MW-month, hydro ₹4.5/kWh, grid ₹7.0/kWh, open access ₹1.0/kWh); water factors solar 0.1, grid 2.0, hydro 0–20 L/kWh. Illustrative, not site data.</li>
+      <li>Report 15 (recommendations): MoP/CEA via Telborg; MeitY consultation (Computer Weekly/ET); CBRE Oct 2026; Union Budget 2026–27 (PIB); CEA draft connectivity regulations 2026; BIS IS 1893:2025 and its withdrawal; MoP ISTS waiver orders (Mercom, JMK, Saur Energy); IEEFA and Neufin on GEOA; CGWA guidelines and 2025 groundwater assessment (PIB); Karnataka and Maharashtra DC policies; Google, Meta, Reliance announcements; SBI sector report; Germany EnEfG; EU Delegated Regulation 2024/1364; Singapore DC-CFA2; Ireland CRU LEU policy; Texas SB 6; Johor water tariff; NDRC 2024 plan; METI watt-bit council. Hub scores and design targets are estimates.</li>
+      <li>Chapter 16 (cooling × power): cooling-technology research, October 2026 (LBNL 2024 US Data Center Energy Usage Report; Uptime Institute Global Survey 2025; Dell'Oro Jan 2026; Munters case studies; Daikin, Mitsubishi and York chiller data; NVIDIA, HPE and Lenovo GB300 specifications; ASHRAE TC 9.9 liquid classes; Schneider Electric WP282 and Jul 2026 India blog; SBI sector report Apr 2026; CEEW Feb 2026; IndiaAI; STT GDC India, CtrlS, Yotta, Sify and NTT disclosures; IMARC 2026 and JM Financial 2025 cost data). Power-station water: MoEFCC 2015 thermal norms; NREL operational water medians; Chapter 8 state grid factors; Chapter 16 least-water mix. Cooling overheads, WUE, costs and hourly cover are engineering estimates.</li>
+      <li>Chapter 16 (carbon–water scheduler): formulation after Li, Yang, Islam &amp; Ren, "Making AI Less Thirsty", <i>Communications of the ACM</i> 68(7), 2025 (DOI 10.1145/3724499); Jiang et al., WaterWise, ACM 2025 (DOI 10.1145/3710848.3710891); NREL/TP-2C00-72196 (2018) thermosyphon hybrid results; Chapter 8 adiabatic cooling formulas; atlas grid carbon (<span data-std="co2" data-d="3">0.675</span> t/MWh) and the India grid-water factor. Hourly profiles are illustrative design days.</li>
+      <li>Chapter 8 (AI data centres vs factories): research report, October 2026. IEA, Energy and AI (Apr 2025); LBNL 2024 US Data Center Energy Usage Report and 2025 update; Uptime Institute Global Survey 2025; Google, Measuring the environmental impact of AI inference (Aug 2025); Li, Yang, Islam &amp; Ren, CACM 2025; Cushman &amp; Wakefield India Data Centre H1 2026 update; Colliers (May 2025); S&amp;P Global; Jefferies; Wood Mackenzie; JLL; JM Financial Data Centre 101 (Mar 2025); AWS, Meta (2025 Environmental Data Index), Microsoft, Digital Realty, Equinix and Google sustainability reports; Nxtra, CtrlS and Sify BRSR; MoEFCC thermal water norms 2015/2018; Tata Steel Integrated Report FY2024-25; TSMC Annual Report 2024; Tata–PSMC environmental appraisal (via The Statesman); NCB cement water study; CPCB paper charter; CPHEEO; CGWB 2025 (via OpenCity); Down To Earth; WRI India; Schneider Electric India policy review (Sep 2026); Patterns (Cell) 2025; Rystad; Mordor Intelligence (flagged). Data-centre water at plant scale is computed with atlas standards.</li>
+      <li>Chapter 18 (60% renewable): research report, October 2026. NITI Aayog, Scenarios Towards Viksit Bharat and Net Zero – Overview (Vol. 1), Buildings (Vol. 5) and Power (Vol. 7), Feb 2026; NITI Aayog 2030 report using IESS 2047 (Jul 2025); Bajpai &amp; Mothkoor, Indian Infrastructure (10 Dec 2025); Ministry of Power Rajya Sabha replies Q952, Q953, Q956 (27 Jul 2026); MeitY Rajya Sabha reply (13 Mar 2026) and factsheet (Aug 2026); CEA 20th EPS, NEP 2023, midterm review and Long-term National Resource Adequacy Plan (Mar 2026); MNRE (Apr 2026); SECI FDRE-RTC (Aug 2026) and FDRE-VII/IX auctions; Forum of Regulators GEOA model regulation; TNERC, UPERC, GERC, MERC orders; JMK Research; Cushman &amp; Wakefield H1 2026; S&amp;P Global; Jefferies; IEEFA; Wood Mackenzie; CEEW; Maharashtra GR (9 Jun 2026); company announcements. TWh conversions, builds, costs and hourly shares are this chapter's estimates.</li>
+      <li>Company disclosures: Google, Microsoft, Meta, AWS, Nxtra, Sify, AdaniConneX, Yotta; EU Commission, German EnEfG, Singapore IMDA</li>
+    </ul>
+  </div>
+</section>
+</main>
+</div>
+
+<footer>
+  <div style="max-width:1320px;margin:0 auto;padding-inline:20px;display:grid;gap:8px">
+    <span>India Data Centre Atlas · compiled October 2026 from a fifteen-part research series. Figures in ₹ use ₹90/US$ unless noted.</span>
+  </div>
+</footer>
+<div id="gpop" role="tooltip" hidden></div>
+
+<script>

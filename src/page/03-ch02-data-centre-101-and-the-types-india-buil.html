@@ -1,0 +1,110 @@
+<section class="ch chw" id="c1" data-n="2">
+  <div class="chq">
+    <div class="chq-n" aria-hidden="true">2</div>
+    <div class="chq-b"><h2 class="chq-t">Data centre 101 and the types India builds</h2>
+      <p class="chq-q"><span>The question</span>What is a data centre, and what kinds does India build?</p>
+      <p class="chq-a"><span>The short answer</span>A data centre is a factory that turns electricity into computing and heat. India's <span data-std="cap.india" data-d="0">1,789</span> MW of IT capacity (Cushman & Wakefield, H1 2026; trackers differ by about ±5%) is mostly colocation in Mumbai, while hyperscale cloud and AI campuses now drive the growth.</p>
+      <nav class="chq-subs" aria-label="In this chapter"><a href="#dc101">2.1</a><a href="#types">2.2</a></nav>
+    </div>
+  </div>
+<div class="subch" id="dc101">
+  <div class="ch-head">
+    <div class="ch-tag"><span class="ch-num" aria-hidden="true">2.1</span><span class="eyebrow">Start here · How a data centre works, in ten calculations</span></div>
+    <h2>Data centre 101</h2>
+    <p class="lede">Before the policy, the water and the forecasts: the physical basics. Each panel below has sliders, a picture and the key numbers. Tap <b>ƒ Show the calculation</b> under any panel to see every formula, the numbers substituted into it, and the result, all updating as you move the sliders.</p>
+  </div>
+  <div class="take">
+    <div><span class="v mono">1 kW → 1 kW of heat</span><span class="k">Every watt a server draws ends up as heat that the building must remove <span class="ev r show" data-src="Conservation of energy">physics</span></span></div>
+    <div><span class="v mono">~3,500×</span><span class="k">How much more heat a litre of water carries than a litre of air for the same temperature rise. This is why AI racks need liquid cooling <span class="ev r show" data-src="Volumetric heat capacity: water 4.18 MJ/m³K, air 1.2 × 1.005 kJ/m³K">physics</span></span></div>
+    <div><span class="v mono">200 km per ms</span><span class="k">Speed of light in optical fibre. Distance sets which workloads must sit near users <span class="ev r show" data-src="Refractive index of silica fibre ≈ 1.47">physics</span></span></div>
+    <div><span class="v mono">2–5 years</span><span class="k">From land to first power for a large campus; the grid connection is often the longest step <span class="ev e show" data-src="Report 15 and industry timelines; illustrative">estimate</span></span></div>
+  </div>
+  <div id="d1-mods" class="d1-mods"></div>
+</div>
+<div class="subch" id="types">
+  <div class="ch-head">
+    <div class="ch-tag"><span class="ch-num" aria-hidden="true">2.2</span><span class="eyebrow"><a class="rep-l" href="#reports">Report 1</a> · Types of data centre, global and Indian</span></div>
+    <h2>Scale wins, and India is just getting started</h2>
+    <p class="lede">A single facility can be "hyperscale", "AI", "Tier III" and "liquid-cooled" at once, because each label answers a different question. Globally, the economics of scale have pushed capacity from company-owned rooms to cloud giants and colocation. India is small and growing very fast.</p>
+  </div>
+  <div class="take">
+    <div><span class="v mono">~103 → 200 GW</span><span class="k">Global data-centre capacity, 2025 → 2030 (JLL, 14% CAGR)</span></div>
+    <div><span class="v mono">56% → 32%</span><span class="k">Enterprise on-premises share of capacity, 2018 → 2026 (Synergy)</span></div>
+    <div><span class="v mono">~50%</span><span class="k">Mumbai's share of India's live capacity; ~95% of international bandwidth lands there</span></div>
+  </div>
+
+  <div class="cols">
+    <div class="panel inst">
+      <h3>Type explorer<span class="sub">Six business models. Pick one to see how it works, what it costs and who uses it.</span></h3>
+      <div class="typegrid" id="type-grid" role="group" aria-label="Data centre type"></div>
+      <div class="detail" id="type-detail"></div>
+    </div>
+    <div class="stack">
+      <div class="panel">
+        <h3>Who owns the world's capacity<span class="sub">Share of global data-centre capacity (Synergy Research). 2031 is a projection.</span></h3>
+        <div class="chart"><canvas id="c-share" aria-label="Capacity share by owner type"></canvas></div>
+        <p class="note">Enterprise capacity is flat in absolute terms; its share shrinks because hyperscale grows so fast. Twenty metro markets hold 60% of hyperscale capacity, with Northern Virginia alone at 11%.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel">
+      <h3>Five ways to classify a data centre</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Axis</th><th>Question it answers</th><th>Main categories</th></tr></thead>
+        <tbody>
+          <tr><td><b>Business model</b></td><td>Who owns and pays?</td><td>Enterprise, retail colo, wholesale colo, hyperscale, managed/cloud, edge</td></tr>
+          <tr><td><b>Workload</b></td><td>What runs inside?</td><td>General cloud, AI/HPC "AI factories", sovereign/government</td></tr>
+          <tr><td><b>Physical form</b></td><td>How is it built?</td><td>Traditional, modular/prefab, underground, underwater (experimental)</td></tr>
+          <tr><td><b>Reliability</b></td><td>How often can it fail?</td><td>Uptime Tier I–IV; ANSI/TIA-942 Rated 1–4</td></tr>
+          <tr><td><b>Cooling</b></td><td>How is heat removed?</td><td>Air, rear-door, direct-to-chip, immersion (see chapter 4)</td></tr>
+        </tbody></table></div>
+      <p class="note">Underwater is a curiosity: Microsoft's Project Natick saw one-eighth the failure rate of land servers, yet Microsoft says it is not building subsea data centres anywhere.</p>
+    </div>
+    <div class="panel inst hot">
+      <h3>What a <button type="button" class="g" data-g="Tier">Tier</button> buys you<span class="sub">Each square is one of 120 slices of a year; orange slices show allowed downtime, magnified 60× so it is visible.</span></h3>
+      <div class="seg" id="tier-btns" role="group" aria-label="Tier"><button data-t="0">Tier I</button><button data-t="1">Tier II</button><button data-t="2" aria-pressed="true">Tier III</button><button data-t="3">Tier IV</button></div>
+      <div class="read" id="tier-read"></div>
+      <div id="tier-text"></div>
+      <p class="note">Tier III is the commercial standard worldwide and in India. In India an AI or Tier IV build costs up to ₹75 crore/MW, against ₹50–55 crore for Tier III air-cooled (SBI, April 2026).</p>
+    </div>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel">
+      <h3>India by city<span class="sub">Megawatts, H1 2026 (Cushman &amp; Wakefield). Switch between what runs today and what is coming by 2030.</span></h3>
+      <div class="seg" id="city-toggle" role="group" aria-label="View"><button data-v="op" aria-pressed="true">Operational</button><button data-v="pipe">Pipeline to 2030</button></div>
+      <div class="chart"><canvas id="c-cities" aria-label="India capacity by city"></canvas></div>
+      <p class="note" id="city-note"></p>
+    </div>
+    <div class="panel inst">
+      <h3>Type finder<span class="sub">Answer four questions and get the type the series would recommend.</span></h3>
+      <div class="ctrls">
+        <div><label class="fieldlbl" for="tf-size">How much IT load?</label><select id="tf-size"><option value="0">Under 1 MW</option><option value="1" selected>1–20 MW</option><option value="2">20–100 MW</option><option value="3">100 MW or more</option></select></div>
+        <div><label class="fieldlbl" for="tf-ai">GPUs / AI training?</label><select id="tf-ai"><option value="0">No</option><option value="1">Yes</option></select></div>
+        <div><label class="fieldlbl" for="tf-lat">Must be close to users (&lt;20 ms)?</label><select id="tf-lat"><option value="0">No</option><option value="1">Yes</option></select></div>
+        <div><label class="fieldlbl" for="tf-reg">Regulated data / full control?</label><select id="tf-reg"><option value="0">No</option><option value="1" selected>Yes</option></select></div>
+      </div>
+      <div class="detail" id="tf-out"></div>
+    </div>
+  </div>
+
+  <div class="cols gap">
+    <div class="callout"><b class="t">Single point of failure.</b> Fifteen of India's 17 international cables land within about 6 km of Versova beach in Mumbai, carrying about 95% of international bandwidth. New east-coast landings (SEA-ME-WE 6 at Chennai, Google's Vizag gateway) matter more than any incentive.</div>
+    <div class="callout cold"><b class="t">The money already committed.</b> Google ≈US$15 bn for a 1 GW AI hub at Vizag; Microsoft US$17.5 bn; Amazon US$35 bn+ across India by 2030; Reliance up to 3 GW at Jamnagar; Adani ≈US$100 bn by 2035; TCS HyperVault 1 GW+. These are announcements, not finished capacity.</div>
+  </div>
+
+  <div class="do">
+    <h3>What India should build, in order</h3>
+    <ol class="clean">
+      <li><b>Hyperscale and wholesale colocation campuses in five hubs</b>: Mumbai, Chennai, Hyderabad, Noida and Vizag. Pair a coastal cable hub with an inland zone 300–700 km away.</li>
+      <li><b>Make every large new build AI-ready</b>: 30–130 kW racks, direct-to-chip liquid cooling, PUE ≤1.35. Avoid speculative GPU halls without anchor tenants.</li>
+      <li><b>Sovereign and government AI through PPP</b>, extending the IndiaAI "empanel and subsidise" model rather than state-built facilities.</li>
+      <li><b>Renewable-backed campuses</b> with round-the-clock contracts; train AI near renewables, serve inference from metros.</li>
+      <li><b>A thin layer of modular edge</b> (0.1–2 MW) in Tier-2/3 cities for 5G, UPI and Indian-language inference.</li>
+    </ol>
+    <p class="note">Not priorities: new large enterprise-owned data centres, Tier IV everywhere, underwater designs.</p>
+  </div>
+</div>
+</section>

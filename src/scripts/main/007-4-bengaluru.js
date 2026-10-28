@@ -1,0 +1,18 @@
+
+/* ---------- 4 BENGALURU ---------- */
+const bp=[{mw:20,u:Math.round(STD.ref.uConv*100),pue:1.45,wue:1.8,ef:STD.co2,gw:STD.gw.India},{mw:50,u:Math.round(STD.ref.uConv*100),pue:1.35,wue:1.6,ef:STD.co2,gw:STD.gw.India},{mw:100,u:Math.round(STD.ref.uAI*100),pue:1.2,wue:.13,ef:STD.co2,gw:STD.gw.India}];
+function blr(){
+  const mw=val('b-mw'),u=val('b-u')/100,p=val('b-pue'),w=val('b-wue'),ef=val('b-ef'),gw=val('b-gw');
+  out('b-mw',mw+' MW');out('b-u',Math.round(u*100)+'%');out('b-pue',p.toFixed(2));out('b-wue',w.toFixed(2));out('b-ef',ef.toFixed(2));out('b-gw',gw.toFixed(1));
+  const it=mw*u*8.76,fac=it*p,onM=it*w/365,offM=fac*gw/365;
+  const mva=mw*p*1.12/0.95,volt=mva<=20?'66 kV':mva<=55?'110 kV':mva<=250?'220 kV, dual feed':'400 kV';
+  readout($('#blr-read'),[[fmt(fac,1)+' MU','Facility energy a year','cold'],[fmt(fac*1e6/1800),'Households at 1,800 kWh/yr'],[(fac/92450*100).toFixed(2)+'%','Share of Karnataka demand (92,450 MU, FY2024-25)'],[(fac/16089*100).toFixed(1)+'%','Share of state household use'],['~'+fmt(mva)+' MVA','Contract demand · '+volt,'hot'],[fmt(fac*ef*1000)+' t','CO₂ a year','heat']]);
+  const mx=Math.max(onM+offM,.01);
+  hbars($('#blr-water'),[['On site (cooling)',onM,'',onM.toFixed(2)],['At power station',offM,'hot',offM.toFixed(2)],['Total',onM+offM,'heat',(onM+offM).toFixed(2)]],{max:mx});
+  $('#blr-note').innerHTML=`On-site water equals the daily needs of about <b>${fmt(onM*1e6/135)}</b> people at 135 L/day: <b>${(onM/1935*100).toFixed(2)}%</b> of BWSSB's supply, but <b>${(onM/45*100).toFixed(1)}%</b> of Bangalore East's sustainable groundwater (~45 MLD) if drawn there. Power-station water is ${(offM/Math.max(onM,.001)).toFixed(1)}× on-site water.`;
+}
+['b-mw','b-u','b-pue','b-wue','b-ef','b-gw'].forEach(i=>document.getElementById(i).addEventListener('input',blr));
+seg('blr-presets',d=>{const q=bp[+d.p];['mw','u','pue','wue','ef','gw'].forEach(k=>setv('b-'+k,q[k]));blr()});blr();
+reg('c-scale',()=>({type:'bar',data:{labels:['+100 MW','+500 MW','+1 GW'],datasets:[{label:'Evaporative (WUE 1.8)',data:[100,500,1000].map(m=>+(m*STD.ref.uAI*24*1.8/1000).toFixed(2)),backgroundColor:T('--heat')},{label:'Adiabatic (0.4)',data:[100,500,1000].map(m=>+(m*STD.ref.uAI*24*.4/1000).toFixed(2)),backgroundColor:T('--hot')},{label:'Dry / DLC (0.05)',data:[100,500,1000].map(m=>+(m*STD.ref.uAI*24*.05/1000).toFixed(2)),backgroundColor:T('--cold')},{label:'Power-station water (PUE 1.15, India grid)',data:[100,500,1000].map(m=>+(m*STD.ref.uAI*24*1.15*STD.gw.India/1000).toFixed(1)),backgroundColor:A(T('--muted'),.6)}]},options:base({plugins:{legend:legendB,tooltip:Object.assign(tip(),{callbacks:{label:c=>`${c.dataset.label}: ${c.raw} MLD`}})},scales:{y:{title:{display:true,text:'MLD'},grid:grid()},x:{grid:{display:false}}}})}));
+hbars($('#users-bars'),[['JSW Vijayanagar (allocation)',330,'heat','330'],['Raichur TPS (1,720 MW)',130,'heat','~130'],['IT campus, 10 m sq ft',6,'hot','~6'],['Toyota Bidadi',4.7,'hot','4.7'],['Brewery, 2 m hl/yr',1.7,'hot','1.7'],['50 MW DC, evaporative',+(50*STD.ref.uConv*24*1.8/1000).toFixed(2),'',(50*STD.ref.uConv*24*1.8/1000).toFixed(2)],['20 MW colo, evaporative',+(20*STD.ref.uConv*24*1.8/1000).toFixed(2),'',(20*STD.ref.uConv*24*1.8/1000).toFixed(2)],['1,000-flat apartments',0.61,'mut','0.61'],['500-bed hospital',0.23,'mut','0.23'],['100 MW AI, DLC + dry',+(100*STD.ref.uAI*24*.05/1000).toFixed(2),'',(100*STD.ref.uAI*24*.05/1000).toFixed(2)]],{log:true,lo:-1.2});
+hbars($('#est-bars'),[['DTE: permitted volumes',2.2,'mut','~2.2'],['Karnataka IT dept (32 DCs)',4,'','~4'],['Series model, mixed cooling',4.5,'','4–5'],['Series model, all evaporative',8.8,'hot','~8.8'],['WELL Labs heuristic',20,'heat','~20']],{max:20});

@@ -1,0 +1,259 @@
+<section class="ch chw" id="c10" data-n="17">
+  <div class="chq">
+    <div class="chq-n" aria-hidden="true">17</div>
+    <div class="chq-b"><h2 class="chq-t">Green standards and state policy</h2>
+      <p class="chq-q"><span>The question</span>What does a green data centre look like, and what do states require?</p>
+      <p class="chq-a"><span>The short answer</span>Leaders reach PUE near 1.2 and high clean-power shares. India has about 16 state regimes, no national law in force and almost no water rules.</p>
+      <nav class="chq-subs" aria-label="In this chapter"><a href="#green">17.1</a><a href="#states">17.2</a><a href="#c10ap">17.3</a></nav>
+    </div>
+  </div>
+<div class="subch" id="green">
+  <div class="ch-head">
+    <div class="ch-tag"><span class="ch-num" aria-hidden="true">17.1</span><span class="eyebrow"><a class="rep-l" href="#reports">Report 8</a> · Green data centres</span></div>
+    <h2>Green is measured, not labelled</h2>
+    <p class="lede">A data centre is green only if it is measured, disclosed and verified on efficiency, hourly carbon-free power, freshwater impact and lifecycle carbon. For a Bengaluru operator the cheapest route is PUE ≤1.20, ≥80% round-the-clock renewables and dry or treated-water cooling. It pays for itself.</p>
+  </div>
+  <div class="take">
+    <div><span class="v mono">~2.3 yrs</span><span class="k">Payback on a ₹60 crore green upgrade for a 20 MW Bengaluru colo</span></div>
+    <div><span class="v mono">−83%</span><span class="k">CO₂ cut (~109,000 t/yr) and ~196 million L/yr freshwater saved</span></div>
+    <div><span class="v mono">+18% / +25%</span><span class="k">Google's and Microsoft's emissions growth despite 100% annual renewable matching</span></div>
+  </div>
+
+  <div class="panel">
+    <h3>Twelve dimensions of "green"<span class="sub">What a green site looks like in India, dimension by dimension.</span></h3>
+    <div class="dims" id="dims"></div>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel inst">
+      <h3>Green upgrade calculator<span class="sub">Baseline: grid power, evaporative towers. Green: lower PUE, hourly renewables, dry or treated-water cooling.</span></h3>
+      <div class="ctrls">
+        <div class="ctrl"><label for="gr-mw">IT capacity (MW)</label><output id="gr-mw-o"></output><input id="gr-mw" type="range" min="5" max="200" step="5" value="20"></div>
+        <div class="ctrl"><label for="gr-u">Average IT load</label><output id="gr-u-o"></output><input id="gr-u" type="range" min="30" max="95" step="1" value="65"></div>
+        <div class="ctrl"><label for="gr-p0">Baseline PUE</label><output id="gr-p0-o"></output><input id="gr-p0" type="range" min="1.2" max="2" step="0.01" value="1.5"></div>
+        <div class="ctrl"><label for="gr-p1">Green PUE</label><output id="gr-p1-o"></output><input id="gr-p1" type="range" min="1.05" max="1.6" step="0.01" value="1.25"></div>
+        <div class="ctrl"><label for="gr-re">Hourly renewable share</label><output id="gr-re-o"></output><input id="gr-re" type="range" min="0" max="100" step="5" value="80"></div>
+        <div class="ctrl"><label for="gr-tar">Grid tariff (₹/kWh)</label><output id="gr-tar-o"></output><input id="gr-tar" type="range" min="5" max="10" step="0.05" value="8"></div>
+        <div class="ctrl"><label for="gr-rp">Renewable landed cost (₹/kWh)</label><output id="gr-rp-o"></output><input id="gr-rp" type="range" min="5" max="10" step="0.05" value="7.25"></div>
+        <div class="ctrl"><label for="gr-cx">Green capex premium (₹ cr)</label><output id="gr-cx-o"></output><input id="gr-cx" type="range" min="0" max="400" step="5" value="60"></div>
+      </div>
+      <div class="read" id="gr-read"></div>
+      <p class="small" id="gr-text"></p>
+      <p class="note">Grid 0.675 tCO₂/MWh; water 1.8 → 0.2 L/kWh at ₹99/kL (BWSSB, as in the simulator); capex annualised at 11% over 15 years. If BESCOM's proposed ₹1.65/kWh surcharge applies, renewables can cost more than grid; group captive avoids most of it.</p>
+    </div>
+    <div class="stack">
+      <div class="panel">
+        <h3>Abatement cost by measure<span class="sub">₹ per tonne of CO₂, 20 MW Bengaluru colo. Negative means it saves money.</span></h3>
+        <div class="chart short"><canvas id="c-mac" aria-label="Marginal abatement cost"></canvas></div>
+        <p class="note">Compare India's expected carbon credit price (~₹955/t initially) and EU ETS (~€84/t). The binding constraint in India is open-access regulation, not carbon price.</p>
+      </div>
+      <div class="panel">
+        <h3>PUE thresholds around the world<span class="sub">Lower is stricter.</span></h3>
+        <div class="chart short"><canvas id="c-pue" aria-label="PUE thresholds"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel">
+      <h3>Maturity self-check<span class="sub">Pick a level for each dimension (India-calibrated). The radar compares you with today's Indian leaders.</span></h3>
+      <div class="seg" id="mat-presets" role="group" aria-label="Preset"><button data-p="lead">Indian leader today</button><button data-p="l4">"L4 by design" blueprint</button><button data-p="base">Basic site</button></div>
+      <div class="mat" id="mat"></div>
+    </div>
+    <div class="panel">
+      <div class="chart tall"><canvas id="c-radar" aria-label="Maturity radar"></canvas></div>
+      <p class="small" id="mat-score"></p>
+    </div>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel">
+      <h3>Spotting greenwashing</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Claim</th><th>Credible if…</th><th>Red flag</th></tr></thead>
+        <tbody>
+          <tr><td>"100% renewable"</td><td>Hourly matching, same grid, new capacity, location-based also shown</td><td>Annual unbundled RECs from old hydro</td></tr>
+          <tr><td>"Carbon neutral"</td><td>Deep cuts first, removals for residuals</td><td>Cheap avoidance offsets</td></tr>
+          <tr><td>"PUE 1.2"</td><td>Annualised, measured at the utility meter, real load</td><td>Design PUE at full load, one cool month</td></tr>
+          <tr><td>"Water positive"</td><td>Site WUE disclosed; replenishment in the same basin</td><td>Credits elsewhere while drawing borewells</td></tr>
+          <tr><td>"Green certified"</td><td>Operational certification on measured data</td><td>Design-stage label never re-checked</td></tr>
+        </tbody></table></div>
+    </div>
+    <div class="panel">
+      <h3>Buying clean power in India</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Route</th><th class="n">Landed ₹/kWh</th><th>Catch</th></tr></thead>
+        <tbody>
+          <tr><td>Rooftop solar</td><td class="n">3–4</td><td>&lt;2–5% of a DC's load</td></tr>
+          <tr><td><b>Group captive</b> (≥26% equity)</td><td class="n">5.5–7</td><td>Avoids CSS and additional surcharge</td></tr>
+          <tr><td>Third-party open access</td><td class="n">6.5–8</td><td>Surcharges, banking limits</td></tr>
+          <tr><td>ISTS hybrid PPA</td><td class="n">5–6.5 + charges</td><td>Better hourly profile</td></tr>
+          <tr><td>SECI RTC/FDRE</td><td class="n">~5.25 + delivery</td><td>High CFE share</td></tr>
+          <tr><td>Unbundled RECs</td><td class="n">+0.1–0.3</td><td>Weakest claim</td></tr>
+        </tbody></table></div>
+      <p class="note">KERC's 2025 rules bank energy monthly at an 8% charge in kind. Nuclear (SHANTI Act, Dec 2025) is a 2030s option, not a current green claim.</p>
+    </div>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel">
+      <h3>Rules elsewhere</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Jurisdiction</th><th>Key requirement</th></tr></thead>
+        <tbody>
+          <tr><td>Germany (EnEfG)</td><td>New sites PUE ≤1.2 from July 2026; 100% renewable from 2027; heat reuse 10→20%</td></tr>
+          <tr><td>European Union</td><td>A–G grades for every site &gt;500 kW from Aug 2027 (A: PUE ≤1.15, WUE ≤0.10)</td></tr>
+          <tr><td>Singapore</td><td>2026 round: PUE 1.25 at full load, ≥50% green energy, Green Mark Platinum</td></tr>
+          <tr><td>China</td><td>New large DCs PUE ≤1.25 (≤1.2 in hubs); ≥80% renewable in hubs</td></tr>
+          <tr><td>India</td><td>No binding national threshold; MeitY tenders PUE &lt;1.35; Karnataka PUE/WUE reporting</td></tr>
+        </tbody></table></div>
+    </div>
+    <div class="panel">
+      <h3>Indian operators</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Operator</th><th>Latest disclosed</th></tr></thead>
+        <tbody>
+          <tr><td>Nxtra (Airtel)</td><td>49% RE in core DCs (FY25), first Indian DC in RE100, 70% target</td></tr>
+          <tr><td>AdaniConneX</td><td>US$875 m sustainability-linked loan, KPIs on efficiency and RE</td></tr>
+          <tr><td>Sify</td><td>&gt;231 MW RE contracted; limited PUE disclosure</td></tr>
+          <tr><td>CtrlS</td><td>Captive solar for Mumbai; NTPC Green partnership</td></tr>
+          <tr><td>Yotta</td><td>Green tariff via TUCO (hydro, biogas)</td></tr>
+        </tbody></table></div>
+      <p class="note">Leaders sit at maturity L2–L3. Heat reuse in India means absorption chillers, process heat or agri-drying, not district heating.</p>
+    </div>
+  </div>
+
+  <div class="cols gap">
+    <div class="callout cold"><b class="t">Blueprint · 20 MW Bengaluru colo, "L4 by design".</b> Hoskote park site (dual grid, treated water, Pavagada solar); containment at 24–27 °C, dry coolers, two DLC-ready halls; eco-mode UPS and ~10 MWh BESS; 80% hourly renewables via group captive; freshwater WUE ≤0.2; design PUE ≤1.20; fly-ash concrete; HVO-ready gensets; quarterly public PUE/WUE/CFE.</div>
+    <div class="callout"><b class="t">Blueprint · 100 MW AI campus, "L4–L5".</b> ≥75% of heat to warm-water DLC, WUE &lt;0.1; MV to the rack, 800 VDC-ready, ≥200 MWh grid-forming BESS; ≥600 MW hybrid portfolio, ≥80% hourly CFE by year three; 45–60 °C return water feeding absorption chillers or agri-processing; carbon-aware scheduling of training.</div>
+  </div>
+</div>
+<div class="subch" id="states">
+  <div class="ch-head">
+    <div class="ch-tag"><span class="ch-num" aria-hidden="true">17.2</span><span class="eyebrow"><a class="rep-l" href="#reports">Report 9</a> · State-wise data centre policies</span></div>
+    <h2>Sixteen states, one race</h2>
+    <p class="lede">With no national data-centre law in force, states set the real rules and compete on duty holidays, tariff subsidies and land. Power price, renewables, connectivity and policy stability decide where large projects actually go. Set your own weights and the ranking re-sorts.</p>
+  </div>
+  <div class="take">
+    <div><span class="v mono">100% → 51%</span><span class="k">Maharashtra's green-power floor, cut in June 2026</span></div>
+    <div><span class="v mono">31 Mar 2026</span><span class="k">Tamil Nadu's policy lapsed; West Bengal's runs out ~Sept 2026</span></div>
+    <div><span class="v mono">0</span><span class="k">Data centres drawn to Bundelkhand or Purvanchal by UP's 50% land subsidy in four years</span></div>
+  </div>
+
+  <div class="panel inst" id="imap" style="margin-bottom:22px">
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:start">
+      <h3>India at a glance<span class="sub">Colour the map by a measure, then tap or hover a state for details.</span></h3>
+    </div>
+    <div class="seg" id="m-metric" role="group" aria-label="Map measure"><button data-v="idx" aria-pressed="true">Policy index</button><button data-v="live">Live MW</button><button data-v="pipe">Pipeline MW</button><button data-v="ed">Duty holiday</button><button data-v="gr">Sustainability rank</button><button data-v="st">Policy status</button></div>
+    <div class="mapwrap">
+      <div><div class="imap" id="tmap"></div><div class="mscale" id="m-scale"></div><p class="xs muted" style="margin-top:6px">Boundaries follow the official map of India, including Pakistan-occupied Kashmir, Gilgit-Baltistan and Aksai Chin. Grey states have no data-centre policy in Report 9. NCR capacity is shown on Uttar Pradesh, Haryana and Delhi together.</p></div>
+      <div class="detail" id="m-detail"></div>
+    </div>
+  </div>
+
+  <div class="cols">
+    <div class="panel inst">
+      <h3>Attractiveness index<span class="sub">States scored 0–10 per factor (Report 9's judgment). Change how much each factor matters.</span></h3>
+      <div class="seg" id="w-presets" role="group" aria-label="Weight presets"><button data-p="base" aria-pressed="true">Report weights</button><button data-p="ai">AI campus</button><button data-p="colo">Interconnection colo</button><button data-p="green">Sustainability first</button></div>
+      <div class="ctrls" id="w-ctrls"></div>
+    </div>
+    <div class="panel">
+      <div class="chart tall"><canvas id="c-states" aria-label="State index"></canvas></div>
+      <p class="note">Click a bar or a table row for that state's details.</p>
+    </div>
+  </div>
+
+  <div class="panel gap">
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:end;justify-content:space-between">
+      <div class="seg" id="st-filter" role="group" aria-label="Status filter">
+        <button data-f="all" aria-pressed="true">All</button><button data-f="active">Active</button><button data-f="expiring">Expiring</button><button data-f="lapsed">Lapsed</button><button data-f="legacy">Legacy</button><button data-f="greenonly">Has green conditions</button>
+      </div>
+      <div style="flex:1 1 220px;max-width:320px"><label for="st-q" class="fieldlbl">Search</label><input id="st-q" type="search" placeholder="State, incentive, company…"></div>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>State</th><th>Status</th><th>Instrument</th><th>Power incentives</th><th>Green conditions</th><th class="n">Index</th></tr></thead>
+      <tbody id="st-body"></tbody>
+    </table></div>
+    <div class="detail" id="st-detail"></div>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel">
+      <h3>Policy validity<span class="sub">When each state's main data-centre instrument runs. The line marks today (Oct 2026).</span></h3>
+      <div class="chart tall"><canvas id="c-valid" aria-label="Policy validity timeline"></canvas></div>
+    </div>
+    <div class="panel">
+      <h3>The incentive race<span class="sub">Electricity-duty holiday, years</span></h3>
+      <div class="hbars" id="race-bars"></div>
+      <p class="note">₹1/unit tariff subsidies went from 5 years (Gujarat 2022) to 20 years (Gujarat 2026, Maharashtra ≥₹60,000 cr). No state publishes what it has disbursed.</p>
+    </div>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel">
+      <h3>The central framework</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Instrument</th><th>Status · effect</th></tr></thead>
+        <tbody>
+          <tr><td>Draft National DC Policy (2020)</td><td>Never notified; consultations revived</td></tr>
+          <tr><td>Infrastructure status (Oct 2022)</td><td>DCs ≥5 MW; long-tenor debt, ECBs</td></tr>
+          <tr><td>Budget 2026–27</td><td>Tax holiday to 31 Mar 2047 for foreign cloud firms using Indian DCs; no green conditions</td></tr>
+          <tr><td>DPDP Rules (Nov 2025)</td><td>Soft localisation; RBI and SEBI rules drive local hosting more</td></tr>
+          <tr><td>Green Open Access Rules 2022</td><td>100 kW threshold; surcharges and banking still bite</td></tr>
+          <tr><td>IndiaAI Mission</td><td>Subsidised GPU compute bought from private operators</td></tr>
+        </tbody></table></div>
+    </div>
+    <div class="panel">
+      <h3>Controversy has arrived</h3>
+      <ul class="clean small">
+        <li><b>Visakhapatnam</b>: the Google–Adani campus faces a Jal Biradari PIL on water near Kambalakonda Wildlife Sanctuary, a PIL on 160 acres of temple land, and protests over Dalit farmers' assigned land at Tarluvada.</li>
+        <li>Karnataka's IT minister called AP's Google package (claimed ~₹22,000 crore) "an economic disaster". AP has not published it.</li>
+        <li>CEEW (Feb 2026) found only 5 of 15 state policies had sustainability provisions; about 8 of 16 now do.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="do">
+    <h3>Recommendations</h3>
+    <div class="cols">
+      <ul class="clean small"><li><b>Centre</b>: a slim national framework of standards: mandatory PUE/WUE/renewable/diesel disclosure for ≥5 MW; climate-zone PUE and WUE benchmarks; a building-code category.</li><li>Make the 2047 tax holiday conditional on certified reporting, the one lever states cannot undercut.</li><li>A siting tool combining grid headroom, groundwater stage and climate hazard; a soft cap on stacked subsidies.</li></ul>
+      <ul class="clean small"><li><b>States</b>: Tamil Nadu and West Bengal should renew now; copy Karnataka's metrics with payouts that matter at hyperscale; publish bespoke deals above 50 MW; spend on substations, treated-water mains and cable landings, not land.</li><li><b>Investors</b>: get explicit contract-backed packages in Telangana and AP; price renewal risk in TN and WB; treat Karnataka's reporting as a preview of national rules.</li></ul>
+    </div>
+  </div>
+</div>
+
+<div class="subch" id="c10ap">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">17.3</span><span class="eyebrow">Policy · Approvals</span></div>
+    <h2>Approvals: what a campus needs, and how long it takes</h2>
+    <p class="lede">No Indian law names data centres. A campus is cleared as a building, licensed as a polluter for its generators and cooling, and connected as a large consumer. The grid connection usually sets the date.</p></div>
+  <div class="panel"><h3>The approvals, one by one<span class="sub">What triggers each, who grants it, and the rule behind it.</span></h3>
+    <div class="tbl"><table class="aif-t"><thead><tr><th>Approval</th><th>Trigger</th><th>Granted by</th><th>Indicative time</th></tr></thead><tbody>
+      <tr><td><b>Environmental clearance</b>, EIA Notification 2006, item 8(a)</td><td>Built-up area 20,000–1,50,000 m² (Category B2). Data-centre operation is not itself listed: the Visakhapatnam hyperscale park was cleared in June 2026 on its built-up area (~1.23 lakh m²), with 512 MW, 307 KLD of water and 100 standby generators noted but not appraised.</td><td>State SEIAA</td><td class="mono">3–6 months</td></tr>
+      <tr><td>Environmental clearance, item 8(b) or Category A</td><td>Built-up area of 1,50,000 m² or more (full EIA, B1); within 10 km of an eco-sensitive zone or protected area the project can become Category A.</td><td>SEIAA, or MoEFCC for Category A</td><td class="mono">8–14 months</td></tr>
+      <tr><td><b>Consent to establish, then to operate</b></td><td>Air Act 1981 and Water Act 1974: generators, cooling-tower blowdown, sewage treatment. The pollution category of a data centre varies by state.</td><td>State pollution control board</td><td class="mono">1–3 months each</td></tr>
+      <tr><td><b>Groundwater no-objection certificate</b></td><td>Any borewell abstraction (CGWA Guidelines 2020); new industrial abstraction is restricted in over-exploited units such as Bengaluru Urban.</td><td>CGWA or state groundwater authority</td><td class="mono">2–4 months</td></tr>
+      <tr><td>Building plan and fire approval</td><td>Height, floor-area ratio, fire safety under the National Building Code 2016.</td><td>Local body, state fire service</td><td class="mono">2–6 months</td></tr>
+      <tr><td><b>Grid connection</b></td><td>33–66 kV up to ~20 MW, 110–220 kV to ~100 MW, 220–400 kV beyond; interstate access under CERC's General Network Access rules for the largest loads; open access for green power under the 2022 rules.</td><td>State transmission utility, discom, CTUIL</td><td class="mono">12–48 months</td></tr>
+      <tr><td>Diesel generators</td><td>Engines up to 800 kW need CPCB IV+ type approval (NOₓ 0.67 g/kWh for 560–800 kW); larger sets meet stack limits set by the board. Every set: 75 dB(A) at 1 m in its enclosure.</td><td>CPCB, state board</td><td class="mono">with consent</td></tr>
+      <tr><td>Coastal works</td><td>Seawater intake, outfall or desalination (CRZ Notification 2019).</td><td>State coastal zone authority, MoEFCC</td><td class="mono">6–12 months</td></tr>
+      <tr><td>Batteries and e-waste</td><td>Battery Waste Management Rules 2022 (UPS batteries, extended producer responsibility); E-Waste (Management) Rules 2022 (retired servers to registered recyclers).</td><td>CPCB portals</td><td class="mono">ongoing</td></tr>
+    </tbody></table></div>
+    <p class="xs muted">Times are indicative atlas estimates; state single-window systems can run several in parallel. <span class="ev r show" data-src="EIA Notification 2006; SEIAA Andhra Pradesh affidavit, ThePrint 2026; CGWA 2020; dieselnet (CPCB)">reported</span> <span class="ev e show" data-src="Durations">estimate</span></p>
+  </div>
+  <div class="panel inst" id="dx-pm-p"><h3>Your approvals path<span class="sub">Which approvals your campus triggers and which one sets the date it can take load.</span></h3>
+    <div class="ctrls"><div class="ctrl"><label for="dx-pm-ba">Built-up area</label><output id="dx-pm-ba-o"></output><input id="dx-pm-ba" type="range" min="5000" max="300000" step="5000" value="60000"></div><div class="ctrl"><label for="dx-pm-mw">IT capacity</label><output id="dx-pm-mw-o"></output><input id="dx-pm-mw" type="range" min="5" max="500" step="5" value="50"></div></div>
+    <div class="std-f" style="margin-top:8px"><label class="switch"><input type="checkbox" id="dx-pm-gw"> Uses groundwater</label><label class="switch"><input type="checkbox" id="dx-pm-esz"> Within 10 km of an eco-sensitive zone</label><label class="switch"><input type="checkbox" id="dx-pm-crz"> Seawater intake or desalination</label></div>
+    <div id="dx-pm-r" style="margin-top:10px"></div><p class="small" id="dx-pm-n"></p>
+  </div>
+  <div class="panel inst" id="dx-dg-p"><h3>Generators: fuel, emissions and noise<span class="sub">Standby sets rarely run, but monthly tests and outages burn diesel next to neighbours.</span></h3>
+    <div class="ctrls"><div class="ctrl"><label for="dx-dg-mw">IT capacity</label><output id="dx-dg-mw-o"></output><input id="dx-dg-mw" type="range" min="5" max="500" step="5" value="50"></div><div class="ctrl"><label for="dx-dg-h">Test hours per set per year</label><output id="dx-dg-h-o"></output><input id="dx-dg-h" type="range" min="0" max="60" step="1" value="12"></div><div class="ctrl"><label for="dx-dg-o">Grid outage hours per year</label><output id="dx-dg-o-o"></output><input id="dx-dg-o" type="range" min="0" max="200" step="1" value="10"></div><div class="ctrl"><label for="dx-dg-d">Distance to the nearest neighbour</label><output id="dx-dg-d-o"></output><input id="dx-dg-d" type="range" min="20" max="1000" step="10" value="150"></div>
+      <div class="ctrl"><label for="dx-dg-z">Neighbourhood</label><select id="dx-dg-z"><option value="industrial">Industrial</option><option value="commercial" selected>Commercial</option><option value="residential">Residential</option><option value="silence">Silence zone (hospital, school)</option></select></div></div>
+    <div id="dx-dg-r" style="margin-top:10px"></div><p class="small" id="dx-dg-n"></p>
+    <p class="xs muted">Fuel 0.27 L/kWh; CO₂ 2.68 kg/L; NOₓ ~6 g/kWh is a typical uncontrolled large diesel (estimate), against the CPCB IV+ limit for 560–800 kW engines. Noise: 75 dB(A) at 1 m per set; up to four sets tested together; point-source spreading only (no barriers). Ambient limits: Noise Pollution Rules 2000. <span class="ev r show" data-src="CPCB genset norms (dieselnet); Noise Pollution (Regulation and Control) Rules 2000">reported</span> <span class="ev e show" data-src="Emission factor, test regime">estimate</span></p>
+  </div>
+  <div class="panel"><h3>Grid reliability: the number nobody publishes<span class="sub">Generators and batteries are sized for outages, but Indian discoms do not report comparable outage statistics.</span></h3>
+    <p class="small">A 2025 review of outage reporting found that most distribution companies, including those serving Bengaluru, Mumbai and Delhi, publish complaint counts or feeder data rather than SAIDI and SAIFI, and that Delhi's supply code excludes planned outages and interruptions under five minutes. Data centres therefore size diesel for 24–48 hours whatever the grid does. A published, audited reliability index for each data-centre substation would let sites hold less diesel and more batteries, and should be part of any state data-centre policy.</p>
+    <p class="xs muted"> <span class="ev r show" data-src="LEAP Journal, A review of outage reporting by Indian discoms, Sept 2025">reported</span></p>
+  </div>
+</div>
+</section>

@@ -1,0 +1,102 @@
+[
+ {
+  "version": "v33",
+  "date": "2026-10-28",
+  "changes": "Open source. The atlas is now built from editable source files (src/: one file per chapter, per script module and for the standards register) with a one-command build (python3 tools/build.py) that reproduces the published pages exactly, a browser check of every page, and open data downloads of the standards register and chip records (data/standards.csv, data/chips.csv). Code is MIT-licensed; text, data and research are CC BY 4.0. Report 14 is identified as the least-water power model (16.2)."
+ },
+ {
+  "version": "v32",
+  "date": "2026-10-27",
+  "changes": "AI accelerators. The standards register (2026.10.6) gains one sourced record for each of nine chips: H100, H200, B200, B300, MI300X, MI325X, MI355X, Ironwood and Gaudi 3, with specifications, server power per GPU, MLPerf Inference Server throughput per GPU and rental prices. Chapter 11 reads them: 11.1 shows the register table and an MLPerf results table; 11.2 adds tokens per watt and per rupee, and measured training runs (Llama 3.1 405B energy corrected to 23.3 GWh with the building; ~30 GWh was all three sizes); 11.4 adds India's named deployments converted to megawatts; new 11.6 sizes a cluster for inference, training and the memory wall. The design check (14.6) adds B300 and MI355X and scales training-run energy by each GPU's speed and power; the data centre model (14.2) and the GPU-hour calculator (15.2) take throughput and power from the register. IndiaAI prices now label the subsidised user rate and the lowest bid separately."
+ },
+ {
+  "version": "v31",
+  "date": "2026-10-27",
+  "changes": "Explanations and consolidation. Every Data centre 101 calculation now says why its equations and values were chosen; three interactive panels that had no reading guide have one; the Reference page lists what each of Reports 1–15 is and where it is used, and defines the terms most easily mixed up (grid water at the plant and the meter, withdrawal and consumption, location and contract carbon, average and marginal factors, IT and all-in prompt energy, energy charge and all-in tariff, utilisation, occupancy and load). Chapter eyebrows link to the report list. Operator disclosure is gathered in 9.4 and per-prompt figures in 9.2, with one-line pointers where panels moved; the empty 11.5 is removed (11.6 becomes 11.5); Chapter 16 opens with a map of every cooling tool by the question it answers. Ch 9 stress weights are labelled as atlas judgements with their basis; the Chapter 10 hall comparison uses the register loads (65% and 78%)."
+ },
+ {
+  "version": "v30",
+  "date": "2026-10-27",
+  "changes": "Audit fixes. Shared defaults: the forecast engine starts from the register grid factor (0.675) and uses register tower water (1.8 L/kWh); the Chapter 13 power-and-water panel, the Chapter 18 forecast conversions and the growth explorer now use the engine's 2030 fleet (4.66 GW, 59.5% load, PUE 1.43, 40% AI, 43% clean, 0.607 t/MWh); AI halls 78% and colocation 65% load everywhere; the design check drops import duty and insurance by default and calibrates serving efficiency to measured energy per prompt; 14.2 adds IT support and maintenance (2% of IT capital); Chapter 12 uses the ₹8.0/kWh all-in tariff. Errors fixed: 14.7 compares with each city's own state demand (CEA FY2024-25); Bengaluru supply 1,935 MLD in every tool; state grid-water sensitivity on the reference page corrected (1.5 Karnataka, 3.3 Uttar Pradesh); fifteen-part series; register version shown on the landing page. Clean-up: 19 moved-panel stubs removed, the second Where the water goes renamed, Chapter 6 research notes moved here."
+ },
+ {
+  "version": "v29",
+  "date": "2026-10-27",
+  "changes": "Section 14.6, Design check, rebuilt as one native tool: the earlier embedded designer merged with a reader-supplied hybrid campus and grid-interactive tool, so 14.8 is no longer needed. Training, inference and general-purpose zones each have their own utilisation, rack density and cooling system (with its plant cost from the 14.2 tables); outputs add queries per day, training runs, cost per GPU-hour, battery and load-shifting economics, infrastructure (design-day peak, grid connection, generators, cooling plant, network, water plant, land), seven checks with the change that flips the verdict, a flip-the-cooling table, sensitivity and pinned comparisons, with a formula drawer behind every panel. 14.7 now points to it. Corrections to the supplied tool: GPU power 1.4–2.0 kW all-in, not 12.5 kW; battery price arbitrage was missing a ×1,000 and now counts round-trip losses; training-deferral savings were about 10× too high and are now limited by spare capacity; energy per query divided by tokens twice; demand-charge savings are limited to the shaveable peak of a flat load; GPUs priced at ₹266 crore/MW plus duty at ₹90 per US$; cooling towers at 1.8–2.4 L/kWh by climate; Bengaluru supply 1,935 MLD; unsourced global and reimbursement figures removed."
+ },
+ {
+  "version": "v27",
+  "date": "2026-10-26",
+  "changes": "Audit and correction. CEA grid factor updated to 0.675 t/MWh (v22.0, FY2025-26) with the marginal 0.963 shown beside it. Coal plant water corrected from 5.55 to 3.5 m³/MWh (MoEFCC limits and measured averages), so India grid water is 2.9 L/kWh at the meter, not 4.5. Carbon and water both use the national grid, as CEA does; state generation mixes became a sensitivity. One reference AI campus (78% load) and conventional hall (65%) in every calculator; reservoir hydro 10 L/kWh everywhere; India demand from the CEA midterm review. Headline numbers recomputed: a 100 MW towers AI campus uses 9.3 MLD (3.4 on site); Scope 2 is 64–96% of water; Chapter 16's cheapest clean mix now uses slightly less water than all-grid power. Eighteen inconsistencies and stale references fixed, and a consistency check of the headline claims runs on every page load."
+ },
+ {
+  "version": "v26",
+  "date": "2026-10-26",
+  "changes": "The AI data centre designer (14.6) now splits energy by workload: training, inference and general-purpose each have their own utilisation (0.90, 0.70 and 0.65 by default), a fixed electrical overhead raises PUE in lightly used halls, PUE and WUE are weighted by energy rather than capacity, and a new Energy by workload table gives IT and facility energy, water, carbon and cost for each zone. Standards 2026.10.4. The Chapter 14 data centre model does the same hour by hour: training runs flat, inference peaks in the evening and general-purpose work in office hours, each at its own utilisation, with a new Energy by workload table; per-prompt energy and training runs now use the inference and training utilisation."
+ },
+ {
+  "version": "v25",
+  "date": "2026-10-25",
+  "changes": "A yellow How to read this guide on every chart, map and diagram; pages made self-contained so they open on any browser; district map lightened."
+ },
+ {
+  "version": "v24",
+  "date": "2026-10-25",
+  "changes": "One page per part with search, this changelog and the brief as the landing page. Nineteen chapters: Bengaluru merged into one chapter; the simulator and the data centre model merged into \"Build a data centre\" with a guided walk-through; duplicate panels on per-prompt water, disclosure, forecasts and design checks replaced by pointers. One standards module read by every model, with a register of ranges, owners and review dates; headline ranges. New: approvals and permit path, generators (fuel, emissions, noise), grid reliability, embodied carbon and e-waste, climate horizons, shadow prices, financing and import duty, land prices, India's carbon market. Fixed: chapter chips in seven chapters showed old numbers."
+ },
+ {
+  "version": "v23",
+  "date": "2026-10-24",
+  "changes": "Design check (AI data centre designer) added to the data centre model, using atlas standards."
+ },
+ {
+  "version": "v22",
+  "date": "2026-10-23",
+  "changes": "Chapters renumbered 1–21; cross-links between overlapping calculators; explanations for sixteen panels."
+ },
+ {
+  "version": "v21",
+  "date": "2026-10-23",
+  "changes": "New visuals: psychrometric chart, climate fingerprints, cost tornadoes, India Scope 2 map, asset-life river, capex area chart, carbon duration curve, place-your-own-campus on the treated-sewage map, cutaway linked to the model."
+ },
+ {
+  "version": "v20",
+  "date": "2026-10-23",
+  "changes": "Scope 1, 2 and 3 water chapter with calculator, flow diagram, follow-one-prompt, grid-mix triangle and disclosure matrix."
+ },
+ {
+  "version": "v19",
+  "date": "2026-10-22",
+  "changes": "Values harmonised across chapters: grid water at the meter, all-in tariffs, ₹90 per US$, reference PUEs."
+ },
+ {
+  "version": "v18",
+  "date": "2026-10-22",
+  "changes": "Audit fixes, including a broken cooling × power chapter (duplicate element ids)."
+ },
+ {
+  "version": "v17",
+  "date": "2026-10",
+  "changes": "Cooling cost, water and energy chapter from the October 2026 research."
+ },
+ {
+  "version": "v16",
+  "date": "2026-10",
+  "changes": "Cooling capex and opex counted in every cost calculation."
+ },
+ {
+  "version": "v15",
+  "date": "2026-10",
+  "changes": "Lifetime value of a data centre against other industries."
+ },
+ {
+  "version": "v14",
+  "date": "2026-10",
+  "changes": "Data centre model: 288-hour engineering model with process diagram."
+ },
+ {
+  "version": "v1–v13",
+  "date": "2026-09/10",
+  "changes": "Second edition assembled: chapters, simulator and scenario bar, brief mode, AI and training/inference chapters, Bengaluru water, forecasts (summarised)."
+ }
+]

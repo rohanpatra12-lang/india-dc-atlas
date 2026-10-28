@@ -1,0 +1,89 @@
+<section class="ch chw" id="c11" data-n="18">
+  <div class="chq">
+    <div class="chq-n" aria-hidden="true">18</div>
+    <div class="chq-b"><h2 class="chq-t">The 60% renewable pathway</h2>
+      <p class="chq-q"><span>The question</span>Can India's data centres run on 60% renewable power by 2030?</p>
+      <p class="chq-a"><span>The short answer</span>Yes over the year in the central case, for about 21 TWh of renewable power at or below grid tariffs. Hour by hour it needs round-the-clock contracts or batteries, and under the government's demand case wind and storage become the limit.</p>
+      
+    </div>
+  </div>
+<div class="subch" id="re60">
+  <div class="ch-head">
+    <div class="ch-tag"><span class="ch-num" aria-hidden="true">18</span><span class="eyebrow">Research + model · Demand forecasts, NITI Aayog outlook and a 60% renewable target</span></div>
+    <h2>Can India's data centres run on 60% renewable power by 2030?</h2>
+    <p class="lede">Yes, if 60% is counted over the year and demand follows the market forecasts: about 21 TWh of renewable power, or 5.4 GW of solar and 3.4 GW of wind bought through open access, at or below today's commercial grid tariff. Counting it hour by hour costs more and needs round-the-clock contracts or batteries. And if demand follows the government's own load projection rather than the market's, the limit becomes wind, storage and transmission, not money. How fast demand grows matters more than how much renewable power India can build.</p>
+  </div>
+  <div class="take">
+    <div><span class="v mono">16 GW · ~90 TWh</span><span class="k">NITI Aayog's 2030 projection of IT load and data-centre electricity, in a scenario study that "is not a statement of policy" <span class="ev r show" data-src="NITI Aayog, Scenarios Towards Viksit Bharat and Net Zero – Sectoral Insights: Buildings (Vol. 5), Feb 2026; TWh converted at 40% utilisation, PUE 1.6">reported</span></span></div>
+    <div><span class="v mono">26.3 GW</span><span class="k">Additional AI data-centre load the Ministry of Power projects by 2031-32, "primarily served by renewable energy" <span class="ev r show" data-src="Ministry of Power, Rajya Sabha Unstarred Question 956, 27 July 2026">reported</span></span></div>
+    <div><span class="v mono">2,388 → 2,703 BU</span><span class="k">India's electricity requirement in 2029-30 and 2031-32 (CEA midterm review), 9% above the 2023 plan <span class="ev r show" data-src="CEA midterm review of the 20th Electric Power Survey, via MoP Rajya Sabha replies, 27 July 2026">reported</span></span></div>
+    <div><span class="v mono">₹5.25/kWh</span><span class="k">Round-the-clock renewable power in SECI's August 2026 auction, before transmission and open-access charges <span class="ev r show" data-src="SECI 1 GW FDRE-RTC auction, Aug 2026 (pv magazine India)">reported</span></span></div>
+  </div>
+
+  <div class="panel inst hot">
+    <h3>The 60% calculator<span class="sub">Pick a demand forecast, a renewable target and a way of buying the power. The panel sizes the solar, wind, round-the-clock contracts and batteries, the cost, and the share of India's yearly renewable build it would take.</span></h3>
+    <div class="vs-ctrls">
+      <div class="opt"><span class="fieldlbl">Demand forecast</span><div class="seg" id="re-sc" role="group" aria-label="Demand forecast"><button data-v="lo">Low 4.2 GW</button><button data-v="ce" aria-pressed="true">Atlas 4.66 GW</button><button data-v="sp">S&amp;P 6.5 GW</button><button data-v="hi">Jefferies 8 GW</button><button data-v="ni">NITI 16 GW</button><button data-v="wm">Wood Mackenzie 12 GW</button><button data-v="mp">MoP 26.3 GW grid, FY32</button></div></div>
+      <div class="opt"><span class="fieldlbl">How the power is bought</span><div class="seg" id="re-pf" role="group" aria-label="Portfolio"><button data-v="p1" aria-pressed="true">P1 Solar–wind open access</button><button data-v="p2">P2 Round-the-clock contracts</button><button data-v="p3">P3 Overbuilt hybrid + batteries</button><button data-v="p4">P4 Blend with certificates</button></div></div>
+    </div>
+    <div class="ctrls"><div class="ctrl"><label for="re-t">Renewable target</label><output id="re-t-o"></output><input id="re-t" type="range" min="30" max="90" step="5" value="60"></div></div>
+    <div class="read" id="re-r"></div>
+    <div class="aif-cmp" id="re-bars" style="margin-top:12px"></div>
+    <p class="small" id="re-n"></p>
+  </div>
+
+  <div class="panel inst hot v2core" id="v2-hmp"><h3>Every hour of the year, clean or not<span class="sub">365 days across, 24 hours up. Each cell is the share of a flat data-centre load met by the portfolio and target chosen in the calculator above. Light means grid power; teal means clean.</span></h3>
+  <div class="hm-w"><canvas id="v2-hm" class="v2-hm" width="730" height="216" role="img" aria-label="Hourly clean-power heat map"></canvas><div class="hm-ax"><span>Jan</span><span>Apr</span><span>Jul</span><span>Oct</span><span>Dec</span></div></div>
+  <div class="read" id="v2-hm-r"></div>
+  <p class="small">Solar alone fills the daytime band and leaves every night on the grid. A 50/50 solar–wind mix (P1) reaches about 55% hour by hour at 60% annual, because monsoon and night wind fill some gaps; with certificates for a third (P4) it falls to about 40%. Batteries (P3) and round-the-clock contracts (P2) paint the nights in. <span class="ev m show" data-src="Synthetic hourly profiles: solar CUF 22% with monsoon cloud, wind CUF 35% with monsoon peak; battery dispatched to serve load; illustrative, not site data">model</span></p></div>
+<div class="panel"><h3>Five ways to reach 60%<span class="sub">2030 atlas central case: 34.7 TWh of load, 20.8 TWh of renewable power. Costs are indicative landed prices, including transmission and open-access charges.</span></h3>
+    <div class="tbl"><table class="aif-t"><thead><tr><th>Portfolio</th><th>Build</th><th>Matching</th><th class="n">₹/kWh</th><th>2030</th><th>For and against</th></tr></thead><tbody>
+      <tr><td><b>P1</b> Group-captive / open-access solar + wind, with banking</td><td>5.4 GW solar + 3.4 GW wind</td><td>60% annual; ~55% hourly (model)</td><td class="n">4.5–5.5</td><td><span class="chip good">High</span></td><td>Cheapest and proven. Exposed to banking caps, 8% banking charges, the return of interstate transmission charges and state open-access friction</td></tr>
+      <tr><td><b>P2</b> Round-the-clock (FDRE-RTC) contracts</td><td>3.3–3.6 GW contracted (≈9–11 GW of renewables and 8–12 GWh of storage behind it)</td><td>~60% hourly and annual</td><td class="n">6.3–7.3</td><td><span class="chip warn">Medium</span></td><td>Best hour-by-hour quality. SECI power goes to distribution companies, so data centres need a green tariff or a bilateral contract; new projects carry delivery risk</td></tr>
+      <tr><td><b>P3</b> Overbuilt hybrid + batteries near the site</td><td>8 GW solar + 5 GW wind + 2 GW / 8 GWh</td><td>~70% hourly; ~74% annual</td><td class="n">5.5–6.5</td><td><span class="chip warn">Medium</span></td><td>Physically credible 24×7; highest capital cost (~₹84,000 crore), land and connectivity. The template for gigawatt AI campuses in Andhra Pradesh and Gujarat</td></tr>
+      <tr><td><b>P4</b> P1 for 40% + green tariff / green market 10% + certificates ≤10%</td><td>4.3 GW solar + 2.7 GW wind + purchases</td><td>60% annual (partly on paper)</td><td class="n">4.5–5.5</td><td><span class="chip good">High</span></td><td>Fast and flexible; certificates add little new capacity, so the claim is weaker</td></tr>
+      <tr><td><b>P5</b> P1 + pumped-storage contracts; nuclear later</td><td>P1 + 1–2 GW of pumped storage</td><td>60–70% hourly after 2030</td><td class="n">5.5–7</td><td><span class="chip bad">Low</span></td><td>Long-duration firming, but pumped storage is mostly contracted to utilities; small reactors are post-2033 under the SHANTI Act 2025</td></tr>
+    </tbody></table></div>
+    <p class="small" style="margin-top:8px"><b>Recommended:</b> P1 for about 60% of the renewable requirement plus P2 for 30–40%. That reaches 60% annual and about 50–55% hourly at ₹5–6/kWh. Use P3 for new gigawatt AI campuses in renewable-rich states, and cap certificates at 10%. <span class="ev m show" data-src="Research report (Oct 2026): SECI tariffs Aug 2026; JMK open-access charges; FoR banking model; indicative unit costs solar ₹4–4.5 cr/MW, wind ₹7–8 cr/MW, BESS ₹1.2–1.8 cr/MWh">estimate</span></p>
+  </div>
+
+  <div class="cols">
+    <div class="panel"><h3>The rules that decide the cost<span class="sub">Charges and limits that apply to buying renewable power directly.</span></h3>
+      <ul class="clean small">
+        <li><b>Interstate transmission charges</b> (~₹1–2/kWh) return in 25% steps for solar and wind commissioned after June 2025, in full from July 2028. Storage paired with renewables keeps its waiver to June 2028; a CERC draft would extend it.</li>
+        <li><b>Banking</b>: at least 30% of monthly consumption may be banked; states are moving to an 8% in-kind charge with monthly settlement (Tamil Nadu from Oct 2025, UP). Gujarat charges ₹1.50/kWh (draft ₹1).</li>
+        <li><b>Tamil Nadu</b>: no banking for third-party open access; unused banked power bought back at 75% of the tariff, which favours captive or group-captive structures.</li>
+        <li><b>Grid comparison</b>: Maharashtra's commercial high-tension tariff is ₹8.72/kWh for FY2026-27 plus ₹565/kVA a month, so firm green power is at or below grid parity for large users.</li>
+        <li><b>Carbon market</b>: data centres are not obligated under India's carbon credit trading scheme, so certificates and voluntary offsets remain the only no-cost instruments.</li>
+      </ul>
+      <p class="xs muted"><span class="ev r show" data-src="CERC/MoP ISTS orders; Forum of Regulators GEOA model regulation; TNERC GEOA 2025; UPERC; GERC; MERC MSEDCL tariff order; JMK Research (Mar 2025)">reported</span></p>
+    </div>
+    <div class="panel"><h3>State by state<span class="sub">Where the load sits and how easily it can buy renewable power.</span></h3>
+      <div class="tbl"><table class="aif-t"><thead><tr><th>State</th><th>Data centres</th><th>For 60%</th></tr></thead><tbody>
+        <tr><td>Maharashtra</td><td>~1,023 of <span data-std="cap.india" data-d="0">1,789</span> MW; 1,984 MW coming</td><td>Largest load; power imported or banked. June 2026 resolution cut the green-power requirement in data-centre parks from 100% to 51%; MSEDCL buying 2,500 MW round-the-clock at ₹5.90 for data-centre demand</td></tr>
+        <tr><td>Tamil Nadu</td><td>214 MW + 368 MW</td><td>Strong wind, but banking rules favour captive structures</td></tr>
+        <tr><td>Telangana</td><td>Hyderabad growing fast</td><td>State requirement 1,20,549 MU by 2031-32</td></tr>
+        <tr><td>Karnataka</td><td>162 MW + 100 MW</td><td>RE policy targets +10 GW by 2027; see the least-water power chapter</td></tr>
+        <tr><td>Uttar Pradesh</td><td>Noida (Adani, Yotta)</td><td>Banking capped; off-peak banked power usable only off-peak</td></tr>
+        <tr><td>Andhra Pradesh</td><td>Google 1 GW; state target 6 GW by 2030</td><td>~160 GW RE + pumped storage policy: best placed for hourly-matched campuses</td></tr>
+        <tr><td>Gujarat</td><td>Reliance and Meta, Jamnagar</td><td>Khavda RE park; Meta's campus "entirely" renewable</td></tr>
+      </tbody></table></div>
+      <p class="xs muted"><span class="ev r show" data-src="C&amp;W H1 2026; Maharashtra GR 9 Jun 2026 (Power Peak Digest); SolarQuarter 4 Jun 2026; TNERC; Telangana Today; Karnataka RE policy; UPERC; AP ICE Policy 2024; company announcements">reported</span></p>
+    </div>
+  </div>
+
+  <div class="do">
+    <h3>What to do with it</h3>
+    <div class="cols">
+      <ul class="clean small"><li><b>Plan for three demand bands</b>: market (31–60 TWh in 2030), NITI (~90 TWh) and government load (140–175 TWh by 2031-32). Label every number as IT or grid MW.</li><li><b>Report hourly as well as annual.</b> A 60% annual claim built on solar and banking can be 40% hour by hour. Operators should publish hourly carbon-free energy alongside the annual share.</li><li><b>Lock in open-access capacity before July 2028</b>, when interstate transmission charges return in full; add round-the-clock contracts for hourly quality.</li></ul>
+      <ul class="clean small"><li><b>Create a data-centre green tariff</b> so distribution companies can pass through SECI-style round-the-clock power, as Maharashtra's 2,500 MW purchase does.</li><li><b>Build wind, storage and transmission where the queue is.</b> The ~17 GW of connection applications should drive renewable zones in Andhra Pradesh, Tamil Nadu, Gujarat and Maharashtra. In the Ministry of Power case data centres would need about half of India's record yearly wind build.</li><li><b>Measure first.</b> The Ministry of Power says data-centre consumption is "not centrally maintained"; mandate disclosure through BEE or CEA. Every 0.1 off PUE in the central case saves about 2.9 TWh a year.</li></ul>
+    </div>
+  </div>
+</div>
+  <div class="panel"><h3>India's carbon market, and why data centres are outside it<span class="sub">The Carbon Credit Trading Scheme caps emission intensity in heavy industry; data centres are not covered.</span></h3>
+    <ul class="clean small"><li>Compliance obligations apply from FY2025-26 to seven sectors: aluminium, cement, chlor-alkali, and pulp and paper (targets notified October 2025); petroleum refining, petrochemicals and textiles (January 2026). Iron and steel and fertilisers are still pending.</li>
+      <li>Targets are emission intensities against a FY2023-24 baseline; entities that beat them earn Carbon Credit Certificates, traded on the power exchanges from about mid-2026. No market price exists yet.</li>
+      <li>Data centres buy electricity rather than burn fuel, so their emissions are indirect and outside the scheme. Their lever is the power they contract: round-the-clock clean power (this chapter) cuts the carbon the scheme cannot see. The voluntary "offset" route of the scheme should not be counted against a data centre's Scope 2.</li></ul>
+    <p class="xs muted"> <span class="ev r show" data-src="ICAP, 2026: compliance obligations under India’s CCTS">reported</span></p>
+  </div>
+</section>

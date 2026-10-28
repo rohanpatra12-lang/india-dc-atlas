@@ -1,0 +1,142 @@
+</style>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="top">
+  <div class="hero-in">
+    <span class="eyebrow">Second edition · five parts · one scenario · October 2026</span>
+    <h1>India Data<br>Centre <span>Atlas</span></h1>
+    <p class="lede">How India's data centres are built, powered, cooled, paid for, made green and regulated, compiled from a fifteen-part research series plus three models of our own (least-water power, the cooling × power matrix and the carbon–water scheduler). Every chart and calculator runs on the series' own numbers. Change an input and watch the answer move.</p>
+    <div class="hero-grid">
+      <div class="schem">
+        <div class="schem-svg">
+          <svg viewBox="0 0 1000 300" role="img" aria-labelledby="sv-title">
+            <title id="sv-title">Schematic: grid power flows through transformers and UPS to the IT hall; heat flows from the IT hall through cooling to heat rejection.</title>
+            <!-- power path -->
+            <path class="flowline" stroke="#F2B34B" d="M140 140 H180 M310 140 H350 M470 140 H510"/>
+            <path class="flowline" stroke="#F2B34B" d="M245 180 V250 H785 V210"/>
+            <!-- heat path -->
+            <path class="flowline slow" stroke="#F07A5F" d="M680 125 H720 M850 125 H880"/>
+            <!-- water in -->
+            <path class="flowline slow" stroke="#5CCAD4" d="M935 290 V210"/>
+            <!-- heat out -->
+            <path class="flowline slow" stroke="#F07A5F" d="M935 100 V30"/>
+            <g>
+              <rect class="sv-box" x="20" y="100" width="120" height="80" rx="10"/>
+              <text class="sv-t" x="80" y="135" text-anchor="middle">Grid</text>
+              <text class="sv-s" x="80" y="155" text-anchor="middle">66–400 kV</text>
+              <rect class="sv-box" x="180" y="100" width="130" height="80" rx="10"/>
+              <text class="sv-t" x="245" y="132" text-anchor="middle">Transformers</text>
+              <text class="sv-s" x="245" y="152" text-anchor="middle">switchgear</text>
+              <rect class="sv-box" x="350" y="100" width="120" height="80" rx="10"/>
+              <text class="sv-t" x="410" y="132" text-anchor="middle">UPS · PDU</text>
+              <text class="sv-s" x="410" y="152" text-anchor="middle">2N, Li-ion</text>
+              <rect x="510" y="85" width="170" height="110" rx="10" fill="#0F3B40" stroke="#5CCAD4" stroke-width="1.5"/>
+              <g fill="#5CCAD4" opacity=".55">
+                <rect x="528" y="118" width="18" height="60" rx="2"/><rect x="552" y="118" width="18" height="60" rx="2"/><rect x="576" y="118" width="18" height="60" rx="2"/><rect x="600" y="118" width="18" height="60" rx="2"/><rect x="624" y="118" width="18" height="60" rx="2"/><rect x="648" y="118" width="18" height="60" rx="2"/>
+              </g>
+              <text class="sv-t" x="595" y="108" text-anchor="middle">IT hall</text>
+              <rect class="sv-box" x="720" y="85" width="130" height="80" rx="10"/>
+              <text class="sv-t" x="785" y="118" text-anchor="middle">Cooling</text>
+              <text class="sv-s" x="785" y="138" text-anchor="middle">CDU · chillers</text>
+              <rect class="sv-box" x="880" y="100" width="110" height="110" rx="10"/>
+              <text class="sv-t" x="935" y="140" text-anchor="middle">Heat</text>
+              <text class="sv-t" x="935" y="158" text-anchor="middle">rejection</text>
+              <text class="sv-s" x="935" y="180" text-anchor="middle">dry / towers</text>
+            </g>
+            <text class="sv-s" x="930" y="26" text-anchor="end">heat to air</text>
+            <text class="sv-s" x="830" y="286">make-up water</text>
+            <text class="sv-s" x="300" y="268">cooling power</text>
+            <!-- live labels -->
+            <text class="sv-v" fill="#5CCAD4" x="595" y="222" text-anchor="middle" id="sv-it">IT 65%</text>
+            <text class="sv-v" fill="#F07A5F" x="785" y="190" text-anchor="middle" id="sv-cool">cooling 24%</text>
+            <text class="sv-v" fill="#F2B34B" x="410" y="205" text-anchor="middle" id="sv-loss">losses 7%</text>
+          </svg>
+        </div>
+        <div class="hseg" id="pue-presets" role="group" aria-label="PUE presets">
+          <button data-v="1.09">Google fleet 1.09</button>
+          <button data-v="1.20">Karnataka incentive 1.20</button>
+          <button data-v="1.35">MeitY AI tender 1.35</button>
+          <button data-v="1.45">Indian leaders 1.45</button>
+          <button data-v="1.54" aria-pressed="true">Global avg 1.54</button>
+          <button data-v="1.85">Legacy 1.85</button>
+        </div>
+        <div class="ctrl"><label for="pue">Power Usage Effectiveness (total facility energy ÷ IT energy)</label><output id="pue-o">1.54</output><input id="pue" type="range" min="1.03" max="2.2" step="0.01" value="1.54"></div>
+        <p class="small" id="flow-text"></p>
+      </div>
+      <div class="htiles" role="list">
+        <div class="htile" role="listitem"><span class="v"><span data-std="cap.india" data-d="0">1,789</span> MW</span><span class="k">India's operational IT capacity, H1 2026 (Cushman &amp; Wakefield)</span></div>
+        <div class="htile" role="listitem"><span class="v">3,860 MW</span><span class="k">Pipeline to 2030, needing ≈US$29.9 bn</span></div>
+        <div class="htile" role="listitem"><span class="v">415 → 945</span><span class="k">TWh used by data centres worldwide, 2024 → 2030 (IEA)</span></div>
+        <div class="htile" role="listitem"><span class="v">0.675</span><span class="k">tCO₂/MWh, India's grid emission factor (CEA v22.0, FY2025-26)</span></div>
+        <div class="htile" role="listitem"><span class="v">₹56 cr/MW</span><span class="k">To build a Tier III colo, before land; ₹340 cr/MW for an AI campus with GPUs</span></div>
+        <div class="htile" role="listitem"><span class="v">~305%</span><span class="k">Groundwater extraction vs recharge in Bangalore East taluk</span></div>
+        <div class="htile" role="listitem"><span class="v">PUE 1.54</span><span class="k">Global weighted average, unchanged for six years (Uptime 2025)</span></div>
+        <div class="htile" role="listitem"><span class="v">~16</span><span class="k">State data-centre regimes; no national law in force</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="side" aria-label="Chapters">
+    <span class="eyebrow side-h" style="padding:0 8px">Chapters</span>
+    <div class="prog"><i id="prog"></i></div>
+    <ol id="rail">
+      <li><a href="#overview"><b>00</b>Start here</a></li>
+      <li class="rail-part">Part I · Understand</li>
+      <li><a href="#cwhy"><b>1</b>Why build, and what matters</a></li><li><a href="#c1"><b>2</b>Data centre 101 and the types India builds</a></li>
+      <li><a href="#c2"><b>3</b>Anatomy of an AI data centre</a></li>
+      <li><a href="#c3"><b>4</b>Cooling</a></li>
+      <li class="rail-part">Part II · Measure</li>
+      <li><a href="#ccx"><b>5</b>Cooling × heat rejection</a></li><li><a href="#cce"><b>6</b>Cooling cost, water and energy</a></li>
+      <li><a href="#c4"><b>7</b>Energy and carbon</a></li>
+      <li><a href="#c5"><b>8</b>Water, direct and indirect</a></li><li><a href="#cscope"><b>9</b>Scope 1, 2 and 3 water</a></li><li><a href="#cai"><b>10</b>AI or conventional: what India builds</a></li><li><a href="#cti"><b>11</b>AI training vs inference</a></li>
+      <li><a href="#cbw"><b>12</b>Bengaluru close-up</a></li>
+      <li class="rail-part">Part III · Forecast</li>
+      <li><a href="#c7"><b>13</b>How big will it get?</a></li>
+      <li class="rail-part">Part IV · Choose</li>
+      <li><a href="#ctwin"><b>14</b>Build a data centre</a></li>
+      <li><a href="#c8"><b>15</b>Where to build, and at what cost</a></li>
+      <li><a href="#c9"><b>16</b>Choosing power and cooling</a></li>
+      <li class="rail-part">Part V · Act</li>
+      <li><a href="#c10"><b>17</b>Green standards and state policy</a></li>
+      <li><a href="#c11"><b>18</b>The 60% renewable pathway</a></li>
+      <li><a href="#c12"><b>19</b>Recommendations</a></li>
+      <li class="rail-part">Reference</li>
+      <li><a href="#numbers"><b>★</b>Key numbers &amp; standards</a></li>
+      <li><a href="#caveats"><b>!</b>Caveats &amp; sources</a></li>
+    </ol>
+    <label class="switch side-ev"><input type="checkbox" class="ev-toggle"> Evidence tags</label>
+    <label class="switch side-ev"><input type="checkbox" id="rdx-all"> Open every "How to read this"</label>
+  </nav>
+
+<main>
+<!-- ================= OVERVIEW ================= -->
+<section class="overview" id="overview">
+  <span class="eyebrow">How to read this atlas</span>
+  <h2>India's data centres in ten numbers</h2>
+  <p class="lede">The second edition of the atlas: five parts, nineteen chapters, one scenario that every tool follows, and a brief mode that cuts it to a ten-minute read. Start with the ten numbers, watch the map, then follow the parts in order or jump to a question.</p>
+  <p class="xs muted" style="margin:-4px 0 10px">Every headline figure carries a range or a dated source. Every chart, map and diagram has a yellow <b>How to read this</b> button that explains what it shows and what it means. Shared values come from one standards register (<a href="#std-p">version <span id="std-v2">2026.10.6</span></a>), each with an owner and a review date.</p>
+  <div class="modebar" role="group" aria-label="Reading mode"><span class="xs muted">Reading mode</span><button type="button" data-m="brief">Brief · 10 minutes</button><button type="button" data-m="analyst" aria-pressed="true">Analyst · every calculation</button><button type="button" class="d1-btn" id="print-brief">Print the brief</button></div>
+  <div class="tks"><a class="tk" href="#c7"><span class="tk-n">01</span><span class="tk-v mono"><span data-std="cap.india" data-d="0">1,789</span> MW → 4.2–12 GW</span><div class="tk-rg" aria-hidden="true"><i class="tk-band" style="left:28.0%;width:52.0%"></i><i class="tk-now" style="left:11.9%"></i><i class="tk-mid" style="left:31.1%"></i></div><span class="tk-k">India's IT capacity today, and the range of published 2030 forecasts: 4.2–8 GW from market trackers, 12 GW from Wood Mackenzie (NITI Aayog's 16 GW scenario is outside the bar). The atlas base case is 4.66 GW.</span><span class="ev r show">Reported</span></a><a class="tk" href="#c7"><span class="tk-n">02</span><span class="tk-v mono">31–175 TWh</span><div class="tk-rg" aria-hidden="true"><i class="tk-band" style="left:17.4%;width:79.8%"></i><i class="tk-now" style="left:7.2%"></i><i class="tk-mid" style="left:19.3%"></i></div><span class="tk-k">Data-centre electricity by 2030–32: 31–60 TWh in market forecasts (Wood Mackenzie's 12 GW: ~89), ~90 TWh in NITI Aayog's scenario, 140–175 TWh if the government's 26.3 GW grid queue is built.</span><span class="ev m show">Model</span></a><a class="tk" href="#c4"><span class="tk-n">03</span><span class="tk-v mono"><span data-std="co2" data-d="3">0.675</span> kg + 2.9 L</span><span class="tk-k">CO₂ and power-station water behind every kWh from India's grid, at the meter (CEA v22.0, FY2025-26; atlas standard). Ranges: 0.675–0.727 kg over three years, 0.96 kg at the margin; 2.3–3.5 L (3.8 L at the margin; state generation mixes 1.5–3.5 L).</span><span class="ev e show">Estimate</span></a><a class="tk" href="#c5"><span class="tk-n">04</span><span class="tk-v mono">⅔ at power stations</span><span class="tk-k">Most of a data centre's water is evaporated at power stations, not on site: two-thirds worldwide (IEA); in India about 64% (51–72%) for a towers-cooled AI campus and 98% with dry or liquid cooling, at the India grid factor.</span><span class="ev m show">Model</span></a><a class="tk" href="#c5"><span class="tk-n">05</span><span class="tk-v mono">9.3 MLD</span><div class="tk-rg" aria-hidden="true"><i class="tk-band" style="left:7.5%;width:4.2%"></i><i class="tk-now" style="left:3.4%"></i><i class="tk-mid" style="left:9.3%"></i></div><span class="tk-k">A 100 MW AI campus on cooling towers: 3.4 MLD on site plus 6.0 at power stations (7.5–11.7 in all). A 10 Mtpa steel plant uses 41–96 MLD on site before its own power's water (Tata Steel: 3.49 m³/t today, 1.5 target); the Tata–PSMC fab ~17.5.</span><span class="ev m show">Model</span></a><a class="tk" href="#c3"><span class="tk-n">06</span><span class="tk-v mono">1.8 vs 0.05 L/kWh</span><span class="tk-k">On-site water of cooling towers (1.5–2.4 by climate) against dry or liquid cooling (0–0.2). Going dry costs a few per cent more electricity in hot hours.</span><span class="ev m show">Model</span></a><a class="tk" href="#c2"><span class="tk-n">07</span><span class="tk-v mono">8 → 600 kW</span><span class="tk-k">Power per rack, enterprise to AI (Kyber, 2027). Liquid takes over at the chip, and GPUs become ~80% of an AI campus's cost.</span><span class="ev r show">Reported</span></a><a class="tk" href="#c6"><span class="tk-n">08</span><span class="tk-v mono">177–187%</span><span class="tk-k">Bengaluru Urban's groundwater extraction against recharge (CGWB assessments, 2024: 186.7%; 2025: 177%). New capacity there should run on treated wastewater or dry cooling.</span><span class="ev r show">Reported</span></a><a class="tk" href="#c11"><span class="tk-n">09</span><span class="tk-v mono">21 TWh (19–36)</span><span class="tk-k">Renewable power needed for 60% clean data centres in 2030 (base case; the range applies 60% to the 31–60 TWh market forecasts): ~5.4 GW solar + 3.4 GW wind, at or below grid tariffs; hour-by-hour 60% needs firm contracts or batteries.</span><span class="ev m show">Model</span></a><a class="tk" href="#c10"><span class="tk-n">10</span><span class="tk-v mono">0</span><span class="tk-k">National data-centre laws or binding water-efficiency rules in force. Only Rajasthan's state policy has water requirements; interstate transmission charges return in full in July 2028.</span><span class="ev r show">Reported</span></a></div>
+  <p class="xs muted tk-lg"><i class="tk-band-l"></i>published or modelled range <i class="tk-now-l"></i>today <i class="tk-mid-l"></i>atlas central value</p>
+  <div class="panel v2map"><h3>A decade of data centres on one map<span class="sub">Press play: IT capacity by city from 2020 to 2035 (atlas base forecast from 2027), with water-stressed cities ringed and India's large renewable zones marked.</span></h3>
+    <div class="v2map-g"><div id="v2-map" class="v2-map"></div><div class="v2map-side"><div class="ctrl"><label for="v2-yr">Year</label><output id="v2-yr-o">2026</output><input id="v2-yr" type="range" min="2020" max="2035" step="1" value="2026"></div><button type="button" class="d1-btn" id="v2-play">▶ Play</button><p class="small" id="v2-map-n"></p><p class="xs muted">Sources: MeitY (2020–2025 totals), Cushman &amp; Wakefield H1 2026 (city split), atlas forecast engine (2027–2035), CGWB and WRI (water stress), MoP Rajya Sabha reply 27 Jul 2026 (grid queue). <span class="ev m show" data-src="Atlas forecast engine; pre-2026 city split estimated from today's shares">model</span></p></div></div>
+  </div>
+  <div class="evbar">
+    <label class="switch"><input type="checkbox" class="ev-toggle"> Show evidence tags</label>
+    <span><span class="ev r show">Reported</span>published or measured by a named source</span>
+    <span><span class="ev e show">Estimate</span>forecast, third-party estimate or contested</span>
+    <span><span class="ev m show">Model</span>calculated in this series</span>
+    <span class="xs muted">Tap any tag to see its source.</span>
+  </div>
+  <a class="startcard" href="#sim"><span class="big">▶</span><span><b>Start here: build your own data centre</b><span>One simulator joins the core models of every chapter. Choose a city, cooling, power and water, and see cost, carbon, water and policy move together, with a flow diagram of where it all goes.</span></span><span class="go">Open the simulator →</span></a>
+  <div class="pcards"><div class="pcard"><span class="part-n">Part I</span><h3>Understand</h3><ol><li><a href="#cwhy"><b>1</b>Why build, and what matters</a></li><li><a href="#c1"><b>2</b>Data centre 101 and the types India builds</a></li><li><a href="#c2"><b>3</b>Anatomy of an AI data centre</a></li><li><a href="#c3"><b>4</b>Cooling</a></li></ol></div><div class="pcard"><span class="part-n">Part II</span><h3>Measure</h3><ol><li><a href="#ccx"><b>5</b>Cooling × heat rejection</a></li><li><a href="#cce"><b>6</b>Cooling cost, water and energy</a></li><li><a href="#c4"><b>7</b>Energy and carbon</a></li><li><a href="#c5"><b>8</b>Water, direct and indirect</a></li><li><a href="#cscope"><b>9</b>Scope 1, 2 and 3 water</a></li><li><a href="#cai"><b>10</b>AI or conventional: what India builds</a></li><li><a href="#cti"><b>11</b>AI training vs inference</a></li><li><a href="#cbw"><b>12</b>Bengaluru close-up</a></li></ol></div><div class="pcard"><span class="part-n">Part III</span><h3>Forecast</h3><ol><li><a href="#c7"><b>13</b>How big will it get?</a></li></ol></div><div class="pcard"><span class="part-n">Part IV</span><h3>Choose</h3><ol><li><a href="#ctwin"><b>14</b>Build a data centre</a></li><li><a href="#c8"><b>15</b>Where to build, and at what cost</a></li><li><a href="#c9"><b>16</b>Choosing power and cooling</a></li></ol></div><div class="pcard"><span class="part-n">Part V</span><h3>Act</h3><ol><li><a href="#c10"><b>17</b>Green standards and state policy</a></li><li><a href="#c11"><b>18</b>The 60% renewable pathway</a></li><li><a href="#c12"><b>19</b>Recommendations</a></li></ol></div></div>
+</section>
+
+
+<!-- ================= SIMULATOR ================= -->
+
+<!-- ================= DC 101 ================= -->
+<div class="part" id="part-I"><span class="part-n">Part I</span><h2>Understand</h2><p>What a data centre is, what is inside an AI campus, and how heat leaves it.</p></div>
+

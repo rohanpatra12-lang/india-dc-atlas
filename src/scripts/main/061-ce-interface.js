@@ -1,0 +1,40 @@
+
+/* ---------- CE interface ---------- */
+(()=>{if(typeof document==='undefined')return;const root=document.getElementById('cce');if(!root)return;const $=id=>document.getElementById(id);
+const O=Object.assign({},CEM.DEF);let lastCity=null;const f0=v=>fmt(v,0),f1=v=>fmt(v,1),f2=v=>fmt(v,2);
+$('ce-city').innerHTML=Object.keys(CEM.CITY).map(k=>`<option value="${k}">${CEM.CITY[k].n}</option>`).join('');
+const NUM={mw:'ce-mw',u:'ce-u',rack:'ce-rack',disc:'ce-disc',t:'ce-t',wp:'ce-wp'};
+Object.entries(NUM).forEach(([k,id])=>$(id).addEventListener('input',e=>{O[k]=+e.target.value;draw()}));
+$('ce-city').addEventListener('change',e=>{O.city=e.target.value;draw()});
+$('ce-fan').addEventListener('change',e=>{O.fan=e.target.checked?1:0;draw()});$('ce-comp').addEventListener('change',e=>{O.comp=e.target.checked?1:0;draw()});
+$('ce-pre').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const P={conv:{mw:10,u:65,rack:10},ai:{mw:50,u:78,rack:120}}[b.dataset.v];Object.assign(O,P);['mw','u','rack'].forEach(k=>$(NUM[k]).value=O[k]);$('ce-pre').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));draw()});
+const COLS=[['capA','Capital','var(--muted)'],['om','Maintenance and consumables','color-mix(in srgb,var(--muted) 55%,var(--sunk))'],['elec','Cooling electricity','var(--hot)'],['water','Water','var(--cold)']];
+function draw(){const c=CEM.CITY[O.city];if(O.city!==lastCity){O.t=c.t;O.wp=c.wp;$('ce-t').value=O.t;$('ce-wp').value=O.wp;lastCity=O.city}
+ const R=CEM.compute(O);window.__CE=R;
+ out('ce-mw',f0(O.mw)+' MW');out('ce-u',O.u+'%');out('ce-rack',f0(O.rack)+' kW');out('ce-disc',O.disc+'%');out('ce-t','₹'+O.t.toFixed(2)+'/kWh');out('ce-wp','₹'+f0(O.wp)+'/kL');
+ $('ce-ctx').textContent=`${c.n}: ${CEM.CLN[c.cl]} climate · all-in tariff default ₹${c.t.toFixed(1)}/kWh (${c.st}) · grid water ${c.gw} L/kWh · dry coolers compressor-free ~${c.fh}% of hours at 35 °C supply · ${f0(R.EIT)} MWh of IT a year.`;
+ const ok=R.ok,mx=Math.max(...ok.map(x=>x.capA+x.om+x.elec+x.water)),b=R.best;
+ /* ranking bars */
+ $('ce-bars').innerHTML=ok.map(x=>`<div class="ce-row${x===b?' me':''}"><span class="ce-n">${x.s.n}${x.s.warn?` <span class="ce-w">${x.s.warn}</span>`:''}</span><div class="ce-tr">${COLS.map(([k,,col])=>`<i style="width:${x[k]/mx*100}%;background:${col}" title="${k}"></i>`).join('')}${x.fan+x.comp>0?`<i class="ce-cr" style="left:${(x.capA+x.om+x.elec+x.water-x.fan-x.comp)/mx*100}%;width:${(x.fan+x.comp)/mx*100}%" title="credits deducted"></i>`:''}</div><span class="ce-v">₹${f0(x.lcoc)}</span></div>`).join('')+
+  (R.rows.some(x=>!x.ok)?`<p class="xs muted" style="margin:6px 0 0">Not shown at ${f0(O.rack)} kW per rack (above their limit): ${R.rows.filter(x=>!x.ok).map(x=>x.s.n.split(' +')[0]).filter((v,i,a)=>a.indexOf(v)===i).join(', ')}.</p>`:'');
+ /* tiles */
+ const cheapAir=ok.filter(x=>!x.s.liq)[0],dlc=R.rows.find(x=>x.s.id==='dlc40');
+ $('ce-r').innerHTML=`<div><span class="v good">₹${f0(b.lcoc)}</span><span class="k">per MWh of IT: cheapest is ${b.s.n.toLowerCase()} (₹${f1(b.tot)} cr a year)</span></div>`+
+  (cheapAir?`<div><span class="v">₹${f0(cheapAir.lcoc)}</span><span class="k">best air option: ${cheapAir.s.n.toLowerCase()}</span></div>`:`<div><span class="v">—</span><span class="k">no air system can cool ${f0(O.rack)} kW racks</span></div>`)+
+  `<div><span class="v">₹${f0(dlc.lcoc)}</span><span class="k">direct-to-chip W40 + dry coolers${O.rack>50?' (no air alternative at this density, so no credits)':O.fan||O.comp?` (credits ₹${f1(dlc.fan+dlc.comp)} cr/yr)`:''}</span></div>`+
+  `<div><span class="v">${R.be.dens?R.be.dens+' kW':'> 60 kW'}</span><span class="k">rack density at which direct-to-chip becomes cheapest here${O.comp?'':' (compaction credit off)'}</span></div>`;
+ /* economics table */
+ $('ce-tab').innerHTML=`<table class="aif-t ce-t"><thead><tr><th>System</th><th>Capex ₹ cr/MW<br><span class="xs">room + heat rejection</span></th><th>Capex ₹ cr</th><th>Life yr</th><th>Capital</th><th>Maint. + consumables</th><th>Electricity</th><th>Water</th><th>Credits</th><th>Total ₹ cr/yr</th><th>₹/MWh IT</th></tr></thead><tbody>${R.rows.map(x=>`<tr class="${x.ok?'':'ce-na'}${x===b?' ce-best':''}"><td>${x.s.n}${x.ok?'':' <span class="xs muted">(above rack limit)</span>'}</td><td>${(x.P.room).toFixed(1)} + ${(x.P.rej).toFixed(2).replace(/\.?0+$/,'')}${x.s.fl?`<br><span class="xs muted">+ fluid ₹${x.s.fl} cr per 100 kW tank</span>`:''}</td><td>${f0(x.capex)}</td><td>${x.P.Lr}/${x.P.Lj}</td><td>${f1(x.capA)}</td><td>${f1(x.om)}</td><td>${f1(x.elec)}</td><td>${f2(x.water)}</td><td>${x.fan+x.comp>0?'−'+f1(x.fan+x.comp):'—'}</td><td><b>${f1(x.tot)}</b></td><td><b>${f0(x.lcoc)}</b></td></tr>`).join('')}</tbody></table>`;
+ /* water table */
+ $('ce-wtab').innerHTML=`<table class="aif-t ce-t"><thead><tr><th>System</th><th>WUE plateau</th><th>WUE humid coast</th><th>WUE hot-dry</th><th>Peak-day WUE (${c.n})</th><th>On-site ML/yr</th><th>Total water m³/MWh IT<br><span class="xs">site + grid at ${c.gw} L/kWh</span></th></tr></thead><tbody>${R.rows.map(x=>`<tr${x.ok?'':' class="ce-na"'}><td>${x.s.n}</td><td>${x.s.w[0]}</td><td>${x.s.w[1]}</td><td>${x.s.w[2]}</td><td>${x.peakWUE?'≈'+x.peakWUE.toFixed(1):x.wue>.1?'seasonal':'—'}</td><td>${f1(x.siteML)}</td><td>${x.tw.toFixed(2)}</td></tr>`).join('')}</tbody></table>`;
+ /* energy table */
+ $('ce-etab').innerHTML=`<table class="aif-t ce-t"><thead><tr><th>System</th><th>PUE plateau</th><th>PUE humid coast</th><th>PUE hot-dry</th><th>Cooling kWh per IT kWh (${c.n})</th><th>Cooling GWh/yr</th><th>CO₂ t per MWh IT</th><th>CO₂ kt/yr</th></tr></thead><tbody>${R.rows.map(x=>`<tr${x.ok?'':' class="ce-na"'}><td>${x.s.n}</td><td>${x.s.p[0].toFixed(2)}</td><td>${x.s.p[1].toFixed(2)}</td><td>${x.s.p[2].toFixed(2)}</td><td>${x.coolKW.toFixed(2)}</td><td>${f1(R.EIT*x.coolKW/1000)}</td><td>${x.co2.toFixed(2)}</td><td>${f1(R.EIT*x.pue*STD.co2/1000)}</td></tr>`).join('')}</tbody></table>`;
+ /* break-evens */
+ const be=R.be,wv=v=>v==null?'—':v<0?'never (wetter option dearer at any price)':'₹'+f0(v)+'/kL';
+ $('ce-be').innerHTML=`<div><span class="v">${wv(be.twFcc)}</span><span class="k">water price above which free-cooling chillers beat towers on cost (air hall). Indian tariffs: ₹20–131/kL</span></div><div><span class="v">${wv(be.twAcc)}</span><span class="k">same, towers vs plain air-cooled chillers</span></div><div><span class="v">${wv(be.dlcTwDry)}</span><span class="k">water price above which dry coolers beat towers in a direct-to-chip hall</span></div><div><span class="v">${be.immT==null?'—':be.immT>40?'> ₹40/kWh':'₹'+be.immT.toFixed(1)+'/kWh'}</span><span class="k">tariff above which single-phase immersion beats direct-to-chip W40 on cost</span></div><div><span class="v">${be.gTwAcc==null?'—':be.gTwAcc.toFixed(1)+' L/kWh'}</span><span class="k">grid water intensity above which towers use less total water than air-cooled chillers (India 2.3–3.5; 3.8 at the margin)</span></div><div><span class="v">${be.gIec==null?'—':be.gIec.toFixed(1)+' L/kWh'}</span><span class="k">same for indirect evaporative units; hybrid coolers ${be.gHyb==null?'—':be.gHyb.toFixed(1)}; direct-to-chip towers vs dry ${be.gDlc==null?'—':be.gDlc.toFixed(0)}</span></div>`;
+ const tw=R.rows.find(x=>x.s.id==='dlct'),dr=R.rows.find(x=>x.s.id==='dlc40');
+ $('ce-n').textContent=`${b.s.n} is cheapest at ₹${f0(b.lcoc)} per MWh of IT. `+(tw.ok&&dr.ok?`In a direct-to-chip hall here, towers instead of dry coolers ${tw.tot<dr.tot?'save':'cost'} ₹${f1(Math.abs(dr.tot-tw.tot))} crore a year but use ${f0(tw.siteML-dr.siteML)} ML more water, an implied water price of ₹${f0(Math.abs(dr.tot-tw.tot)*1e7/((tw.siteML-dr.siteML)*1000))}/kL. `:'')+`Electricity, not water price, decides the ranking; water decides whether evaporative cooling is permitted and safe.`}
+draw();window.__CEX={O,draw};
+})();
+
+(()=>{const el=document.getElementById('ce-fh');if(el)hbars(el,[['Bengaluru',71,'good','~71%'],['Pune',66,'good','~66%'],['Delhi',59,'','~59%'],['Hyderabad',53,'','~53%'],['Chennai',32,'hot','~32%'],['Mumbai',27,'hot','~27%']],{max:100})})();

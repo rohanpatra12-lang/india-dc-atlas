@@ -1,0 +1,299 @@
+<section class="ch chw" id="c9" data-n="16">
+  <div class="chq">
+    <div class="chq-n" aria-hidden="true">16</div>
+    <div class="chq-b"><h2 class="chq-t">Choosing power and cooling</h2>
+      <p class="chq-q"><span>The question</span>Which cooling and power combination uses least water and carbon at an acceptable cost?</p>
+      <p class="chq-a"><span>The short answer</span>The power source decides most of the water and all of the carbon; cooling decides the rest. Dry or liquid cooling with a solar–wind–battery mix uses a small fraction of the water of towers on grid power, and scheduling resolves most of the carbon–water conflict.</p>
+      <nav class="chq-subs" aria-label="In this chapter"><a href="#cx">16.1</a><a href="#ka">16.2</a><a href="#sched">16.3</a></nav>
+    </div>
+  </div>
+<div class="panel gap" id="cool-nav"><h3>Choosing cooling: which tool answers which question<span class="sub">The atlas has several cooling tools because each answers a different question. Find yours, then follow the link.</span></h3><div class="tbl"><table class="aif-t"><thead><tr><th>Your question</th><th>Tool</th><th>Where</th></tr></thead><tbody><tr><td>What can a rack of this power be cooled with? How warm can the water run in my city?</td><td>Cooling selector, warm-water explorer</td><td><a href="#cooling">4</a></td></tr><tr><td>Which heat-rejection pairings exist, and what does each use?</td><td>Combination picker</td><td><a href="#ccx2">5.2</a></td></tr><tr><td>Where and when does each combination make sense?</td><td>Guide by climate and workload</td><td><a href="#ccx5">5.5</a></td></tr><tr><td>What does each system cost over its life, including hidden costs?</td><td>Cooling cost calculator, shadow prices</td><td><a href="#cce1">6.1</a></td></tr><tr><td>How do climate and the hour of the year change PUE and water?</td><td>Every hour of the year, climate fingerprints</td><td><a href="#cce3">6.3</a></td></tr><tr><td>Which system for which Indian city?</td><td>Recommendations by city</td><td><a href="#cce5">6.5</a></td></tr><tr><td>Does counting power-station water change the ranking?</td><td>Power versus water</td><td><a href="#wp">8.2</a></td></tr><tr><td>Does liquid cooling still save water once power is counted?</td><td>Run the trade</td><td><a href="#vs">10.4</a></td></tr><tr><td>Which cooling and power pair is best for my site?</td><td>The full matrix, below</td><td><a href="#cx">16.1</a></td></tr><tr><td>Does my whole design pass, and what if I flip the cooling?</td><td>Design check</td><td><a href="#ctwin5">14.6</a></td></tr><tr><td>What should rules require in each climate?</td><td>Cooling by climate</td><td><a href="#rec">19</a></td></tr></tbody></table></div></div>
+<div class="subch" id="cx">
+  <div class="ch-head">
+    <div class="ch-tag"><span class="ch-num" aria-hidden="true">16.1</span><span class="eyebrow">Calculator · Every cooling technology with every electricity source</span></div>
+    <h2>Cooling × power: the water behind each combination</h2>
+    <p class="lede">A data centre's water footprint has two halves. The direct half is evaporated on site by the cooling system. The indirect half is evaporated at the power stations that make its electricity. This tab puts 14 cooling technologies against 12 electricity sources, 168 combinations in all. Pick a city and a workload, tap any cell, and the page works out both waters, the cost and the carbon, then shows the recommended combination and how much water it would save.</p>
+  </div>
+  <div class="take">
+    <div><span class="v mono">130 kW+</span><span class="k">Power drawn by one AI rack (GB300 NVL72: 132–142 kW, about 90% of the heat to liquid). Air and room cooling stop at roughly 15–50 kW, so AI rows are liquid-only <span class="ev r show" data-src="HPE/Supermicro/Lenovo specifications 2025–26; STT GDC India Pune lab; SBI sector report Apr 2026">reported</span></span></div>
+    <div><span class="v mono">0.05 vs 1.8 L/kWh</span><span class="k">On-site water of dry or liquid cooling against cooling towers. Towers save electricity by evaporating water; dry coolers save water but use more electricity <span class="ev r show" data-src="LBNL 2024 US Data Center Energy Usage Report; Report 12 cooling ranges">reported</span></span></div>
+    <div><span class="v mono">2.9 L/kWh</span><span class="k">Water evaporated at power stations for each kWh bought from a state grid. For most combinations this indirect water is bigger than what the site uses <span class="ev e show" data-src="Report 12 state ranges (CEA generation mix × MoEFCC plant norms), at the meter">estimate</span></span></div>
+    <div><span class="v mono">PUE &lt;1.35</span><span class="k">What the IndiaAI GPU tender requires; India's fleet averages about 1.4–1.6 <span class="ev r show" data-src="Schneider Electric blog Jul 2026; SBI Data Centre sector report Apr 2026">reported</span></span></div>
+  </div>
+
+  <div class="panel inst has-fx" id="cx-p1">
+    <button type="button" class="fx" aria-expanded="false" aria-controls="fx-cx1" title="Show formulas and assumptions">ƒ<span class="sr">Formulas and assumptions: cooling × power calculator</span></button>
+    <h3>The full matrix: 14 cooling technologies × 12 electricity sources<span class="sub">Choose the site and workload, then tap any cell. Each number is computed for that pair; ✕ marks a cooling design that cannot serve the chosen workload or site. The starred cell is the recommended combination.</span></h3>
+    <div class="fxbox" id="fx-cx1" hidden>
+      <div class="fxh">How this is calculated · cooling × power</div>
+      <ol class="fxf">
+        <li>Average IT power (share of rated) L = idle share × (1 − compute utilisation) + busy power share × compute utilisation: a straight line between idle and busy power, as LBNL 2024 models servers</li>
+        <li>IT energy (MWh/yr) = IT MW × L × 8,760</li>
+        <li>Design overhead O = power-chain losses + other loads + cooling overhead (losses / other: 0.045 / 0.015 for every workload, the atlas standard), valid at the design load L₀ (conventional 70%, AI 80%)</li>
+        <li>Part-load PUE = max(1.03, 1 + O × (φ × L₀ ÷ L + (1 − φ))), where φ is the load-independent share of overhead: other loads 100% fixed, power-chain losses 40%, cooling 25%. At low load the fixed part is spread over less IT energy, so PUE rises</li>
+        <li>Cooling overhead depends on the city's design dry-bulb (DB) or wet-bulb (WB). Examples: towers 0.19 + 0.012(WB − 19.4); adiabatic dry coolers 0.24 + 0.01(DB − 24.6); air-cooled chillers 0.39 + 0.015(DB − 24.6); direct-to-chip + dry coolers 0.09 + 0.006 per °C above 24.6 (+0.02 if DB + 7 &gt; 45). Calibrated so Bengaluru values equal the atlas cooling reference in Chapter 6.</li>
+        <li>Facility energy = IT energy × PUE</li>
+        <li>Direct water (ML/yr) = IT energy × WUE ÷ 1,000. WUE examples: towers 1.8 × (1 + 0.03(WB − 19.4)); indirect evaporative 0.55 × (1 + 0.07(WB − 19.4)); dry and liquid designs 0.01–0.10</li>
+        <li>Water per kWh bought = cover × source water + (1 − cover) × state grid water. Remote power plants are divided by 0.92 for transmission losses</li>
+        <li>Cover: physical (hourly) accounting uses the share of hours the source can actually supply (solar 35%, wind 55%, hybrid 70%, RTC 85%, least-water mix 83%, reservoir hydro 90%, run-of-river 60%, firm plants 100%); annual contract accounting credits 100% to the contracted source (except the least-water mix, which really buys 17% from the grid)</li>
+        <li>Indirect water (ML/yr) = facility energy × water per kWh ÷ 1,000</li>
+        <li>Price (₹/kWh) = generation + state open-access charge + ₹0.6 banking on the unmatched share; grid = DISCOM energy tariff. The demand charge (₹/kVA a month) is left out because it is the same whichever source supplies the energy; all-in tariffs are in Chapter 6.</li>
+        <li>Annual cost (₹ cr) = facility MWh × price ÷ 10,000 + direct ML × water ₹/kL ÷ 10,000 + cooling capex × CRF(11%, 15 yr) + cooling O&amp;M</li>
+        <li>CO₂ (kt) = facility MWh × (cover × source factor + (1 − cover) × 0.675) ÷ 1,000</li>
+        <li>Recommended combination: among mature, feasible designs (air-cooled designs for conventional, direct-to-chip for AI), pick the lowest total water whose annual cost is within the tolerance of the cheapest, powered by the least-water mix</li>
+        <li>Water saved = selected total − recommended total; ₹ per kL saved = extra cost ÷ kL saved</li>
+      </ol>
+      <div class="fxa"><b>Assumptions</b><ul>
+        <li>Cooling overheads and WUE follow the atlas simulator and Report 12 ranges, checked against LBNL 2024, Uptime 2025, Munters case studies and NVIDIA/OEM rack specifications. They are engineering estimates for Indian design conditions, not measured site data.</li>
+        <li>Power-station water: coal 3.0 L/kWh for a new plant (MoEFCC 2015 norm; the atlas uses 3.5 for the fleet, the figure behind the India grid factor), dry-cooled coal 0.4, gas CCGT 0.75 and nuclear 2.6 (NREL medians), reservoir hydro 0/10/20 (switch), solar 0.1 (washing), wind ≈0. Grid at the meter: India 2.9 for every state (atlas standard; Karnataka's own mix 1.5 as a sensitivity).</li>
+        <li>Generation prices (₹/kWh, 2026): coal 5.5, dry coal 5.8, gas 9.0, nuclear 5.0, hydro 4.5, solar 2.7, wind 3.4, hybrid 3.2, FDRE 4.8, least-water mix 4.06 (from Chapter 16's ₹5.39 all-in with 17% grid at ₹7.0 and ₹1.0 open access). Open-access charges by state ₹1.0–1.6. Indicative, not quotes.</li>
+        <li>Cooling capex (₹ crore per MW of IT) 6–22, anchored to Chapter 15's cost stacks (about ₹10 crore/MW for colocation air cooling and ₹17 crore/MW for AI liquid cooling) and spread by Report 12's relative costs (air-cooled chillers −5%, indirect evaporative +20%, adiabatic +15% against tower plants). This sits inside the 18–28% mechanical share of ₹50–95 crore/MW builds (IMARC 2026; JM Financial 2025). O&amp;M 3–5% of capex a year.</li>
+        <li>The least-water mix is Chapter 16's hourly optimisation on Karnataka-shaped solar and wind. Outside Karnataka it is indicative; its 83% clean share and ratios are carried over.</li>
+        <li>Idle and busy power: conventional servers idle at 36% of maximum power (2023) and run at 100% when busy; AI nodes idle at 20% of rated power and draw about 78% of rated when training (70% for mixed work). Default compute utilisation: conventional 30% (LBNL colocation 21–35%), AI training 80% (inference ~40%). Source: LBNL 2024 US Data Center Energy Usage Report, Section 3; Brookhaven measurement of an 8-GPU H100 node, 1.86 kW idle vs 8.4 kW peak (Latif et al., arXiv 2412.08602).</li>
+        <li>The fixed shares of overhead (100% / 40% / 25%) are engineering estimates for UPS no-load losses, minimum fan and pump speeds, lighting and security.</li>
+        <li>Demand (kVA) charges are left out because every option keeps a grid connection of similar size.</li>
+      </ul></div>
+    </div>
+
+    <div class="vs-ctrls">
+      <div class="opt"><span class="fieldlbl">Site</span><div class="seg" id="cx-city" role="group" aria-label="City"><button data-v="blr" aria-pressed="true">Bengaluru</button><button data-v="mum">Mumbai</button><button data-v="che">Chennai</button><button data-v="hyd">Hyderabad</button><button data-v="pun">Pune</button><button data-v="noi">Delhi NCR</button><button data-v="viz">Vizag</button></div></div>
+      <div class="opt"><span class="fieldlbl">Workload</span><div class="seg" id="cx-wk" role="group" aria-label="Workload"><button data-v="conv">Conventional · 10 kW/rack</button><button data-v="ai" aria-pressed="true">AI · 130 kW/rack</button></div></div>
+    </div>
+    <p class="xs muted" id="cx-cty"></p>
+    <div class="vs-ctrls">
+      <div class="ctrl"><label for="cx-mw">IT capacity</label><output id="cx-mw-o"></output><input id="cx-mw" type="range" min="5" max="300" step="5" value="50"></div>
+      <div class="ctrl"><label for="cx-u">Compute utilisation (share of time busy)</label><output id="cx-u-o"></output><input id="cx-u" type="range" min="5" max="100" step="5" value="80"></div>
+      <div class="ctrl"><label for="cx-idle">Idle power, % of rated</label><output id="cx-idle-o"></output><input id="cx-idle" type="range" min="5" max="70" step="1" value="20"></div>
+      <div class="ctrl"><label for="cx-op">Power when busy, % of rated</label><output id="cx-op-o"></output><input id="cx-op" type="range" min="50" max="100" step="1" value="78"></div>
+      <div class="ctrl"><label for="cx-tol">Extra cost accepted to save water</label><output id="cx-tol-o"></output><input id="cx-tol" type="range" min="0" max="25" step="1" value="5"></div>
+    </div>
+    <div class="vs-ctrls">
+      <div class="opt"><span class="fieldlbl">How renewable water is counted</span><div class="seg" id="cx-acc" role="group" aria-label="Accounting"><button data-v="phys" aria-pressed="true">Physical, hour by hour</button><button data-v="cont">Annual contract (banked)</button></div></div>
+      <div class="opt"><span class="fieldlbl">Reservoir hydro water</span><div class="seg" id="cx-hw" role="group" aria-label="Hydro water"><button data-v="0">0 L/kWh</button><button data-v="10" aria-pressed="true">10</button><button data-v="20">20</button></div></div>
+      <div class="opt"><span class="fieldlbl">Colour the matrix by</span><div class="seg" id="cx-met" role="group" aria-label="Matrix metric"><button data-v="tw" aria-pressed="true">Total water</button><button data-v="dir">Direct</button><button data-v="ind">Indirect</button><button data-v="cost">₹/kWh</button><button data-v="co2">CO₂</button></div></div>
+    </div>
+    <div class="cx-mx" id="cx-mx"></div>
+    <div class="cx-lg xs" id="cx-lg"></div>
+  </div>
+
+  <div class="panel inst hot" id="cx-det">
+    <h3>Your combination<span class="sub" id="cx-hd"></span></h3>
+    <div class="cx-pick">
+      <div><label for="cx-cs" class="fieldlbl">Cooling technology</label><select id="cx-cs"></select></div>
+      <div><label for="cx-ss" class="fieldlbl">Electricity source</label><select id="cx-ss"></select></div>
+    </div>
+    <div id="cx-fl"></div>
+    <div class="read" id="cx-r"></div>
+    <div class="cols">
+      <div><h4 class="cx-h4">Water: your selection against the alternatives</h4><div id="cx-cmp"></div></div>
+      <div><h4 class="cx-h4">Where the annual cost goes</h4><div class="hbars" id="cx-cb"></div><div id="cx-ti" style="margin-top:10px"></div></div>
+    </div>
+    <div id="cx-rc"></div>
+    <details class="cx-dt"><summary>Show the calculation with these numbers</summary><div id="cx-tr"></div></details>
+  </div>
+
+  <div class="cols">
+    <div class="panel"><h3>Cooling technologies: reference values<span class="sub">Computed for the selected city with the state grid. PUE for AI is shown only where the design can cool 130 kW racks. WUE is on-site litres per kWh of IT.</span></h3>
+      <div class="tbl"><table class="cx-tab"><thead><tr><th>Technology</th><th class="n">PUE conv.</th><th class="n">PUE AI</th><th class="n">WUE</th><th class="n">Max kW/rack</th><th>AI-capable</th><th class="n">Capex ₹cr/MW</th><th>Status (2026)</th></tr></thead><tbody id="cx-tc"></tbody></table></div>
+    </div>
+    <div class="panel"><h3>Electricity sources: reference values<span class="sub">Water evaporated at the power station (and delivered, after transmission losses), carbon, generation price and the share of a flat load's hours the source can meet.</span></h3>
+      <div class="tbl"><table class="cx-tab"><thead><tr><th>Source</th><th class="n">Water at plant L/kWh</th><th class="n">Delivered L/kWh</th><th class="n">CO₂ t/MWh</th><th class="n">Price ₹/kWh</th><th class="n">Hourly cover</th><th>Availability</th></tr></thead><tbody id="cx-ts"></tbody></table></div>
+    </div>
+  </div>
+
+  <div class="do">
+    <h3>What the matrix says to do</h3>
+    <div class="cols">
+      <ul class="clean small"><li><b>Change the power before the cooling.</b> On a state grid the indirect water (2.9 L/kWh) is usually larger than anything the cooling system evaporates, so the electricity source decides most of the total.</li><li><b>Clean is not automatically dry.</b> Reservoir hydro (up to 20 L/kWh), nuclear and wet-cooled coal are all thirstier than the grid average. Solar, wind and storage are the water-light sources.</li><li><b>Idle servers still drink.</b> A conventional server idles at about 36% of its maximum power, so at 30% compute utilisation nearly half of its electricity, and the water behind it, is used while it does no work (about 6% for an AI training cluster at 80%). Consolidating and virtualising servers is a water measure as well as an energy one.</li><li><b>Count water hour by hour.</b> Under annual contract accounting a solar deal looks almost water-free, but at night the site still runs on grid power and grid water.</li></ul>
+      <ul class="clean small"><li><b>AI halls: direct-to-chip liquid with dry or hybrid coolers.</b> It is the only design that is low on both energy and water in every Indian city in this tab.</li><li><b>Conventional halls:</b> at a 5% cost tolerance the matrix picks zero-water air-cooled chillers in Bengaluru and the coastal metros, and adiabatic dry coolers in Hyderabad, Pune and Delhi NCR. Indirect evaporative cooling has the lowest running cost in the drier cities, and is worth choosing only on treated wastewater, never municipal water.</li><li><b>Avoid two-phase PFAS fluids</b> for new builds until supply and regulation settle.</li></ul>
+    </div>
+  </div>
+</div>
+<div class="subch" id="ka">
+  <div class="ch-head">
+    <div class="ch-tag"><span class="ch-num" aria-hidden="true">16.2</span><span class="eyebrow">Model · Least-water power for a Karnataka data centre</span></div>
+    <h2>Buying power to save water</h2>
+    <p class="lede">An hour-by-hour optimisation picks the solar, wind, hydro and battery mix for a 50 MW-IT data centre in Karnataka (65 MW at the meter, every hour of the year). It finds the cheapest mix, then tightens a cap on water and re-solves, tracing what each litre saved costs. The chosen option and the reasons for it are below.</p>
+  </div>
+  <div class="take">
+    <div><span class="v mono">161 MW solar · 86 MW wind · 379 MWh battery</span><span class="k">Recommended mix: ₹5.39/kWh, 303 ML of water a year, 83% clean power, no hydro <span class="ev m show" data-src="Hourly LP, karnataka_dc_model.py; synthetic Karnataka-shaped profiles, 2026 cost benchmarks">model</span></span></div>
+    <div><span class="v mono">₹85 per kL</span><span class="k">What each kilolitre of water saved costs, compared with the cheapest mix. Bengaluru's municipal water costs about ₹99 <span class="ev m show" data-src="(₹10.5 crore extra a year) ÷ (1,255 ML saved); ₹99/kL is the atlas simulator's BWSSB rate">model</span></span></div>
+    <div><span class="v mono">1,558 vs 1,651 ML</span><span class="k">The cheapest clean-power mix saves only 6% of the water of buying everything from the grid, because its reservoir hydro evaporates ~10 L/kWh <span class="ev m show" data-src="Model base case: hydro 10 L/kWh, India grid 2.9 L/kWh (re-priced; the mixes were solved at 2.0)">model</span></span></div>
+    <div><span class="v mono">−23% · −81% · −83%</span><span class="k">Recommended mix against all-grid power: cost, water and CO₂ <span class="ev m show" data-src="All-grid: ₹7.00/kWh, 2.9 L/kWh, 0.675 tCO₂/MWh">model</span></span></div>
+  </div>
+
+  <!-- A frontier -->
+  <div class="panel inst hot has-fx">
+    <button type="button" class="fx" aria-expanded="false" aria-controls="fx-ka1" title="Show formulas and assumptions">ƒ<span class="sr">Formulas and assumptions: the optimisation</span></button>
+    <h3>Cost against water: every option the model found<span class="sub">Each dot is a least-cost mix for a given water cap. Moving left saves water; moving up costs more. Points below the dashed line save water for less than the city charges for it. Tap a dot.</span></h3>
+    <div class="fxbox" id="fx-ka1" hidden>
+      <div class="fxh">How this is calculated · hourly linear programme</div>
+      <ol class="fxf">
+        <li>Decision variables: solar MW (Cs), wind MW (Cw), hydro contract MW (Ch ≤ 40), battery MWh (E); and for each of 8,760 hours hydro h, grid g, charge c, discharge d, state of charge q, curtailment u</li>
+        <li>Energy balance, every hour: Cs·S(t) + Cw·W(t) + h + d + g − c − u = 65 MW</li>
+        <li>Battery: q(t+1) = q(t) + 0.938·c − d ÷ 0.938 (88% round trip, cyclic); q ≤ E; c, d ≤ E ÷ 4 (4-hour unit)</li>
+        <li>Hydro: h ≤ Ch each hour; monthly energy ≤ Ch × monthly capacity factor × hours (45% Jan … 85% Aug)</li>
+        <li>Cost (₹ crore/yr) = Cs × (3.8 × CRF(10%, 25) + 1.5% O&amp;M) + Cw × (7.0 × CRF + 1.5%) + Ch × ₹4.5/kWh take-or-pay + E × ₹0.105 cr/MWh + ₹1.0/kWh open-access charge on delivered RE + ₹7.0/kWh on grid energy</li>
+        <li>Water (ML/yr) = 0.1 L/kWh × solar output + hydro L/kWh × hydro energy + 2.9 L/kWh × grid energy (India grid; the solve used 2.0)</li>
+        <li>Frontier: minimise cost; minimise water; then minimise cost with water ≤ min + f × (cheapest − min), f = 0.75 … 0.05</li>
+        <li>₹ per kL saved = (cost − cheapest cost) ÷ (cheapest water − water)</li>
+        <li>"Water cap N%": water allowed = minimum water + N% × (cheapest-mix water − minimum water)</li>
+      </ol>
+      <div class="fxa"><b>Assumptions</b><ul><li>Solar profile: Pavagada/Tumakuru-like, capacity factor 20.5%, monsoon dip. Wind: Chitradurga/Gadag-like, CF 33%, peaking June–August with an evening bias. Both synthetic (seeded random weather), not measured data.</li><li>Hydro water: base 10 L/kWh (reservoir evaporation), run-of-river 0, high 20. Grid 2.0 L/kWh in the solve; the atlas re-prices the grid share of every option at the India grid's 2.9 L/kWh and CEA's 0.675 t/MWh (the mixes themselves are unchanged). Solar 0.1 L/kWh (panel washing).</li><li>Flat 65 MW load (50 MW IT × PUE 1.30). CO₂ = grid MWh × <span data-std="co2" data-d="3">0.675</span> t (CEA); renewables counted at zero.</li><li>Solved with SciPy HiGHS; each solve ~35 s, 52,564 variables.</li></ul></div>
+    </div>
+    <div class="vs-ctrls">
+      <div class="opt"><span class="fieldlbl">Water used by hydro (reservoir evaporation)</span><div class="seg" id="ka1-h" role="group" aria-label="Hydro water case"><button data-v="run-of-river">0 L/kWh · run-of-river</button><button data-v="base" aria-pressed="true">10 L/kWh · base</button><button data-v="high">20 L/kWh · high</button></div></div>
+      <div class="ctrl"><label for="ka1-p">Value of water</label><output id="ka1-p-o"></output><input id="ka1-p" type="range" min="24" max="399" step="5" value="99"></div>
+    </div>
+    <div id="ka1" class="wpsvg" role="img" aria-label="Cost versus water frontier"></div>
+    <div id="ka1-d" aria-live="polite"></div>
+  </div>
+
+  <!-- B mix along frontier -->
+  <div class="panel gap">
+    <h3>What gets built as the water cap tightens<span class="sub">Base case. Left to right: from the cheapest mix to the lowest-water mix. Top: capacity. Bottom: where each hour's energy comes from over a year.</span></h3>
+    <div id="ka2" class="ka-mix"></div>
+    <div class="ka-leg" id="ka2-l"></div>
+    <p class="note">Three phases. First, hydro is squeezed out and the grid fills the gap: water falls 75% for 6 paise a kWh, but clean share drops from 79% to 70%. Then solar and batteries replace the grid: clean share climbs back to 83% and beyond. Finally only batteries can close the last night hours, and costs rise steeply.</p>
+  </div>
+
+  <!-- C rationale -->
+  <div class="cols gap">
+    <div class="panel has-fx">
+      <button type="button" class="fx" aria-expanded="false" aria-controls="fx-ka3" title="Show formulas and assumptions">ƒ<span class="sr">Formulas and assumptions: price of water saved</span></button>
+      <h3>Rule 1 · Save water only while it is cheaper than buying it<span class="sub">Extra cost of each option per kilolitre of water saved, compared with the cheapest mix (base case).</span></h3>
+      <div class="fxbox" id="fx-ka3" hidden>
+        <div class="fxh">How this is calculated · price of water saved</div>
+        <ol class="fxf"><li>Average: (cost − cheapest cost) × 10⁷ ÷ ((cheapest water − water) × 1,000) in ₹/kL</li><li>Step: the same between neighbouring points on the frontier</li></ol>
+        <div class="fxa"><b>Assumptions</b><ul><li>₹99/kL municipal benchmark is the BWSSB rate used in the atlas simulator; tanker water costs more, so the rule is conservative.</li><li>Carbon co-benefits are not priced in this rule; they appear in Rule 3.</li></ul></div>
+      </div>
+      <div id="ka3" class="wpsvg" role="img" aria-label="Cost per kilolitre of water saved"></div>
+      <p class="note">Up to the recommended option, every kilolitre saved costs less than tap water (₹85 on average). The next option averages ₹143 and the one after ₹249; at the margin, the extra kilolitres beyond the recommended point cost over ₹1,100 each. From there you pay more to save water than the water is worth.</p>
+    </div>
+    <div class="panel">
+      <h3>Rule 2 · Pick a mix that survives the hydro uncertainty<span class="sub">Annual water of each base-case mix if reservoir hydro really evaporates 0, 10 or 20 L/kWh. Nobody measures this for Indian reservoirs.</span></h3>
+      <div id="ka4" class="wpsvg" role="img" aria-label="Water of each mix across hydro assumptions"></div>
+      <p class="note">The cheapest mix leans on a 28 MW hydro contract, so its water could be anything from 361 to 2,754 ML. The recommended mix contracts no hydro: 303 ML whatever the true number is. When an input is this uncertain, a choice that does not depend on it is worth paying a little for.</p>
+    </div>
+  </div>
+
+  <div class="panel gap">
+    <h3>Rule 3 · Don't trade water for carbon<span class="sub">Water against CO₂ for each base-case option. The "water-only" knee cuts water by buying coal power; the recommended option cuts both.</span></h3>
+    <div id="ka5" class="wpsvg" role="img" aria-label="Water versus carbon for each option"></div>
+  </div>
+
+  <!-- D dispatch -->
+  <div class="panel inst gap">
+    <h3>A week, hour by hour<span class="sub">How the chosen mix meets a flat 65 MW load. Above the line: supply. Below: energy going into the battery and surplus that is curtailed.</span></h3>
+    <div class="vs-ctrls">
+      <div class="opt"><span class="fieldlbl">Option</span><div class="seg" id="ka6-o" role="group" aria-label="Option"><button data-v="base">Cheapest</button><button data-v="0.25">Water-only knee</button><button data-v="0.15" aria-pressed="true">Recommended</button><button data-v="0.05">Near-zero water</button></div></div>
+      <div class="opt"><span class="fieldlbl">Week</span><div class="seg" id="ka6-w" role="group" aria-label="Week"><button data-v="jan">January</button><button data-v="apr" aria-pressed="true">April (hot, low wind)</button><button data-v="jul">July (monsoon)</button></div></div>
+    </div>
+    <div id="ka6" class="wpsvg" role="img" aria-label="Hourly dispatch for one week"></div>
+    <div class="ka-leg" id="ka6-l"></div>
+    <div class="read" id="ka6-r"></div>
+  </div>
+
+  <!-- E monthly -->
+  <div class="panel gap">
+    <h3>A year, month by month<span class="sub">Energy supplied to the load each month for the selected option (GWh). Curtailed surplus is shown as a thin cap.</span></h3>
+    <div id="ka7" class="wpsvg" role="img" aria-label="Monthly energy by source"></div>
+    <p class="note" id="ka7-n"></p>
+  </div>
+
+  <div class="do">
+    <h3>Interpretation and the choice</h3>
+    <div class="cols">
+      <ul class="clean small">
+        <li><b>Chosen: 161 MW solar, 86 MW wind, 379 MWh of 4-hour batteries, grid top-up, no hydro.</b> ₹5.39/kWh, 303 ML a year (0.53 L/kWh), 83% clean, 64 kt CO₂.</li>
+        <li><b>Why this point:</b> it is the lowest-water option whose water saving still costs less than municipal water (Rule 1); its water does not depend on the unmeasured hydro factor (Rule 2); and it cuts carbon as well as water (Rule 3).</li>
+        <li><b>Price:</b> ₹10.5 crore a year more than the cheapest mix (+3.6%), yet ₹92 crore a year cheaper than all-grid power.</li>
+      </ul>
+      <ul class="clean small">
+        <li><b>Hydro is not free water.</b> At 10 L/kWh of reservoir evaporation a hydro PPA is more than three times thirstier than the India grid (2.9 L/kWh). If a genuine run-of-river contract exists (no reservoir evaporation), a mix with ~38 MW of it reaches ~173 ML at ₹5.30: the one case that beats this choice.</li>
+        <li><b>Rejected:</b> the water-only knee (514 ML, ₹5.26) because it raises CO₂ to 113 kt; near-zero water (83 ML, ₹5.81) because each extra kL beyond the recommended point costs ~₹1,100; strict zero water (₹18.16/kWh) because it needs 593 MW of wind and 4.4 GWh of batteries.</li>
+        <li><b>On site, cooling still matters:</b> this is the power side only. Pair it with dry or liquid cooling (chapters 4–6) or on-site water returns as the larger share.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="note gap">Illustrative model: resource profiles are synthetic but Karnataka-shaped; costs are 2026 Indian benchmarks; load is flat. Re-run with measured site data (NIWE wind, NSRDB/Solargis solar, KPTCL open-access charges) before any procurement decision. Model: <span class="mono">karnataka_dc_model.py</span> (hourly LP, SciPy HiGHS).</p>
+</div>
+<div class="subch" id="sched">
+  <div class="ch-head">
+    <div class="ch-tag"><span class="ch-num" aria-hidden="true">16.3</span><span class="eyebrow">Model · Hourly carbon–water scheduling for an AI campus</span></div>
+    <h2>Follow the sun for compute, unfollow it for evaporation</h2>
+    <p class="lede">To cut carbon, run flexible AI work when solar power is plentiful. To cut water, avoid the hot afternoon hours when evaporative cooling drinks the most. Li, Yang, Islam and Ren (<i>Communications of the ACM</i>, 2025) call these two goals "not substitutable". This model plans one day hour by hour. It decides when deferrable work runs and whether the cooling sprays water or runs dry in each hour, and it shows how much of the conflict that second choice removes.</p>
+  </div>
+  <div class="take">
+    <div><span class="v mono">1–3%</span><span class="k">Gap in carbon or water between the carbon-best and water-best schedules when only the timing can change, on a hot Karnataka day. In India the conflict is small, because coal sets both the grid's carbon and its water <span class="ev m show" data-src="This model; Karnataka-shaped hourly carbon and grid-water profiles">model</span></span></div>
+    <div><span class="v mono">−96% on-site water</span><span class="k">When the model may also switch the cooling to dry in hot hours. Carbon stays at the flat-schedule level, about 6% above the carbon-best plan, because running dry at midday costs least when the grid is cleanest <span class="ev m show" data-src="This model; Chapter 8 adiabatic cooling formulas">model</span></span></div>
+    <div><span class="v mono">14.8% · 21.9%</span><span class="k">Water and carbon savings of the WaterWise co-optimising scheduler across five cloud regions, against its baseline <span class="ev r show" data-src="Jiang et al., WaterWise, ACM 2025 (DOI 10.1145/3710848.3710891), Google Borg trace">reported</span></span></div>
+    <div><span class="v mono">−50%</span><span class="k">On-site water saved at NREL's warm-water HPC centre by running a dry cooler first and towers only when hot, with no energy penalty <span class="ev r show" data-src="NREL/TP-2C00-72196 (2018), 24-month and 5-year results">reported</span></span></div>
+  </div>
+
+  <div class="panel inst hot has-fx" id="sc-p">
+    <button type="button" class="fx" aria-expanded="false" aria-controls="fx-sc" title="Show formulas and assumptions">ƒ<span class="sr">Formulas and assumptions: carbon–water scheduler</span></button>
+    <h3>Plan one day: when to run, and when to spray<span class="sub">Bars are the AI campus's IT load each hour: blue hours cool with water spray, amber hours run dry. The dark line is grid carbon intensity. Move the priority slider from carbon to water and watch the plan change.</span></h3>
+    <div class="fxbox" id="fx-sc" hidden>
+      <div class="fxh">How this is calculated · hourly carbon–water scheduling</div>
+      <ol class="fxf">
+        <li>Decisions each hour h: IT load cooled wet, y<sub>wet</sub>(h), and IT load cooled dry, y<sub>dry</sub>(h)</li>
+        <li>Carbon(h) = (y<sub>wet</sub>·PUE<sub>wet</sub> + y<sub>dry</sub>·PUE<sub>dry</sub>) × CI(h)</li>
+        <li>On-site water(h) = y<sub>wet</sub>·WUE<sub>wet</sub>(h) + y<sub>dry</sub>·0.03; grid water(h) = facility energy × EW(h)</li>
+        <li>Minimise α × Carbon ÷ Carbon<sub>flat</sub> + (1 − α) × (k × on-site water + grid water) ÷ Water<sub>flat</sub>, where "flat" is the baseline plan and k is the scarcity weight on local water</li>
+        <li>Subject to: firm load every hour; total deferrable energy done within the day; y<sub>wet</sub> + y<sub>dry</sub> ≤ campus capacity</li>
+        <li>Because each hour's cost is linear and the hours are linked only by the total-energy constraint, the exact optimum is: pick the cheaper mode in each hour, then fill deferrable work into the cheapest hours first (fractional knapsack)</li>
+        <li>Chilled-water storage (optional): up to S MWh of IT heat in the most expensive hours is cooled with cold made at the coolest hour, with 5% storage losses; applied after the schedule is set</li>
+        <li>Wet mode: PUE = 1.22 + 0.015 × max(0, DB − 25); WUE = 0 below 26 °C, else min(1.6, 0.1 + 0.107 × (DB − 26)). Dry mode: PUE = 1.22 + 0.035 × max(0, DB − 25); WUE = 0.03 (Chapter 8 adiabatic model)</li>
+        <li>CI(h) = daily mean × (1 − dip × (s(h) − mean s)), with solar shape s(h) = max(0, sin(π(h − 6)/12))<sup>1.2</sup>; EW(h) = state grid water × CI(h) ÷ mean CI (grid water follows coal)</li>
+      </ol>
+      <div class="fxa"><b>Assumptions</b><ul>
+        <li>Hot-season design days (dry-bulb low / high): Bengaluru 22/35, Hyderabad 27/41, Mumbai 27/34, Chennai 28/38, Delhi NCR 28/43 °C. Illustrative, not typical-year weather.</li>
+        <li>Grid carbon averages <span data-std="co2" data-d="3">0.675</span> t/MWh in every state (CEA; one national grid); the midday solar dip is deepest in Karnataka (±40%), then Tamil Nadu (30%), Telangana (25%), Maharashtra (20%) and Uttar Pradesh (15%), reflecting their solar shares. Grid water at the meter: India grid 2.9 L/kWh at the meter (CEA publishes one national grid; carbon uses the same boundary).</li>
+        <li>Average IT load is 75% of capacity; the deferrable share is the part of daily energy that can move to any hour of the same day.</li>
+        <li>The adiabatic model is driven by dry-bulb temperature. In humid Mumbai and Chennai real sprays cool less, so wet mode saves less energy than shown.</li>
+        <li>Single site, one day, perfect forecasts. Real schedulers re-solve every hour on forecasts and can also move work between sites.</li>
+      </ul></div>
+    </div>
+    <div class="vs-ctrls">
+      <div class="opt"><span class="fieldlbl">Site (hot-season day)</span><div class="seg" id="sc-city" role="group" aria-label="City"><button data-v="blr" aria-pressed="true">Bengaluru</button><button data-v="hyd">Hyderabad</button><button data-v="mum">Mumbai</button><button data-v="che">Chennai</button><button data-v="noi">Delhi NCR</button></div></div>
+      <div class="opt"><span class="fieldlbl">Cooling may switch to dry in hot hours</span><div class="seg" id="sc-sw" role="group" aria-label="Mode switching"><button data-v="1" aria-pressed="true">Yes</button><button data-v="0">No, always wet</button></div></div>
+    </div>
+    <div class="ctrls">
+      <div class="ctrl"><label for="sc-a">Priority (carbon ↔ water)</label><output id="sc-a-o"></output><input id="sc-a" type="range" min="0" max="100" step="5" value="50"></div>
+      <div class="ctrl"><label for="sc-f">Deferrable share of the day's work</label><output id="sc-f-o"></output><input id="sc-f" type="range" min="0" max="60" step="5" value="40"></div>
+      <div class="ctrl"><label for="sc-k">Scarcity weight on local water</label><output id="sc-k-o"></output><input id="sc-k" type="range" min="1" max="5" step="0.5" value="2"></div>
+      <div class="ctrl"><label for="sc-s">Chilled-water storage</label><output id="sc-s-o"></output><input id="sc-s" type="range" min="0" max="300" step="10" value="0"></div>
+      <div class="ctrl"><label for="sc-mw">Campus IT capacity</label><output id="sc-mw-o"></output><input id="sc-mw" type="range" min="20" max="300" step="10" value="60"></div>
+    </div>
+    <div class="sc-ch" id="sc-ch" role="img" aria-label="24-hour plan"></div>
+    <div class="read" id="sc-r"></div>
+    <p class="small" id="sc-n"></p>
+  </div>
+
+  <div class="cols">
+    <div class="panel"><h3>The trade-off curve<span class="sub">Each dot is the best plan for one priority setting, from all-carbon to all-water. Grey: timing only. Teal: timing plus switching the cooling mode. The ring is your current plan; the square is the flat baseline.</span></h3>
+      <div class="sc-pf" id="sc-pf" role="img" aria-label="Carbon against water trade-off"></div>
+      <p class="xs muted" id="sc-pn"></p>
+    </div>
+    <div class="panel"><h3>How to read the result<span class="sub">What the model shows, and what it leaves out.</span></h3>
+      <ul class="clean small">
+        <li><b>Timing alone barely matters in India.</b> When coal backs down at noon, both the grid's carbon and its water fall, so "follow the sun" helps both. The only part that rises in the afternoon is on-site evaporation.</li>
+        <li><b>Mode switching resolves most of the conflict.</b> Running dry at midday raises PUE when the grid is cleanest, so the carbon cost of saving water is smallest exactly then. Spray only at night, when the air is cool and spraying is barely needed anyway.</li>
+        <li><b>Storage separates the two clocks.</b> Chilled water made at night cools the hottest afternoon hours, so compute can follow the sun while evaporation does not.</li>
+        <li><b>Weight water by where it is taken.</b> A litre evaporated on site in Bengaluru comes from a stressed city supply; a litre at a coal plant comes from a different basin. The scarcity slider sets how much more the local litre counts.</li>
+        <li><b>Limits:</b> one site, one day, perfect forecasts. A production scheduler re-plans each hour on forecasts and can also move work between regions (Chapter 16; WaterWise).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="do">
+    <h3>What to do with it</h3>
+    <div class="cols">
+      <ul class="clean small"><li><b>Operators:</b> give the cooling plant a "dry first" control mode with a water budget per day, and let the workload scheduler see both the hourly carbon forecast and the cooling plant's hourly water cost.</li><li><b>Tag work by flexibility.</b> Training, fine-tuning, evaluation and batch inference can usually wait hours; interactive inference cannot. The deferrable share is what buys the savings.</li><li><b>Build in storage.</b> A few hours of chilled-water storage is cheap next to the GPUs, and it lets the cooling plant spray only when the air is cool.</li></ul>
+      <ul class="clean small"><li><b>Regulators:</b> CEA publishes an annual grid carbon factor but no hourly one, and no grid water factor at all. Hourly state factors for both, published day-ahead, would let every Indian operator run this kind of scheduler.</li><li><b>Report on a daily basis.</b> Annual WUE hides the afternoon peaks that stress city supplies; ask for peak-day and peak-hour water alongside the annual figure.</li><li><b>Price water at its scarcity value.</b> At Bengaluru's ₹99/kL tariff the model weights water lightly; at tanker prices or with a scarcity multiplier, dry-first operation pays for itself.</li></ul>
+    </div>
+  </div>
+</div>
+</section>
+<div class="part" id="part-V"><span class="part-n">Part V</span><h2>Act</h2><p>Standards, state policy, the 60% renewable pathway and what India should do.</p></div>

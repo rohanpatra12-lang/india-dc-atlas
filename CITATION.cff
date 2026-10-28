@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+title: India Data Centre Atlas
+message: "If you use this atlas, please cite it as below."
+type: dataset
+authors:
+  - name: "India Data Centre Atlas contributors"
+version: "v33"
+date-released: "2026-10-28"
+license: CC-BY-4.0
+keywords: [data centres, India, water, energy, carbon, cooling, AI infrastructure]

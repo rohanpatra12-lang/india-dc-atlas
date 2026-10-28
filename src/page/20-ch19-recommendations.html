@@ -1,0 +1,121 @@
+<section class="ch chw" id="c12" data-n="19">
+  <div class="chq">
+    <div class="chq-n" aria-hidden="true">19</div>
+    <div class="chq-b"><h2 class="chq-t">Recommendations</h2>
+      <p class="chq-q"><span>The question</span>What should India do?</p>
+      <p class="chq-a"><span>The short answer</span>Site campuses by basin, require treated water for evaporative cooling, count power-station water, disclose by site, and buy firm clean power before transmission charges return in 2028.</p>
+      
+    </div>
+  </div>
+<div class="subch" id="rec">
+  <div class="ch-head">
+    <div class="ch-tag"><span class="ch-num" aria-hidden="true">19</span><span class="eyebrow"><a class="rep-l" href="#reports">Report 15</a> · Design, site and policy recommendations</span></div>
+    <h2>Build where power, water and fibre are planned together</h2>
+    <p class="lede">The Central Electricity Authority expects about 26 GW of new data-centre demand by 2031–32, over fourteen times what runs today. If it lands where today's capacity sits, it lands on the most stressed grids and aquifers in the country. This chapter sets out where to build, what to build, and the rules that would make both happen.</p>
+  </div>
+  <div class="take">
+    <div><span class="v mono">26.3 GW</span><span class="k">Extra data-centre demand CEA projects by 2031–32 across 11 states; ~17 GW has already applied to state grids <span class="ev r show" data-src="Ministry of Power reply to Rajya Sabha (May 2026), via Telborg briefing; secondary source">reported</span></span></div>
+    <div><span class="v mono">~80%</span><span class="k">Share of India's operating capacity in Mumbai, Chennai and Delhi-NCR <span class="ev r show" data-src="MeitY consultation (Economic Times via Computer Weekly); CBRE Oct 2026: more than 80%">reported</span></span></div>
+    <div><span class="v mono">0</span><span class="k">National data-centre policies in force: the 2020 draft was never notified <span class="ev r show" data-src="MeitY; consultations revived Aug 2025">reported</span></span></div>
+    <div><span class="v mono">PUE ≤1.20 · WUE ≤0.2 · 80% CFE</span><span class="k">Design targets for an AI campus in a mild climate (hourly clean power by 2030) <span class="ev e show" data-src="Report 15 engineering estimates, benchmarked to Germany EnEfG 1.2 and Singapore DC-CFA2 1.25">estimate</span></span></div>
+  </div>
+
+  <!-- two rules -->
+  <div class="cols">
+    <div class="panel inst"><h3>Rule 1 · Cloud and colocation stay near users<span class="sub">Interactive traffic and interconnection need low latency and cable landings. Sustainability must come from design, because the location cannot change.</span></h3>
+      <div class="rc-chips">Navi Mumbai · Pune · Chennai · Hyderabad · NCR · Bengaluru periphery · Kolkata</div>
+      <ul class="clean small"><li>Zero-freshwater cooling: closed-loop liquid + dry coolers</li><li>Treated sewage water (TSE) for anything that evaporates</li><li>Multi-storey where land is scarce; plinths above flood level</li></ul></div>
+    <div class="panel inst hot"><h3>Rule 2 · AI training goes where power is<span class="sub">Training traffic is bulk and latency-tolerant, so trade latency for renewable power, land, water and low hazard.</span></h3>
+      <div class="rc-chips">Vizag · Jamnagar · Kurnool–Anantapur · Tumakuru–Chitradurga · Telangana interior · western Rajasthan · Bhubaneswar–Paradip</div>
+      <ul class="clean small"><li>Co-locate with solar + wind + batteries at a 400 kV pooling station</li><li>Desalinated or treated water only; seismic Zone II/III</li><li>Already happening: Google Vizag (~1 GW), Meta–Reliance Jamnagar (168 MW, desalinated seawater)</li></ul></div>
+  </div>
+
+  <!-- hub matrix -->
+  <div class="panel inst hot gap has-fx">
+    <button type="button" class="fx" aria-expanded="false" aria-controls="fx-rc1" title="Show formulas and assumptions">ƒ<span class="sr">Formulas and assumptions: hub ranking</span></button>
+    <h3>Which hub, for which kind of data centre?<span class="sub">Eleven hubs scored 1–5 on six criteria (5 = best). Pick an archetype or set your own weights; the ranking re-sorts. Tap a hub for the design response it needs.</span></h3>
+    <div class="fxbox" id="fx-rc1" hidden>
+      <div class="fxh">How this is calculated · hub ranking</div>
+      <ol class="fxf"><li>Score (out of 5) = Σ (criterion score × weight) ÷ Σ weights</li><li>Cloud/colo weights: power 25, clean power 10, water 15, hazard 10, latency 20, land 10</li><li>AI training weights: power 30, clean power 20, water 15, hazard 10, latency 5, land 10</li><li>Latency rule (cloud only, optional): drop hubs scoring below 4 on latency/cable landing</li></ol>
+      <div class="fxa"><b>Assumptions</b><ul><li>Hub scores are Report 15 estimates, not measured indices; tier-2 is a group average.</li><li>The full framework also weights policy (5%) and skills (5%); they are not scored per hub, so weights are re-normalised over the six criteria.</li><li>Use the chapter 15 ranking engine for city-level detail.</li></ul></div>
+    </div>
+    <div class="vs-ctrls">
+      <div class="opt"><span class="fieldlbl">Archetype</span><div class="seg" id="rc1-a" role="group" aria-label="Archetype"><button data-v="cloud" aria-pressed="true">Cloud / colocation</button><button data-v="ai">AI training campus</button><button data-v="custom">Custom weights</button></div></div>
+      <label class="switch"><input type="checkbox" id="rc1-l" checked> Cloud: strict latency rule (cable-landing metros, score ≥ 4)</label>
+    </div>
+    <div class="rc-w" id="rc1-w"></div>
+    <div class="rc-hub" id="rc1"></div>
+    <div id="rc1-d" class="small" aria-live="polite"></div>
+    <p class="note">With the strict latency rule on, Hyderabad and Bengaluru drop out of the cloud ranking; they still work as second availability zones paired with a cable-landing metro. Switch the rule off and Jamnagar tops the cloud list on power and land alone, which is why latency is treated as a filter, not just a weight. No metro scores well on water, so in Mumbai, Chennai, Bengaluru and NCR water performance has to be designed in. Vizag and Jamnagar lead for AI because renewable power, land and seawater coincide there, but both carry cyclone risk that must be engineered for.</p>
+  </div>
+
+  <!-- archetypes -->
+  <div class="panel gap">
+    <h3>Siting and design by archetype<span class="sub">Where each kind of data centre should go, and the rule that decides it.</span></h3>
+    <div class="rc-arch" id="rc2"></div>
+  </div>
+
+  <!-- target checker -->
+  
+
+  <!-- design blocks -->
+  <div class="panel gap">
+    <h3>Cooling by climate<span class="sub">Raise the water temperature so dry coolers can reject heat without evaporation; keep evaporation for peak hours, on treated or desalinated water. City-by-city systems with costs are in <a href="#cce5">6.5</a>; every cooling tool is mapped in <a href="#cool-nav">Chapter 16</a>.</span></h3>
+    <div class="rc-clim" id="rc4"></div>
+    <p class="note">Zero on-site water only helps overall when it comes with clean power. A dry design that adds 0.03–0.05 to PUE adds ~0.1–0.15 L/kWh of coal-plant water on today's grid (MoEFCC allows plants 3.0–3.5 L/kWh, and a CSE survey found half of freshwater plants over the cap).</p>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel"><h3>Electrical design<span class="sub">From grid connection to rack.</span></h3><div class="rc-list" id="rc5"></div></div>
+    <div class="panel"><h3>Water: a hierarchy, sized to the peak day<span class="sub">Use the first source that works; never the last.</span></h3><div class="rc-ladder" id="rc6"></div>
+      <p class="note">Size storage and treatment for April–May, when adiabatic systems use the most (chapter 8), with ≥7 days' storage for TSE-fed sites. Report peak-day withdrawal as well as the annual average.</p></div>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel"><h3>Hazards and resilience<span class="sub">Design to the stricter of today's code and the most recent hazard evidence.</span></h3><div class="rc-list" id="rc7"></div></div>
+    <div class="panel"><h3>Heat reuse in a hot country<span class="sub">Space heating is irrelevant in most of India; target cooling and process heat instead.</span></h3><div class="rc-list" id="rc8"></div>
+      <p class="note">Germany's reuse quotas (10% rising to 20%) do not transfer. A workable Indian target: reuse ≥5% where an industrial offtaker exists, and a feasibility study for every site of 10 MW or more.</p></div>
+  </div>
+
+  <div class="panel gap"><h3>Clean power: how to buy it<span class="sub">The interstate transmission waiver is being phased out, so in-state supply and co-located storage now carry the economics.</span></h3><div class="rc-list rc-row" id="rc9"></div></div>
+
+  <!-- POLICY -->
+  <div class="panel inst hot gap">
+    <h3>Policy today: what exists and what's missing<span class="sub">The national instruments that touch data centres, October 2026.</span></h3>
+    <div class="tbl"><table class="rc-fw" id="rc10"></table></div>
+  </div>
+
+  <div class="panel gap has-fx">
+    <button type="button" class="fx" aria-expanded="false" aria-controls="fx-rc11" title="Show formulas and assumptions">ƒ<span class="sr">Formulas and assumptions: policy tools</span></button>
+    <h3>The tools other countries use, and India's gaps<span class="sub">Peers have converged on six tools. Tap a cell for the rule behind it.</span></h3>
+    <div class="fxbox" id="fx-rc11" hidden><div class="fxh">How to read this</div><ol class="fxf"><li>● in force · ◐ partial, draft or indirect · — none</li><li>India row: the best national instrument found today</li></ol><div class="fxa"><b>Assumptions</b><ul><li>Netherlands and Virginia entries were not re-verified in this research; Johor WUE thresholds are reported inconsistently (1.4 vs 1.8).</li><li>China: NDRC 2024 plan, ≤1.25 for new large DCs, ≤1.2 at hub nodes.</li></ul></div></div>
+    <div class="tbl"><table class="rc-int" id="rc11"></table></div>
+    <div id="rc11-d" class="small" aria-live="polite"></div>
+  </div>
+
+  <div class="panel inst gap">
+    <h3>Eighteen recommendations, on a five-year roadmap<span class="sub">Each bar runs from start to target date (Oct 2026 → Oct 2031). Filter by theme or lead agency; tap a bar for the detail.</span></h3>
+    <div class="vs-ctrls">
+      <div class="opt"><span class="fieldlbl">Theme</span><div class="seg" id="rc12-t" role="group" aria-label="Theme"></div></div>
+      <div><label for="rc12-a" class="fieldlbl">Lead agency</label><select id="rc12-a"></select></div>
+    </div>
+    <div id="rc12" class="wpsvg" role="img" aria-label="Policy roadmap"></div>
+    <div id="rc12-d" aria-live="polite"></div>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel"><h3>Who has to act<span class="sub">Number of recommendations each agency leads or supports.</span></h3><div class="hbars" id="rc13"></div></div>
+    <div class="panel"><h3>One size does not fit all states<span class="sub">How the recommendations should differ by state.</span></h3><div class="rc-list" id="rc14"></div></div>
+  </div>
+
+  <div class="do">
+    <h3>The short version</h3>
+    <div class="cols">
+      <ul class="clean small"><li><b>Within 12 months:</b> notify the national policy with a single window; add WUE and hourly clean power to IndiaAI tenders; publish the data-sovereignty negative list before May 2027; open allocation records to the public.</li><li><b>Within 24 months:</b> mandatory assured disclosure to a national registry; large-load grid rules with study fees and flexibility; 24×7 clean-power products and harmonised banking; a statutory water hierarchy.</li></ul>
+      <ul class="clean small"><li><b>By 2030:</b> PUE floors with a glide path (new builds ≤1.25–1.30, AI ≤1.20); green data-centre zones with substations, treated water and fibre built ahead of demand; incentives paid only for verified results, with sunset clauses.</li><li><b>Throughout:</b> make government cloud the most transparent, not the least; review incentives every three years and drop those that cannot show results.</li></ul>
+    </div>
+  </div>
+  <p class="note gap">Hub scores, climate design values, performance targets, plinth and battery sizing and the tropical PUE allowance are Report 15 engineering estimates. Several figures (CEA 26.3 GW, the "specified data centre" scheme status, Texas PUCT rules, Singapore awards, Johor thresholds) come from secondary sources. Rules are in flux: IS 1893:2025 was withdrawn in March 2026, CEA's connectivity rules are in draft, DPDP cross-border provisions start May 2027 and the national policy is unfinalised.</p>
+</div>
+</section>
+

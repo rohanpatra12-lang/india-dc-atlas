@@ -1,0 +1,227 @@
+<section class="ch chw" id="c7" data-n="13">
+  <div class="chq">
+    <div class="chq-n" aria-hidden="true">13</div>
+    <div class="chq-b"><h2 class="chq-t">How big will it get?</h2>
+      <p class="chq-q"><span>The question</span>How much capacity and electricity will India's data centres need?</p>
+      <p class="chq-a"><span>The short answer</span>Market trackers give 4.2–8 GW of IT and 31–60 TWh a year by 2030 (Wood Mackenzie: 12 GW); NITI Aayog's scenario implies about 90 TWh; the government's grid queue implies 140–175 TWh by 2031-32. The units differ, so compare carefully.</p>
+      <nav class="chq-subs" aria-label="In this chapter"><a href="#forecast">13.1</a><a href="#fc2">13.2</a></nav>
+    </div>
+  </div>
+<div class="panel inst v2core"><h3>Every forecast on one fan<span class="sub">GW on a log scale. Teal: IT capacity. Amber: "power capacity". Red: grid load. The shaded wedge is the published 2030 range; the dark line is the atlas base case; the dashed line is NITI Aayog's path.</span></h3>
+  <div id="v2-fan" class="v2-fan"></div>
+  <p class="small">Most of the spread is units, not optimism: grid load is IT capacity × PUE plus headroom, and connection requests are not consumption. NITI Aayog's 16 GW comes with a 40% utilisation, so its electricity (~90 TWh) sits between the market and the government cases. <span class="ev r show" data-src="C&amp;W, Colliers, S&amp;P, Jefferies, IEEFA, Wood Mackenzie, MeitY, CEA, MoP, NITI Aayog (2025–26)">reported</span></p></div>
+<div class="subch" id="forecast">
+  <div class="ch-head">
+    <div class="ch-tag"><span class="ch-num" aria-hidden="true">13.1</span><span class="eyebrow"><a class="rep-l" href="#reports">Report 11</a> · India data centres to 2035</span></div>
+    <h2>A forecast you can argue with</h2>
+    <p class="lede">Three capacity models (growth rate, S-curve and pipeline conversion), checked against how past forecasts actually turned out. The capacity path drives electricity, carbon, water, cost and where in India the new megawatts go. Every slider moves the whole chain, and 1,000 randomised runs draw the uncertainty band around it.</p>
+  </div>
+  <div class="take">
+    <div><span class="v mono">4.7 → 10.8 GW</span><span class="k">Base-case IT capacity, end-2030 and end-2035 <span class="ev m show" data-src="Report 11 integrated model: mean of pipeline and logistic to 2030, logistic × 0.9 after">model</span></span></div>
+    <div><span class="v mono">0.58–0.87×</span><span class="k">Share of forecast capacity that past consultant forecasts actually delivered <span class="ev m show" data-src="Report 11 backtest of JLL 2021 and 2023 forecasts against reported capacity">model</span></span></div>
+    <div><span class="v mono">~6.5 GW</span><span class="k">Median published forecast for 2030; the base case is 0.72× that <span class="ev r show" data-src="CareEdge, Colliers, Arizton, C&amp;W, Rubix, Macquarie, Jefferies, PIB, Wood Mackenzie (Report 11)">reported</span></span></div>
+  </div>
+
+  <div class="panel inst has-fx" id="fc-ctrl">
+    <button type="button" class="fx" aria-expanded="false" aria-controls="fx-fc" title="Show formulas and assumptions">ƒ<span class="sr">Formulas and assumptions: forecast</span></button>
+    <h3>Forecast engine<span class="sub">Four headline sliders explain most of the uncertainty: the S-curve ceiling, how much of the planned pipeline gets built, utilisation and the grid's carbon intensity. Open "More assumptions" for the rest.</span></h3>
+    <div class="fxbox" id="fx-fc" hidden>
+      <div class="fxh">How this is calculated · forecast to 2035</div>
+      <ol class="fxf">
+        <li>CAGR: C(y) = 1,611 × (1 + g)^(y − 2025)</li>
+        <li>Logistic: C(y) = K ÷ (1 + e^(−r(y − t₀))), with t₀ = 2025 + ln(K ÷ 1,611 − 1) ÷ r so the curve passes through end-2025</li>
+        <li>Pipeline: C(y) = 1,789 + 509 × c_UC × f_UC(y) + 3,351 × c_P × f_P(y) + X × f_P(y); f_UC = 0.4, 0.9, 1 for 2026, 2027, 2028+; f_P = 0, 0.12, 0.37, 0.65, 1 for 2026–2030</li>
+        <li>Integrated: 2026–2030 = mean(pipeline, logistic); 2031–2035 = logistic × delivery factor (base 0.9)</li>
+        <li>Electricity: IT TWh = MW × u × 8.76 ÷ 1,000; facility TWh = IT × PUE; u and PUE move linearly 2026 → 2035</li>
+        <li>India requirement (BU) = 1,694 × (1 + g_grid)^(y − 2024); share = facility TWh ÷ BU</li>
+        <li>Carbon: net Mt = facility TWh × EF(y) × (1 − clean(y)); location-based Mt = facility TWh × EF(y). EF and clean share are piecewise linear through 2026, 2030 and 2035</li>
+        <li>Liquid / dry share (Bass): L = 0.20 + (m − 0.20) × F(y − 2025), F(t) = (1 − e^(−(p+q)t)) ÷ (1 + (q/p)e^(−(p+q)t))</li>
+        <li>Conventional WUE = L × 0.1 + (1 − L) × W_air, with W_air = e × WUE_evap + (1 − e) × 0.5 and evaporative share e falling 0.69 → 0.50</li><li>AI share of capacity A: 15% (2026) → your 2030 and 2035 values; AI halls run harder, so their share of IT energy is A × 1.2 ÷ (A × 1.2 + 1 − A)</li><li>AI rack density k moves linearly 2026 → 2035; share of heat to liquid f = 0 at 20 kW, 0.9 × (k − 20) ÷ 110 up to 130 kW, then up to 1.0 at 250 kW</li><li>AI WUE = f × (dry share × 0.05 + (1 − dry share) × 1.5) + (1 − f) × W_air</li><li>Fleet WUE = AI energy share × AI WUE + (1 − AI energy share) × conventional WUE; on-site MLD = IT TWh × WUE × 2.7397</li><li>Power-plant water: L per kWh bought = clean share × source water (solar/wind 0.05, RTC 0.07, reservoir hydro 10, nuclear 2.6, mix 1.93) + (1 − clean) × grid water; grid water = 2.9 L/kWh × EF(y) ÷ 0.675, so it falls as coal's share falls; MLD = facility TWh × L/kWh × 2.7397</li>
+        <li>Build cost (air) = 58.4 × (C(y) ÷ 1,611)^(−b) × (1 + π)^(y − 2025); AI = air × (1 + a); blended = air × (1 + a × AI share), AI share 0.4 → 0.6 (2030) → 0.7 (2035)</li>
+        <li>Capex (₹ crore) = Σ ΔMW × blended cost; excludes land and IT/GPU hardware</li>
+        <li>GPU price (₹/hr) = P₀ × (1 − d)^(y − 2026)</li>
+        <li>Cities 2026–2030: increment over <span data-std="cap.india" data-d="0">1,789</span> MW split 8.6% Vizag, 5.2% other, rest by C&amp;W pipeline shares; 2031–2035 each year's increment split α × current share + (1 − α) × score^k ÷ Σ score^k</li>
+        <li>Monte Carlo: 1,000 runs; K lognormal (σ 0.36) around your value, other inputs triangular or uniform around your values (ranges in the parameter table); K and utilisation correlated (ρ ≈ 0.5). Band = 10th–90th percentile</li>
+      </ol>
+      <div class="fxa"><b>Assumptions</b><ul><li>History is Report 11's harmonised series (375 MW in 2019 to 1,611 MW at end-2025); the C&amp;W H1 2026 figure of <span data-std="cap.india" data-d="0">1,789</span> MW is the anchor.</li><li>K (the ceiling) is a judgement, not a statistical fit: seven early-growth data points cannot identify it.</li><li>State electricity denominators are estimates (≈6%/yr from FY25), not CEA state tables.</li><li>City scores default to Report 11's illustrative values; switch to the live chapter-10 scores below.</li></ul></div>
+    </div>
+    <div class="cols3">
+      <div class="opt"><span class="fieldlbl">Capacity model</span><div class="seg" id="fc-mod" role="group" aria-label="Capacity model"><button data-v="int" aria-pressed="true">Integrated (base)</button><button data-v="log">S-curve</button><button data-v="cagr">Growth rate</button><button data-v="pipe">Pipeline (to 2030)</button></div></div>
+      <div class="opt"><span class="fieldlbl">Scenario presets</span><div class="seg" id="fc-pre" role="group" aria-label="Scenario"><button data-p="low">Low</button><button data-p="base" aria-pressed="true">Base</button><button data-p="high">High</button></div></div>
+      <div class="ctrl"><label for="fc-yr">Show values for</label><output id="fc-yr-o"></output><input id="fc-yr" type="range" min="2026" max="2035" step="1" value="2030"></div>
+    </div>
+    <div class="ctrls" id="fc-main"></div>
+    <div class="fc-wbox"><span class="fieldlbl"><b>Water: AI halls, rack density and the electricity behind them</b></span>
+      <div class="opt"><span class="fieldlbl">The clean share of electricity comes from</span><div class="seg" id="fc-src" role="group" aria-label="Clean power source"><button data-v="sw" aria-pressed="true">Solar + wind</button><button data-v="rtc">RTC solar + wind + storage</button><button data-v="hyd">Reservoir hydro</button><button data-v="nuc">Nuclear</button><button data-v="mix">Mix</button><button data-v="grid">No clean power</button></div></div>
+      <div class="ctrls" id="fc-wat"></div><div class="small" id="fc-wtr"></div></div>
+    <details><summary class="small" style="cursor:pointer"><b>More assumptions</b> · growth rate, delivery factor, PUE, clean power, liquid cooling, costs, GPU prices, grid growth</summary><div class="ctrls" id="fc-more" style="margin-top:12px"></div></details>
+  </div>
+
+  <div class="kpis gap" id="fc-kpi" aria-live="polite"></div>
+
+  <div class="panel gap">
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center">
+      <h3 id="fc-ch-h">Capacity<span class="sub" id="fc-ch-sub"></span></h3>
+      <div class="seg" id="fc-met" role="group" aria-label="Metric"><button data-v="mw" aria-pressed="true">Capacity</button><button data-v="twh">Electricity</button><button data-v="co2">Carbon</button><button data-v="wat">Water on site</button><button data-v="ind">Water at power plants</button><button data-v="wtot">Total water</button><button data-v="cost">Build cost</button><button data-v="capex">Investment</button><button data-v="gpu">GPU-hour</button></div>
+    </div>
+    <div class="chart tall"><canvas id="c-fc" aria-label="Forecast chart"></canvas></div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center"><label class="switch"><input type="checkbox" id="fc-all"> Show all three capacity models</label><span class="xs muted">Shaded band = 10th–90th percentile of 1,000 runs. Dots = reported history.</span></div>
+  </div>
+
+  <div class="panel gap">
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:start">
+      <h3>Where the megawatts go<span class="sub" id="fc-map-sub"></span></h3>
+      <div class="opt"><span class="fieldlbl">City scores</span><div class="seg" id="fc-sc" role="group" aria-label="City scores"><button data-v="rep" aria-pressed="true">Report 11 (illustrative)</button><button data-v="ch10">Live from chapter 15</button></div></div>
+    </div>
+    <div class="mapwrap">
+      <div><div class="fcmap" id="fc-map"></div><p class="xs muted" style="margin-top:6px">Bubble area = IT capacity in the selected year; ring = H1 2026 stock. Official boundary of India. Drag the year slider above to watch the shift.</p></div>
+      <div class="stack"><div class="tbl"><table><thead><tr><th>City</th><th class="n">H1 2026</th><th class="n" id="fc-th-y">2030</th><th class="n">Share</th><th class="n">MLD</th><th class="n">% supply</th></tr></thead><tbody id="fc-ct"></tbody></table></div>
+      <p class="note">Water share uses each city utility's supply (BMC ~4,100, HMWSSB ~2,478, Metrowater 1,245, DJB ~4,555, PMC ~1,222, BWSSB ~1,935, KMC ~1,850, GVMC ~384 MLD). Most "Mumbai" capacity sits in Navi Mumbai, served by NMMC, CIDCO and MIDC, so the true local share is higher.</p></div>
+    </div>
+  </div>
+
+
+  <div class="panel inst hot gap" id="cw-p">
+    <h3>City water range: live and upcoming capacity<span class="sub">Pick the workload mix, the AI rack density, the cooling types you would allow and the power supply. Each city's best and worst case use its own 1991–2020 climate, so the same choices give different litres in Chennai and Bengaluru.</span></h3>
+    <div class="vs-ctrls">
+      <div class="opt"><span class="fieldlbl">Capacity</span><div class="seg" id="cw-cap" role="group" aria-label="Capacity"><button data-v="live">Live (H1 2026)</button><button data-v="up">Upcoming (pipeline)</button><button data-v="both" aria-pressed="true">Live + upcoming</button></div></div>
+      <div class="opt"><span class="fieldlbl">AI rack density</span><div class="seg" id="cw-rd" role="group" aria-label="AI rack density"><button data-v="0">40 kW · air</button><button data-v="1" aria-pressed="true">132 kW · NVL72</button><button data-v="2">190 kW · Vera Rubin</button><button data-v="3">600 kW · Kyber</button></div></div>
+      <div class="opt"><span class="fieldlbl">Cooling allowed (tap to switch on or off)</span><div class="seg" id="cw-cool" role="group" aria-label="Cooling allowed"><button data-v="tower" aria-pressed="true">Cooling towers</button><button data-v="adiab" aria-pressed="true">Adiabatic dry coolers</button><button data-v="aircc" aria-pressed="true">Air-cooled chillers</button><button data-v="dlc" aria-pressed="true">Liquid + dry coolers</button></div></div>
+      <div class="opt"><span class="fieldlbl">Power</span><div class="seg" id="cw-pw" role="group" aria-label="Power"><button data-v="0" aria-pressed="true">State grid</button><button data-v="0.6">60% RTC + grid</button><button data-v="0.9">90% clean, hourly</button></div></div>
+    </div>
+    <div class="ctrls" style="margin-top:10px">
+      <div class="ctrl"><label for="cw-ail">AI share of live capacity</label><output id="cw-ail-o"></output><input id="cw-ail" type="range" min="0" max="60" step="5" value="5"></div>
+      <div class="ctrl"><label for="cw-aiu">AI share of upcoming capacity</label><output id="cw-aiu-o"></output><input id="cw-aiu" type="range" min="0" max="100" step="5" value="35"></div>
+      <div class="ctrl"><label for="cw-hyp">Hyperscale share of the non-AI part</label><output id="cw-hyp-o"></output><input id="cw-hyp" type="range" min="0" max="100" step="5" value="40"></div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:8px"><label class="switch"><input type="checkbox" id="cw-load" checked> Include load uncertainty (±10 points)</label><label class="switch"><input type="checkbox" id="cw-viz" checked> Include Visakhapatnam's announced ~1 GW AI hub</label></div>
+    <div class="read" id="cw-r" style="margin-top:12px"></div>
+    <div class="cw-lg"><span><i class="b"></i>Best case</span><span><i class="w"></i>Worst case</span><span><i class="o"></i>On site (darker) and power stations (lighter)</span><span class="xs muted">Tap a city to show its calculation</span></div>
+    <div class="cw-rows" id="cw-rows"></div>
+    <div class="tbl" style="margin-top:12px"><table class="aif-t" id="cw-t"><thead><tr><th>City</th><th class="n">MW used</th><th class="n">On site MLD<br><small>best · worst</small></th><th class="n">Power stations MLD<br><small>best · worst</small></th><th class="n">Total MLD<br><small>range</small></th><th class="n">% of city supply</th><th>Cooling picked: best · <span style="color:var(--bad)">worst</span></th></tr></thead><tbody id="cw-tb"></tbody></table></div>
+    <p class="small" id="cw-n"></p>
+    <details class="aif-det"><summary>How the best and worst cases are built</summary><ul class="clean xs muted" style="margin-top:6px">
+      <li><b>Best case:</b> for each hall type, the allowed cooling with the least total water per kWh (on site plus the power-station water its PUE causes, at the power supply you chose); the city's annual climate (days-weighted average of 12 monthly values); towers at 6 cycles of concentration (softened or treated make-up); load 10 points below the norm if load uncertainty is on.</li>
+      <li><b>Worst case:</b> the allowed cooling with the most total water per kWh; the city's hottest month for that design; towers at 3 cycles (untreated make-up); load 10 points above the norm. It is a peak-month daily rate, not an annual average.</li>
+      <li><b>Halls:</b> colocation (load 70%, air-cooled, ~8–15 kW racks), hyperscale (75%, air-cooled), AI (80%, with the rack density you choose; 40 kW racks are air-cooled, NVL72 sends 85% of heat to liquid, Vera Rubin 90%, Kyber 100%). Liquid-cooled heat can go to any of the four systems; "liquid + dry coolers" cannot serve air-cooled halls, which then use air-cooled chillers.</li>
+      <li><b>Capacity:</b> live and pipeline MW by city from Cushman &amp; Wakefield H1 2026; Visakhapatnam's ~1 GW (Google–Adani) is announced, not in that pipeline. Supplies: BMC ~4,100, HMWSSB ~2,478, Metrowater 1,245, DJB ~4,555, PMC ~1,222, BWSSB ~1,935, KMC ~1,850, GVMC ~384 MLD. Kolkata has no climate table in the atlas and uses Chennai's (both hot and humid).</li>
+      <li><b>Power-station water</b> uses the India grid factor (2.9 L/kWh at the meter for every city; state generation mixes 1.5–3.5 as a sensitivity) for the grid share and 0.05 L/kWh for clean power.</li></ul></details>
+  </div>
+  <div class="cols gap">
+    <div class="panel">
+      <h3>Grid stress by state<span class="sub" id="fc-st-sub"></span></h3>
+      <div class="hbars" id="fc-state"></div>
+      <p class="note">State data-centre energy = national facility TWh × the state's share of city capacity (UP takes 70% of NCR). State totals are estimates <span class="ev e show" data-src="Report 11: extrapolated ≈6%/yr from FY25; replace with CEA 20th EPS mid-term review state tables">estimate</span>; Maharashtra already shows 4.1% unserved energy in 2031-32 in the CEA adequacy study.</p>
+    </div>
+    
+  </div>
+
+  <div class="cols gap">
+    <div class="panel">
+      <h3>Backtest: how past forecasts turned out</h3>
+      <div class="tbl"><table><thead><tr><th>Forecast</th><th>Predicted</th><th>Outcome</th><th class="n">Delivered</th></tr></thead><tbody>
+        <tr><td>JLL, H1 2021</td><td>499 → 1,008 MW by 2023</td><td>≈875 MW (interpolated)</td><td class="n">0.74 adds · 0.87 level</td></tr>
+        <tr><td>JLL, ~2023</td><td>+681 MW to 1,318 MW by end-2024</td><td>1,030 MW</td><td class="n">0.58 adds · 0.78 level</td></tr>
+        <tr><td>C&amp;W, Feb 2022</td><td>&gt;1 GW under construction, 4–5 years</td><td>≈1,070 MW added by H1 2026</td><td class="n">≈1.0</td></tr>
+        <tr><td>ICRA, Oct 2024</td><td>2,000–2,100 MW by Mar 2027</td><td><span data-std="cap.india" data-d="0">1,789</span> MW at H1 2026</td><td class="n">≈0.9–1.0 (on track)</td></tr>
+        <tr><td>Arizton</td><td>3.5 GW (Feb 2025) → 4.8 GW (Jul 2025)</td><td>Raised 37% in 5 months</td><td class="n">—</td></tr>
+        <tr><td>CEEW / Systemiq</td><td>~US$95 bn committed 2019–2025</td><td>~50% progressed</td><td class="n">≈0.5</td></tr>
+      </tbody></table></div>
+      <p class="note">Projects already under construction deliver almost fully; announcements and plans deliver about half to three-quarters. Hence the integrated path sits near the delivered pipeline, not the headline forecasts.</p>
+    </div>
+    <div class="panel">
+      <h3>What demand alone would justify<span class="sub">Demand-driver regressions for 2030 (Report 11)</span></h3>
+      <div class="hbars" id="fc-drv"></div>
+      <p class="small">ln MW = 2.462 + 0.471 × ln UPI (R² 0.958, n = 7) <span class="ev m show" data-src="Report 11 regression, 2019–2025; descriptive, not causal">model</span>. Consumer and enterprise drivers support about 3.7 GW by 2030. The gap up to the supply-side forecast is AI, hyperscale and sovereign compute, the most cyclical part of the outlook: 82% of H1 2026 absorption was pre-committed hyperscale AI demand (JLL).</p>
+    </div>
+  </div>
+
+  <div class="panel gap">
+    <h3>Forecast table<span class="sub" id="fc-tb-sub">Your settings; P10–P90 from the Monte Carlo in grey</span></h3>
+    <div class="tbl"><table><thead><tr><th>Year</th><th class="n">MW</th><th class="n">Facility TWh</th><th class="n">% of India</th><th class="n">Net MtCO₂</th><th class="n">On-site MLD</th><th class="n">Power-plant MLD</th><th class="n">Total MLD</th><th class="n">Cum. capex ₹ lakh cr</th><th class="n">₹ cr/MW air · AI</th><th class="n">₹/GPU-hr</th></tr></thead><tbody id="fc-tb"></tbody></table></div>
+  </div>
+
+  <div class="do">
+    <h3>What the forecast means</h3>
+    <div class="cols">
+      <ul class="clean small"><li><b>Planners and utilities:</b> plan transmission for the high case (about 14 GW connected load by 2032, close to the CEA's 17 GW and MoP's 13.56 GW estimates). Over-building wires is cheap; stranding a 1 GW campus is not.</li><li><b>Investors:</b> underwrite at no more than 0.7× of announced pipeline, and model ₹ crore per MW rising 2–4% a year, not falling.</li></ul>
+      <ul class="clean small"><li><b>States:</b> make dry or recycled-water cooling a condition of approval in Chennai, Navi Mumbai and Visakhapatnam, and tie incentives to measured, published PUE and WUE.</li><li><b>Biggest swing factors:</b> power and grid connection (±5 GW by 2035), the AI demand cycle (±3–6 GW), GPU export controls, policy, water. Rebase every six months to C&amp;W or JLL actuals.</li></ul>
+    </div>
+  </div>
+</div>
+<div class="subch" id="fc2">
+  <div class="ch-head">
+    <div class="ch-tag"><span class="ch-num" aria-hidden="true">13.2</span><span class="eyebrow">Research · Every forecast side by side</span></div>
+    <h2>Market, NITI Aayog and government numbers, in one place</h2>
+    <p class="lede">The atlas engine above is one forecast. These panels set it beside every published one, convert each to electricity, and show what NITI Aayog and the Central Electricity Authority expect for the whole power system.</p>
+  </div>
+<!-- 2 · CAPACITY -->
+  <div class="cols">
+    
+    <div class="panel"><h3>Where it is being built<span class="sub">Operating IT MW in H1 2026 and supply due by 2030, top seven markets.</span></h3>
+      <div class="tbl"><table class="aif-t"><thead><tr><th>City</th><th class="n">Operating</th><th class="n">Due by 2030</th><th class="n">If all delivered</th></tr></thead><tbody id="ai-city"></tbody></table></div>
+      <p class="xs muted">147 data centres, 33 providers; 178 MW added in H1 2026; colocation vacancy 14.9%. Of the 3,860 MW due, 509 MW is under construction and 3,351 MW at planning stage. Visakhapatnam (Google–Adani, ~1 GW from 2026) is not yet in the base. Named chip deployments are converted to megawatts in <a href="#cti4">11.4</a> (Yotta's 20,736 B300 ≈ 39 MW of IT). <span class="ev r show" data-src="Cushman &amp; Wakefield, India Data Centre H1 2026 update (Sep 2026)">reported</span></p>
+    </div>
+  </div>
+
+  <div class="panel inst hot">
+    <h3>What a forecast means in power and water<span class="sub">Pick a 2030 capacity and how it is run and cooled; the panel converts it into electricity, carbon and water, direct and indirect.</span></h3>
+    <div class="ctrls">
+      <div class="ctrl"><label for="ai-gw">IT capacity in 2030</label><output id="ai-gw-o"></output><input id="ai-gw" type="range" min="2" max="12" step="0.02" value="4.66"></div>
+      <div class="ctrl"><label for="ai-lf">Average IT load</label><output id="ai-lf-o"></output><input id="ai-lf" type="range" min="40" max="85" step="1" value="59"></div>
+      <div class="ctrl"><label for="ai-pue">Fleet PUE</label><output id="ai-pue-o"></output><input id="ai-pue" type="range" min="1.10" max="1.60" step="0.01" value="1.43"></div>
+      <div class="ctrl"><label for="ai-ev">Share of capacity on evaporative cooling</label><output id="ai-ev-o"></output><input id="ai-ev" type="range" min="0" max="100" step="1" value="48"></div>
+      <div class="ctrl"><label for="ai-cl">Clean power share (PPAs)</label><output id="ai-cl-o"></output><input id="ai-cl" type="range" min="0" max="90" step="1" value="43"></div>
+    </div>
+    <div class="read" id="ai-fc-r"></div>
+    <p class="small" id="ai-fc-n"></p>
+  </div>
+
+  <div class="cols">
+    <div class="panel"><h3>Data-centre electricity in 2030–32, by forecast<span class="sub">TWh a year = IT GW × utilisation × PUE × 8.76 (or grid GW × load factor × 8.76); every IT forecast is converted at the atlas 2030 fleet values, 59.5% load and PUE 1.43 (Chapter 13 engine), so the bars differ only in capacity. Market forecasts in blue, NITI Aayog in amber, government load projections in red.</span></h3>
+      <div class="hbars" id="re-dm"></div>
+      <p class="xs muted">The government figures count grid (facility) load from connection requests: about 17 GW had applied to state transmission utilities by May 2026 (secondary report). The 26.3 GW at PUE 1.4 implies ≈19 GW of IT, four times the atlas central case. <span class="ev m show" data-src="This chapter's conversions; inputs from C&amp;W, S&amp;P, Jefferies, Wood Mackenzie, NITI Buildings Vol. 5, MeitY (13 Mar 2026), CEA, MoP (27 Jul 2026)">model</span></p>
+    </div>
+    
+  </div>
+
+  <div class="cols">
+    <div class="panel"><h3>NITI Aayog's power outlook<span class="sub">Scenarios Towards Viksit Bharat and Net Zero (Feb 2026): current policies (CPS) and net zero by 2070 (NZS). The study models 2050 and 2070 only.</span></h3>
+      <div class="tbl"><table class="aif-t"><thead><tr><th></th><th class="n">2023-24</th><th class="n">CPS 2050</th><th class="n">CPS 2070</th><th class="n">NZS 2050</th><th class="n">NZS 2070</th></tr></thead><tbody>
+        <tr><td>Electricity use (TWh)</td><td class="n">1,541</td><td class="n">6,544</td><td class="n">9,718</td><td class="n">8,070</td><td class="n">12,997</td></tr>
+        <tr><td>Per person (kWh)</td><td class="n">1,400</td><td class="n">~4,800</td><td class="n">~7,400</td><td class="n">~6,400</td><td class="n">~10,000</td></tr>
+        <tr><td>Capacity (GW)</td><td class="n">523</td><td class="n">2,500–2,800</td><td class="n">4,650–4,750</td><td class="n">3,800–3,830</td><td class="n">6,800–7,350</td></tr>
+        <tr><td>Solar + wind (GW)</td><td class="n">136</td><td class="n">1,890–2,200</td><td class="n">4,150–4,200</td><td class="n">3,150–3,200</td><td class="n">6,150–6,700</td></tr>
+        <tr><td>Batteries (GW)</td><td class="n">&lt;0.5</td><td class="n">420–520</td><td class="n">1,300–1,400</td><td class="n">900–1,150</td><td class="n">2,500–3,000</td></tr>
+        <tr><td>Grid CO₂ (kg/kWh)</td><td class="n">0.727</td><td class="n">0.328</td><td class="n">0.067</td><td class="n">0.257</td><td class="n">0</td></tr>
+        <tr><td>Data centres (TWh)</td><td class="n">—</td><td class="n" colspan="2">~392 (2050) · ~717 (2070)</td><td class="n" colspan="2">same path in both</td></tr>
+      </tbody></table></div>
+      <ul class="clean xs muted" style="margin-top:8px">
+        <li>NITI's data-centre path: 16 → 64 → 105 GW of IT in 2030, 2050 and 2070, at utilisation 40% → 50% → 60% and PUE 1.6 → 1.4 → 1.3.</li>
+        <li>NITI-affiliated figures disagree: two NITI staff (Dec 2025, personal views) cited S&amp;P's 57 TWh for 2030, against the Buildings volume's ~90 TWh.</li>
+        <li>NITI's older 2030 report (Jul 2025, IESS 2047 tool) assumes 170 GW of renewables; India already had 274.7 GW by March 2026.</li>
+      </ul>
+      <p class="xs muted"><span class="ev r show" data-src="NITI Aayog Power Vol. 7 Table E.1 and Buildings Vol. 5 (Feb 2026); Indian Infrastructure, 10 Dec 2025; NITI 2030 report (Jul 2025)">reported</span></p>
+    </div>
+    <div class="panel"><h3>CEA's nearer-term numbers<span class="sub">Energy requirement and peak demand, original 2023 plan vs the 2026 midterm review.</span></h3>
+      <div class="tbl"><table class="aif-t"><thead><tr><th></th><th class="n">2026-27</th><th class="n">2029-30</th><th class="n">2031-32</th><th class="n">2035-36</th></tr></thead><tbody>
+        <tr><td>Energy, 2023 plan (BU)</td><td class="n">1,908</td><td class="n">—</td><td class="n">2,474</td><td class="n">—</td></tr>
+        <tr><td><b>Energy, midterm review (BU)</b></td><td class="n">1,929</td><td class="n">2,388</td><td class="n">2,703</td><td class="n">3,365</td></tr>
+        <tr><td>Peak, midterm review (GW)</td><td class="n">289</td><td class="n">345</td><td class="n">388</td><td class="n">459</td></tr>
+        <tr><td>Installed capacity (GW)</td><td class="n">610 (plan)</td><td class="n">—</td><td class="n">900 (plan)</td><td class="n">1,121</td></tr>
+        <tr><td>Battery storage</td><td class="n">6 GW / 24 GWh</td><td class="n">—</td><td class="n">47 GW / 236 GWh</td><td class="n">~174 GW / 888 GWh</td></tr>
+      </tbody></table></div>
+      <ul class="clean xs muted" style="margin-top:8px">
+        <li>Demand grows at 6.4% a year to 2035-36; peak at 5.6%. CEA cites data centres and green hydrogen but publishes no data-centre line.</li>
+        <li>Non-fossil capacity reached 283.5 GW in March 2026 (150 GW solar, 56 GW wind) after a record 55.3 GW in FY2025-26, including 6.05 GW of wind. 500 GW by 2030 needs ~59 GW a year.</li>
+        <li>CEA's adequacy plan puts the 2026-27 peak at ~270 GW, against 289 GW in the survey: a different basis, not reconciled.</li>
+      </ul>
+      <p class="xs muted"><span class="ev r show" data-src="CEA 20th EPS and NEP 2023; midterm review via MoP RS Q953/956 (27 Jul 2026); CEA Long-term National Resource Adequacy Plan (Mar 2026, via media); MNRE (Apr 2026)">reported</span></p>
+    </div>
+  </div>
+
+  </div>
+</section>
+<div class="part" id="part-IV"><span class="part-n">Part IV</span><h2>Choose</h2><p>Where to build, what it costs, and which cooling and power to pick.</p></div>
+
+

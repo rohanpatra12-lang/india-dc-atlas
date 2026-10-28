@@ -1,0 +1,116 @@
+<section class="ch chw" id="c4" data-n="7">
+  <div class="chq">
+    <div class="chq-n" aria-hidden="true">7</div>
+    <div class="chq-b"><h2 class="chq-t">Energy and carbon</h2>
+      <p class="chq-q"><span>The question</span>How much electricity do data centres use, and how clean is it?</p>
+      <p class="chq-a"><span>The short answer</span>Every kWh from India's grid emits about <span data-std="co2" data-d="3">0.675</span> kg of CO₂ (CEA, FY2025-26; 0.727 two years earlier), and about 0.96 kg at the margin, where added load is met by coal. An AI campus runs fuller and at a lower PUE than a colocation hall, and when and where it draws power matters as much as how much.</p>
+      <nav class="chq-subs" aria-label="In this chapter"><a href="#carbon">7.1</a></nav>
+    </div>
+  </div>
+<div class="panel inst hot v2core" id="v2-flow"><h3>From coal to chip: where one site's energy and water go<span class="sub">Driven by the scenario bar (and Build a data centre). Top: electricity from the grid and clean sources through the facility to heat. Bottom: water evaporated at power stations and drawn, evaporated and discharged on site.</span></h3>
+  <p class="fieldlbl">Energy, MU a year</p><div class="v2-sk" id="v2-fe"></div>
+  <p class="fieldlbl">Water, ML a year</p><div class="v2-sk" id="v2-fw"></div>
+  <div class="read" id="v2-flow-r"></div><p class="small" id="v2-flow-n"></p></div>
+<div class="subch" id="carbon">
+  <div class="ch-head">
+    <div class="ch-tag"><span class="ch-num" aria-hidden="true">7.1</span><span class="eyebrow"><a class="rep-l" href="#reports">Report 5</a> · Every TWh is not the same</span></div>
+    <h2>Same electricity, very different footprint</h2>
+    <p class="lede">The carbon and water behind a kilowatt-hour depend on five things: source, timing, location, carbon intensity and water intensity. One TWh can mean about 10,000 tCO₂ or about 1,000,000 tCO₂. Where, when and from what you buy power matters more than almost any efficiency gain inside the building.</p>
+  </div>
+  <div class="take">
+    <div><span class="v mono">0.77 Mt</span><span class="k">CO₂ per TWh on the Indian grid, once ~8% network losses are counted</span></div>
+    <div><span class="v mono">174 GW</span><span class="k">Fossil generation at 7 pm vs ~125 GW at 1 pm (Ember, H1 2026)</span></div>
+    <div><span class="v mono">−80–90%</span><span class="k">CO₂ and water from hourly-matched renewables plus batteries</span></div>
+  </div>
+
+  <div class="cols">
+    <div class="panel inst heat">
+      <h3>1 TWh of data-centre load, seven ways<span class="sub">Toggle between carbon and water.</span></h3>
+      <div class="seg" id="mx-toggle" role="group" aria-label="Metric"><button data-m="co2" aria-pressed="true">CO₂ (Mt)</button><button data-m="water">Water consumed (bn L)</button></div>
+      <div class="chart tall"><canvas id="c-matrix" aria-label="Carbon and water by source"></canvas></div>
+      <p class="note">Nuclear with cooling towers is excellent on carbon but close to coal on water. Only wind and dry-cleaned solar, firmed by batteries, are low on both. Norway's hydro water figure is contested and left out of the water view.</p>
+    </div>
+    <div class="panel">
+      <h3>A Karnataka day<span class="sub">Illustrative hourly grid intensity, dry season (gCO₂/kWh). The marginal unit stays coal in most hours.</span></h3>
+      <div class="chart tall"><canvas id="c-hours" aria-label="Hourly grid intensity"></canvas></div>
+      <p class="note">Based on a modelled third-party dashboard (90-day Karnataka range ~210–603 g). No official hourly or marginal factor exists for India.</p>
+    </div>
+  </div>
+  <div class="panel inst"><h3>Move the load to the clean hours<span class="sub">The Karnataka day above, sorted from dirtiest to cleanest hour. Shift part of a data centre's daily energy from the dirtiest hours into the cleanest.</span></h3>
+    <div class="ctrls">
+      <div class="ctrl"><label for="vz-dur-f">Flexible energy moved each day</label><output id="vz-dur-f-o"></output><input id="vz-dur-f" type="range" min="0" max="40" step="5" value="20"></div>
+      <div class="ctrl"><label for="vz-dur-h">Headroom above normal load</label><output id="vz-dur-h-o"></output><input id="vz-dur-h" type="range" min="10" max="60" step="5" value="30"></div>
+    </div>
+    <div class="vz-scroll" style="margin-top:8px"><svg id="vz-dur" class="vz-svg" viewBox="0 0 640 280" role="img" aria-label="Grid carbon duration curve with data-centre load"></svg></div>
+    <div class="read" id="vz-dur-r" style="margin-top:8px"></div>
+    <p class="xs muted">How to read it: grey bars are grid intensity, sorted; the dashed line is a flat load and the green line the shifted one. Average accounting rewards shifting into the solar hours; against the marginal plant (coal in nearly every hour) the saving is small or negative, which is why hourly clean-power contracts matter more than timing alone. Training jobs and batch work can move; live inference mostly cannot. <span class="ev m show" data-src="Atlas illustrative Karnataka profile">model</span></p>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel inst">
+      <h3>Load-shift calculator<span class="sub">Move flexible work (training, batch inference, backups) from the evening peak into solar hours. India's ToD rules give ≥20% off in solar hours and ≥20% extra at peak.</span></h3>
+      <div class="ctrls">
+        <div class="ctrl"><label for="ls-mw">Shiftable load (MW)</label><output id="ls-mw-o"></output><input id="ls-mw" type="range" min="1" max="100" step="1" value="20"></div>
+        <div class="ctrl"><label for="ls-h">Hours shifted per day</label><output id="ls-h-o"></output><input id="ls-h" type="range" min="1" max="8" step="1" value="4"></div>
+        <div class="ctrl"><label for="ls-d">Days per year</label><output id="ls-d-o"></output><input id="ls-d" type="range" min="100" max="365" step="5" value="365"></div>
+        <div class="ctrl"><label for="ls-t">Base tariff (₹/kWh)</label><output id="ls-t-o"></output><input id="ls-t" type="range" min="5" max="10" step="0.1" value="7"></div>
+      </div>
+      <div class="read" id="ls-read"></div>
+      <p class="note">Carbon uses an average-intensity difference of 0.30 t/MWh between evening and solar hours. On curtailment days the marginal saving is larger still.</p>
+    </div>
+    <div class="panel inst hot">
+      <h3>Five-factor scorecard<span class="sub">Score a site or power contract 1–5 on each factor. Weights: carbon 30%, water 25%, source 20%, timing 15%, location 10%.</span></h3>
+      <div class="seg" id="sc-presets" role="group" aria-label="Scorecard preset"><button data-p="grid" aria-pressed="true">Bengaluru, grid only</button><button data-p="green">24/7 renewables + BESS + dry</button></div>
+      <div class="ctrls" id="sc-ctrls"></div>
+      <div class="read" id="sc-read"></div>
+    </div>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel">
+      <h3>Lifecycle carbon by source<span class="sub">gCO₂e/kWh, IPCC AR5 medians</span></h3>
+      <div class="hbars" id="lc-bars"></div>
+      <p class="note">Real Indian coal units run at 900–1,100 g. CEA grid average 675 g (FY2025-26); Ember 670 g (2025); Karnataka's consumption mix ≈500 g (estimate). The NEP pathway implies ~430 g by FY2031-32.</p>
+    </div>
+    <div class="panel">
+      <h3>Water consumed by source<span class="sub">L/MWh, typical. Indian coal plants use about twice the world average.</span></h3>
+      <div class="hbars" id="ws-bars"></div>
+      <p class="note">CSE found about half of non-seawater coal capacity broke the 3.5 m³/MWh limit. Raichur ran 87% over it and has shut for lack of Krishna water.</p>
+    </div>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel">
+      <h3>Annual matching hides the gap<span class="sub">Microsoft Scope 2 emissions, Mt CO₂e: location-based vs market-based.</span></h3>
+      <div class="chart short"><canvas id="c-msft" aria-label="Microsoft location vs market based emissions"></canvas></div>
+      <p class="note">Location-based rose 130% from FY20 to FY24 while market-based fell 43%. Google reached 66% hourly carbon-free energy globally in 2024 but only 12% in Asia-Pacific. The GHG Protocol is moving to hourly matching (~2027).</p>
+    </div>
+    <div class="panel">
+      <h3>Carbon per IT-kWh, worked<span class="sub"><button type="button" class="g" data-g="CUE">CUE</button> = PUE × grid factor (for grid-only supply)</span></h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Case</th><th class="n">kgCO₂/IT-kWh</th></tr></thead>
+        <tbody>
+          <tr><td>PUE 1.5 on Indian grid (0.77 at meter)</td><td class="n">1.16</td></tr>
+          <tr><td>PUE 1.5 on Karnataka mix (0.50)</td><td class="n">0.75</td></tr>
+          <tr><td>PUE 1.5 with 90% hourly clean energy</td><td class="n">0.17</td></tr>
+          <tr><td>Same compute in France</td><td class="n">~0.05–0.09</td></tr>
+        </tbody></table></div>
+    </div>
+  </div>
+
+  <div class="do">
+    <h3>What to do</h3>
+    <div class="cols">
+      <ul class="clean small"><li><b>Operators</b>: contract 24/7, not annual: solar + wind hybrids with 2–4 h batteries via green open access or group captive, targeting ≥80–90% hourly CFE.</li><li>Shift flexible jobs into the eight solar hours; sign demand-response deals with BESCOM/KPTCL like Google's with TVA.</li><li>Report location-based and market-based Scope 2, hourly CFE%, and site + source water.</li></ul>
+      <ul class="clean small"><li><b>Regulators</b>: CEA should publish hourly and marginal emission factors and a residual mix.</li><li>Publish metered plant-level water use; enforce the 3.5/3.0 m³/MWh norms.</li><li>Karnataka should adopt Andhra Pradesh's announced 70% renewable rule, but measured hour by hour.</li></ul>
+    </div>
+  </div>
+</div>
+  <div class="panel inst" id="dx-em-p"><h3>Embodied carbon and electronic waste<span class="sub">The carbon built into the hardware and the building, spread over their lives, next to the carbon from electricity. GPUs are replaced every few years, so their embodied carbon recurs.</span></h3>
+    <div class="seg" id="dx-em-hw" role="group" aria-label="Hardware"><button data-v="gb300" aria-pressed="true">GB300-class AI</button><button data-v="h100" aria-pressed="false">H100-class AI</button><button data-v="cpu" aria-pressed="false">CPU colocation</button></div>
+    <div class="ctrls" style="margin-top:10px"><div class="ctrl"><label for="dx-em-mw">IT capacity</label><output id="dx-em-mw-o"></output><input id="dx-em-mw" type="range" min="5" max="500" step="5" value="50"></div><div class="ctrl"><label for="dx-em-ref">Hardware replaced every</label><output id="dx-em-ref-o"></output><input id="dx-em-ref" type="range" min="3" max="8" step="1" value="5"></div><div class="ctrl"><label for="dx-em-cl">Clean power share</label><output id="dx-em-cl-o"></output><input id="dx-em-cl" type="range" min="0" max="100" step="5" value="0"></div></div>
+    <div id="dx-em-r" style="margin-top:10px"></div>
+    <p class="small" id="dx-em-n"></p>
+    <p class="xs muted">GPU: NVIDIA's HGX H100 product carbon footprint is 1,312 kg CO₂e per 8-GPU baseboard (cradle to gate, 24 kg), 164 kg per GPU; memory is 42% of it. A full server adds CPUs, memory, chassis and power supplies: × 2.5 (1.8–4, atlas estimate). CPU servers: ~1 t each (estimate). Building, power and cooling plant: 1,500 t per MW (800–2,500, estimate) over 25 years. Load 78%, PUE 1.2, grid 0.675 t/MWh. Rack masses ~1.4 t (GB300 NVL72), ~0.9 t (H100), ~0.8 t (CPU). Under the E-Waste (Management) Rules 2022, a data centre as bulk consumer must send retired equipment only to registered recyclers or refurbishers and file returns; UPS batteries fall under the Battery Waste Management Rules 2022. <span class="ev r show" data-src="NVIDIA HGX H100 PCF summary; E-Waste Rules 2022">reported</span> <span class="ev e show" data-src="Atlas estimates for servers, building and masses">estimate</span></p>
+  </div>
+</section>

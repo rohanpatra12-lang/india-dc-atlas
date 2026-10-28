@@ -1,0 +1,372 @@
+<section class="ch chw" id="c5" data-n="8">
+  <div class="chq">
+    <div class="chq-n" aria-hidden="true">8</div>
+    <div class="chq-b"><h2 class="chq-t">Water, direct and indirect</h2>
+      <p class="chq-q"><span>The question</span>How much water does a data centre use, and how does it compare with other industries?</p>
+      <p class="chq-a"><span>The short answer</span>A 100 MW AI campus on cooling towers evaporates about 3.4 million litres a day on site (2.8–4.5 by climate) and about 6 million more at power stations (4.7–7.2 across the India grid range): 9.3 MLD in all, less than a steel plant or a chip fab, but concentrated in water-stressed cities.</p>
+      <nav class="chq-subs" aria-label="In this chapter"><a href="#water">8.1</a><a href="#wp">8.2</a><a href="#aif">8.3</a></nav>
+    </div>
+  </div>
+<div class="subch" id="water">
+  <div class="ch-head">
+    <div class="ch-tag"><span class="ch-num" aria-hidden="true">8.1</span><span class="eyebrow"><a class="rep-l" href="#reports">Report 6</a> · From litres used to water impact</span></div>
+    <h2>Withdrawal, consumption and scarcity are three different numbers</h2>
+    <p class="lede"><b>Withdrawal</b> is what you draw. <b>Consumption</b> is what never comes back, mostly evaporation. <b>Scarcity weighting</b> asks how much that loss hurts where it happens. A 50 MW evaporative site is 0.09% of city supply, but about 4% of Bangalore East's sustainable groundwater.</p>
+  </div>
+  <div class="take">
+    <div><span class="v mono">1.5 L/kWh</span><span class="k">Water evaporated per kWh of heat rejected (physics floor for towers)</span></div>
+    <div><span class="v mono">~13×</span><span class="k">Power-station water vs on-site water for a 100 MW liquid-cooled site</span></div>
+    <div><span class="v mono">3.5×</span><span class="k">Peak-day to average water demand at an adiabatic AI site (April–May)</span></div>
+  </div>
+
+  <div class="cols">
+    <div class="panel inst">
+      <h3>Cooling-tower water balance, 50 MW hyperscale<span class="sub">Annual ML at 80% load. <button type="button" class="g" data-g="CoC">CoC</button> is how many times water is reused before it is bled off.</span></h3>
+      <div class="seg" id="wb-mode" role="group" aria-label="Treatment mode"><button data-m="std" aria-pressed="true">Standard</button><button data-m="ro">Treated wastewater + RO</button><button data-m="zld">Zero liquid discharge</button></div>
+      <div class="ctrl"><label for="coc">Cycles of concentration</label><output id="coc-o">5</output><input id="coc" type="range" min="2" max="10" step="0.5" value="5"></div>
+      <div class="wb" id="wb"></div>
+      <div class="read" id="wb-read"></div>
+      <p class="small" id="wb-text"></p>
+    </div>
+    <div class="stack">
+      <div class="panel">
+        <h3>The season matters<span class="sub">Monthly withdrawal, MLD, for the 50 MW evaporative site. The peak lands when tankers are scarcest.</span></h3>
+        <div class="chart short"><canvas id="c-season" aria-label="Seasonal water profile"></canvas></div>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel">
+      <h3>Scarcity-weighted water footprint<span class="sub">Mm³-equivalent a year, 50 MW, illustrative AWARE-style factors</span></h3>
+      <div class="chart tall"><canvas id="c-wsf" aria-label="Scarcity-weighted footprint"></canvas></div>
+      <p class="note">Dry cooling cuts the footprint ~54% vs evaporative on groundwater; adding renewables cuts it ~96%. Once groundwater is out, off-site Krishna-basin water is the largest term.</p>
+    </div>
+    <div class="panel">
+      <h3>Impact scorecard<span class="sub">Weighted 1 (low) – 5 (high impact) across volume, source, timing, location and off-site water.</span></h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Scenario</th><th class="n">Score</th><th>Decision</th></tr></thead>
+        <tbody>
+          <tr><td>A · Evaporative, Bangalore East groundwater</td><td class="n">4.6</td><td><span class="chip bad">Refuse</span></td></tr>
+          <tr><td>B · Evaporative, BWSSB potable</td><td class="n">4.0</td><td><span class="chip bad">Redesign</span></td></tr>
+          <tr><td>C · Evaporative, treated water + RO</td><td class="n">3.8</td><td><span class="chip warn">Conditional</span></td></tr>
+          <tr><td>F · 100 MW AI, DLC on treated water</td><td class="n">3.3</td><td><span class="chip warn">Conditional</span></td></tr>
+          <tr><td>D · Dry cooling</td><td class="n">2.6</td><td><span class="chip good">Acceptable</span></td></tr>
+          <tr><td>E · Dry + renewable PPA</td><td class="n">1.9</td><td><span class="chip good">Preferred</span></td></tr>
+        </tbody></table></div>
+    </div>
+  </div>
+
+  <div class="tbl gap"><table>
+    <thead><tr><th>Bengaluru scenario</th><th class="n">Site WUE</th><th class="n">Source WUE</th><th class="n">L per H100-hour (site/total)</th><th class="n">mL per prompt (site/total)</th></tr></thead>
+    <tbody>
+      <tr><td>S1 · 20 MW colo, evaporative</td><td class="n">1.80</td><td class="n">3.90</td><td class="n">1.8 / 3.9</td><td class="n">0.39 / 0.84</td></tr>
+      <tr><td>S2 · 50 MW hyperscale, evaporative CoC 5</td><td class="n">1.85</td><td class="n">3.80</td><td class="n">1.85 / 3.8</td><td class="n">0.43 / 0.88</td></tr>
+      <tr><td>S3 · 50 MW dry</td><td class="n">0.05</td><td class="n">2.23</td><td class="n">0.05 / 2.2</td><td class="n">0.01 / 0.46</td></tr>
+      <tr><td>S4 · 100 MW AI, DLC + adiabatic</td><td class="n">0.13</td><td class="n">1.86</td><td class="n">0.13 / 1.9</td><td class="n">0.03 / 0.48</td></tr>
+    </tbody></table></div>
+
+  <div class="cols gap">
+    <div class="panel">
+      <h3>Suggested thresholds</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Indicator</th><th>Green</th><th>Amber</th><th>Red</th></tr></thead>
+        <tbody>
+          <tr><td>Site consumption WUE (L/kWh)</td><td>≤0.2</td><td>0.2–1.0</td><td>&gt;1.0</td></tr>
+          <tr><td>Groundwater for cooling, over-exploited taluk</td><td>0%</td><td>—</td><td>&gt;0%</td></tr>
+          <tr><td>Withdrawal ÷ taluk recharge</td><td>&lt;0.5%</td><td>0.5–1%</td><td>&gt;1%</td></tr>
+          <tr><td>Peak ÷ average without curtailment plan</td><td>&lt;1.5</td><td>1.5–3</td><td>&gt;3</td></tr>
+          <tr><td>Source WUE (L/kWh)</td><td>&lt;1.0</td><td>1.0–2.5</td><td>&gt;2.5</td></tr>
+        </tbody></table></div>
+    </div>
+    <p class="small xref">The seven metrics every site should publish are in <a href="#cscope4">9.4</a>, next to what operators publish today.</p>
+  </div>
+  <div class="panel inst gap" id="wpic">
+    <h3>Water you can picture<span class="sub">Turn million litres into people, tanker trucks and swimming pools, then test the site against a 2024-style summer.</span></h3>
+    <div class="seg" id="wp-pre" role="group" aria-label="Facility"><button data-v="p20" aria-pressed="true">20 MW colo · towers</button><button data-v="p50">50 MW hyperscale · towers</button><button data-v="p100">100 MW AI · liquid + dry</button><button data-v="sim">Your simulator design</button></div>
+    <label class="switch"><input type="checkbox" id="wp-off"> Include water consumed at power stations</label>
+    <div class="read" id="wp-read"></div>
+    <div><span class="fieldlbl" id="wp-ppl-l"></span><div class="icons" id="wp-ppl" aria-hidden="true"></div></div>
+    <div><span class="fieldlbl" id="wp-tk-l"></span><div class="icons tk" id="wp-tk" aria-hidden="true"></div></div>
+    <div class="callout cold"><b class="t">Stress test: a 2024-style summer</b><span class="small">In March 2024, 6,997 of Bengaluru's 14,781 public borewells failed after a weak 2023 monsoon. BWSSB banned non-essential use of potable water, tanker prices surged until the authorities capped them, and groundwater extraction in Bengaluru Urban rose from about 600 MLD in 2020 to 1,457 MLD. Evaporative cooling peaks in April–May at about 1.3× its average, exactly when supply is tightest.</span></div>
+    <div class="ctrls">
+      <div class="ctrl"><label for="ws-cut">Cut in city water supply</label><output id="ws-cut-o"></output><input id="ws-cut" type="range" min="0" max="60" step="5" value="30"></div>
+      <div class="ctrl"><label for="ws-bw">Share of borewells that fail</label><output id="ws-bw-o"></output><input id="ws-bw" type="range" min="0" max="80" step="1" value="47"></div>
+      <div class="ctrl"><label for="ws-tp">Price per 12,000-litre tanker</label><output id="ws-tp-o"></output><input id="ws-tp" type="range" min="600" max="3000" step="100" value="1500"></div>
+      <div class="ctrl"><label for="ws-st">On-site water storage</label><output id="ws-st-o"></output><input id="ws-st" type="range" min="0" max="20" step="0.5" value="3"></div>
+    </div>
+    <div class="read" id="ws-read"></div>
+    <p class="small" id="ws-text"></p>
+    <p class="note">Assumptions <span class="ev e show" data-src="135 L/person/day (CPHEEO urban norm); 12,000-litre tanker; Olympic pool 2.5 million litres; BWSSB delivered supply ~1,935 MLD (Legislative Council, Aug 2026); Bangalore East sustainable groundwater ~45 MLD (series estimate); borewell failure 47% = 6,997 ÷ 14,781 (March 2024). Tanker price is a user input.">estimate</span>: 135 litres per person per day, 12,000-litre tankers, 2.5 million-litre Olympic pools. BWSSB delivers about 1,935 MLD. A borewell failure share of 47% is the March 2024 figure.</p>
+  </div>
+
+</div>
+<div class="subch" id="wp">
+  <div class="ch-head">
+    <div class="ch-tag"><span class="ch-num" aria-hidden="true">8.2</span><span class="eyebrow"><a class="rep-l" href="#reports">Report 12</a> · Water and energy, calculated</span></div>
+    <h2>Power is water</h2>
+    <p class="lede">The cooling system sets a site's own water bill. The grid sets most of its total water, because Indian coal plants evaporate about 3 litres for every kWh they deliver. The charts below trace both, hour by hour and over a year, and show where cheap power and scarce water pull in opposite directions.</p>
+  </div>
+  <div class="take">
+    <div><span class="v mono">~2.9 L/kWh</span><span class="k">Water evaporated at power plants per kWh delivered on the Indian grid (range 2.3–3.5; 3.8 at the margin) <span class="ev m show" data-src="73% coal × 3.5 m³/MWh + nuclear and gas (Ember 2025 mix), ÷ 0.92 network losses">model</span></span></div>
+    <div><span class="v mono">6×</span><span class="k">Off-site water of a dry-cooled 100 MW Bengaluru AI campus versus the on-site water of a 20 MW cooling-tower colo in Mumbai <span class="ev m show" data-src="Report 12 worked examples A and C">model</span></span></div>
+    <div><span class="v mono">₹1.17 → ₹9.90</span><span class="k">Exchange power price, 11:00 low versus 22:30 high, June 2026. Water use peaks at midday, when power is cheapest. <span class="ev r show" data-src="IEX day-ahead hourly averages via earthsync (Report 12)">reported</span></span></div>
+  </div>
+
+  <!-- 1 Power vs water -->
+  <div class="panel has-fx">
+    <button type="button" class="fx" aria-expanded="false" aria-controls="fx-wp1" title="Show formulas and assumptions">ƒ<span class="sr">Formulas and assumptions: power versus water</span></button>
+    <h3>Power versus water: every cooling technology<span class="sub">Each box spans the typical annual PUE and on-site water (WUE) range in Indian climates. Dots are published fleet figures. Switch on the grid's water to see where each design really lands.</span></h3>
+    <div class="fxbox" id="fx-wp1" hidden>
+      <div class="fxh">How this is calculated · power vs water</div>
+      <ol class="fxf">
+        <li>On-site view: box = [WUE low, WUE high] × [PUE low, PUE high] from the Report 12 cooling table</li>
+        <li>Total-water view: source WUE = WUE + PUE × grid water intensity (EWIF); box corners move by PUE × EWIF</li>
+        <li>Grid water intensity default 2.9 L/kWh at the meter (India grid; 3.8 at the margin; state generation mixes 1.5–3.5)</li>
+      </ol>
+      <div class="fxa"><b>Assumptions</b><ul><li>Ranges are engineering estimates for Indian climates [proxy], cross-checked against LBNL 2024 and operator data.</li><li>Fleet dots: Microsoft FY25 (global and Asia-Pacific), NTT DATA FY24 portfolio, LBNL US average 2023, Google PUE 2025 with fleet WUE 2024 (different years). Bases differ (withdrawal vs consumption).</li></ul></div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px 22px;align-items:end">
+      <div class="opt"><span class="fieldlbl">Water counted</span><div class="seg" id="wp1-m" role="group" aria-label="Water counted"><button data-v="site" aria-pressed="true">On-site only</button><button data-v="src" aria-pressed="false">On-site + power plants</button></div></div>
+      <div class="ctrl" style="min-width:230px"><label for="wp1-e">Grid water intensity</label><output id="wp1-e-o"></output><input id="wp1-e" type="range" min="0.3" max="6.5" step="0.1" value="2.9"></div>
+    </div>
+    <div id="wp1" class="wpsvg" role="img" aria-label="PUE versus water use for cooling technologies"></div>
+    <div id="wp1-d" class="small" aria-live="polite"></div>
+    <p class="note">On site, the trade-off is real: air-cooled chillers use no water but more power. Count the power plants' water too, and the boxes reorder. Each extra 0.1 of PUE costs about 0.3 L/kWh of coal-plant water, so a 1.6-PUE "waterless" site can use more water than a 1.2-PUE adiabatic one.</p>
+  </div>
+
+  <!-- 2 Hourly -->
+  <div class="panel gap has-fx">
+    <button type="button" class="fx" aria-expanded="false" aria-controls="fx-wp2" title="Show formulas and assumptions">ƒ<span class="sr">Formulas and assumptions: hourly profile</span></button>
+    <h3>One hot day, hour by hour<span class="sub">A 50 MW hyperscale site in Hyderabad on a May design day, 42 MW of IT load all day. Bars are water drawn each hour; the line is the second measure you choose.</span></h3>
+    <div class="fxbox" id="fx-wp2" hidden>
+      <div class="fxh">How this is calculated · hourly profile</div>
+      <ol class="fxf">
+        <li>Temperature: Report 12 May design day, 27 °C at 05:00 to 40 °C at 15:00 (2-hourly points, interpolated)</li>
+        <li>Adiabatic: PUE(T) = 1.22 + 0.015 × max(0, T − 25); WUE(T) = 0 below 26 °C, else min(1.6, 0.1 + 0.107 × (T − 26))</li>
+        <li>Cooling towers: WUE(T) = 1.9 + 0.4 × (T − 27) ÷ 13; PUE(T) = 1.30 + 0.10 × (T − 27) ÷ 13</li>
+        <li>Dry + liquid: WUE = 0.03; PUE(T) = 1.15 + 0.008 × max(0, T − 25)</li>
+        <li>Water (kL/h) = IT MW × WUE; facility MW = IT MW × PUE</li>
+        <li>Dry at noon: inside the window WUE = 0 and PUE + penalty; extra cost = extra MWh × exchange price</li>
+      </ol>
+      <div class="fxa"><b>Assumptions</b><ul><li>Adiabatic functions and design day are Report 12 models; they give 905 kL and 1,358 MWh for the day.</li><li>Tower and dry curves are illustrative [model], tuned to the Report 12 ranges (towers nearly flat at 1.9–2.3 L/kWh; dry ≈ 0).</li><li>Exchange prices are shaped to June 2026 IEX hourly averages (trough ₹1.17 at 11:00, peak ₹9.90 at 22:30) [reported, shape is a proxy].</li><li>The +0.10 PUE "dry" penalty is an assumption for running chillers with pads off.</li><li>Report 12 says an 11:00–16:00 window halves the peak hour; on its own profile the 16:00–17:00 hours stay hot, so a window to about 18:00 is needed to cut the peak substantially.</li></ul></div>
+    </div>
+    <div class="cols3">
+      <div class="opt"><span class="fieldlbl">Cooling design</span><div class="seg" id="wp2-c" role="group" aria-label="Cooling design"><button data-v="adi" aria-pressed="true">Adiabatic</button><button data-v="twr" aria-pressed="false">Cooling towers</button><button data-v="dry" aria-pressed="false">Dry + liquid</button></div></div>
+      <div class="opt"><span class="fieldlbl">Line shows</span><div class="seg" id="wp2-l" role="group" aria-label="Line"><button data-v="mw" aria-pressed="true">Facility power (MW)</button><button data-v="px" aria-pressed="false">Exchange price (₹/kWh)</button><button data-v="t" aria-pressed="false">Temperature (°C)</button></div></div>
+      <div style="display:grid;gap:8px">
+        <label class="switch"><input type="checkbox" id="wp2-dry"> "Dry at noon": switch off evaporation in a window</label>
+        <div class="ctrls" id="wp2-win" style="grid-template-columns:1fr 1fr">
+          <div class="ctrl"><label for="wp2-s">From</label><output id="wp2-s-o"></output><input id="wp2-s" type="range" min="6" max="18" step="1" value="10"></div>
+          <div class="ctrl"><label for="wp2-e">To (end of hour)</label><output id="wp2-e-o"></output><input id="wp2-e" type="range" min="7" max="22" step="1" value="18"></div>
+        </div>
+      </div>
+    </div>
+    <div class="chart tall"><canvas id="c-wp2" aria-label="Hourly water and power"></canvas></div>
+    <div class="read" id="wp2-r"></div>
+  </div>
+
+  <!-- 3 Histogram + heatmap -->
+  <div class="panel gap has-fx">
+    <button type="button" class="fx" aria-expanded="false" aria-controls="fx-wp3" title="Show formulas and assumptions">ƒ<span class="sr">Formulas and assumptions: annual hours</span></button>
+    <h3>All 8,760 hours of a year<span class="sub">The same adiabatic site, run through a whole year of typical temperatures. The histogram counts how many hours fall at each rate of water draw; the grid shows when they happen.</span></h3>
+    <div class="fxbox" id="fx-wp3" hidden>
+      <div class="fxh">How this is calculated · annual hours</div>
+      <ol class="fxf">
+        <li>Hourly temperature = monthly mean minimum + (mean maximum − mean minimum) × shape(h); shape rises as a half-cosine from 05:00 to 15:00 and falls over the next 14 h</li>
+        <li>Water each hour (kL) = IT MW × WUE(T), with the adiabatic WUE(T) above</li>
+        <li>Annual WUE = Σ water ÷ Σ IT energy; wet-mode hours = hours above 28 °C</li>
+        <li>Peak-month factor = highest month's daily water ÷ annual daily average</li>
+      </ol>
+      <div class="fxa"><b>Assumptions</b><ul><li>Monthly mean maxima and minima are approximate IMD normals [proxy]; replace with ISHRAE typical-year files.</li><li>Smooth normals miss heatwaves, so true peaks are higher; Report 12 uses 0.45 L/kWh for Hyderabad to allow for this.</li><li>The model uses dry-bulb only. In humid Mumbai and Chennai, evaporation cools less, so real adiabatic designs save less water than shown.</li></ul></div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px 22px;align-items:end">
+      <div class="opt"><span class="fieldlbl">City climate</span><div class="seg" id="wp3-c" role="group" aria-label="City"><button data-v="hyd" aria-pressed="true">Hyderabad</button><button data-v="blr" aria-pressed="false">Bengaluru</button><button data-v="del" aria-pressed="false">Delhi NCR</button><button data-v="bom" aria-pressed="false">Mumbai</button><button data-v="maa" aria-pressed="false">Chennai</button></div></div>
+      <div class="opt"><span class="fieldlbl">Histogram of</span><div class="seg" id="wp3-m" role="group" aria-label="Measure"><button data-v="w" aria-pressed="true">Water (kL/h)</button><button data-v="p" aria-pressed="false">Facility power (MW)</button></div></div>
+    </div>
+    <div class="read" id="wp3-r"></div>
+    <div class="cols">
+      <div><div class="chart"><canvas id="c-wp3" aria-label="Histogram of hourly water draw"></canvas></div></div>
+      <div><div id="wp3-hm" class="wpsvg" role="img" aria-label="Water draw by month and hour"></div><p class="xs muted" style="margin-top:4px">Darker = more water drawn that hour (kL/h, 42 MW IT). Rows are months, columns are hours of the day.</p></div>
+    </div>
+  </div>
+
+  <!-- 4 direct vs indirect, cost vs water -->
+  <div class="cols gap">
+    <div class="panel">
+      <h3>Where the water goes<span class="sub">Annual water for the three Report 12 worked examples: on site versus at the power plants that supply them.</span></h3>
+      <div class="seg" id="wp4-m" role="group" aria-label="Power source"><button data-v="g" aria-pressed="true">Grid power</button><button data-v="re" aria-pressed="false">90% round-the-clock renewables</button></div>
+      <div class="chart"><canvas id="c-wp4" aria-label="Direct and indirect water by example"></canvas></div>
+      <p class="note">On grid power, the Bengaluru AI campus uses almost no water on site but the most in total. A 90% renewable supply cuts total water by 60–85% in every case; changing the cooling cannot do that.</p>
+    </div>
+    <div class="panel">
+      <h3>Cost versus water, by how you buy power<span class="sub">Each dot is one procurement option for one worked example: landed ₹ per kWh against total water per year. Down and to the left is better.</span></h3>
+      <div class="chart"><canvas id="c-wp5" aria-label="Landed cost versus total water"></canvas></div>
+      <p class="note">Group-captive renewables sit in the bottom-left corner every time. A DISCOM "green tariff" costs more without moving the dot down, because the electricity still comes from the same plants. Ranges for Bengaluru options are shown at their midpoints.</p>
+      <p class="xs muted">● DISCOM tariff &nbsp; ▲ DISCOM green tariff &nbsp; ◆ group-captive renewables &nbsp; ■ third-party renewables over the inter-state grid</p>
+    </div>
+  </div>
+
+  <!-- 5 grid water + peaks -->
+  <div class="cols gap">
+    <div class="panel">
+      <h3>Where grid water comes from<span class="sub">Litres evaporated per kWh, by source, for India's FY25 generation mix. Coal is almost all of it.</span></h3>
+      <div class="seg" id="wp6-m" role="group" aria-label="Hydro"><button data-v="lo" aria-pressed="true">Hydro: operational only</button><button data-v="hi" aria-pressed="false">Hydro: include reservoir evaporation</button></div>
+      <div class="chart short"><canvas id="c-wp6" aria-label="Grid water intensity by source"></canvas></div>
+      <h4 style="margin:6px 0 0">By state (proxy ranges, L/kWh delivered)</h4>
+      <div class="chart short"><canvas id="c-wp7" aria-label="Grid water intensity by state"></canvas></div>
+    </div>
+    <div class="panel">
+      <h3>Peaks size the pipes<span class="sub">How far the peak day and peak hour rise above the annual average. Water connections and storage are sized to these, not to the yearly total.</span></h3>
+      <div class="chart"><canvas id="c-wp8" aria-label="Peak factors by cooling system"></canvas></div>
+      <h4 style="margin:6px 0 0">Hours a year that adiabatic coolers run wet (above ~28 °C)</h4>
+      <div class="chart short"><canvas id="c-wp9" aria-label="Wet-mode hours by city"></canvas></div>
+    </div>
+  </div>
+
+  <!-- 6 tower balance + prompt -->
+
+  <!-- HOW THE CAPACITIES ARE FOUND -->
+  <div class="panel gap" id="kc-p">
+    <h3>How the capacities are found: the worked check<span class="sub">The capacities are not set by a formula. An hourly optimisation chooses them, so that the 65 MW load is met in all 8,760 hours at the lowest cost, under a cap on water. Pick an option to see its sizes, then every number checked by hand: energy in equals energy out, the cost adds up, and the water sits exactly on its cap.</span></h3>
+    <div class="vs-ctrls"><div><label for="kc-o" class="fieldlbl">Option on the frontier</label><select id="kc-o"></select></div></div>
+    <div class="cols">
+      <div><h4 class="cx-h4">1 · What one unit of each source costs (₹ per year)</h4><div class="tbl"><table class="kc-t"><thead><tr><th>Source</th><th>Annual cost per unit</th><th class="n">Delivered ₹/kWh</th></tr></thead><tbody id="kc-u"></tbody></table></div>
+      <p class="xs muted">CRF(10%, 25 years) = 0.10 × 1.1²⁵ ÷ (1.1²⁵ − 1) = 0.1102. Open access ₹1.0/kWh is paid on renewable energy actually used, not on curtailed energy.</p></div>
+      <div><h4 class="cx-h4">2 · What the optimiser chose for this option</h4><div class="read" id="kc-c"></div><p class="small" id="kc-why"></p></div>
+    </div>
+    <div class="cols">
+      <div><h4 class="cx-h4">3 · Energy check for the year (MWh)</h4><div class="tbl"><table class="kc-t"><tbody id="kc-e"></tbody></table></div></div>
+      <div><h4 class="cx-h4">4 · Cost and water check</h4><div class="tbl"><table class="kc-t"><tbody id="kc-k"></tbody></table></div></div>
+    </div>
+    <details class="cx-dt"><summary>The optimisation itself, in plain words</summary>
+      <ol class="cx-ol">
+        <li><b>It decides</b> four sizes (solar MW, wind MW, hydro contract MW up to 40, battery MWh) and, for each of the 8,760 hours, how much hydro, grid, battery charge and discharge, and curtailment to use: 52,564 numbers in all.</li>
+        <li><b>Every hour</b> solar MW × that hour's solar profile + wind MW × wind profile + hydro + battery discharge + grid − battery charge − curtailment must equal 65 MW.</li>
+        <li><b>The battery</b> loses 12% of what passes through it, can never hold more than its size, can charge or discharge at most a quarter of its size per hour (a 4-hour unit), and ends the year as full as it started.</li>
+        <li><b>Hydro</b> cannot exceed its contract in any hour, or the reservoir's monthly allowance (45% of the contract in January, up to 85% in August).</li>
+        <li><b>It minimises</b> the total annual cost from step 1. For the cheapest option there is no water limit; for the others, total water must stay below a cap set between the minimum possible water and the cheapest option's water.</li>
+        <li><b>The answer</b> is whatever mix meets every hour at the least cost. Capacities rise or fall together: more solar is only worth adding if the battery can store its midday surplus, and a bigger battery is only worth it if there is surplus to store.</li>
+      </ol>
+    </details>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel has-fx">
+      <button type="button" class="fx" aria-expanded="false" aria-controls="fx-wp10" title="Show formulas and assumptions">ƒ<span class="sr">Formulas and assumptions: cooling tower water balance</span></button>
+      <h3>Inside a cooling tower<span class="sub">Where each litre of make-up water goes. Raising cycles of concentration (cleaner water, softening or RO) is the cheapest saving at existing tower sites.</span></h3>
+      <div class="fxbox" id="fx-wp10" hidden>
+        <div class="fxh">How this is calculated · tower water balance</div>
+        <ol class="fxf"><li>Heat rejected Q = 1.25 kWh of heat per kWh IT (chiller COP 5–7)</li><li>Evaporation E = Q × latent share × 3,600 ÷ 2,430 kJ/kg</li><li>Blowdown B = E ÷ (CoC − 1)</li><li>Drift D = 0.002 L per kWh of heat</li><li>WUE = E + B + D per kWh IT</li></ol>
+        <div class="fxa"><b>Assumptions</b><ul><li>Latent heat at ~30 °C; latent share 0.75–0.95 (default 0.85) [proxy].</li><li>NTT DATA's evaporative sites reported 1.42–2.93 L/kWh in FY22–24 [reported].</li></ul></div>
+      </div>
+      <div class="ctrls">
+        <div class="ctrl"><label for="wp10-c">Cycles of concentration (CoC)</label><output id="wp10-c-o"></output><input id="wp10-c" type="range" min="2" max="10" step="0.5" value="4"></div>
+        <div class="ctrl"><label for="wp10-f">Share of heat removed by evaporation</label><output id="wp10-f-o"></output><input id="wp10-f" type="range" min="0.75" max="0.95" step="0.01" value="0.85"></div>
+      </div>
+      <div class="chart short"><canvas id="c-wp10" aria-label="Tower water balance"></canvas></div>
+      <div class="read" id="wp10-r"></div>
+    </div>
+    
+  </div>
+
+  <!-- 7 calculator -->
+  
+
+  <div class="do">
+    <h3>What the numbers say to do</h3>
+    <div class="cols">
+      <ul class="clean small"><li><b>Buy power before choosing cooling.</b> Above 20 MW, group-captive round-the-clock renewables are the cheapest option in two of three worked examples and cut total water by 70–85%.</li><li><b>Size water to the peak day.</b> Adiabatic sites in Hyderabad and Delhi need supply and storage for about twice the average day.</li><li><b>Run dry at noon when water is short.</b> The extra electricity costs little at midday exchange prices.</li></ul>
+      <ul class="clean small"><li><b>Coastal cities:</b> avoid freshwater towers in Chennai, Mumbai, Kolkata and Vizag; use treated sewage, seawater, or liquid cooling with dry coolers.</li><li><b>Get industrial tariff status.</b> In Maharashtra the commercial category costs about ₹1.78/kVAh more.</li><li><b>Report both waters.</b> Publish withdrawal and consumption, on-site and grid, as Karnataka's 2026 policy now asks.</li></ul>
+    </div>
+  </div>
+</div>
+<div class="subch" id="aif">
+  <div class="ch-head">
+    <div class="ch-tag"><span class="ch-num" aria-hidden="true">8.3</span><span class="eyebrow">Research · AI data centres: anatomy, capacity and water, compared with factories</span></div>
+    <h2>How thirsty is an AI data centre next to a steel plant?</h2>
+    <p class="lede">A 100 MW AI campus cooled by towers evaporates about 3.4 million litres a day on site. Its electricity costs another 4.7–7.2 million litres a day at power stations (India grid, 2.3–3.5 L/kWh). That is less than a coal plant, a steel plant, a paper mill or the Tata–PSMC chip fab, and close to a large cement plant. The risk is not how much water each campus uses, but where they are being built (water-stressed metros) and how fast they are being added. This chapter sets out what is inside an AI data centre, how much capacity India is forecast to build, where its water goes, and how it compares with other industry.</p>
+  </div>
+  <div class="take">
+    <div><span class="v mono">3.4 · 9.3 MLD</span><span class="k">Water for a 100 MW-IT AI campus with cooling towers: on site, then including power-station water (India grid; 7.5–11.7) <span class="ev m show" data-src="This chapter: WUE 1.8 L/kWh (1.5–2.4 by climate), 78% load, PUE 1.10 (direct-to-chip + towers), India grid 2.9 L/kWh (2.3–3.5)">model</span></span></div>
+    <div><span class="v mono">4.2–12 GW</span><span class="k">Published 2030 forecasts of India's IT capacity, against <span data-std="cap.india" data-d="0">1,789</span> MW operating in H1 2026. The atlas uses 4.66 GW as its central case <span class="ev r show" data-src="Cushman &amp; Wakefield H1 2026; Colliers May 2025; S&amp;P Global; Jefferies; Wood Mackenzie">reported</span></span></div>
+    <div><span class="v mono">⅔</span><span class="k">Share of the world's data-centre water that is evaporated at power stations, not on site: 373 of 560 billion litres in 2023 <span class="ev r show" data-src="IEA, Energy and AI (April 2025)">reported</span></span></div>
+    <div><span class="v mono">24×</span><span class="k">Meta's 2024 power-station water against its data centres' own consumption (72,207 vs 2,974 ML) <span class="ev r show" data-src="Meta 2025 Environmental Data Index">reported</span></span></div>
+  </div>
+
+  <!-- 3 · WATER -->
+  <div class="cols">
+    <div class="panel"><h3>Direct, indirect, embodied<span class="sub">The world's data centres, 2023, billion litres consumed.</span></h3>
+      <div class="aif-stack" id="aif-iea" role="img" aria-label="Global data-centre water split"></div>
+      <ul class="clean small" style="margin-top:10px">
+        <li><b>Direct</b>: evaporated and drained by cooling on site. Set by the cooling type and climate.</li>
+        <li><b>Indirect</b>: evaporated at power stations to make the electricity. Set by the grid mix: ~5 L/kWh for the India grid (atlas assumption for coal with towers), ~0.1 for solar.</li>
+        <li><b>Embodied</b>: used to make the chips and servers (ultrapure water at fabs).</li>
+        <li>The IEA projects ~1,200 billion litres by 2030. A <i>Patterns</i> (Cell) study argues indirect water is undercounted: at 3.4 L/kWh it alone would be ~1,225 billion litres.</li>
+      </ul>
+      <p class="xs muted"><span class="ev r show" data-src="IEA Energy and AI (2025); Patterns (Cell) 2025">reported</span></p>
+    </div>
+    
+  </div>
+
+  <!-- 4 · FACTORIES -->
+  <div class="panel inst hot">
+    <h3>An AI data centre next to other factories<span class="sub">Size the data centre and choose its rack density, cooling and power; compare its water with representative Indian industrial plants or with plants in and around Bengaluru and elsewhere in Karnataka. Data-centre bars split direct (dark) and power-station (light) water; factory bars show direct water, with the faded part covering the published range.</span></h3>
+    <div class="vs-ctrls">
+      <div class="opt"><span class="fieldlbl">Cooling</span><div class="seg" id="ai-cool" role="group" aria-label="Cooling"><button data-v="t" aria-pressed="true">Cooling towers</button><button data-v="h">Liquid + adiabatic</button><button data-v="d">Liquid + dry coolers</button></div></div>
+      <div class="opt"><span class="fieldlbl">Electricity</span><div class="seg" id="ai-grid" role="group" aria-label="Electricity"><button data-v="2.9" aria-pressed="true">India grid</button><button data-v="1.54">Karnataka mix</button><button data-v="1.19">60% RTC + India grid</button><button data-v="0.34">90% solar + wind</button></div></div>
+      <div class="opt"><span class="fieldlbl">Rack density</span><div class="seg" id="ai-rd" role="group" aria-label="Rack density"><button data-v="0">8 kW · air</button><button data-v="1" aria-pressed="true">132 kW · NVL72</button><button data-v="2">190 kW · Vera Rubin</button><button data-v="3">600 kW · Kyber</button></div></div>
+      <div class="opt"><span class="fieldlbl">Compare with</span><div class="seg" id="ai-reg" role="group" aria-label="Compare with"><button data-v="in" aria-pressed="true">Indian benchmarks</button><button data-v="blr">Bengaluru &amp; Karnataka</button></div></div>
+      <div class="opt"><span class="fieldlbl">Compare by</span><div class="seg" id="ai-view" role="group" aria-label="Compare by"><button data-v="mld" aria-pressed="true">Water a day</button><button data-v="ppl">People equivalent</button><button data-v="inv">Per ₹1,000 crore invested</button></div></div>
+    </div>
+    <div class="ctrls"><div class="ctrl"><label for="ai-mw">AI campus IT capacity</label><output id="ai-mw-o"></output><input id="ai-mw" type="range" min="20" max="1000" step="10" value="100"></div></div>
+    <div class="aif-cmp" id="ai-cmp" role="img" aria-label="Water comparison"></div>
+    <div class="read" id="ai-cmp-r" style="margin-top:12px"></div>
+    <p class="small" id="ai-cmp-n"></p>
+    <div class="aif-rd" id="ai-rd-t"></div>
+    <p class="fieldlbl" style="margin-top:12px">The same, drawn to scale (circle area = water a day; data centre includes power-station water)</p><div class="circs" id="v2-circ"></div>
+<details class="aif-det"><summary>Sources and caveats for each plant</summary>
+      <div class="tbl"><table class="aif-t"><thead><tr><th>Plant (assumed scale)</th><th>Intensity</th><th class="n">MLD</th><th>Basis</th></tr></thead><tbody id="ai-src"></tbody></table></div>
+      <ul class="clean xs muted" style="margin-top:8px">
+        <li>Factory figures are mostly withdrawal; data-centre WUE can be either. Factories' own power-station water is not added: a fab or a steel plant drawing 100+ MW would add a similar amount again.</li>
+        <li>A data centre's indirect water is the power station's water. Do not add both when summing a state's industrial water.</li>
+        <li>Beverage, refinery, fertiliser, pharma, aluminium and leather benchmarks were not checked against primary sources and are left out rather than estimated.</li>
+        <li><b>Karnataka plants:</b> JSW Vijayanagar (Ballari, ~300 km from Bengaluru) and West Coast Paper (Dandeli, ~450 km) draw river water, the Tungabhadra and the Kali, not Bengaluru's supply; they show what a large Karnataka industrial user looks like. The JSW figure is an estimate from an old intensity; modern plants recycle more, so it is likely an upper bound. <b>Around Bengaluru:</b> the Yelahanka plant runs entirely on treated sewage and Toyota meets about 95% of its need from recycled and rain water, so their draw on Cauvery or groundwater is far smaller than the bar. The data-centre bars assume fresh water unless the campus is designed for treated wastewater. TVS reports one company-wide figure; Hosur is its largest plant but not the whole of it. No published water figure was found for Foxconn (Devanahalli), Wistron (Narasapura), Bosch (Bidadi) or the large breweries, so they are left out.</li>
+        <li><b>Rack density</b> changes the share of heat taken by liquid (0 at 8 kW air, 85% NVL72, 90% Vera Rubin, 100% Kyber). With towers, all heat is still evaporated, so density barely moves on-site water; with adiabatic or dry heat rejection, warm liquid loops avoid chillers and spray hours, lowering WUE and PUE.</li>
+      </ul>
+    </details>
+  </div>
+
+  <div class="cols">
+    <div class="panel"><h3>Numbers that do not add up<span class="sub">Widely quoted figures for India that conflict with a bottom-up estimate.</span></h3>
+      <div class="tbl"><table class="aif-t"><thead><tr><th>Claim</th><th>Source</th><th>Bottom-up check</th></tr></thead><tbody>
+        <tr><td>India's data centres use 150 bn L in 2025 → 358 bn L by 2030</td><td>Mordor Intelligence (method not disclosed)</td><td>≈79 bn L in 2025 including power-station water (1.5 GW × 70% × WUE 1.8, PUE 1.5, 2.9 L/kWh); ≈210–245 bn L in 2030 at 4.66 GW</td></tr>
+        <tr><td>Bengaluru's data centres use "over 26 million litres annually"</td><td>Dialogue Earth via WION</td><td>Far too low: 162 MW would use that in about 5 days if on towers</td></tr>
+        <tr><td>Bengaluru's data centres use "about 20 million litres per day"</td><td>WELL Labs via Newslaundry (26 ML/MW/yr assumed)</td><td>Too high: even if every site used towers, 162 MW × 70% × 1.8 ≈ 4.9 MLD; permissions held ≈ 2.2 MLD (Down To Earth)</td></tr>
+        <tr><td>Global direct data-centre water</td><td>IEA: 140 bn L (2023) vs Rystad: 222 bn L (2025)</td><td>Rystad is ~60% higher for a two-year gap; treat as a range</td></tr>
+      </tbody></table></div>
+      <p class="xs muted"><span class="ev m show" data-src="This chapter's bottom-up estimates using atlas standards">model</span></p>
+    </div>
+    <div class="panel"><h3>Water stress where the campuses go<span class="sub">The intensity is moderate; the location is not.</span></h3>
+      <ul class="clean small">
+        <li><b>Bengaluru</b>: groundwater extraction at 177% of recharge (CGWB 2025); the city draws ~2,000 MLD from the Cauvery against demand of up to 3,000 MLD.</li>
+        <li><b>Hyderabad</b>: drinking and industrial shortfall projected at 870–909 MLD by 2027–28; the state policy promises "continuous water supply for heavy duty cooling".</li>
+        <li><b>India</b>: more than half of ~271 data centres sit in water-stressed regions (WRI India); S&amp;P expects 60–80% to face high stress this decade.</li>
+        <li><b>Policy</b>: no national data-centre policy and no binding WUE rule. Only 5 of 15 state policies mention sustainability; only Rajasthan's (2025) requires recycling, zero liquid discharge and recharge.</li>
+      </ul>
+      <p class="xs muted"><span class="ev r show" data-src="OpenCity / CGWB 2025; Down To Earth; Deccan Chronicle; WRI India; S&amp;P Global; Schneider Electric India policy review (Sep 2026)">reported</span></p>
+    </div>
+  </div>
+
+  <div class="do">
+    <h3>What to do with it</h3>
+    <div class="cols">
+      <ul class="clean small"><li><b>Judge sites by basin, not by litres per MW.</b> A 100 MW campus is smaller than a cement plant, but ten of them in one stressed city is a new town's worth of demand. States should set a basin water budget covering fabs, data centres and power plants together (Narmada for Dholera, Vizag, Bengaluru Urban).</li><li><b>Mandate the water source.</b> Any evaporative cooling should run on treated wastewater; in CGWA over-exploited blocks, only dry or closed-loop cooling should be allowed.</li><li><b>Count the power-station water.</b> At the India grid's 2.9 L/kWh clean power saves more water than any cooling choice, and dry cooling still beats towers on total water.</li></ul>
+      <ul class="clean small"><li><b>Disclose by site.</b> Add site-level WUE, withdrawal and consumption to BRSR: no Indian operator publishes a WUE today.</li><li><b>Report forecasts with their units.</b> Every capacity number should say IT, facility or grid MW, and operating, under construction or announced.</li><li><b>Do not cite the 150 billion litre figure as fact.</b> Show it beside a bottom-up estimate and say they conflict.</li><li><b>Gaps</b>: forecasts from Goldman Sachs, McKinsey, BNEF, ICRA and CRISIL, and water benchmarks for beverages, refineries and pharma, were not checked against primary sources.</li></ul>
+    </div>
+  </div>
+</div>
+</section>
+
+

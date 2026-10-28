@@ -1,0 +1,308 @@
+<section class="ch chw" id="cti" data-n="11">
+  <div class="chq">
+    <div class="chq-n" aria-hidden="true">11</div>
+    <div class="chq-b"><h2 class="chq-t">AI training and AI inference: two jobs, one kind of building</h2>
+      <p class="chq-q"><span>The question</span>How does a data centre that trains AI models differ from one that answers people's prompts, and how much electricity and water does one prompt really cost?</p>
+      <p class="chq-a"><span>The short answer</span>The chips and racks are now largely the same. What differs is how the load behaves and where it sits: training runs thousands of GPUs flat out, in lockstep, for weeks, wherever power is cheap and plentiful; inference follows the day's demand from users, sits near cities and carries more backup. One short prompt uses a quarter to a third of a watt-hour (0.24–0.34 Wh, measured by Google and OpenAI) and about 0.6–1.8 mL of water once the power station is counted, but billions a day add up: over a model's life, serving it uses more energy and water than training it.</p>
+      <nav class="chq-subs" aria-label="In this chapter"><a href="#cti1">11.1</a><a href="#cti2">11.2</a><a href="#cti3">11.3</a><a href="#cti4">11.4</a><a href="#cti6">11.5</a><a href="#csz">11.6</a></nav>
+    </div>
+  </div>
+
+<div class="subch" id="cti1">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">11.1</span><span class="eyebrow">Research · Hardware</span></div>
+    <h2>Two jobs on increasingly similar machines</h2>
+    <p class="lede">Training builds a model; inference uses it. A useful picture: training is writing and printing a textbook once, and inference is every reader opening it, every day, for years.</p></div>
+  <div class="cti-two">
+    <div class="cai-card ai"><h4>Training: teaching the model</h4>
+      <p class="small">The model reads trillions of words (tokens), guesses the next one, checks the answer and adjusts billions of internal numbers. It does this millions of times. The work is split across thousands of GPUs that must finish each step together before any can start the next, so they all run, and pause, at once.</p>
+      <ul class="clean small"><li><b>One job</b> on 16,000 to over 200,000 GPUs</li><li><b>Weeks to months</b> of non-stop running (Llama 3.1 405B: 16,384 H100s for 54 days)</li><li><b>Can wait or move</b>: nobody is waiting for an answer, so it can go where power is cheap</li><li><b>Restarts from a saved copy</b> (a checkpoint) if a GPU fails, which happened every ~3 hours on Llama 3.1</li></ul></div>
+    <div class="cai-card cv"><h4>Inference: answering prompts</h4>
+      <p class="small">A finished model receives a prompt, reads it (the "prefill" step) and writes the reply one token at a time (the "decode" step). Each request is small and runs on one to a few racks; thousands of copies of the model serve millions of people at once.</p>
+      <ul class="clean small"><li><b>Millions of small jobs</b>, each lasting seconds</li><li><b>Follows people's day</b>: busier in the evening, quieter at night</li><li><b>Must be fast and always on</b>: sits near users, with full backup power</li><li><b>Lasts as long as the model is in use</b>, often years, so its total grows past training</li></ul></div>
+  </div>
+
+  <div class="panel gap" id="chip-p">
+    <h3>The chips: one sourced record each<span class="sub">From the atlas standards register (dense figures, per accelerator). Server power is the vendor's system maximum ÷ GPUs where published; marked estimates use TDP plus the same host share. Prices are rentals, the only prices published for most of these chips.</span></h3>
+    <div class="tbl"><table class="aif-t cai-t"><thead><tr><th>Chip</th><th>Memory</th><th class="n">Bandwidth</th><th class="n">BF16 · FP8 · FP4 (dense)</th><th class="n">TDP</th><th class="n">Server kW per GPU</th><th>Cooling · scale-up link</th><th class="n">Rent per GPU-hour</th></tr></thead><tbody id="chip-spec"></tbody></table></div>
+    <details class="aif-det"><summary>Not in the register yet</summary><div class="tbl"><table class="aif-t cai-t"><tbody>
+      <tr><td><b>Vera Rubin</b></td><td>Training and the decode step</td><td>up to 2,300 W (analyst estimate)</td><td>288 GB HBM4</td><td>NVIDIA has not published the power</td></tr>
+      <tr><td><b>Rubin CPX</b></td><td>Inference, the prefill step for long prompts</td><td>~800 W (estimate)</td><td>128 GB GDDR7</td><td>Cheaper memory, because prefill needs compute more than bandwidth</td></tr>
+      <tr><td><b>L4 / L40S / RTX PRO 6000</b></td><td>Inference, vision, small models</td><td>72–600 W</td><td>GDDR</td><td>Air-cooled ordinary servers; enterprise and edge use</td></tr></tbody></table></div></details>
+    <p class="small" id="chip-spec-n"></p>
+    <div class="cols gap">
+      <div><h4 class="cti-h4">Lower precision</h4><p class="small">Training mostly works with 16- or 8-bit numbers. Inference is moving to 8- and 4-bit numbers, and each halving roughly doubles the answers per watt. That is a big reason Google's energy per prompt fell 33× in one year.</p></div>
+      <div><h4 class="cti-h4">Memory is the bottleneck</h4><p class="small">Writing a reply token by token is limited by how fast the chip can read the model from memory, not by raw compute. That is why inference chips advertise memory size and speed, and why NVIDIA splits prefill (CPX) from decode (HBM GPUs).</p></div>
+      <div><h4 class="cti-h4">Batches</h4><p class="small">Training feeds huge batches through thousands of GPUs at once. Inference batches are limited by how long a user will wait for the first word, so its GPUs average well below peak power.</p></div>
+    </div>
+    <p class="xs muted">Sources per chip are in the register on the Reference page: NVIDIA product pages and DGX user guides; AMD datasheets; Google Ironwood announcement; Intel Gaudi 3 white paper; Lenovo Press; cloud price pages (AIMultiple, Spheron, E2E via Ancapex); IndiaAI L1 rates (PIB, Business Standard). Vera Rubin and CPX: SemiAnalysis and Ming-Chi Kuo estimates. <span class="ev r show" data-src="NVIDIA product pages and CES 2026; SemiAnalysis; Ming-Chi Kuo; HPE GB200 specs; Google Ironwood announcement; Meta Llama 3 paper">reported</span> <span class="ev e show" data-src="Vera Rubin and CPX power: SemiAnalysis and Ming-Chi Kuo estimates">estimate</span></p>
+  </div>
+  <div class="panel gap" id="mlp-p"><h3>Measured inference throughput (MLPerf)<span class="sub">Inference text generated: output tokens per second. Latency bounds: Llama 3.1 8B Server first token ≤2 s and ≤100 ms per token (Interactive 0.5 s, 30 ms); GPT-OSS-120B 3 s, 80 ms; DeepSeek-R1 2 s, 80 ms; Llama 2 70B Server 2 s, 200 ms.</span></h3>
+    <div class="tbl"><table class="aif-t cai-t"><thead><tr><th>Chip · system</th><th>Model</th><th>Precision</th><th>Scenario</th><th class="n">System tokens/s</th><th class="n">GPUs</th><th class="n">Per GPU</th><th>Round · entry</th></tr></thead><tbody><tr><td>H200 SXM · 1 GPU</td><td>Llama 3.1 8B</td><td>FP8</td><td>Offline (no bound)</td><td class="n">7,797</td><td class="n">1</td><td class="n"><b>7,797</b></td><td class="xs">v6.1 (individual submitter)</td></tr><tr><td>H200 SXM · 1 GPU</td><td>Llama 3.1 8B</td><td>FP8</td><td>Server</td><td class="n">7,377</td><td class="n">1</td><td class="n"><b>7,377</b></td><td class="xs">v6.1</td></tr><tr><td>H100 SXM · 1 GPU</td><td>Llama 3.1 8B</td><td>FP8</td><td>Server</td><td class="n">5,103</td><td class="n">1</td><td class="n"><b>5,103</b></td><td class="xs">v5.1 (Red Hat; no v6 H100 result)</td></tr><tr><td>HGX B200 · 8 GPUs (Lambda)</td><td>Llama 3.1 8B</td><td>FP4</td><td>Server</td><td class="n">130,008</td><td class="n">8</td><td class="n"><b>16,251</b></td><td class="xs">v6.0 · 6.0-0062</td></tr><tr><td>B300 · 1 GPU</td><td>Llama 3.1 8B</td><td>FP4</td><td>Server</td><td class="n">20,420</td><td class="n">1</td><td class="n"><b>20,420</b></td><td class="xs">v6.1</td></tr><tr><td>MI355X · 8 GPUs (Dell)</td><td>Llama 3.1 8B</td><td>FP8</td><td>Server · Interactive</td><td class="n">148,563 · 130,540</td><td class="n">8</td><td class="n"><b>18,570 · 16,318</b></td><td class="xs">secondary compilation</td></tr><tr><td>B300 · 1 GPU</td><td>Llama 2 70B</td><td>FP4</td><td>Server</td><td class="n">14,496</td><td class="n">1</td><td class="n"><b>14,496</b></td><td class="xs">v6.1 · 6.1-0103</td></tr><tr><td>HGX B300 · 8 GPUs, air-cooled (ASUS)</td><td>Llama 2 70B</td><td>FP4</td><td>Server</td><td class="n">113,455</td><td class="n">8</td><td class="n"><b>14,182</b></td><td class="xs">v6.1</td></tr><tr><td>MI355X · 8 GPUs (AMD)</td><td>Llama 2 70B</td><td>FP4</td><td>Server · Interactive</td><td class="n">103,275 · 73,192</td><td class="n">8</td><td class="n"><b>12,909 · 9,149</b></td><td class="xs">v6.1 · 6.1-0003</td></tr><tr><td>H200 · 8 GPUs (CoreWeave)</td><td>Llama 2 70B</td><td>FP8</td><td>Server</td><td class="n">33,000</td><td class="n">8</td><td class="n"><b>4,125</b></td><td class="xs">v5.0</td></tr><tr><td>B300 · 8 GPUs</td><td>GPT-OSS-120B</td><td>MXFP4</td><td>Server</td><td class="n">—</td><td class="n">8</td><td class="n"><b>14,211</b></td><td class="xs">v6.1 · 6.1-0052</td></tr><tr><td>MI355X · 8 GPUs (AMD)</td><td>GPT-OSS-120B</td><td>MXFP4</td><td>Server</td><td class="n">113,241</td><td class="n">8</td><td class="n"><b>14,155</b></td><td class="xs">v6.1 · 6.1-0003</td></tr><tr><td>MI355X · 72 GPUs (AMD)</td><td>GPT-OSS-120B</td><td>MXFP4</td><td>Server</td><td class="n">964,468</td><td class="n">72</td><td class="n"><b>13,395</b></td><td class="xs">v6.1 · 6.1-0004</td></tr><tr><td>MI355X · 512 GPUs (Crusoe)</td><td>GPT-OSS-120B</td><td>MXFP4</td><td>Server</td><td class="n">5,392,930</td><td class="n">512</td><td class="n"><b>10,533</b></td><td class="xs">v6.1 · 6.1-0027</td></tr><tr><td>B200 · 8 GPUs</td><td>GPT-OSS-120B</td><td>MXFP4</td><td>Server</td><td class="n">—</td><td class="n">8</td><td class="n"><b>11,276</b></td><td class="xs">v6.1 · 6.1-0021</td></tr><tr><td>H200 · 8 GPUs (Red Hat)</td><td>GPT-OSS-120B</td><td>MXFP4</td><td>Server</td><td class="n">—</td><td class="n">8</td><td class="n"><b>3,013</b></td><td class="xs">v6.0 · 6.0-0092</td></tr><tr><td>B300 · 8 GPUs</td><td>DeepSeek-R1</td><td>FP4</td><td>Server</td><td class="n">—</td><td class="n">8</td><td class="n"><b>8,846</b></td><td class="xs">v6.1 · 6.1-0046</td></tr><tr><td>GB300 NVL72 · 72 GPUs</td><td>DeepSeek-R1</td><td>NVFP4</td><td>Server</td><td class="n">—</td><td class="n">72</td><td class="n"><b>8,064</b></td><td class="xs">v6.0</td></tr><tr><td>MI355X · 512 GPUs (Crusoe)</td><td>DeepSeek-R1</td><td>FP4</td><td>Server</td><td class="n">2,405,310</td><td class="n">512</td><td class="n"><b>4,698</b></td><td class="xs">v6.1 · 6.1-0026</td></tr></tbody></table></div>
+    <div class="cols gap">
+      <div><h4 class="cti-h4">Read per GPU with care</h4><p class="small">Per-GPU throughput is the system result ÷ GPUs; MLCommons does not publish it as a metric. The same chip varies 4% (MI355X) to 13.5% (B300) between submitters in one round.</p></div>
+      <div><h4 class="cti-h4">Scale costs throughput</h4><p class="small">MI355X keeps 94.6% of its per-GPU throughput from 8 to 72 GPUs (964,468 ÷ (113,241 × 9)), but 512 GPUs deliver 10,533 per GPU, 74% of the 8-GPU figure.</p></div>
+      <div><h4 class="cti-h4">Software moves fastest</h4><p class="small">AMD's same 8 × MI355X system went from 10,267 to 14,155 tokens/s per GPU on GPT-OSS-120B between v6.0 and v6.1 (+37.9%) after a ROCm update: more than the gap between B300 and MI355X. Hopper rows come from older rounds and understate it today.</p></div>
+    </div>
+    <p class="xs muted">MLCommons MLPerf Inference v5.0–v6.1 results via NVIDIA, AMD ROCm blog, Crusoe, CoreWeave, Supermicro, Red Hat and GPU Insights' per-GPU recomputation (2026). <span class="ev r show" data-src="MLCommons MLPerf Inference v5.0–v6.1">reported</span> <span class="ev e show" data-src="MI355X Llama 3.1 8B row: secondary compilation of a Dell entry">single source</span></p></div>
+
+
+  <div class="cols gap">
+    <div class="panel"><h3>Rack power<span class="sub">Frontier inference racks are now as dense as training racks; inference halls average lower only because they also hold ordinary servers.</span></h3>
+      <div class="tbl"><table class="aif-t"><thead><tr><th>Rack</th><th>kW per rack</th><th>Cooled by</th></tr></thead><tbody>
+        <tr><td>Average rack worldwide (Uptime, 2025)</td><td>~7.6</td><td>Air</td></tr>
+        <tr><td>8-GPU H200 / B200 servers</td><td>10–14 per server; 30–40 per rack</td><td>Air, rear door or liquid</td></tr>
+        <tr><td>GB200 NVL72</td><td>~120–132</td><td>~115 kW liquid, ~17 kW air</td></tr>
+        <tr><td>GB300 NVL72</td><td>132–142 (peaks ~155)</td><td>~85% liquid, 15% air</td></tr>
+        <tr><td>Vera Rubin NVL72</td><td>~180–230 (estimates)</td><td>100% liquid, no fans</td></tr>
+        <tr><td>Vera Rubin NVL144 CPX (inference)</td><td>~370 (estimate)</td><td>Liquid</td></tr>
+        <tr><td>Rubin Ultra "Kyber" (2027)</td><td>~600, heading to 1 MW</td><td>Liquid, 800 V DC power</td></tr>
+      </tbody></table></div>
+      <p class="xs muted">HPE, SemiAnalysis, NVIDIA roadmap, Uptime Institute. <span class="ev r show" data-src="HPE; SemiAnalysis; NVIDIA GTC roadmap; Uptime Institute 2025">reported</span></p></div>
+    <div class="panel"><h3>What the building must do differently<span class="sub">Industry practice; there is no standard that defines a "training" or an "inference" hall.</span></h3>
+      <div class="tbl"><table class="aif-t cai-t"><thead><tr><th></th><th>Training hall</th><th>Inference hall</th></tr></thead><tbody>
+        <tr><td><b>Cooling</b></td><td>85–100% direct-to-chip liquid, warm water (30–45 °C)</td><td>Mix: liquid for NVL72 racks, air for ordinary servers</td></tr>
+        <tr><td><b>Network</b></td><td>Every GPU talks to every other: one 400–800 Gb/s link and optics per GPU</td><td>Small groups of racks, far less traffic between them</td></tr>
+        <tr><td><b>Backup power</b></td><td>N or N+1; a job can restart from a checkpoint, so cuts are tolerable</td><td>2N, Tier III/IV-like: users cannot wait</td></tr>
+        <tr><td><b>Power smoothing</b></td><td>Batteries or capacitors to absorb sudden swings (xAI: ~150 MW of Tesla Megapacks)</td><td>Not needed</td></tr>
+        <tr><td><b>Floor</b></td><td colspan="2">An NVL72 rack weighs 1.4–1.6 tonnes, so both need a concrete slab rather than a raised floor</td></tr>
+        <tr><td><b>Location</b></td><td>Wherever large, cheap power arrives fast; distance from users does not matter</td><td>In or near cities and undersea-cable landings, for speed</td></tr>
+        <tr><td><b>Size of one site</b></td><td>150 MW to over 1 GW at one grid connection</td><td>10–100 MW city halls up to hyperscale regions</td></tr>
+      </tbody></table></div>
+      <p class="xs muted">Microsoft/OpenAI/NVIDIA power paper (2025); Meta Llama 3 paper; xAI and press coverage; OCP. <span class="ev r show" data-src="arXiv 2508.14318; Meta Llama 3 paper; xAI coverage; OCP 800 VDC">reported</span></p></div>
+  </div>
+</div>
+
+<div class="subch" id="cti2">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">11.2</span><span class="eyebrow">Research · Power</span></div>
+    <h2>How the two loads behave on the grid</h2>
+    <p class="lede">Training is a flat plateau with sharp, synchronised swings every second or two. Inference rises and falls with people's day. That difference, not rack density, is what separates the two for power planners.</p></div>
+  <div class="panel">
+    <h3>Load shape: a day and a few seconds<span class="sub">Illustrative curves built from published measurements (peak use 97% training vs 79% inference; inference peak ÷ average 1.19; training swings at 0.2–3 Hz). Share of the power the hall is built for.</span></h3>
+    <div class="vs-ctrls"><div class="opt"><span class="fieldlbl">Time scale</span><div class="seg" id="cti-ls" role="group" aria-label="Time scale"><button data-v="d" aria-pressed="true">One day</button><button data-v="s">Twenty seconds</button></div></div></div>
+    <div id="cti-load" class="cti-load"></div>
+    <p class="small" id="cti-load-n"></p>
+    <p class="xs muted">Microsoft POLCA (ASPLOS 2024); Microsoft/OpenAI/NVIDIA, arXiv 2508.14318; Wilkins, Kazhamiaka &amp; Rajagopal, arXiv 2603.18383. Curves are drawn to match these statistics, not metered Indian data. <span class="ev m show" data-src="Shapes drawn to published statistics">model</span></p>
+  </div>
+  <div class="cols gap">
+    <div class="panel"><h3>The numbers behind the curves<span class="sub">Cluster-level measurements from Microsoft and partners.</span></h3>
+      <div class="tbl"><table class="aif-t"><thead><tr><th>Measure</th><th>Training</th><th>Inference</th></tr></thead><tbody>
+        <tr><td>Peak use of the power provisioned</td><td>97%</td><td>79%</td></tr>
+        <tr><td>Headroom that can be safely oversold</td><td>~3%</td><td>~21%</td></tr>
+        <tr><td>Average load over time (load factor)</td><td>~0.9 while a job runs</td><td>0.6–0.84</td></tr>
+        <tr><td>Pattern</td><td>Compute, then pause to share results; dips for checkpoints</td><td>Up after ~9 am, down after ~10 pm</td></tr>
+        <tr><td>Swing speed</td><td>Every 1–10 s, strongest at 0.2–3 Hz</td><td>Random across racks, so it averages out</td></tr>
+      </tbody></table></div>
+      <p class="xs muted">POLCA; arXiv 2508.14318; arXiv 2603.18383. <span class="ev r show" data-src="POLCA ASPLOS 2024; arXiv 2508.14318; arXiv 2603.18383">reported</span></p></div>
+    <div class="panel"><h3>Why grid operators worry about training<span class="sub">Rules are arriving in the US; India has none yet.</span></h3>
+      <ul class="clean small">
+        <li><b>Big, fast swings.</b> A training campus can drop around 300 MW "in moments" and ramp back. NERC also recorded an unexpected loss of about 1,500 MW of data-centre load that the grid had to absorb.</li>
+        <li><b>Oscillations.</b> Swings at 0.2–3 Hz can excite resonances in generators and lines, the same problem steel arc furnaces cause.</li>
+        <li><b>New rules.</b> NERC issued a Level 3 Essential Action Alert on computational loads on 4 May 2026 (responses due 3 August 2026). Texas (ERCOT NOGRR282) took effect on 1 August 2026.</li>
+        <li><b>Fixes.</b> Filler work that keeps GPUs busy during pauses (under 5% throughput loss, but wasted energy), GPU firmware that limits ramps, and batteries at the rack or the site.</li>
+        <li><b>The upside.</b> Training can pause or move, so it can act as demand response. xAI got grid power within a year by agreeing to be interruptible. Inference can only shift between regions.</li>
+      </ul>
+      <p class="xs muted">NERC Large Loads Task Force; NERC Level 3 alert (May 2026); ERCOT. <span class="ev r show" data-src="NERC LLTF; NERC Level 3 alert 4 May 2026; ERCOT NOGRR282">reported</span></p></div>
+  </div>
+  <div class="cols gap">
+    <div class="panel"><h3>How AI power splits between training and inference<span class="sub">McKinsey's global projection, GW of data-centre demand.</span></h3>
+      <div class="hbars" id="cti-mck"></div>
+      <p class="small">Other estimates disagree mainly on what they count: compute cycles, spending or power, and whether experiments count as training. Epoch AI says today's AI power splits "roughly equally between training, experiments and inference"; Deloitte has inference at about half of AI compute in 2025 and two-thirds in 2026. A fair working figure for 2026 is 40–50% training and 50–60% inference by energy, moving to about 30/70 by 2030.</p>
+      <p class="xs muted">McKinsey (2025); Epoch AI (Aug 2025); Deloitte TMT Predictions 2026 (secondary). <span class="ev e show" data-src="McKinsey 2025; Epoch AI; Deloitte 2026">estimate</span></p></div>
+    <div class="panel"><h3>Energy for one unit of work<span class="sub">Company figures are self-reported and use undisclosed prompt lengths.</span></h3>
+      <div class="tbl"><table class="aif-t"><thead><tr><th>Unit</th><th>Energy</th><th>Status</th></tr></thead><tbody>
+        <tr><td>Gemini median text prompt (May 2025)</td><td>0.24 Wh (0.10 Wh chip only)</td><td>Reported by Google</td></tr>
+        <tr><td>Average ChatGPT query (June 2025)</td><td>0.34 Wh</td><td>OpenAI claim</td></tr>
+        <tr><td>GPT-4o typical query, ~500 output tokens</td><td>~0.3 Wh</td><td>Epoch AI estimate</td></tr>
+        <tr><td>Very long input (long documents)</td><td>2.5–40 Wh</td><td>Epoch AI estimate</td></tr>
+        <tr><td>GPT-5 reasoning reply, 1,000 tokens</td><td>~18 Wh (up to 40)</td><td>URI AI Lab estimate</td></tr>
+        <tr><td>Training Llama 3.1 405B</td><td>~21.6 GWh at chip power; ~23.3 GWh with the building (Meta PUE 1.08). The often-quoted ~30 GWh covers all three Llama 3.1 sizes</td><td>From Meta's 30.84 M GPU-hours</td></tr>
+        <tr><td>Training GPT-3 (2020)</td><td>~1.29 GWh</td><td>Li et al. estimate</td></tr>
+      </tbody></table></div>
+      <div class="cti-call"><b>When serving overtakes training.</b> 21.6 GWh ÷ 0.3 Wh per query = 72 billion queries. At 1 billion queries a day, a model matches its whole training energy in about 10 weeks of use.</div>
+      <p class="xs muted">Google (Aug 2025); OpenAI (Altman blog, Jun 2025); Epoch AI; University of Rhode Island AI Lab via The Guardian (Aug 2025); Meta Llama 3.1 model card. The press figure of "over 11 GWh" for Llama 3.1 conflicts with Meta's own GPU-hours. <span class="ev r show" data-src="Google; OpenAI; Meta model card">reported</span> <span class="ev e show" data-src="Epoch AI; URI AI Lab; atlas arithmetic">estimate</span></p></div>
+  </div>
+  <div class="panel gap" id="eff-p"><h3>Tokens per watt and per rupee<span class="sub">Inference text generated, from the MLPerf Server results in the register (same latency bound for every chip on a model). Per watt uses the chip's TDP and, closer to the bill, the server power per GPU.</span></h3>
+    <div class="vs-ctrls"><div class="opt"><span class="fieldlbl">Model</span><div class="seg" id="eff-m" role="group" aria-label="Model"><button data-v="l8" aria-pressed="true">Llama 3.1 8B</button><button data-v="l70">Llama 2 70B</button><button data-v="oss">GPT-OSS-120B</button><button data-v="r1">DeepSeek-R1</button></div></div></div>
+    <div class="tbl"><table class="aif-t cai-t"><thead><tr><th>Chip</th><th class="n">Tokens/s per GPU</th><th class="n">per kW of TDP</th><th class="n">per kW of server</th><th class="n">Wh per 1,000 tokens (server)</th><th class="n">Million tokens per US$</th><th class="n">Tokens per ₹ (IndiaAI rate)</th></tr></thead><tbody id="eff-t"></tbody></table></div>
+    <p class="small" id="eff-n"></p>
+    <p class="xs muted">Rental prices: AIMultiple, Spheron (10 Jun 2026), E2E via Ancapex; IndiaAI rates: PIB, Business Standard, Ancapex. No MI355X rental price has been published, so its per-dollar cell is left empty. TDP is a ceiling, not measured draw. <span class="ev r show" data-src="MLPerf; vendor TDPs; price pages">reported</span> <span class="ev m show" data-src="Atlas arithmetic">model</span></p></div>
+  <div class="panel gap" id="trn-p"><h3>Measured training runs<span class="sub">Training data consumed, not text generated. Published runs to set beside the planning formula in 11.6.</span></h3>
+    <div class="tbl"><table class="aif-t cai-t"><thead><tr><th>Run</th><th>Hardware</th><th>What was reported</th><th>Derived</th></tr></thead><tbody>
+      <tr><td><b>Llama 3.1 405B</b> pre-training</td><td>16,384 H100, global batch 16 M tokens, sequence 8,192</td><td>15.6 T tokens; 3.8 × 10²⁵ FLOPs; 30.84 M GPU-hours; 380–400 TFLOPS per GPU (38–43% MFU)</td><td>6 × 405 B × 15.6 T = 3.79 × 10²⁵ ✓ · realised over all GPU-hours: 3.8 × 10²⁵ ÷ (30.84 M × 3,600) = 342 TFLOPS = 34.6% MFU · ~156 tokens/s per GPU</td></tr>
+      <tr><td><b>Llama 3.1 70B</b></td><td>H100</td><td>~15 T tokens; 7.0 M GPU-hours</td><td>6 × 70 B × 15 T ÷ (7.0 M × 3,600 × 989 TFLOPS) = 25.3% realised MFU</td></tr>
+      <tr><td>MLPerf Training v6.0: Llama 3.1 405B</td><td>8,192 GB200 (Azure) · 4,096 GB300 (CoreWeave)</td><td>7.07 min · 9.77 min to train</td><td>GB300 v5.0 → v6.0: 27.33 → 9.77 min</td></tr>
+      <tr><td>MLPerf Training v6.0: DeepSeek-V3 671B</td><td>GB300 NVL72, 2,048 / 4,096 / 8,192 GPUs</td><td>5.54 / 3.09 / 2.02 min</td><td>Scaling 2,048 → 4,096: (5.54 ÷ 3.09) ÷ 2 = 89.6%; → 8,192: (5.54 ÷ 2.02) ÷ 4 = 68.6%</td></tr>
+    </tbody></table></div>
+    <p class="small">Energy of the 405B run: 30.84 M GPU-hours × 0.7 kW = 21.6 GWh at the chips; × Meta's PUE 1.08 = 23.3 GWh. On India's grid (0.675 t/MWh) that is about 15,700 t of CO₂, against Meta's 8,930 t location-based. NVIDIA had the fastest time on all seven MLPerf Training v6.0 benchmarks (its own statement); AMD had no 405B or DeepSeek-V3 submission.</p>
+    <p class="xs muted">Meta, The Llama 3 Herd of Models (arXiv 2407.21783) and Llama 3.1 model card; MLCommons MLPerf Training v6.0 (16 Jun 2026) via NVIDIA, CoreWeave and Digital Citizen; arXiv 2412.06288 for Meta's PUE. <span class="ev r show" data-src="Meta; MLCommons">reported</span> <span class="ev m show" data-src="Atlas arithmetic">model</span></p></div>
+
+</div>
+
+<div class="subch" id="cti3">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">11.3</span><span class="eyebrow">Research · Cooling, water and cost</span></div>
+    <h2>Cooling, water and money</h2>
+    <p class="lede">A training hall is almost all liquid-cooled and can reject its heat without evaporating water. An inference hall still has a share of air-cooled servers that lean on chillers and towers. In India, though, the power station usually uses more water than either.</p></div>
+  <div class="cols gap">
+    <div class="panel"><h3>Cooling by hall type<span class="sub">On-site WUE and PUE are atlas estimates for Indian climates, built from the sources below.</span></h3>
+      <div class="tbl"><table class="aif-t cai-t"><thead><tr><th></th><th>Training hall</th><th>Inference hall</th></tr></thead><tbody>
+        <tr><td><b>At the rack</b></td><td>85–100% direct-to-chip liquid</td><td>Liquid for NVL72 or TPU pods; air or rear-door coils for ordinary servers</td></tr>
+        <tr><td><b>Outdoors</b></td><td>Dry or adiabatic coolers all year at 30–45 °C water; towers where water is cheap</td><td>Chillers with towers or adiabatic coolers for the air-cooled share; little roof space in cities for dry coolers</td></tr>
+        <tr><td><b>On-site WUE</b></td><td>0–0.5 L/kWh dry or adiabatic; up to ~1.8 with towers</td><td>0.5–1.8 L/kWh, depending on how much is air-cooled</td></tr>
+        <tr><td><b>PUE</b></td><td>~1.1–1.2</td><td>~1.2–1.4 (part load and more air cooling)</td></tr>
+        <tr><td><b>Cooling plant cost</b></td><td colspan="2">Liquid $4.5–5.2 M per MW vs air ~$1.8 M (Archdesk 2026); converting an air hall to liquid ~$2 M per MW (STL Partners)</td></tr>
+      </tbody></table></div>
+      <p class="xs muted">Google and Meta fleet PUE 1.08–1.09; ASHRAE liquid classes; Archdesk; STL Partners. <span class="ev e show" data-src="Atlas estimates from hyperscaler PUE, ASHRAE W32–W45, Archdesk, STL Partners">estimate</span></p></div>
+    <p class="small xref">Why per-prompt water figures differ 170× is now beside the prompt calculator in <a href="#cscope2">9.2</a>.</p>
+  </div>
+  <div class="cols gap">
+    <div class="panel"><h3>What a 1 GW AI campus costs<span class="sub">Epoch AI model of a GB200-based campus, US$ billion of capital. Servers dominate; the building is under a third.</span></h3>
+      <div class="hbars" id="cti-capex"></div>
+      <p class="small">Running costs about $0.9 billion a year; including the servers' short life, the full yearly cost is about $8.5 million per MW. Training and inference halls cost about the same per MW of building (±10–15%): training spends more on networking, inference on backup power and city land.</p>
+      <p class="xs muted">Epoch AI; Goldman Sachs; JLL 2026. <span class="ev e show" data-src="Epoch AI 1 GW model">estimate</span></p></div>
+    <div class="panel"><h3>India's prices<span class="sub">Building cost per MW and the rent for one GPU for one hour.</span></h3>
+      <div class="tbl"><table class="aif-t"><thead><tr><th>Item</th><th>Price</th></tr></thead><tbody>
+        <tr><td>Air-cooled Tier III building (conventional)</td><td>₹50–55 crore per MW</td></tr>
+        <tr><td>AI-ready building (liquid, 20–50+ kW racks)</td><td>₹70–95 crore per MW</td></tr>
+        <tr><td>Large campuses (scale savings)</td><td>₹35–45 crore per MW</td></tr>
+        <tr><td>IndiaAI GPU-hour, after 40% subsidy (what users pay)</td><td>~₹65 average; ~₹92 for H100</td></tr>
+        <tr><td>IndiaAI lowest bid (L1) before subsidy (what providers are paid)</td><td>~₹115 average; ~₹140 for H100; ₹168 MI300X; ₹291 B200 (rate card)</td></tr>
+        <tr><td>Yotta H100 cluster (monthly → 2-year)</td><td>₹386 → ₹278 per GPU-hour</td></tr>
+        <tr><td>E2E Networks H100 · B200</td><td>$3.99 · $7.99 per GPU-hour</td></tr>
+        <tr><td>Cost to reach GPT-3.5-level answers</td><td>$20 → $0.07 per million tokens (Nov 2022 → Oct 2024)</td></tr>
+      </tbody></table></div>
+      <p class="xs muted">SBI sector report (Apr 2026); Lok Sabha reply on IndiaAI; Yotta and E2E price lists (2026); Stanford AI Index 2025. Older training GPUs move down to inference as new ones arrive, so today's training hall is tomorrow's inference hall. <span class="ev r show" data-src="SBI Apr 2026; Lok Sabha; Yotta; E2E; Stanford AI Index 2025">reported</span></p></div>
+  </div>
+  <div class="panel gap" id="dep-p"><h3>Where India's AI chips are<span class="sub">Named deployments with dates. Megawatts are the atlas conversion: GPUs × server power per GPU from the register (IT only; × PUE for the grid connection).</span></h3>
+    <div class="tbl"><table class="aif-t cai-t"><thead><tr><th>Operator</th><th>Chips</th><th>Where · when</th><th class="n">IT MW (derived)</th><th>Source</th></tr></thead><tbody>
+      <tr><td><b>Yotta (Shakti Cloud)</b></td><td>20,736 liquid-cooled B300; over 10,000 committed to IndiaAI</td><td>60 MW D2 data centre, Noida · target Aug 2026</td><td class="n" style="white-space:normal;min-width:8rem">20,736 × 1.875 kW = <b>38.9</b></td><td class="xs">Yotta; DatacenterDynamics (18 Feb 2026); CRN Asia; HPCwire</td></tr>
+      <tr><td>Yotta, earlier rounds</td><td>8,192 H100 (round 1) · 8,192 B200 (round 2)</td><td>Navi Mumbai, Greater Noida · 2025</td><td class="n" style="white-space:normal;min-width:8rem">10.4 · 14.7</td><td class="xs">Indian Infrastructure (24 Jun 2025); ICAI (secondary)</td></tr>
+      <tr><td>Yotta, announced</td><td>40,000 Vera Rubin + 40,000 GB300; ~US$12 B</td><td>Greater Noida, Navi Mumbai (80 MW) · reported Sep 2026</td><td class="n" style="white-space:normal;min-width:8rem">—</td><td class="xs">Moneycontrol via Shattered.io (secondary)</td></tr>
+      <tr><td><b>IndiaAI Mission</b></td><td>Round 1: 12,896 H100 + 1,480 H200 + MI300X/MI325X; 1,050 Google Trillium TPUs in round 3; 38,231 deployed</td><td>14 empanelled providers · 2025–26</td><td class="n" style="white-space:normal;min-width:8rem">38,231 × ~1.275 ≈ <b>~49</b> if all H100-class</td><td class="xs">PIB (30 May 2025); Business Standard (Jan, 12 Oct 2026); AI CERTs</td></tr>
+      <tr><td>Reliance Jio (IndiaAI)</td><td>752 H200 + 268 MI300X</td><td>2025</td><td class="n" style="white-space:normal;min-width:8rem">1.3</td><td class="xs">Indian Infrastructure (Jun 2025)</td></tr>
+      <tr><td><b>Vultr</b> with AMD</td><td>MI355X; GPU count not disclosed</td><td>Chennai · 20 MW · 21 Oct 2026</td><td class="n" style="white-space:normal;min-width:8rem">20 MW ÷ 1.15 ÷ 1.875 ≈ ≤9,300 GPUs</td><td class="xs">Vultr/BusinessWire (20–21 Oct 2026)</td></tr>
+      <tr><td><b>Google</b> with AdaniConneX and Airtel Nxtra</td><td>"Custom TPUs"; generation not stated</td><td>Visakhapatnam · 1 GW · US$15 B, 2026–30</td><td class="n" style="white-space:normal;min-width:8rem">—</td><td class="xs">TechCrunch; Data Center Knowledge</td></tr>
+      <tr><td>Reliance (Digital Connexion) · OpenAI with Tata</td><td>Chips not named</td><td>Visakhapatnam 1 GW · 100 MW → 1 GW</td><td class="n" style="white-space:normal;min-width:8rem">—</td><td class="xs">BDBIPL (secondary)</td></tr>
+    </tbody></table></div>
+    <p class="small">IndiaAI totals differ by source (18,417 vs 18,693 in round 1; 38,000 to 45,000 later) because of cut-off dates and units bid versus empanelled. Yotta's 20,736 B300 at about 39 MW of IT fits its 60 MW Noida building at a liquid-cooled PUE near 1.15, a useful check that announced GPU counts and announced megawatts agree. No NTT or Tata deployment with named chips was found.</p>
+    <p class="xs muted"><span class="ev r show" data-src="Company and government announcements">reported</span> <span class="ev m show" data-src="IT MW: atlas conversion with register server power">model</span></p></div>
+
+</div>
+
+<div class="subch" id="cti4">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">11.4</span><span class="eyebrow">Research · India</span></div>
+    <h2>Is India training or serving?</h2>
+    <p class="lede">By hardware and by number of users, India is building for inference. By GPU-hours actually used today, sovereign model training may still dominate.</p></div>
+  <div class="kpis cai-k">
+    <div class="kpi"><span class="v">38,000+</span><span class="k">GPUs onboarded under IndiaAI, mostly H100/H200; target ~100,000 by Dec 2026</span></div>
+    <div class="kpi"><span class="v">~80%</span><span class="k">of IndiaAI GPU-hours used for training today (one consultant, Business Standard, Jun 2026)</span></div>
+    <div class="kpi"><span class="v">&gt;60%</span><span class="k">of startups asking for GPUs want them for inference (same source)</span></div>
+    <div class="kpi"><span class="v">4,096 H100s</span><span class="k">Sarvam AI's sovereign-model allocation on Yotta, 6 months (subsidy ₹98.7 crore of ₹246.7 crore)</span></div>
+    <div class="kpi"><span class="v">120 MW</span><span class="k">first phase of Reliance Jamnagar on GB300, aiming for "the world's lowest AI inferencing cost"</span></div>
+    <div class="kpi"><span class="v">1 GW+</span><span class="k">Google–Adani Visakhapatnam, ~$15 bn 2026–30, TPUs, serving Search and YouTube too</span></div>
+  </div>
+  <div class="cols gap">
+    <div class="panel"><h3>Where each kind belongs in India<span class="sub">Siting follows from the load behaviour in 11.2.</span></h3>
+      <ul class="clean small">
+        <li><b>Inference near users and cables:</b> Mumbai, Chennai, Hyderabad, Delhi NCR, and Visakhapatnam as a new cable hub. Full backup power; a share of air-cooled servers that will lean on evaporative cooling and city water.</li>
+        <li><b>Training where power is cheap and clean:</b> Gujarat (Jamnagar), Rajasthan, coastal Andhra Pradesh, with captive solar, wind and storage. Water and carbon should use the local or captive power mix, not the national average.</li>
+        <li><b>Training can run dry.</b> Even at Indian temperatures, 40–45 °C liquid loops can reject heat through dry coolers for most of the year, so a training hall need not evaporate water at all.</li>
+        <li><b>Plan for the cascade.</b> Halls built for training in 2026 will likely serve inference within 2–4 years as GPUs age, so build them with the backup and water plans inference needs.</li>
+      </ul></div>
+    <div class="panel"><h3>Training and inference side by side<span class="sub">Summary of 11.1–11.3.</span></h3>
+      <div class="tbl"><table class="aif-t cai-t"><thead><tr><th></th><th>Training hall</th><th>Inference hall</th></tr></thead><tbody>
+        <tr><td><b>Rack kW</b></td><td>120–230 today; ~600 by 2027</td><td>Two groups: 10–40 and 120–370</td></tr>
+        <tr><td><b>Average load</b></td><td>~0.9, flat</td><td>~0.6–0.8, daily cycle</td></tr>
+        <tr><td><b>PUE · on-site WUE</b></td><td>1.1–1.2 · 0–0.5 (dry) to 1.8 (towers)</td><td>1.2–1.4 · 0.5–1.8</td></tr>
+        <tr><td><b>Energy per unit</b></td><td>~21.6 GWh per Llama 3.1 405B run</td><td>0.24–0.34 Wh per short prompt; 18–40 Wh reasoning</td></tr>
+        <tr><td><b>Water per unit</b></td><td>0.7 ML on site / 5.4 ML total (GPT-3)</td><td>0.26 mL (cooling only) to 45 mL (lifecycle)</td></tr>
+        <tr><td><b>Building cost</b></td><td>₹65–85 crore per MW (atlas cost stack, ₹74 central) + more network</td><td>Similar + backup and city premium</td></tr>
+        <tr><td><b>Siting</b></td><td>Cheap, large, fast power</td><td>Near users and cable landings</td></tr>
+      </tbody></table></div></div>
+  </div>
+  <details class="aif-det"><summary>Where the sources disagree, and what is uncertain</summary><ul class="clean xs muted" style="margin-top:6px">
+    <li>Per-prompt water spans 170× (0.26 mL Google, 10–50 mL Li et al., 45 mL Mistral) mainly because of what is counted.</li>
+    <li>Mistral's 281 million litres is called "training" by some outlets and "training plus 18 months of use" by others.</li>
+    <li>Llama 3.1 405B energy: "over 11 GWh" in the press versus ~21.6–30 GWh from Meta's GPU-hours.</li>
+    <li>Inference share of AI compute: about a third (Epoch's equal three-way split) to two-thirds (Deloitte 2026) to 80–90% (weakly sourced aggregators).</li>
+    <li>IndiaAI: the 93.18 lakh GPU-hours reported in total looks smaller than Sarvam's implied ~179 lakh hours alone, so the official counts probably use different scopes. The 80% training share rests on one consultant.</li>
+    <li>Vera Rubin and CPX power, the CPX roadmap and Microsoft's "37.5% vs 9%" row swing figure come from analysts or single secondary sources.</li>
+    <li>PUE and WUE by hall type are atlas engineering estimates, not measured Indian values.</li></ul></details>
+</div>
+
+<div class="subch" id="cti6">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">11.5</span><span class="eyebrow">Model · Bengaluru</span></div>
+    <h2>If all of Bengaluru's coming capacity is conventional, or all AI</h2>
+    <p class="lede">Choose how many megawatts arrive and whether they are conventional halls or AI halls. The controls change to match: conventional halls get their racks, load and chillers; AI halls get their training share, racks and liquid cooling. The result is a year of energy, water and cost, set against the city's piped water. <a href="#cbw4">12.4</a> runs the same question with water prices, heat rejection and a full grid of scenarios.</p></div>
+  <div class="panel inst hot gap" id="cti-p6">
+    <h3>Bengaluru's upcoming capacity: all conventional or all AI<span class="sub">Bengaluru has 162 MW live; Cushman &amp; Wakefield lists 100 MW in the pipeline and the Hoskote park plans ~500 MW more. BWSSB delivers about 1,935 million litres a day.</span></h3>
+    <div class="vs-ctrls">
+      <div class="opt"><span class="fieldlbl">The upcoming capacity is</span><div class="seg cti-big" id="bx-ty" role="group" aria-label="Type"><button data-v="cv">All conventional</button><button data-v="ai" aria-pressed="true">All AI</button></div></div>
+      <div class="opt"><span class="fieldlbl">How much</span><div class="seg" id="bx-pre" role="group" aria-label="How much"><button data-v="100">Pipeline · 100 MW</button><button data-v="600" aria-pressed="true">+ Hoskote park · 600 MW</button><button data-v="1000">State 1 GW goal</button></div></div>
+    </div>
+    <div class="ctrls" style="margin-top:8px">
+      <div class="ctrl"><label for="bx-mw">Upcoming IT capacity</label><output id="bx-mw-o"></output><input id="bx-mw" type="range" min="25" max="2000" step="25" value="600"></div>
+    </div>
+    <div id="bx-cv" class="cti-grp" hidden>
+      <div class="cti-gh">Conventional hall settings</div>
+      <div class="vs-ctrls">
+        <div class="opt"><span class="fieldlbl">Rack</span><div class="seg" id="bx-cr" role="group" aria-label="Conventional rack"><button data-v="6">6 kW enterprise</button><button data-v="8" aria-pressed="true">8 kW colocation</button><button data-v="12">12 kW cloud</button></div></div>
+        <div class="opt"><span class="fieldlbl">Cooling</span><div class="seg" id="bx-cc" role="group" aria-label="Conventional cooling"><button data-v="t" aria-pressed="true">Chilled water + towers</button><button data-v="h">Indirect evaporative</button><button data-v="d">Air-cooled chillers</button></div></div>
+      </div>
+      <div class="ctrls" style="margin-top:8px"><div class="ctrl"><label for="bx-cu">Average load</label><output id="bx-cu-o"></output><input id="bx-cu" type="range" min="40" max="85" step="5" value="65"></div></div>
+    </div>
+    <div id="bx-ai" class="cti-grp">
+      <div class="cti-gh">AI hall settings</div>
+      <div class="vs-ctrls">
+        <div class="opt"><span class="fieldlbl">Rack</span><div class="seg" id="bx-ar" role="group" aria-label="AI rack"><button data-v="0">50 kW · air + rear door</button><button data-v="1" aria-pressed="true">132 kW · NVL72</button><button data-v="2">190 kW · Vera Rubin</button><button data-v="3">600 kW · Kyber</button></div></div>
+        <div class="opt"><span class="fieldlbl">Heat rejection</span><div class="seg" id="bx-ac" role="group" aria-label="AI cooling"><button data-v="t">Cooling towers</button><button data-v="h" aria-pressed="true">Adiabatic</button><button data-v="d">Dry coolers</button></div></div>
+      </div>
+      <div class="ctrls" style="margin-top:8px"><div class="ctrl"><label for="bx-ts">Training share of the AI work (rest is inference)</label><output id="bx-ts-o"></output><input id="bx-ts" type="range" min="0" max="100" step="5" value="30"></div></div>
+    </div>
+    <div class="vs-ctrls" style="margin-top:8px">
+      <div class="opt"><span class="fieldlbl">Electricity</span><div class="seg" id="bx-pw" role="group" aria-label="Electricity"><button data-v="0" aria-pressed="true">India grid</button><button data-v="1">60% RTC + grid</button><button data-v="2">90% clean</button><button data-v="3">Karnataka mix</button></div></div>
+      <div class="opt"><span class="fieldlbl">Cooling water from</span><div class="seg" id="bx-ws" role="group" aria-label="Water source"><button data-v="0" aria-pressed="true">BWSSB piped</button><button data-v="1">Treated sewage</button><button data-v="2">Borewells</button></div></div>
+      <div class="opt"><span class="fieldlbl">Today's 162 MW</span><div class="seg" id="bx-ex" role="group" aria-label="Include today's capacity"><button data-v="0" aria-pressed="true">Leave out</button><button data-v="1">Add (conventional)</button></div></div>
+    </div>
+    <div class="read" id="bx-r" style="margin-top:12px"></div>
+    <div class="cti-meter" id="bx-m"></div>
+    <div class="tbl" style="margin-top:10px"><table class="aif-t cti-vs" id="bx-vs"></table></div>
+    <p class="small" id="bx-n"></p>
+    <details class="aif-det"><summary>Assumptions</summary><ul class="clean xs muted" style="margin-top:6px">
+      <li>Capacity: 162 MW live and 100 MW pipeline (Cushman &amp; Wakefield H1 2026); Hoskote ~500 MW park with 60 MLD treated water planned; Karnataka's 1 GW goal from its data-centre policy.</li>
+      <li>Load: conventional as set (default 65%); AI = 0.9 for training and 0.7 for inference, weighted by the training share.</li>
+      <li>Cooling paths: the atlas model used in the AI chapter. Liquid share by AI rack: 50 kW 0, NVL72 0.85, Vera Rubin 0.9, Kyber 1.0; conventional halls are all air.</li>
+      <li>Power: India grid 2.9 L/kWh at ₹8.0/kWh all-in (KERC HT-2(a) energy ₹6.60 + demand charge and true-up, Chapter 6); 60% round-the-clock clean + grid 1.19 L/kWh at ~₹7.5; 90% clean 0.34 L/kWh at ~₹7.8; "Karnataka mix" applies the state's own generation mix, 1.5 L/kWh at the grid tariff, as a what-if if the power came from the national mix.</li>
+      <li>Water price: BWSSB ₹99/kL, treated sewage ₹40/kL, borewell ₹20/kL (pumping and treatment). On-site water is consumption (evaporation); towers also withdraw about a third more as blowdown.</li>
+      <li>Capital: building and electrical ₹46 crore/MW (conventional) or ₹55.5 crore/MW (AI) over 20 years at 11%; cooling ₹9–17 crore/MW by type over its own 12–20-year life, plus cooling maintenance; AI GPUs and servers ~₹266 crore/MW over 5 years at 11%. Staff, other maintenance and land are not included.</li>
+      <li>City comparison: BWSSB delivers ~1,935 MLD (Legislative Council, Aug 2026); 135 L per person per day; a Bengaluru home uses ~1,800 kWh a year.</li></ul></details>
+  </div>
+</div>
+
+<div class="subch" id="csz">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">11.6</span><span class="eyebrow">Model · Size a cluster</span></div>
+    <h2>How many GPUs a job needs, and what they draw</h2>
+    <p class="lede">Three questions every AI campus plan starts with: how many GPUs serve a given load, how many train a given model in a given time, and how many users fit in a GPU's memory. Each answer turns into megawatts, water, carbon and rupees with the atlas standards.</p></div>
+  <div class="panel inst gap" id="sz-ip"><h3>Inference: GPUs for a serving load<span class="sub">Every chip is compared on its MLPerf Server result for the same model, so all meet the same latency bound. The comparison is fair only on that condition.</span></h3>
+    <div class="vs-ctrls"><div class="opt"><span class="fieldlbl">Model</span><div class="seg" id="sz-im" role="group" aria-label="Model"><button data-v="l8" aria-pressed="true">Llama 3.1 8B</button><button data-v="l70" aria-pressed="false">Llama 2 70B</button><button data-v="oss" aria-pressed="false">GPT-OSS-120B</button><button data-v="r1" aria-pressed="false">DeepSeek-R1</button></div></div><div class="opt"><span class="fieldlbl">Chip</span><div class="seg" id="sz-ic" role="group" aria-label="Chip"><button data-v="h100" aria-pressed="false">H100</button><button data-v="h200" aria-pressed="false">H200</button><button data-v="b200" aria-pressed="false">B200</button><button data-v="b300" aria-pressed="true">B300</button><button data-v="mi355x" aria-pressed="false">MI355X</button></div></div><div class="opt"><span class="fieldlbl">Heat rejection</span><div class="seg" id="sz-ik" role="group" aria-label="Heat rejection"><button data-v="dry" aria-pressed="true">Liquid + dry coolers</button><button data-v="adi" aria-pressed="false">Liquid + adiabatic</button><button data-v="twr" aria-pressed="false">Liquid + towers</button></div></div></div>
+    <div class="ctrls"><div class="ctrl"><label for="sz-q">Peak queries per second</label><output id="sz-q-o"></output><input id="sz-q" type="range" min="100" max="50000" step="100" value="10000"></div><div class="ctrl"><label for="sz-tq">Output tokens per query</label><output id="sz-tq-o"></output><input id="sz-tq" type="range" min="100" max="4000" step="50" value="500"></div><div class="ctrl"><label for="sz-u">Target utilisation</label><output id="sz-u-o"></output><input id="sz-u" type="range" min="40" max="90" step="1" value="70"></div></div>
+    <div class="read" id="sz-ir" style="margin-top:10px"></div>
+    <h4 class="cti-h4" style="margin-top:14px">Same load on every chip</h4>
+    <div class="hbars" id="sz-ib"></div>
+    <p class="small" id="sz-in"></p>
+    <p class="xs muted">GPU count = peak QPS × tokens per query ÷ (MLPerf Server tokens/s per GPU × utilisation). Power uses server kW per GPU; energy, water and carbon use the atlas standards (utilisation, PUE and WUE for the heat rejection, grid 2.9 L/kWh and 0.675 t/MWh). <span class="ev r show" data-src="MLPerf Server results; DGX power specs">reported</span> <span class="ev m show" data-src="Atlas sizing arithmetic">model</span></p></div>
+  <div class="panel inst gap" id="sz-tp"><h3>Training: GPUs for a run<span class="sub">Training data consumed. FLOPs ≈ 6 × parameters × tokens: 2 per parameter per token forward (multiply and add), 4 backward (gradients for activations and for weights).</span></h3>
+    <div class="vs-ctrls"><div class="opt"><span class="fieldlbl">Chip</span><div class="seg" id="sz-tc" role="group" aria-label="Chip"><button data-v="h100" aria-pressed="true">H100</button><button data-v="h200" aria-pressed="false">H200</button><button data-v="b200" aria-pressed="false">B200</button><button data-v="b300" aria-pressed="false">B300</button><button data-v="mi300x" aria-pressed="false">MI300X</button><button data-v="mi355x" aria-pressed="false">MI355X</button><button data-v="gaudi3" aria-pressed="false">Gaudi 3</button></div></div><div class="opt"><span class="fieldlbl">Training precision</span><div class="seg" id="sz-tpr" role="group" aria-label="Training precision"><button data-v="bf16" aria-pressed="true">BF16</button><button data-v="fp8" aria-pressed="false">FP8</button></div></div></div>
+    <div class="ctrls"><div class="ctrl"><label for="sz-n">Parameters (billion)</label><output id="sz-n-o"></output><input id="sz-n" type="range" min="1" max="1000" step="1" value="70"></div><div class="ctrl"><label for="sz-d">Training tokens (trillion)</label><output id="sz-d-o"></output><input id="sz-d" type="range" min="0.1" max="30" step="0.1" value="2"></div><div class="ctrl"><label for="sz-days">Target time (days)</label><output id="sz-days-o"></output><input id="sz-days" type="range" min="7" max="180" step="1" value="30"></div><div class="ctrl"><label for="sz-mfu">Model FLOPs utilisation</label><output id="sz-mfu-o"></output><input id="sz-mfu" type="range" min="20" max="60" step="1" value="40"></div></div>
+    <div class="read" id="sz-tr" style="margin-top:10px"></div>
+    <p class="small" id="sz-tn"></p>
+    <p class="xs muted">MFU 30% is a conservative planning figure, 50% a well-optimised large cluster; Meta reports 38–43% for Llama 3.1 405B while running, but only ~25% realised for Llama 3.1 70B over all GPU-hours. Energy uses server kW per GPU at the register's training utilisation (0.90) and PUE 1.15 (liquid + dry coolers). <span class="ev r show" data-src="Meta Llama 3 paper and model card">reported</span> <span class="ev m show" data-src="6ND planning formula">model</span></p></div>
+  <div class="panel inst gap" id="sz-mp"><h3>Memory wall: how many requests fit on one GPU<span class="sub">Each request keeps a key–value (KV) cache for its whole context. Once the weights are loaded, the memory left decides how many users a GPU can serve at once, often before compute runs out.</span></h3>
+    <div class="vs-ctrls"><div class="opt"><span class="fieldlbl">Model</span><div class="seg" id="sz-mm" role="group" aria-label="Model"><button data-v="l8" aria-pressed="false">Llama 3.1 8B</button><button data-v="l70" aria-pressed="true">Llama 3.1 70B</button><button data-v="l405" aria-pressed="false">Llama 3.1 405B</button></div></div><div class="opt"><span class="fieldlbl">Weights</span><div class="seg" id="sz-mw" role="group" aria-label="Weights"><button data-v="2" aria-pressed="false">FP16</button><button data-v="1" aria-pressed="true">FP8</button><button data-v="0.5" aria-pressed="false">FP4</button></div></div><div class="opt"><span class="fieldlbl">KV cache</span><div class="seg" id="sz-mk" role="group" aria-label="KV cache"><button data-v="2" aria-pressed="false">FP16</button><button data-v="1" aria-pressed="true">FP8</button></div></div></div>
+    <div class="ctrls"><div class="ctrl"><label for="sz-ctx">Context per request (thousand tokens)</label><output id="sz-ctx-o"></output><input id="sz-ctx" type="range" min="1" max="128" step="1" value="32"></div></div>
+    <div class="read" id="sz-mr" style="margin-top:10px"></div>
+    <div class="hbars" id="sz-mb"></div>
+    <p class="small" id="sz-mn"></p>
+    <p class="xs muted">KV bytes per token = 2 × layers × KV heads × head size × bytes; model shapes from the Llama 3 paper (Table 3). 10% of memory is held back for activations and the runtime (atlas assumption). One GPU holds the whole model here; tensor parallelism splits weights across GPUs at the cost of interconnect traffic. <span class="ev r show" data-src="Llama 3 Herd of Models, Table 3">reported</span> <span class="ev e show" data-src="10% runtime reserve">estimate</span></p></div>
+</div>
+</section>
+

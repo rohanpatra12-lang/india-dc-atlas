@@ -1,0 +1,273 @@
+{
+ "h100": {
+  "n": "NVIDIA H100 SXM",
+  "arch": "Hopper",
+  "mem": 80,
+  "memT": "HBM3",
+  "bw": 3.35,
+  "bf16": 989,
+  "fp8": 1979,
+  "fp4": null,
+  "tdp": 700,
+  "cool": "Air or liquid",
+  "link": "NVLink 900 GB/s",
+  "kw": 1.275,
+  "kwSrc": "DGX H100: 10.2 kW max ÷ 8 GPUs (NVIDIA)",
+  "kwC": "reported",
+  "usd": 2.69,
+  "usdSrc": "AIMultiple cloud benchmark, 2026",
+  "inr": 140,
+  "inrSrc": "IndiaAI lowest bid (L1), Business Standard Oct 2026",
+  "mlp": {
+   "l8": [
+    5103,
+    "v5.1 · FP8 · 1 GPU (Red Hat vLLM)"
+   ]
+  },
+  "specSrc": "NVIDIA H100 product page"
+ },
+ "h200": {
+  "n": "NVIDIA H200 SXM",
+  "arch": "Hopper",
+  "mem": 141,
+  "memT": "HBM3e",
+  "bw": 4.8,
+  "bf16": 989,
+  "fp8": 1979,
+  "fp4": null,
+  "tdp": 700,
+  "cool": "Air or liquid",
+  "link": "NVLink 900 GB/s",
+  "kw": 1.275,
+  "kwSrc": "DGX H200: 10.2 kW max ÷ 8 GPUs (NVIDIA)",
+  "kwC": "reported",
+  "usd": 5.29,
+  "usdSrc": "E2E Networks India on-demand, Oct 2026 (via Ancapex)",
+  "inr": 140,
+  "inrSrc": "IndiaAI rate card ₹100–140 (Ancapex, secondary)",
+  "mlp": {
+   "l8": [
+    7376.6,
+    "v6.1 · FP8 · 1 GPU (individual submitter)"
+   ],
+   "l70": [
+    4125,
+    "v5.0 · FP8 · 8 GPUs (CoreWeave)"
+   ],
+   "oss": [
+    3013,
+    "v6.0 · MXFP4 · 8 GPUs (Red Hat)"
+   ],
+   "r1": [
+    556,
+    "v5.1 · FP8 · DGX H200"
+   ]
+  },
+  "specSrc": "NVIDIA H200 product page"
+ },
+ "b200": {
+  "n": "NVIDIA B200 (HGX)",
+  "arch": "Blackwell",
+  "mem": 180,
+  "memT": "HBM3e",
+  "bw": 7.7,
+  "bf16": 2250,
+  "fp8": 4500,
+  "fp4": 9,
+  "tdp": 1000,
+  "cool": "Air or liquid",
+  "link": "NVLink 5, 1.8 TB/s",
+  "kw": 1.79,
+  "kwSrc": "DGX B200: 14.3 kW max ÷ 8 GPUs (NVIDIA)",
+  "kwC": "reported",
+  "usd": 2.68,
+  "usdSrc": "Spheron spot, 10 Jun 2026",
+  "inr": 290.7,
+  "inrSrc": "IndiaAI rate card, on-demand (Ancapex, secondary)",
+  "mlp": {
+   "l8": [
+    16251,
+    "v6.0 · FP4 · 8 GPUs (Lambda)"
+   ],
+   "l70": [
+    12499,
+    "v5.1 · FP4 · 8 GPUs (Lambda)"
+   ],
+   "oss": [
+    11276,
+    "v6.1 · MXFP4 · 8 GPUs (entry 6.1-0021)"
+   ],
+   "r1": [
+    7015,
+    "MLPerf Server · FP4 · 8 GPUs"
+   ]
+  },
+  "specSrc": "Lenovo Press LP2226; NVIDIA HGX B200 (180 GB, 7.7 TB/s shipping; 192 GB, 8 TB/s launch figure)"
+ },
+ "b300": {
+  "n": "NVIDIA B300 (Blackwell Ultra)",
+  "arch": "Blackwell Ultra",
+  "mem": 288,
+  "memT": "HBM3e",
+  "bw": 8,
+  "bf16": 2250,
+  "fp8": 5000,
+  "fp4": 15,
+  "tdp": 1400,
+  "cool": "Liquid (air-cooled HGX exists)",
+  "link": "NVLink 5, 1.8 TB/s",
+  "kw": 1.875,
+  "kwSrc": "DGX B300: 15 kW max ÷ 8 GPUs; 14.5 kW typical (NVIDIA DGX B300 user guide)",
+  "kwC": "reported",
+  "usd": 3.29,
+  "usdSrc": "Spheron spot, 10 Jun 2026",
+  "inr": null,
+  "inrSrc": "",
+  "mlp": {
+   "l8": [
+    20420.4,
+    "v6.1 · FP4 · 1 GPU"
+   ],
+   "l70": [
+    14495.6,
+    "v6.1 · FP4 · 1 GPU (entry 6.1-0103)"
+   ],
+   "oss": [
+    14211,
+    "v6.1 · MXFP4 · 8 GPUs (entry 6.1-0052)"
+   ],
+   "r1": [
+    8846,
+    "v6.1 · FP4 · 8 GPUs (entry 6.1-0046)"
+   ]
+  },
+  "specSrc": "NVIDIA (1.5× B200 dense FP4); RunPod and Vast.ai datasheets. Dense FP8 is disputed: 5 PF (RunPod) vs 7 PF (Spheron, Vast.ai); BF16 2.25 PF used as the conservative value"
+ },
+ "mi300x": {
+  "n": "AMD Instinct MI300X",
+  "arch": "CDNA 3",
+  "mem": 192,
+  "memT": "HBM3",
+  "bw": 5.3,
+  "bf16": 1307.4,
+  "fp8": 2614.9,
+  "fp4": null,
+  "tdp": 750,
+  "cool": "Air",
+  "link": "Infinity Fabric 896 GB/s",
+  "kw": 1.225,
+  "kwSrc": "TDP + 0.475 kW host share (atlas estimate)",
+  "kwC": "estimate",
+  "usd": 1.87,
+  "usdSrc": "IndiaAI L1 ₹168.22 (PIB, 30 May 2025)",
+  "inr": 168.22,
+  "inrSrc": "IndiaAI L1 (PIB, 30 May 2025)",
+  "mlp": {},
+  "specSrc": "AMD MI300 product page; Lenovo Press LP1943"
+ },
+ "mi325x": {
+  "n": "AMD Instinct MI325X",
+  "arch": "CDNA 3",
+  "mem": 256,
+  "memT": "HBM3E",
+  "bw": 6,
+  "bf16": 1307.4,
+  "fp8": 2614.9,
+  "fp4": null,
+  "tdp": 1000,
+  "cool": "Air",
+  "link": "Infinity Fabric 896 GB/s",
+  "kw": 1.475,
+  "kwSrc": "TDP + 0.475 kW host share (atlas estimate)",
+  "kwC": "estimate",
+  "usd": null,
+  "usdSrc": "",
+  "inr": null,
+  "inrSrc": "",
+  "mlp": {},
+  "specSrc": "AMD MI325X datasheet"
+ },
+ "mi355x": {
+  "n": "AMD Instinct MI355X",
+  "arch": "CDNA 4",
+  "mem": 288,
+  "memT": "HBM3E",
+  "bw": 8,
+  "bf16": 2516,
+  "fp8": 5033,
+  "fp4": 10.07,
+  "tdp": 1400,
+  "cool": "Direct liquid",
+  "link": "Infinity Fabric 538 GB/s",
+  "kw": 1.875,
+  "kwSrc": "TDP + 0.475 kW host share, as B300 (AMD publishes no platform power; atlas estimate)",
+  "kwC": "estimate",
+  "usd": null,
+  "usdSrc": "No rental price found; SemiAnalysis says \"meaningfully lower\" than B200",
+  "inr": null,
+  "inrSrc": "",
+  "mlp": {
+   "l8": [
+    18570,
+    "MLPerf · FP8 · 8 GPUs (Dell; secondary compilation)"
+   ],
+   "l70": [
+    12909,
+    "v6.1 · FP4 · 8 GPUs (AMD, entry 6.1-0003)"
+   ],
+   "oss": [
+    14155,
+    "v6.1 · MXFP4 · 8 GPUs (AMD, entry 6.1-0003)"
+   ],
+   "r1": [
+    4698,
+    "v6.1 · FP4 · 512 GPUs (Crusoe, entry 6.1-0026)"
+   ]
+  },
+  "specSrc": "AMD datasheet via Boston Ltd and AquaNode; 20.1 PF FP4 is the sparse figure"
+ },
+ "ironwood": {
+  "n": "Google TPU v7 Ironwood",
+  "arch": "TPU, dual chiplet",
+  "mem": 192,
+  "memT": "HBM3E",
+  "bw": 7.37,
+  "bf16": 2307,
+  "fp8": 4614,
+  "fp4": null,
+  "tdp": null,
+  "cool": "Liquid",
+  "link": "ICI 1.2 TB/s; 9,216-chip pods",
+  "kw": null,
+  "kwSrc": "Not published: 600 W (QSCompute) to ~1 kW claimed",
+  "kwC": "unverified",
+  "usd": null,
+  "usdSrc": "",
+  "inr": null,
+  "inrSrc": "",
+  "mlp": {},
+  "specSrc": "Google via Tom's Hardware and TrendForce; no MLPerf result"
+ },
+ "gaudi3": {
+  "n": "Intel Gaudi 3 (OAM)",
+  "arch": "Gaudi 3",
+  "mem": 128,
+  "memT": "HBM2e",
+  "bw": 3.7,
+  "bf16": 1835,
+  "fp8": 1835,
+  "fp4": null,
+  "tdp": 900,
+  "cool": "Air",
+  "link": "24 × 200 GbE RoCE",
+  "kw": 1.375,
+  "kwSrc": "TDP + 0.475 kW host share (atlas estimate)",
+  "kwC": "estimate",
+  "usd": null,
+  "usdSrc": "",
+  "inr": null,
+  "inrSrc": "",
+  "mlp": {},
+  "specSrc": "Intel Gaudi 3 white paper; no comparable MLPerf v6 datacenter LLM result"
+ }
+}

@@ -1,0 +1,183 @@
+<section class="ch chw" id="c2" data-n="3">
+  <div class="chq">
+    <div class="chq-n" aria-hidden="true">3</div>
+    <div class="chq-b"><h2 class="chq-t">Anatomy of an AI data centre</h2>
+      <p class="chq-q"><span>The question</span>What changes when the racks are built for AI?</p>
+      <p class="chq-a"><span>The short answer</span>Rack power jumps from about 8 kW to 120–600 kW. Liquid replaces air at the chip, grid connections move to 132–400 kV, and GPUs become most of the cost.</p>
+      
+    </div>
+  </div>
+<div class="panel inst v2core"><h3>Take an AI campus apart<span class="sub">Tap a block to see what it does, what it costs and what water it uses. Explode the building to see the layers.</span></h3>
+  <div class="cut-g"><div id="v2-cut" class="v2-cut" data-ex="0"></div><div><div id="v2-cut-i" class="cut-i"></div><button type="button" class="d1-btn" id="v2-cut-x" style="margin-top:10px">Explode the building</button><p class="xs muted" style="margin-top:8px">Costs from the atlas capex stack for a 100 MW AI campus (Chapter 15); energy shares at PUE 1.10–1.20. When you have built a design in Chapter 14, its own numbers appear under each block. <span class="ev m show" data-src="Atlas capex stack (Report 7); research report Oct 2026">model</span></p></div></div></div>
+<div class="subch" id="ai">
+  <div class="ch-head">
+    <div class="ch-tag"><span class="ch-num" aria-hidden="true">3</span><span class="eyebrow"><a class="rep-l" href="#reports">Report 2</a> · Anatomy of consumption, AI vs conventional</span></div>
+    <h2>AI racks are a different machine</h2>
+    <p class="lede">A conventional rack draws about as much as a few homes; a GB200 rack draws about as much as a street. That one fact changes cooling, power delivery, grid planning and cost. Per query the footprint is small. The aggregate is not.</p>
+  </div>
+  <div class="take">
+    <div><span class="v mono">24%</span><span class="k">AI servers' share of server electricity (2024), growing ~30% a year vs ~9% for conventional</span></div>
+    <div><span class="v mono">0.24 Wh</span><span class="k">Median Gemini text prompt, with 0.26 mL on-site water (Google, self-reported)</span></div>
+    <div><span class="v mono">450 → 40 MW</span><span class="k">One AI site's swing in 36 seconds; NERC issued a Level 3 alert on 4 May 2026</span></div>
+  </div>
+
+  <div class="cols">
+    <div class="panel">
+      <h3>Global data-centre electricity<span class="sub">TWh, IEA <i>Energy and AI</i> (April 2025) base case. 2030 high case exceeds 1,260 TWh.</span></h3>
+      <div class="chart short"><canvas id="c-global" aria-label="Global data centre electricity"></canvas></div>
+      <p class="note">945 TWh in 2030 is slightly more than Japan uses today. The US and China make up nearly 80% of growth; India is a fraction of a per cent of the total today.</p>
+    </div>
+    <div class="panel">
+      <h3>Where the power goes, by facility class<span class="sub">Share of facility electricity, indicative (series synthesis from PUE ranges and IEA component shares).</span></h3>
+      <div class="chart short"><canvas id="c-split" aria-label="Power split by facility class"></canvas></div>
+    </div>
+  </div>
+
+  <div class="panel gap">
+    <h3>The power chain, grid to chip<span class="sub">Every conversion loses a little. Typical losses at each stage in a conventional AC facility.</span></h3>
+    <div class="diagram">
+      <svg viewBox="0 0 1000 150" role="img" aria-label="Power chain from grid to chip with losses">
+        <g>
+          <rect class="d-box h" x="10" y="35" width="130" height="60" rx="8"/><text class="d-t" x="75" y="62" text-anchor="middle">Grid</text><text class="d-s" x="75" y="80" text-anchor="middle">33–220 kV AC</text>
+          <rect class="d-box" x="180" y="35" width="130" height="60" rx="8"/><text class="d-t" x="245" y="62" text-anchor="middle">Transformer</text><text class="d-s" x="245" y="80" text-anchor="middle">−1 to 2%</text>
+          <rect class="d-box" x="350" y="35" width="130" height="60" rx="8"/><text class="d-t" x="415" y="62" text-anchor="middle">UPS</text><text class="d-s" x="415" y="80" text-anchor="middle">−2 to 8%</text>
+          <rect class="d-box" x="520" y="35" width="130" height="60" rx="8"/><text class="d-t" x="585" y="62" text-anchor="middle">PDU / busway</text><text class="d-s" x="585" y="80" text-anchor="middle">−1 to 3%</text>
+          <rect class="d-box" x="690" y="35" width="130" height="60" rx="8"/><text class="d-t" x="755" y="62" text-anchor="middle">Server PSU</text><text class="d-s" x="755" y="80" text-anchor="middle">−4 to 10%</text>
+          <rect class="d-box c" x="860" y="35" width="130" height="60" rx="8"/><text class="d-t" x="925" y="62" text-anchor="middle">Chip</text><text class="d-s" x="925" y="80" text-anchor="middle">~0.8 V</text>
+        </g>
+        <path class="d-l p" d="M140 65 H176 M310 65 H346 M480 65 H516 M650 65 H686 M820 65 H856"/>
+        <text class="d-s" x="500" y="130" text-anchor="middle">Nvidia's 800 VDC design (Kyber, 2027) removes several AC/DC stages and up to 200 kg of copper busbar per 1 MW rack.</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel inst">
+      <h3>Rack inspector<span class="sub">Slide the rack's power draw and see what it forces on the building.</span></h3>
+      <div class="ctrl"><label for="rk">Rack power</label><output id="rk-o">8 kW</output><input id="rk" type="range" min="0" max="100" step="1" value="12"></div>
+      <div class="rackviz"><div class="rack" id="rack" aria-hidden="true"></div><div class="read" id="rk-read"></div></div>
+      <p class="small" id="rk-text"></p>
+    </div>
+    <div class="panel">
+      <h3>Rack density and chip power<span class="sub">Toggle between rack kW (log scale) and per-GPU watts.</span></h3>
+      <div class="seg" id="dens-toggle" role="group" aria-label="Metric"><button data-v="rack" aria-pressed="true">Rack kW</button><button data-v="gpu">GPU watts</button></div>
+      <div class="chart"><canvas id="c-density" aria-label="Rack density chart"></canvas></div>
+      <p class="note">A facility built in 2023 for 30 kW racks is already stranded for frontier training. Rubin power figures are industry estimates, not Nvidia specs.</p>
+    </div>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel">
+      <h3>Load profiles<span class="sub">Why grids now treat AI training as a reliability risk.</span></h3>
+      <div class="diagram" style="padding:6px">
+        <svg viewBox="0 0 720 230" role="img" aria-label="Load profile shapes for conventional, training and inference">
+          <text class="d-s" x="10" y="22">Conventional: gentle daily swing, 30–60% of peak</text>
+          <path class="d-l c" d="M10 60 C80 40 140 40 200 55 S320 75 380 55 S500 40 560 52 S680 66 710 55"/>
+          <text class="d-s" x="10" y="102">AI training: near-peak plateau with synchronised dips</text>
+          <path class="d-l h" d="M10 120 H110 V150 H125 V120 H260 V150 H272 V120 H420 V185 H440 V120 H600 V150 H612 V120 H710"/>
+          <text class="d-s" x="10" y="198">AI inference: bursty, follows users</text>
+          <path class="d-l p" d="M10 220 L40 212 L60 218 L85 205 L110 216 L140 200 L165 214 L200 206 L230 219 L260 202 L295 214 L330 198 L360 213 L400 205 L430 219 L470 201 L500 214 L540 206 L580 218 L620 203 L660 215 L710 208"/>
+        </svg>
+      </div>
+      <p class="note">NERC documented a July 2024 event where ~1,500 MW of data-centre load switched to backup at once after a 230 kV fault. Mitigations: GPU power smoothing, rack storage, site batteries, ride-through.</p>
+    </div>
+    <div class="panel">
+      <h3>Energy per workload</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Workload</th><th class="n">Energy</th><th>Source</th></tr></thead>
+        <tbody>
+          <tr><td>Google web search</td><td class="n">~0.3 Wh</td><td>Google, 2009 figure</td></tr>
+          <tr><td>Median Gemini text prompt</td><td class="n">0.24 Wh</td><td>Google, May 2025 (33× lower than a year earlier)</td></tr>
+          <tr><td>ChatGPT average query</td><td class="n">~0.34 Wh</td><td>Altman, June 2025</td></tr>
+          <tr><td>GPT-4o, 500 output tokens</td><td class="n">~0.3 Wh</td><td>Epoch AI</td></tr>
+          <tr><td>Long input, 10k / 100k tokens</td><td class="n">2.5 / 40 Wh</td><td>Epoch AI</td></tr>
+          <tr><td>Llama 3.1 405B training</td><td class="n">≤21.6 GWh</td><td>30.84 M H100-hours (IT only, upper bound)</td></tr>
+          <tr><td>GPT-4 training (unofficial)</td><td class="n">~50–62 GWh</td><td>Estimates</td></tr>
+        </tbody></table></div>
+      <p class="note">Inference now outweighs training in total: ChatGPT at 1 bn messages a day needs about 12.5 MW continuously, and it never stops.</p>
+    </div>
+  </div>
+
+  <div class="tbl gap"><table>
+    <thead><tr><th>Attribute</th><th>Conventional</th><th>AI data centre</th></tr></thead>
+    <tbody>
+      <tr><td>Rack density</td><td>5–15 kW (modal ~7–9)</td><td>120–142 kW (GB200/GB300) → 190–230 kW (Rubin) → 600 kW+ (Kyber)</td></tr>
+      <tr><td>Cooling</td><td>Air, CRAH, containment</td><td>Direct-to-chip liquid mandatory; 85–100% of heat to liquid</td></tr>
+      <tr><td>Power</td><td>400/415 V AC, 12 V boards</td><td>415/480 V AC + 54 V busbars now; 800 V DC from 2027; site batteries</td></tr>
+      <tr><td>Networking</td><td>North–south, 10–100 GbE</td><td>East–west fabric, 400–800 Gb/s per GPU, many times more fibre</td></tr>
+      <tr><td>Campus size</td><td>1–50 MW</td><td>100 MW to multi-GW (Stargate Abilene ~1.2 GW, Meta Hyperion 2→5 GW)</td></tr>
+      <tr><td>Siting</td><td>Latency-first, near users</td><td>Power-first for training; metro for inference</td></tr>
+      <tr><td>Capex</td><td>JLL shell ≈US$11.3 m/MW; India ₹50–55 cr/MW</td><td>+ up to US$25 m/MW fit-out before GPUs; India up to ₹75 cr/MW</td></tr>
+      <tr><td>Reliability</td><td>Tier III/IV, 2N</td><td>Training often N+1 (checkpoints); inference Tier III+</td></tr>
+      <tr><td>Obsolescence</td><td>Refresh every 5–7 years</td><td>New GPU generation yearly; economic life 3–6 years (contested)</td></tr>
+    </tbody></table></div>
+
+  <div class="cols gap">
+    <div class="panel">
+      <h3>Training vs inference sites</h3>
+      <div class="tbl"><table>
+        <thead><tr><th></th><th>Training</th><th>Inference</th></tr></thead>
+        <tbody>
+          <tr><td>Location</td><td>Power-rich, remote, cheap land</td><td>Metro or edge, near users</td></tr>
+          <tr><td>Size</td><td>300 MW – 5 GW</td><td>10–200 MW, distributed</td></tr>
+          <tr><td>Network</td><td>Huge internal fabric</td><td>Strong external peering</td></tr>
+          <tr><td>Redundancy</td><td>Lower (checkpointing)</td><td>Tier III+</td></tr>
+          <tr><td>Trend</td><td>Fewer, larger campuses</td><td>Most AI electricity by 2030</td></tr>
+        </tbody></table></div>
+    </div>
+    <div class="panel">
+      <h3>India's AI build-out</h3>
+      <ul class="clean small">
+        <li><b>IndiaAI Mission</b>: ₹10,372 crore; 38,231 GPUs onboarded across 14 providers at an average ≈₹65/GPU-hour (March 2026); ~20,000 more announced.</li>
+        <li><b>Yotta</b>: NM1 Navi Mumbai, Tier IV, 52 MW, 8,192 H100s; B300 and Vera Rubin plans at Greater Noida (announced, not commissioned).</li>
+        <li><b>Reliance Jamnagar</b>: up to 3 GW plan; 120 MW+ expected online H2 2026; Meta lease ~168 MW.</li>
+        <li><b>Sify</b>: first Indian DGX-Ready liquid-cooling certification (130 kW/rack), later 200 kW/rack sites.</li>
+        <li><b>Retrofit reality</b>: a 10× density jump strands floor space, needs new transformers, water loops, &gt;1.3 t floor loading and taller halls. Build liquid-ready shells now.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- moved from the AI-vs-factories chapter -->
+<!-- 1 · ANATOMY -->
+  <div class="panel inst">
+    <h3>Anatomy: from the substation to the chip<span class="sub">Two paths run through every AI data centre: electricity comes in, heat goes out. Water enters where the heat leaves (cooling towers) and, out of sight, at the power stations that make the electricity.</span></h3>
+    <div class="aif-flow" aria-label="Power path">
+      <span class="aif-lab">Power in</span>
+      <div class="aif-node w"><b>Power station</b><small>coal plant evaporates ~3 L per kWh</small></div>
+      <div class="aif-node"><b>Grid substation</b><small>132–220 kV (400 kV for GW campuses); colo 11–33 kV</small></div>
+      <div class="aif-node"><b>Transformers &amp; switchgear</b><small>MV → 415 V AC, or MV → 800 V DC (2027+)</small></div>
+      <div class="aif-node"><b>UPS / batteries + diesel</b><small>N+1 or 2N backup; BESS replacing lead-acid</small></div>
+      <div class="aif-node"><b>Busway → rack</b><small>48–54 V in the rack; 12 V at the chip</small></div>
+      <div class="aif-node hot"><b>GPU rack</b><small>120–230 kW today, ~600 kW from 2027</small></div>
+    </div>
+    <div class="aif-flow" aria-label="Heat path">
+      <span class="aif-lab">Heat out</span>
+      <div class="aif-node hot"><b>Cold plates on chips</b><small>~85–90% of rack heat goes to liquid</small></div>
+      <div class="aif-node"><b>CDU</b><small>coolant distribution unit, one per row</small></div>
+      <div class="aif-node"><b>Facility water loop</b><small>ASHRAE W32–W45: 32–45 °C water</small></div>
+      <div class="aif-node"><b>Residual air</b><small>10–30% of heat: memory, power supplies, switches</small></div>
+      <div class="aif-node w"><b>Heat rejection</b><small>towers 1.8 L/kWh · adiabatic ~0.3 · dry coolers ~0.05</small></div>
+    </div>
+    <div class="cols">
+      <div>
+        <p class="fieldlbl">Where an AI facility's energy goes (Google, Gemini prompt, 2025)</p>
+        <div class="aif-stack" id="aif-split" role="img" aria-label="Energy split"></div>
+        <p class="xs muted">Measured on Google's production fleet: 58% accelerators, 25% host CPU and memory, 10% idle machines kept ready, 8% data-centre overhead (cooling, power losses). Counting only the chips gives 0.10 Wh per prompt; the whole system gives 0.24 Wh. <span class="ev r show" data-src="Google, Measuring the environmental impact of AI inference (Aug 2025)">reported</span></p>
+      </div>
+      <div class="tbl"><table class="aif-t"><thead><tr><th></th><th>Conventional / cloud</th><th>AI campus</th></tr></thead><tbody>
+        <tr><td>Rack power</td><td>8 kW average; 82% of sites below 30 kW peak</td><td>120–140 kW (GB200/GB300 NVL72) → 120–230 kW (Vera Rubin, 2H 2026) → ~600 kW (Kyber, 2027)</td></tr>
+        <tr><td>Cooling</td><td>Air: CRAH units, chillers or towers</td><td>Direct-to-chip liquid + residual air; dry coolers possible with 40–45 °C water</td></tr>
+        <tr><td>Grid connection</td><td>11–33 kV, 5–50 MW</td><td>132–400 kV, 100 MW–1 GW+</td></tr>
+        <tr><td>PUE</td><td>1.54 global average (Uptime 2025)</td><td>1.1–1.3 for new liquid-cooled halls</td></tr>
+        <tr><td>Load pattern</td><td>Steady; 50–65% of IT capacity</td><td>Training near full power for weeks (70–85%); inference follows the day</td></tr>
+        <tr><td>Building cost</td><td>₹46.5 crore/MW India colo average</td><td>₹70–95 crore/MW AI-ready, plus GPUs (≈₹266 crore/MW)</td></tr>
+        <tr><td>Footprint</td><td>Single halls, 1–5 acres</td><td>Google–Adani Vizag: ~1 GW on ~600 acres (≈1.7 MW/acre)</td></tr>
+      </tbody></table></div>
+    </div>
+    <p class="fieldlbl" style="margin-top:14px">One rack generation at a time</p>
+    <div class="seg" id="ai-rk" role="group" aria-label="Rack generation"><button data-v="0" aria-pressed="true">Enterprise rack</button><button data-v="1">GB200 / GB300 NVL72</button><button data-v="2">Vera Rubin</button><button data-v="3">Kyber (2027)</button></div>
+    <div class="read" id="ai-rk-r" style="margin-top:10px"></div>
+  </div>
+
+  </div>
+</section>

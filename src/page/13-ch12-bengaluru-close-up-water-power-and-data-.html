@@ -1,0 +1,375 @@
+<section class="ch chw" id="cbw" data-n="12">
+  <div class="chq">
+    <div class="chq-n" aria-hidden="true">12</div>
+    <div class="chq-b"><h2 class="chq-t">Bengaluru close-up: water, power and data centres</h2>
+      <p class="chq-q"><span>The question</span>What does water cost in Bengaluru, where does it come from, how much would the city's data centres need if the coming capacity is conventional or AI, does rack density change that, and how could they run on treated sewage without leaving the city with stranded pipes?</p>
+      <p class="chq-a"><span>The short answer</span>By volume, data centres are small users: even 1 GW on cooling towers would evaporate about 34 MLD, 1.7% of BWSSB's ~1,935 MLD, and AI halls on dry coolers would need under 1 MLD. By location they matter: most sit in groundwater belts drawn at 170–190% of recharge, and none are separately metered. Water costs about 2% of their power bill, so price will not change behaviour; siting rules, a WUE cap and shared, utility-owned treated-water mains will.</p>
+      <nav class="chq-subs" aria-label="In this chapter"><a href="#cbw1">12.1</a><a href="#cbw2">12.2</a><a href="#cbw3">12.3</a><a href="#cbw4">12.4</a><a href="#cbw5">12.5</a><a href="#cbw6">12.6</a><a href="#cbw7">12.7</a><a href="#bengaluru">12.8</a></nav>
+    </div>
+  </div>
+
+<div class="subch" id="cbw1">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">12.1</span><span class="eyebrow">Research · Prices</span></div>
+    <h2>What water costs in Bengaluru</h2>
+    <p class="lede">BWSSB revised its tariffs in April 2025, the first rise since 2014, and now raises them 3% every April. Every data centre's volume falls in the top non-domestic slab, ₹99/kL. Tankers cost more; treated sewage much less, if you can get it.</p></div>
+  <div class="cols gap">
+    <div class="panel"><h3>Tariffs and prices<span class="sub">Per kilolitre (1,000 litres). 2026–27 rates are the 2025 rates plus 3%.</span></h3>
+      <div class="tbl"><table class="aif-t"><thead><tr><th>Who / what</th><th>₹ per kL</th><th>Note</th></tr></thead><tbody>
+        <tr><td>Houses, 0–8 / 8–25 / 25–50 / &gt;50 kL a month</td><td>8.5 / 14 / 34 / 55</td><td>Was 7 / 11 / 26 / 45 before April 2025</td></tr>
+        <tr><td>Apartments</td><td>25–32</td><td>Revised Sept 2025 to 200 L per family per day at ₹32</td></tr>
+        <tr><td>Non-domestic, 0–10 kL … 75–100 kL</td><td>60 → 98</td><td>Five slabs</td></tr>
+        <tr><td><b>Non-domestic &gt;100 kL (all data centres)</b></td><td><b>99</b> (≈102 in 2026–27)</td><td>Was 87</td></tr>
+        <tr><td>Private tankers, capped (Mar 2024)</td><td>83–125</td><td>₹600–1,200 per load by size and distance</td></tr>
+        <tr><td>Private tankers, 2024 crisis market</td><td>131 median; up to 238</td><td>Caps widely ignored</td></tr>
+        <tr><td>BWSSB secondary-treated water</td><td>10 (+ transport)</td><td>Hebbal plant, construction users; ~₹60 delivered by tanker</td></tr>
+        <tr><td>BWSSB tertiary-treated water</td><td>15</td><td>Ad hoc offer, Nayandahalli and Cubbon Park plants</td></tr>
+        <tr><td>Peenya industrial pipeline (planned)</td><td>~31–51</td><td>"50% of the prevailing tariff"; 27 km, 4 MLD</td></tr>
+        <tr><td>Groundwater charge (from July 2025)</td><td>1–35 per m³</td><td>Above 25 m³/day; metering and NOC mandatory</td></tr>
+      </tbody></table></div>
+      <p class="xs muted">BWSSB order of 10 Apr 2025 via Citizen Matters and Deccan Herald; Bengaluru Urban DC order, 7 Mar 2024; Bangalore Apartments' Federation survey; The Hindu; Karnataka Ground Water Authority. 2026–27 rate from a third-party calculator, not a BWSSB schedule. <span class="ev r show" data-src="BWSSB 2025 tariff order; DC tanker order 2024; KGWA">reported</span></p></div>
+    <div class="panel"><h3>What BWSSB spends, and why price will not save water<span class="sub">Atlas arithmetic from BWSSB's reported monthly spend.</span></h3>
+      <div class="kpis cai-k">
+        <div class="kpi"><span class="v">~₹34/kL</span><span class="k">BWSSB's cost to supply (₹200 cr a month ÷ ~58 million kL)</span></div>
+        <div class="kpi"><span class="v">~₹15.5/kL</span><span class="k">of that is electricity to pump Cauvery water ~100 km and 300–450 m uphill</span></div>
+        <div class="kpi"><span class="v">26.5%</span><span class="k">non-revenue water (leaks, theft, unbilled), down from 51% in 2013</span></div>
+        <div class="kpi"><span class="v">~2%</span><span class="k">water's share of a 1 GW AI campus's power bill, even at ₹99/kL on towers</span></div>
+      </div>
+      <p class="small">The ₹99 slab already cross-subsidises households, so selling drinking water to data centres is profitable for BWSSB. That weakens the utility's own incentive to move them onto treated water. And because water is a rounding error next to electricity, an operator will not pay ~4% more energy for dry coolers just to save water at these prices. Rules have to do that work.</p>
+      <p class="xs muted">Citizen Matters citing BWSSB (₹200 cr spend, ₹120 cr collected, ₹90 cr power a month). <span class="ev e show" data-src="Atlas arithmetic on BWSSB figures">estimate</span></p></div>
+  </div>
+</div>
+
+<div class="subch" id="cbw2">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">12.2</span><span class="eyebrow">Research · Sources</span></div>
+    <h2>Where Bengaluru's water comes from</h2>
+    <p class="lede">The Cauvery, pumped from ~100 km away, supplies most piped water. Borewells fill much of the gap. The one large source the city under-uses is its own treated sewage, most of which is sent to fill lakes in Kolar and Chikkaballapur.</p></div>
+  <div class="cols gap">
+    <div class="panel"><h3>The water balance<span class="sub">Million litres a day (MLD), 2024–2026. Ranges where sources disagree; bars at midpoints.</span></h3>
+      <div class="hbars" id="bw-bal"></div>
+      <p class="small">Demand for fresh water is ~2,600 MLD against ~1,935 delivered by BWSSB, a gap of ~500 MLD filled by borewells and tankers (which mostly move groundwater). Of the delivered water, 26.5% is lost before it is billed.</p>
+      <p class="xs muted">Legislative Council (Aug 2026); BWSSB via Elets (Apr 2026); Deccan Herald; SANDRP/Biome; OpenCity from CGWB 2025; WELL Labs. <span class="ev r show" data-src="BWSSB; Deccan Herald; CGWB 2025; WELL Labs">reported</span> <span class="ev e show" data-src="Groundwater share and demand are estimates">estimate</span></p></div>
+    <div class="panel"><h3>Each source in brief<span class="sub">Plans are marked; they are not delivered capacity.</span></h3>
+      <div class="tbl"><table class="aif-t cai-t"><thead><tr><th>Source</th><th>What we know</th></tr></thead><tbody>
+        <tr><td><b>Cauvery I–IV</b></td><td>~1,450 MLD design, pumped from TK Halli</td></tr>
+        <tr><td><b>Cauvery V</b> (Oct 2024)</td><td>+775 MLD for 110 added villages; ₹4,336–5,550 crore (JICA). Treatment capacity now 2,225–2,293 MLD.</td></tr>
+        <tr><td><b>Entitlement</b></td><td>The 2018 Supreme Court verdict added 4.75 TMC for drinking water. Reported city totals differ: 23 TMC (~1,785 MLD) or ~29 TMC (~2,250 MLD). Either way, Stage V uses up most of it; Stage VI (~500 MLD) faces approvals.</td></tr>
+        <tr><td><b>Pumping</b></td><td>~1.3 kWh/kL to lift ~350 m; BWSSB's bill implies ~2 kWh/kL all-in</td></tr>
+        <tr><td><b>Groundwater</b></td><td>~600–1,000 MLD; ~3 lakh borewells. 6,997 of 14,781 BWSSB borewells failed in 2024. Extraction at ~180–187% of recharge in Bengaluru Urban, 169% in Devanahalli.</td></tr>
+        <tr><td><b>TG Halli, Hesaraghatta</b></td><td>Not supplying now; TG Halli (110 MLD) awaits Yettinahole water</td></tr>
+        <tr><td><b>Sewage</b></td><td>2,200–2,300 MLD generated; 33–34 BWSSB plants (1,348.5 MLD) treat ~1,200–1,350; ~580 MLD untreated</td></tr>
+        <tr><td><b>Treated water reused</b></td><td>~820–855 MLD, mostly lake filling: KC Valley gets ~290 of 440 MLD design to Kolar; HN Valley 210 MLD design to Chikkaballapur; only ~30 MLD commercial</td></tr>
+        <tr><td><b>Tankers</b></td><td>2026 summer: 1,260 mini-tanks and 117 tankers in 448 high-alert pockets, many in the eastern data-centre corridor</td></tr>
+      </tbody></table></div>
+      <p class="xs muted">TNM; BWSSB; Deccan Herald; GWD–CGWB Dynamic Ground Water Resources 2024; National Compilation 2024; The Week; SANDRP. <span class="ev r show" data-src="TNM; BWSSB; Deccan Herald; CGWB 2024">reported</span></p></div>
+  </div>
+</div>
+
+<div class="subch" id="cbw3">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">12.3</span><span class="eyebrow">Research · Today</span></div>
+    <h2>How much water Bengaluru's data centres use today</h2>
+    <p class="lede">Nobody meters it. BWSSB was only recently told to start collecting the figure, and data centres inside larger buildings share one connection. Estimates differ fivefold, mostly because of the litres-per-megawatt factor each uses.</p></div>
+  <div class="cols gap">
+    <div class="panel"><h3>Reported and estimated figures<span class="sub">Each measures something different.</span></h3>
+      <div class="tbl"><table class="aif-t"><thead><tr><th>Source</th><th>Figure</th><th>What it really is</th></tr></thead><tbody>
+        <tr><td>Karnataka IT department (2026)</td><td>~4 MLD for 32 centres</td><td>Informal operator inputs</td></tr>
+        <tr><td>WELL Labs</td><td>~20 MLD</td><td>26 ML per MW per year × 292 MW (18 centres)</td></tr>
+        <tr><td>IT Minister, Assembly (Mar 2026)</td><td>25 ML per MW per year</td><td>≈2.85 L/kWh at full load</td></tr>
+        <tr><td>BWSSB billing</td><td>~4.3 kL/day for five centres</td><td>Only separately metered connections; implies most cooling water is borewell, tanker or shared</td></tr>
+        <tr><td>Down To Earth, permissions</td><td>~2.2 or ~4.9 MLD</td><td>Two versions of the same article disagree</td></tr>
+        <tr><td>One allotment (ETL Secure Space)</td><td>650 kL/day</td><td>Government order</td></tr>
+      </tbody></table></div>
+      <p class="xs muted">Newslaundry / The News Minute (Apr 2026); Down To Earth; WELL Labs. <span class="ev r show" data-src="Newslaundry; DTE; WELL Labs">reported</span></p></div>
+    <div class="panel"><h3>Atlas estimate from capacity<span class="sub">162 MW live IT; on-site MLD = MW × load × 24 × WUE ÷ 1,000.</span></h3>
+      <div class="kpis cai-k">
+        <div class="kpi"><span class="v">4.5 MLD</span><span class="k">if all on cooling towers (65% load, WUE 1.8)</span></div>
+        <div class="kpi"><span class="v">3.4 MLD</span><span class="k">if 70% towers, 30% air-cooled chillers</span></div>
+        <div class="kpi"><span class="v">0.25 MLD</span><span class="k">if all air-cooled chillers</span></div>
+        <div class="kpi"><span class="v">0.18–0.25%</span><span class="k">of BWSSB's supply, central range</span></div>
+      </div>
+      <p class="small">The IT department's ~4 MLD fits a mostly water-cooled fleet. WELL Labs' ~20 MLD needs full load, heavy blowdown or a factor that bundles other uses, so the atlas treats it as an upper bound. The water matters less for its size than for where it is drawn: Whitefield, Hoskote and Devanahalli are among the most over-drawn aquifers in the state.</p></div>
+  </div>
+</div>
+
+<div class="subch" id="cbw4">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">12.4</span><span class="eyebrow">Model · Growth</span></div>
+    <h2>If the coming capacity is all conventional, or all AI</h2>
+    <p class="lede">Choose the megawatts, the type of hall, its heat rejection, the water price and the grid. The panel gives a year of water, energy and cost, and the full grid of scenarios underneath. <a href="#cti6">11.5</a> asks the same question from the rack up (training share, rack density, liquid cooling); both use the same atlas WUE and grid-water standards.</p></div>
+  <div class="panel inst hot gap" id="bw-p4">
+    <h3>Bengaluru growth scenarios: water, energy and cost<span class="sub">On-site water = IT MW × load × 24 × WUE; power-station water = facility energy × grid litres per kWh; water cost = ML × ₹/kL ÷ 10,000 (₹ crore).</span></h3>
+    <div class="vs-ctrls">
+      <div class="opt"><span class="fieldlbl">New capacity</span><div class="seg" id="bw-mw" role="group" aria-label="New capacity"><button data-v="100">100 MW · pipeline</button><button data-v="600" aria-pressed="true">600 MW · + Hoskote</button><button data-v="1000">1 GW · state goal</button></div></div>
+      <div class="opt"><span class="fieldlbl">All of it is</span><div class="seg cti-big" id="bw-ty" role="group" aria-label="Type"><button data-v="cv">Conventional</button><button data-v="ai" aria-pressed="true">AI</button></div></div>
+    </div>
+    <div class="vs-ctrls" style="margin-top:8px">
+      <div class="opt"><span class="fieldlbl">Heat rejection</span><div class="seg" id="bw-cl" role="group" aria-label="Heat rejection"></div></div>
+      <div class="opt"><span class="fieldlbl">Water price</span><div class="seg" id="bw-pr" role="group" aria-label="Water price"><button data-v="99" aria-pressed="true">BWSSB ₹99</button><button data-v="102">₹102 (2026–27)</button><button data-v="40">Treated ₹40</button><button data-v="20">Borewell ₹20</button><button data-v="131">Tanker ₹131</button></div></div>
+      <div class="opt"><span class="fieldlbl">Power-station water</span><div class="seg" id="bw-gr" role="group" aria-label="Grid water"><button data-v="2.9" aria-pressed="true">India grid 2.9</button><button data-v="3.8">Marginal (coal) 3.8</button><button data-v="1.54">Karnataka mix 1.54</button></div></div>
+    </div>
+    <div class="read" id="bw-r" style="margin-top:12px"></div>
+    <p class="small" id="bw-n"></p>
+    <div class="tbl" style="margin-top:10px"><table class="aif-t cti-vs" id="bw-grid"></table></div>
+    <details class="aif-det"><summary>Assumptions</summary><ul class="clean xs muted" style="margin-top:6px">
+      <li>Conventional halls (6–12 kW air racks): load 65%; chilled water + towers PUE 1.25, WUE 1.8; air-cooled chillers PUE 1.45, WUE 0.05 (atlas cooling reference, Chapter 6).</li>
+      <li>AI halls (132–600 kW liquid racks): load 80% (between inference 0.7 and training 0.9); towers PUE 1.10, WUE 1.8; adiabatic dry coolers PUE 1.12, WUE 0.25; dry coolers PUE 1.15, WUE 0.05.</li>
+      <li>For context, Uptime's 2025 survey put the global average PUE at 1.54 (1.44 for sites over 20 MW); Google's fleet averaged 1.09.</li>
+      <li>Electricity at ₹8.0/kWh all-in (BESCOM HT-2(a), atlas register). BWSSB supply 1,935 MLD. These values are a single set per hall type; the 11.5 calculator uses the atlas cooling-path model by rack, so its figures differ by a few percent.</li></ul></details>
+  </div>
+</div>
+
+<div class="subch" id="cbw5">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">12.5</span><span class="eyebrow">Model · Rack density</span></div>
+    <h2>Does rack density change water or energy?</h2>
+    <p class="lede">Not directly. Every kWh a server uses becomes a kWh of heat, and evaporating water to remove it takes ~1.5 L per kWh whatever the rack. What density changes is which cooling is possible: dense liquid-cooled racks run warm enough for dry coolers, and that is where the water saving comes from.</p></div>
+  <div class="panel inst hot gap" id="bw-p5">
+    <h3>Rack density, water and energy<span class="sub">Water per rack = kW × load × 24 × WUE. Pick a heat-rejection path to see that water per MWh stays flat on towers while water per rack climbs with density.</span></h3>
+    <div class="vs-ctrls"><div class="opt"><span class="fieldlbl">Heat rejection</span><div class="seg" id="bw-rc" role="group" aria-label="Heat rejection"><button data-v="t" aria-pressed="true">Cooling towers</button><button data-v="a">Adiabatic</button><button data-v="d">Dry (or air-cooled chillers)</button></div></div></div>
+    <div class="cols gap">
+      <div><h4 class="cti-h4">Water per MWh of IT energy</h4><div class="hbars" id="bw-rk1"></div></div>
+      <div><h4 class="cti-h4">Water per rack per day</h4><div class="hbars" id="bw-rk2"></div></div>
+    </div>
+    <div class="tbl" style="margin-top:10px"><table class="aif-t" id="bw-rkt"></table></div>
+    <p class="small" id="bw-rk-n"></p>
+    <div class="cols gap">
+      <div><h4 class="cti-h4">Six ways density matters indirectly</h4><ol class="small" style="margin:4px 0 0 18px;padding:0">
+        <li><b>Feasibility:</b> above ~30–50 kW air is impractical; NVL72 racks need liquid at the chip.</li>
+        <li><b>Coolant temperature:</b> NVIDIA specifies 45 °C inlet water (ASHRAE W45 class).</li>
+        <li><b>No chillers:</b> 45 °C water can be cooled by outside air until ~35 °C ambient, which covers almost all of Bengaluru's year.</li>
+        <li><b>Fan and compressor energy:</b> liquid removes server fans and room air handlers, so PUE falls from ~1.25–1.45 to ~1.10–1.15.</li>
+        <li><b>Free-cooling hours:</b> Bengaluru's mild wet-bulb (~19.4 °C) suits towers too, which is why the choice is close here.</li>
+        <li><b>Concentration:</b> 1 GW needs ~125,000 racks at 8 kW but ~7,600 at 132 kW, so demand lands on a few big meters: easier to supply with treated water, harder on one local aquifer.</li></ol></div>
+      <div><h4 class="cti-h4">The trade in one line</h4><p class="small">The same NVL72 hall uses ~4.3 kL per rack per day on towers and ~0.13 kL on dry coolers: a ~97% cut in on-site water for ~4% more electricity. Because power-station water is 2.9 L/kWh on the India grid, that 4% adds back only a fraction of what is saved. Bengaluru's summer peaks (mid-30s °C) should be checked against hourly ISHRAE/IMD data before claiming chiller-free operation.</p>
+        <p class="xs muted">NVIDIA (45 °C MGX inlet; DSX reference design); ASHRAE TC9.9 liquid classes; Uptime Institute 2024–25 surveys; HPE and QCT GB200 specifications. "Zero water" is NVIDIA's marketing phrase. <span class="ev e show" data-src="Atlas estimates from NVIDIA, ASHRAE, Uptime">estimate</span></p></div>
+    </div>
+  </div>
+</div>
+
+<div class="subch" id="cbw6">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">12.6</span><span class="eyebrow">Model · Treated wastewater</span></div>
+    <h2>Running data centres on treated sewage</h2>
+    <p class="lede">Bengaluru treats far more sewage than any data-centre fleet could use. But secondary-treated water must be polished before it can go into a cooling tower, and a dedicated pipe has to be paid for. At full cost, tertiary water is about as expensive as drinking water.</p></div>
+  <div class="cols gap">
+    <div class="panel"><h3>What has to be built<span class="sub">From the treatment plant to the tower.</span></h3>
+      <ol class="cti-steps">
+        <li><b>Source.</b> BWSSB offers secondary water (BOD ~25, ammonia ~35, suspended solids ~35 mg/L). Towers need ammonia below ~1–5 mg/L and phosphate below ~1–5: ammonia above 0.5 corrodes copper and feeds biofilm.</li>
+        <li><b>Tertiary treatment.</b> Filtration or membrane bioreactor → ultrafiltration → partial or full reverse osmosis (RO) → UV or chlorine. RO rejects ~25% of its feed.</li>
+        <li><b>On-site polishing.</b> Side-stream filters, softening, biocide dosing and a Legionella plan (ASHRAE 188). Polished water allows 6–8 cycles of concentration instead of ~3, halving make-up.</li>
+        <li><b>A separate purple pipe.</b> Pumping station at the plant, a DN300–500 main for 1–5 MLD, 2–3 days of storage on site.</li>
+        <li><b>Disposal.</b> RO reject plus blowdown (~30–35% of feed, salty) back to the sewer under pollution-board consent. Zero liquid discharge works but costs a lot of energy.</li>
+        <li><b>Fallback.</b> A metered, capped potable or borewell connection for plant outages, curtailed in drought.</li>
+      </ol>
+      <p class="small">Energy: UF + RO ~0.8–1.2 kWh/m³ and pumping ~0.1–0.5 kWh/m³ add only ~0.2–0.3% to a campus's electricity.</p>
+      <p class="xs muted">Chemical Engineering; San Diego County Water Authority cooling-tower guidance; Pearce (2008); IWA; Lux Research. <span class="ev r show" data-src="ChemEng; SDCWA; Pearce 2008; IWA">reported</span></p></div>
+    <div class="panel"><h3>Costs from real projects<span class="sub">Indian reuse schemes and where data-centre clusters could connect.</span></h3>
+      <div class="tbl"><table class="aif-t"><thead><tr><th>Project</th><th>Size</th><th>Cost</th></tr></thead><tbody>
+        <tr><td>Peenya tertiary line (planned)</td><td>4 MLD, 27 km</td><td>₹20–27 cr (~₹1 cr/km)</td></tr>
+        <tr><td>HN Valley</td><td>210 MLD, 137 km</td><td>₹948 cr</td></tr>
+        <tr><td>KC Valley phase 1</td><td>440 MLD</td><td>₹1,270–1,342 cr</td></tr>
+        <tr><td>Chennai Kodungaiyur TTRO</td><td>45 MLD, ~28 km</td><td>₹255 cr + ₹205 cr O&amp;M over 15 yr</td></tr>
+        <tr><td>Chennai Koyambedu TTRO</td><td>45 MLD, ~60 km</td><td>₹482–486 cr + ₹198 cr O&amp;M</td></tr>
+        <tr><td>Navi Mumbai tertiary to MIDC</td><td>50 MLD</td><td>₹18.50/m³ vs ₹22.50 fresh</td></tr>
+      </tbody></table></div>
+      <div class="tbl" style="margin-top:8px"><table class="aif-t"><thead><tr><th>Cluster</th><th>Nearest supply (map estimates)</th></tr></thead><tbody>
+        <tr><td>Whitefield / ITPL</td><td>Kadubeesanahalli, K R Puram plants, ~5–10 km</td></tr>
+        <tr><td>Electronic City</td><td>Bellandur / Agara plants, ~10–15 km</td></tr>
+        <tr><td>Yelahanka</td><td>Jakkur plant, &lt;5 km (already supplies 15 MLD to the gas plant)</td></tr>
+        <tr><td>Devanahalli</td><td>HN Valley corridor or KIADB's 18.5 km line</td></tr>
+        <tr><td>Hoskote</td><td>Tap off the KC Valley main on Hoskote Road</td></tr>
+      </tbody></table></div>
+      <p class="small">Chennai is the warning: 90 MLD of tertiary capacity was built, but only ~40 MLD was being supplied in 2024 because industry did not take it. Abroad, Google's Douglas County (Georgia) site runs on recycled water for over 90% of its use, and Microsoft's Quincy reuse plant cut potable use 97%.</p>
+      <p class="xs muted">Deccan Herald; DT Next; WABAG; EA Water; Free Press Journal; Google and Microsoft disclosures. <span class="ev r show" data-src="Deccan Herald; DT Next; WABAG; Google; Microsoft">reported</span></p></div>
+  </div>
+  <div class="panel inst hot gap" id="bw-p6">
+    <h3>Treated-water supply for a campus<span class="sub">Make-up from 12.4's physics; feed = make-up ÷ RO recovery; levelised cost = (plant + pipe capital × capital recovery factor) ÷ water a year + O&amp;M and energy + the secondary water bought.</span></h3>
+    <div class="vs-ctrls">
+      <div class="opt"><span class="fieldlbl">Example</span><div class="seg" id="bw-tp" role="group" aria-label="Example"><button data-v="w" aria-pressed="true">100 MW AI on towers, Whitefield</button><button data-v="h">Hoskote park, 500 MW AI on towers</button><button data-v="c">100 MW conventional on towers</button></div></div>
+    </div>
+    <div class="ctrls" style="margin-top:8px">
+      <div class="ctrl"><label for="bw-tmw">Campus IT capacity</label><output id="bw-tmw-o"></output><input id="bw-tmw" type="range" min="10" max="1000" step="10" value="100"></div>
+      <div class="ctrl"><label for="bw-tkm">Pipe length from the plant</label><output id="bw-tkm-o"></output><input id="bw-tkm" type="range" min="0" max="40" step="1" value="10"></div>
+      <div class="ctrl"><label for="bw-tck">Pipe cost per km</label><output id="bw-tck-o"></output><input id="bw-tck" type="range" min="0.5" max="3" step="0.1" value="1.5"></div>
+      <div class="ctrl"><label for="bw-tpc">Tertiary plant cost per MLD of feed</label><output id="bw-tpc-o"></output><input id="bw-tpc" type="range" min="3" max="9" step="0.1" value="5.5"></div>
+    </div>
+    <div class="vs-ctrls" style="margin-top:8px">
+      <div class="opt"><span class="fieldlbl">Hall type and cooling</span><div class="seg" id="bw-tc" role="group" aria-label="Hall"><button data-v="at" aria-pressed="true">AI · towers</button><button data-v="aa">AI · adiabatic</button><button data-v="ct">Conventional · towers</button></div></div>
+      <div class="opt"><span class="fieldlbl">Polishing</span><div class="seg" id="bw-tro" role="group" aria-label="Polishing"><button data-v="0.75" aria-pressed="true">RO (75% recovery)</button><button data-v="0.95">Filtration only (95%)</button></div></div>
+    </div>
+    <div class="read" id="bw-tr" style="margin-top:12px"></div>
+    <p class="small" id="bw-tn"></p>
+    <details class="aif-det"><summary>Assumptions</summary><ul class="clean xs muted" style="margin-top:6px">
+      <li>Capital recovered over 15 years at 10% (factor 0.131). O&amp;M and energy ₹18/kL of product (Chennai 15-year O&amp;M ÷ volume, plus UF/RO power). Secondary water bought at ₹12/kL of feed.</li>
+      <li>Plant capex ₹5.2–8.8 crore per MLD (Chennai TTRO). Pipe ₹1–3 crore per km including pumping (Peenya ~₹1; atlas STP panel ₹1.5).</li>
+      <li>Energy: tertiary + RO 1.0 kWh/m³ (0.3 without RO), pumping 0.05 kWh/m³ per km; compared with the campus's facility energy from 12.4.</li>
+      <li>The Hoskote preset uses a 3 km tap off the KC Valley main, against a BWSSB allocation of 60 MLD.</li></ul></details>
+  </div>
+<div class="panel inst hot gap" id="sm-p">
+    <h3>Treated sewage for Bengaluru's data centres<span class="sub">Each data centre is matched to the nearest BWSSB sewage treatment plant with spare treated water, the method of Wang et al. (2026) applied to one city. Orange squares group the data centres by area; blue circles are treatment plants with spare treated water; white circles are plants whose water is already committed to lake-filling or industry; green lines are the pipes. Only plants that would supply a data centre are named; hover any circle for details, and the tables below give distances and volumes.</span></h3>
+    <div class="vs-ctrls">
+      <div class="opt"><span class="fieldlbl">Longest pipeline allowed</span><div class="seg" id="sm-d" role="group" aria-label="Longest pipeline"><button data-v="5">5 km</button><button data-v="10" aria-pressed="true">10 km</button><button data-v="15">15 km</button><button data-v="20">20 km</button></div></div>
+      <div class="opt"><span class="fieldlbl">Capacity</span><div class="seg" id="sm-cap" role="group" aria-label="Capacity"><button data-v="live">Live</button><button data-v="both" aria-pressed="true">Live + upcoming</button></div></div>
+      <div class="opt"><span class="fieldlbl">Polishing before the cooling tower</span><div class="seg" id="sm-q" role="group" aria-label="Polishing"><button data-v="t" aria-pressed="true">Tertiary filtration + disinfection</button><button data-v="ro">Tertiary + reverse osmosis</button></div></div>
+    </div>
+    <div class="ctrls" style="margin-top:10px">
+      <div class="ctrl"><label for="sm-ev">Share of data-centre capacity on evaporative cooling</label><output id="sm-ev-o"></output><input id="sm-ev" type="range" min="10" max="100" step="5" value="60"></div>
+      <div class="ctrl"><label for="sm-sh">Most of a plant's spare treated water data centres may take</label><output id="sm-sh-o"></output><input id="sm-sh" type="range" min="5" max="100" step="5" value="30"></div>
+    </div>
+    <div class="sm-my"><label class="switch"><input type="checkbox" id="sm-my"> Place your own campus: click the map</label><div class="ctrl"><label for="sm-mw">Its size</label><output id="sm-mw-o"></output><input id="sm-mw" type="range" min="10" max="300" step="10" value="50"></div></div><div id="sm-my-r" style="margin-top:6px"></div>
+    <label class="switch" style="margin-top:8px"><input type="checkbox" id="sm-vv" checked> Treat Vrishabhavathi Valley water as committed (planned filling of 97 tanks in Bengaluru Rural)</label>
+    <div class="read" id="sm-r" style="margin-top:12px"></div>
+    <div class="sm-wrap"><div class="sm-map" id="sm-map" role="img" aria-label="Map of Bengaluru data centres and sewage treatment plants"></div><div id="sm-cl"></div><div class="sm-side" id="sm-side"></div></div>
+    <p class="small" id="sm-n"></p>
+    <details class="aif-det"><summary>Data, method and caveats</summary><ul class="clean xs muted" style="margin-top:6px">
+      <li><b>Treatment plants:</b> BWSSB locations and capacities from the OpenCity dataset (BWSSB STP locations and details), cross-checked with BWSSB's January 2024 presentation to CSE: 33 plants, 1,381.5 MLD capacity, ~1,200 MLD treated, ~850 MLD already reused. The dataset places the 100 MLD Hebbal plant on top of K&amp;C Valley, so it is moved here to Hebbal valley (approximate). The 40 MLD tertiary plant serving KIADB near Devanahalli is not in the dataset and is placed approximately.</li>
+      <li><b>Commitments:</b> K&amp;C Valley and Bellandur pump ~336 MLD to 126 tanks in Kolar and Chikkaballapur; Hebbal, Hennur and Horamavu pump ~140 MLD to 65 tanks (HN Valley); Agaram feeds the Anekal lift scheme; 40 of Kadabeesanahalli's 50 MLD goes to Narasapura; Yelahanka and Jakkur tertiary water already goes to industry and the KPCL gas plant; Cubbon Park and Lalbagh serve their gardens. Spare water = capacity × 87% (BWSSB's treated ÷ capacity) − committed volume.</li>
+      <li><b>Data centres:</b> sites from DataCenterMap (34 listings, small hosting rooms left out). Published MW are used where they exist (NTT B2 4.5, B3 12, B4A and B4C 22.4 each, Nxtra BLR1 5.4, Cyfuture 3); the rest of Cushman &amp; Wakefield's 162 MW live is shared out by site size and marked "est.". Upcoming: NTT B4B 22.4 and L&amp;T Vyoma BLR1 40 MW. Locations are locality-level (±1–2 km).</li>
+      <li><b>Demand:</b> make-up = MW × 70% load × 24 h × 1.8 L/kWh × evaporative share; with reverse osmosis, ÷ 0.75 for reject water. <b>Pipe length</b> = straight line × 1.3 for roads. <b>Energy:</b> tertiary 0.3 kWh/m³, reverse osmosis +1.0 kWh/m³, pumping 0.05 kWh/m³ per km; CO₂ at <span data-std="co2" data-d="3">0.675</span> kg/kWh. <b>Indicative pipeline cost</b> ₹1.5 crore per km (urban DI main, assumption).</li>
+      <li>Not modelled: the ~50% of water from apartment and tech-park STPs that is not reused (Deccan Herald, July 2026), which could serve sites inside tech parks such as ITPB and Electronic City; heat reuse, which the paper sends to sludge digestion that most BWSSB plants do not have.</li></ul></details>
+  </div>
+</div>
+
+<div class="subch" id="cbw7">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">12.7</span><span class="eyebrow">Policy · Pipes that outlive their customers</span></div>
+    <h2>When a data centre closes, and the other policy questions</h2>
+    <p class="lede">Servers are replaced every 4–6 years, buildings last 15–25, pipelines 30–50 and park leases 30+30. A pipe built for one customer is a stranded asset waiting to happen; a shared, utility-owned non-potable main is not.</p></div>
+  <div class="cols gap">
+    <div class="panel"><h3>Design so a closure is a non-event<span class="sub">Who owns what, who else can use the water, and who pays if a customer leaves.</span></h3>
+      <div class="tbl"><table class="aif-t cai-t"><thead><tr><th>Tool</th><th>How it works</th></tr></thead><tbody>
+        <tr><td><b>Shared trunk, private branch</b></td><td>BWSSB or KIADB owns a looped non-potable main along a corridor; each data centre pays only for its branch and meter. On closure, only the branch is capped.</td></tr>
+        <tr><td><b>Second users</b></td><td>Other KIADB industry; construction (demand jumped to ~6 MLD in 2024 when potable use was banned); parks and landscaping; lake top-up; district cooling for nearby offices; recharge structures.</td></tr>
+        <tr><td><b>Take-or-pay</b></td><td>Pay for 70–80% of reserved capacity for the loan term (10–15 years), used or not.</td></tr>
+        <tr><td><b>Capacity reservation fee</b></td><td>A charge on unused allocation, so the 60 MLD at Hoskote is not hoarded.</td></tr>
+        <tr><td><b>Successor clause</b></td><td>Obligations attach to the KIADB lease and pass to the next occupant; data-centre buildings are usually re-let.</td></tr>
+        <tr><td><b>Exit payment and bond</b></td><td>Undepreciated branch and dedicated plant paid on early exit; a bond of ~10–15% of branch capex covers capping and restoration.</td></tr>
+        <tr><td><b>Step-in right</b></td><td>The utility can take over an on-site tertiary plant when a tenant leaves.</td></tr>
+      </tbody></table></div>
+      <p class="small"><b>Who carries what:</b> the utility carries the trunk, priced into a common tariff; the customer carries its branch and dedicated plant through take-or-pay and exit payments; the state carries drought reallocation through published curtailment rules.</p></div>
+    <div class="panel"><h3>The policy package<span class="sub">Eight steps, in the order they unlock each other.</span></h3>
+      <ol class="cti-steps">
+        <li><b>Meter and disclose.</b> A "data centre" category at BWSSB and KSPCB; monthly withdrawals by source (Cauvery, borewell, tanker, treated); site PUE and WUE published, as the 2026–31 policy now asks.</li>
+        <li><b>Hydrology first.</b> In over-exploited taluks, approve new sites only with treated water or dry cooling; no new groundwater NOCs for cooling in Bengaluru Urban or Devanahalli.</li>
+        <li><b>A performance standard.</b> For example WUE ≤0.3 L/kWh on potable or groundwater, towers only on tertiary water. Fix the policy's 0.7–1.3 incentive band, which leaves out the best (sub-0.7) designs.</li>
+        <li><b>Full-cost treated water.</b> Price tertiary water near cost (~₹60–90/kL) but below potable. Turn the ₹8 lakh/yr reimbursement cap into capital support for shared mains, where the real cost lies.</li>
+        <li><b>Shared non-potable grids</b> with the contracts on the left, starting at Hoskote (KC Valley tap) and Whitefield (Kadubeesanahalli).</li>
+        <li><b>Drought rules.</b> A pre-agreed ladder: in a declared drought, data centres switch to dry or adiabatic mode or cut load before households lose supply.</li>
+        <li><b>Reject and blowdown.</b> Consent specifies the disposal route and salinity limits; prefer sewer return over energy-hungry zero discharge.</li>
+        <li><b>One window.</b> IT department, KIADB, BWSSB, KSPCB, the groundwater authority and GBA in a single approval desk, with a public register of who gets treated water.</li>
+      </ol>
+      <p class="small"><b>Fairness:</b> treated water already fills 274 lakes in Kolar and Chikkaballapur, and KC Valley delivers only ~290 of its 440 MLD design. Selling it to data centres is fair only if it replaces drinking water or groundwater and is priced at full cost. Hoskote's 60 MLD is ~2.7× what a 500 MW AI park on towers would need and ~100× a dry-cooled one; tie the allocation to the cooling design.</p>
+      <p class="xs muted">Karnataka Sustainable Data Centre Policy 2026–31 (Newslaundry, MediaNama summaries); national data-centre water framework (Oct 2026, via ETV Bharat); WELL Labs; Deccan Herald. Verify incentive figures against the gazetted policy. <span class="ev e show" data-src="Atlas recommendations from the research">estimate</span></p></div>
+  </div>
+  <details class="aif-det"><summary>Where the sources disagree</summary><ul class="clean xs muted" style="margin-top:6px">
+    <li>Data-centre water today: ~4 MLD (IT department) vs ~20 MLD (WELL Labs); litres-per-MW factors in circulation span 1.1–3.0 L/kWh.</li>
+    <li>Cauvery entitlement: 23 TMC (TNM) vs ~29 TMC (BWSSB, 2018); distance 90–110 km, lift 300–450 m.</li>
+    <li>Groundwater extraction: 177%, 186.7%, ~187% and "10×" recharge, depending on source and area.</li>
+    <li>Sewage: 2,200–2,580 MLD generated; treatment capacity 1,348.5 (BWSSB) vs ~1,523 MLD (WELL Labs, incl. others); reuse 750–855 MLD.</li>
+    <li>The 2026–27 tariff is from a third-party calculator; KIADB water tariffs and the non-domestic sanitary schedule were not verified.</li>
+    <li>Chennai's tariffs and utilisation are from news reports. STP additions, Stage VI, TG Halli and Hoskote timelines are plans.</li></ul></details>
+</div>
+<div id="c6" class="anchor"></div>
+<div class="subch" id="bengaluru">
+  <div class="ch-head">
+    <div class="ch-tag"><span class="ch-num" aria-hidden="true">12.8</span><span class="eyebrow"><a class="rep-l" href="#reports">Report 4</a> · Campus calculator, grid and city scale</span></div>
+    <h2>What one campus asks of a city</h2>
+    <p class="lede">Data centres won't cause Bengaluru's water scarcity, but they can make it worse locally. Power is the bigger strain: a single 100 MW AI campus uses more than 5% of all household electricity in Karnataka.</p>
+  </div>
+  <div class="take">
+    <div><span class="v mono">~140 MVA</span><span class="k">Contract demand for a 100 MW AI campus: 220 kV, dual feed</span></div>
+    <div><span class="v mono">~34 MLD</span><span class="k">If Karnataka's 1 GW target all used evaporative towers on fresh water (~1.7% of supply, at 78% load)</span></div>
+    <div><span class="v mono">4 – 20 MLD</span><span class="k">Today's estimates of the sector's water use; nobody meters it</span></div>
+  </div>
+
+  <div class="cols">
+    <div class="panel inst">
+      <h3>Campus calculator<span class="sub">The presets are the report's three central cases. Change anything.</span></h3>
+      <div class="seg" id="blr-presets" role="group" aria-label="Presets">
+        <button data-p="0" aria-pressed="true">20 MW colo, air</button>
+        <button data-p="1">50 MW hyperscale, evaporative</button>
+        <button data-p="2">100 MW AI, liquid + dry</button>
+      </div>
+      <div class="ctrls">
+        <div class="ctrl"><label for="b-mw">IT capacity (MW)</label><output id="b-mw-o"></output><input id="b-mw" type="range" min="5" max="300" step="5" value="20"></div>
+        <div class="ctrl"><label for="b-u">Average IT load</label><output id="b-u-o"></output><input id="b-u" type="range" min="30" max="95" step="1" value="65"></div>
+        <div class="ctrl"><label for="b-pue">PUE</label><output id="b-pue-o"></output><input id="b-pue" type="range" min="1.05" max="2" step="0.01" value="1.45"></div>
+        <div class="ctrl"><label for="b-wue">On-site WUE (L/kWh IT)</label><output id="b-wue-o"></output><input id="b-wue" type="range" min="0" max="2.5" step="0.01" value="1.8"></div>
+        <div class="ctrl"><label for="b-ef">Grid carbon (t/MWh)</label><output id="b-ef-o"></output><input id="b-ef" type="range" min="0.05" max="1.1" step="0.005" value="0.675"></div>
+        <div class="ctrl"><label for="b-gw">Power-station water (L/kWh)</label><output id="b-gw-o"></output><input id="b-gw" type="range" min="0" max="5" step="0.1" value="2.9"></div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="read" id="blr-read"></div>
+      <div class="panel">
+        <h3>Water: on site vs at the power station<span class="sub">Million litres per day (MLD)</span></h3>
+        <div class="hbars" id="blr-water"></div>
+        <p class="note" id="blr-note"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel">
+      <h3>Scaling to Karnataka's 1 GW target<span class="sub">MLD of on-site water at 78% IT load (the atlas AI campus), by cooling choice; plus power-station water at the India grid factor, outside the city.</span></h3>
+      <div class="chart"><canvas id="c-scale" aria-label="Water by added capacity and cooling"></canvas></div>
+    </div>
+    <div class="panel">
+      <h3>Compared with other users<span class="sub">Water, MLD (log scale). Data centres are mid-sized water users but extreme power users.</span></h3>
+      <div class="hbars" id="users-bars"></div>
+    </div>
+  </div>
+
+  <div class="cols gap">
+    
+    
+  </div>
+
+  <div class="cols gap">
+    <div class="panel">
+      <h3>Grid connection by size<span class="sub">KERC conditions of supply (as reported).</span></h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Contract demand</th><th>Voltage</th><th>Fits</th></tr></thead>
+        <tbody>
+          <tr><td>Up to 20 MVA</td><td>66 kV</td><td>Small colo</td></tr>
+          <tr><td>Up to 35 MVA (55 MVA since June 2025, if feasible)</td><td>110 kV</td><td>20 MW colo (~35 MVA)</td></tr>
+          <tr><td>Above 20 MVA</td><td>220 kV, dual circuit</td><td>50–100 MW (80–140 MVA)</td></tr>
+          <tr><td>300 MW+ campuses</td><td>400 kV</td><td>Multi-phase AI parks</td></tr>
+        </tbody></table></div>
+      <p class="note">Tier III/IV sites install about twice the contract MVA (2N), so the grid builds double the assets for the same energy.</p>
+    </div>
+    <div class="callout"><b class="t">Karnataka's 2026–31 policy, critiqued.</b> It requires plant-wise PUE and WUE reporting and pays ₹20 crore for PUE ≤1.20. But the treated-water reimbursement caps at ₹8 lakh a year, which buys only 0.15–0.22 MLD, under a sixth of one 50 MW evaporative site's need. Its WUE incentive band of 0.7–1.3 L/kWh rewards designs that liquid and adiabatic systems beat four-fold.</div>
+  </div>
+
+
+  
+  <div class="do">
+    <h3>Recommended roadmap</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Phase</th><th>When</th><th>Actions</th></tr></thead>
+      <tbody>
+        <tr><td><b>1</b></td><td>Q4 2026–2027</td><td>Operational guidelines; mandatory metering and disclosure; ban groundwater for cooling in over-exploited taluks; data-centre water tariff (₹150–200/kL potable); publish grid hosting-capacity map</td></tr>
+        <tr><td><b>2</b></td><td>2027–2028</td><td>WUE ≤0.4 and PUE ≤1.3 in consents for new builds; treated-water pipelines to Hoskote and Whitefield; ≥70% renewable rule above 50 MW; batteries and demand response</td></tr>
+        <tr><td><b>3</b></td><td>2029–2031</td><td>Existing fleet to WUE ≤1.0 and PUE ≤1.45; hourly renewable matching; independent audits; review the 1 GW target</td></tr>
+      </tbody></table></div>
+  </div>
+  <div class="panel inst hot gap" id="day">
+    <h3>A day in Bengaluru, hour by hour<span class="sub">Scrub through 24 hours. Grid carbon, the power tariff, outdoor heat, how the cooling plant runs and the IT load all change through the day, and so do the cost, carbon and water of each unit of compute.</span></h3>
+    <div class="ctrls">
+      <div class="opt"><span class="fieldlbl">Season</span><div class="seg" id="d-season" role="group" aria-label="Season"><button data-v="apr" aria-pressed="true">April heat</button><button data-v="jul">July monsoon</button><button data-v="jan">January</button></div></div>
+      <div class="opt"><span class="fieldlbl">Workload</span><div class="seg" id="d-wl" role="group" aria-label="Workload"><button data-v="colo" aria-pressed="true">Colo (steady)</button><button data-v="ai">AI training</button><button data-v="inf">AI inference</button></div></div>
+      <div class="opt" style="grid-column:1/-1"><span class="fieldlbl">Cooling</span><div class="seg" id="d-cool" role="group" aria-label="Cooling"><button data-v="tower" aria-pressed="true">Cooling towers</button><button data-v="adiab">Adiabatic dry coolers</button><button data-v="aircc">Air-cooled chillers</button><button data-v="dlc">Warm-water liquid</button></div></div>
+      <div class="ctrl"><label for="d-mw">IT capacity</label><output id="d-mw-o"></output><input id="d-mw" type="range" min="10" max="200" step="10" value="50"></div>
+      <div class="ctrl"><label for="d-shift">Flexible load moved from evening peak (18–23 h) to solar hours (10–15 h)</label><output id="d-shift-o"></output><input id="d-shift" type="range" min="0" max="40" step="5" value="0"></div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:end;flex-wrap:wrap">
+      <button class="btn" id="d-play" type="button" aria-pressed="false">▶ Play the day</button>
+      <div class="ctrl" style="flex:1 1 260px"><label for="d-h">Hour</label><output id="d-h-o"></output><input id="d-h" type="range" min="0" max="23" step="1" value="15"></div>
+    </div>
+    <div class="strips" id="d-strips"></div>
+    <div class="read" id="d-read"></div>
+    <div class="cols">
+      <div class="chart short"><canvas id="c-day" aria-label="Facility power and grid carbon through the day"></canvas></div>
+      <div class="stack"><h4>Totals for the day</h4><div class="read" id="d-tot"></div><p class="small" id="d-text"></p></div>
+    </div>
+    <p class="note">Model <span class="ev m show" data-src="Hourly temperatures are a smooth curve between typical Bengaluru daily lows and highs for each month; grid carbon is the Report 5 indicative Karnataka hourly curve scaled for season (monsoon wind lowers it); tariff is KERC HT ₹6.70/kWh with the ±20% time-of-day swing Report 5 assumed. Indicative, not metered data.">model</span>: hourly temperatures follow typical Bengaluru lows and highs for each month. Grid carbon is the Report 5 Karnataka curve, adjusted for season. The tariff is ₹6.70/kWh with the ±20% time-of-day swing Report 5 assumed.</p>
+  </div>
+</div>
+</section>
+<div class="part" id="part-III"><span class="part-n">Part III</span><h2>Forecast</h2><p>How big India's data-centre load gets, by whose count.</p></div>
+

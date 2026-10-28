@@ -1,0 +1,199 @@
+<section class="ch chw" id="cce" data-n="6">
+  <div class="chq">
+    <div class="chq-n" aria-hidden="true">6</div>
+    <div class="chq-b"><h2 class="chq-t">Cooling systems compared: cost, water and energy</h2>
+      <p class="chq-q"><span>The question</span>For each cooling system used in Indian data centres, what does it cost to build and run over its life, how much water does it use, and how much energy?</p>
+      <p class="chq-a"><span>The short answer</span>For a conventional hall of about 10 kW per rack, chilled-water air handlers with containment plus cooling towers (best with magnetic-bearing chillers) or indirect evaporative units are cheapest, at about ₹4,000–4,200 per MWh of IT in Bengaluru. Above about 16–30 kW per rack, direct-to-chip liquid cooling becomes cheapest once server-fan savings and floor-space savings are counted, and above about 40–50 kW air is no longer possible. Towers save money but use 35 times the on-site water of dry coolers and more total water everywhere in India. Electricity price, not water price, sets the ranking.</p>
+      <nav class="chq-subs" aria-label="In this chapter"><a href="#cce1">6.1</a><a href="#cce2">6.2</a><a href="#cce3">6.3</a><a href="#cce4">6.4</a><a href="#cce5">6.5</a></nav>
+    </div>
+  </div>
+
+<div class="subch" id="cce1">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">6.1</span><span class="eyebrow">Model · Economics</span></div>
+    <h2>Capex, opex and lifetime cost of every cooling system</h2>
+    <p class="lede">Pick a city, size and rack density. Every workable cooling system is costed over its life on the same basis and ranked by its levelised cost per MWh of IT.</p></div>
+  <div class="panel"><h3>Cooling cost calculator<span class="sub">Levelised cooling cost (LCOC) per MWh of IT; constant 2026 rupees, before tax.</span></h3>
+    <div class="dt-presets"><span class="fieldlbl">Start from</span><div class="seg" id="ce-pre" role="group" aria-label="Presets"><button data-v="conv" aria-pressed="true">Conventional hall · 10 MW, 10 kW racks</button><button data-v="ai">AI hall · 50 MW, 120 kW racks</button></div></div>
+    <div class="dt-grid">
+      <fieldset class="dt-fs"><legend>Site</legend>
+        <div><label class="fieldlbl" for="ce-city">City (sets climate, tariff, water price, grid water)</label><select id="ce-city"></select></div>
+        <div class="ctrl"><label for="ce-t">All-in electricity tariff (₹/kWh)</label><output id="ce-t-o"></output><input id="ce-t" type="range" min="5" max="14" step="0.1" value="8"></div>
+        <div class="ctrl"><label for="ce-wp">Water price incl. source (₹/kL)</label><output id="ce-wp-o"></output><input id="ce-wp" type="range" min="20" max="600" step="5" value="99"></div>
+      </fieldset>
+      <fieldset class="dt-fs"><legend>Hall</legend>
+        <div class="ctrl"><label for="ce-mw">IT capacity</label><output id="ce-mw-o"></output><input id="ce-mw" type="range" min="1" max="200" step="1" value="10"></div>
+        <div class="ctrl"><label for="ce-u">Average load</label><output id="ce-u-o"></output><input id="ce-u" type="range" min="40" max="95" step="1" value="65"></div>
+        <div class="ctrl"><label for="ce-rack">Rack density</label><output id="ce-rack-o"></output><input id="ce-rack" type="range" min="5" max="150" step="1" value="10"></div>
+      </fieldset>
+      <fieldset class="dt-fs"><legend>Finance and credits</legend>
+        <div class="ctrl"><label for="ce-disc">Discount rate</label><output id="ce-disc-o"></output><input id="ce-disc" type="range" min="8" max="14" step="0.5" value="11"></div>
+        <label class="dv-chk"><input type="checkbox" id="ce-fan" checked> Credit liquid cooling for server-fan power saved (3% of IT power at 10 kW racks, rising to 7% at 40 kW; immersion 5–9.5%)</label>
+        <label class="dv-chk"><input type="checkbox" id="ce-comp" checked> Credit liquid cooling for smaller buildings at higher density (10% of building capex at 20 kW, 14% at 40 kW)</label>
+        <p class="xs muted" style="margin:0">Credits apply only while an air system could still cool the racks (up to 50 kW).</p>
+      </fieldset>
+    </div>
+    <p class="small muted" id="ce-ctx" style="margin-top:10px"></p>
+    <div class="read" id="ce-r" style="margin-top:8px" aria-live="polite"></div>
+    <div class="dt-sub">Levelised cooling cost, ₹ per MWh of IT (cheapest first)</div>
+    <div id="ce-bars" class="ce-bars"></div>
+    <div class="cti-leg"><span style="--c:var(--muted)">capital</span><span style="--c:color-mix(in srgb,var(--muted) 55%,var(--sunk))">maintenance and consumables</span><span style="--c:var(--hot)">cooling electricity</span><span style="--c:var(--cold)">water</span><span style="--c:var(--good)">hatched end of a bar: credits deducted from it</span></div>
+    <p class="small" id="ce-n" style="margin-top:8px"></p>
+    <details class="aif-det" open><summary>Full cost table</summary><div class="tbl" id="ce-tab"></div>
+      <p class="xs muted">Capital = each part's capex × CRF(rate, its life): room side 12–15 years, heat rejection 15–20 years. Maintenance 3–5% of cooling capex a year by technology, plus tower water treatment ₹15/kL, oil top-up 1% and two-phase fluid loss 3% a year. Cooling electricity = IT energy × (PUE − 1.06) × tariff, which leaves UPS and distribution losses out. Credits lower liquid cooling's cost. Cooling capex per MW from the atlas cooling cost table, checked against Turner &amp; Townsend's mechanical share (22% air, 33% liquid of ₹60 cr/MW in Mumbai), which implies the atlas excludes some balance-of-plant (secondary piping, controls, storage). <span class="ev e show" data-src="Atlas cooling cost table; T&T 2025–26">estimate</span></p></details>
+    <div class="dt-sub">Break-even points at your settings</div>
+    <div class="read" id="ce-be"></div>
+  </div>
+  <div class="panel" id="vz-ltor-p"><h3>Which assumption matters most?<span class="sub">How far the levelised cooling cost moves when each input changes, for the system you pick. ⇄ marks a range that changes which system is cheapest.</span></h3>
+    <label class="fieldlbl" for="vz-ltor-s">System</label> <select id="vz-ltor-s" class="vz-sel"></select>
+    <div class="vz-scroll"><svg id="vz-ltor" class="vz-svg" viewBox="0 0 640 300" role="img" aria-label="Tornado chart of levelised cooling cost sensitivity"></svg></div>
+    <p class="small" id="vz-ltor-n"></p>
+    <p class="xs muted">Bars start at the cost at your settings above and end at the cost with one input changed, everything else held. Tariff, water price, cost of capital and utilisation are re-run through the full calculator; capex, maintenance, PUE and WUE scale that component of the chosen system only. <span class="ev m show" data-src="Atlas cooling cost model, Chapter 6">model</span></p>
+  </div>
+  <div class="panel" id="dx-sh-p"><h3>Add the hidden costs: shadow prices<span class="sub">The ranking above prices water at the tariff and carbon at zero. Value both at what they cost the city and the climate, and see whether the cheapest system changes.</span></h3>
+    <div class="ctrls"><div class="ctrl"><label for="dx-sh-w">Water, ₹ per kL (Bengaluru tanker water: ₹58–250)</label><output id="dx-sh-w-o"></output><input id="dx-sh-w" type="range" min="0" max="300" step="1" value="83"></div><div class="ctrl"><label for="dx-sh-c">Carbon, ₹ per tonne of CO₂</label><output id="dx-sh-c-o"></output><input id="dx-sh-c" type="range" min="0" max="17000" step="250" value="4500"></div></div>
+    <div class="tbl" id="dx-sh-t" style="margin-top:10px"></div>
+    <p class="small" id="dx-sh-n"></p>
+    <p class="xs muted">Water shadow price: Bengaluru's district fixed tanker rates (₹600–1,200 for 6,000–12,000 L, 2024) give ₹58–125/kL; crisis prices above ₹2,000 a load give ₹170–330/kL. Only the part above the tariff is added. Carbon: ₹4,500/t ≈ US$50; the US EPA's 2023 social cost of carbon (US$190/t) is the top of the slider. Carbon counts all facility electricity of the cooling choice (PUE × grid factor). <span class="ev e show" data-src="Bengaluru Urban district order 2024; US EPA 2023; atlas model">estimate</span></p>
+  </div>
+
+</div>
+
+<div class="subch" id="cce2">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">6.2</span><span class="eyebrow">Model · Water</span></div>
+    <h2>Water: on site, at the power station, and on the peak day</h2>
+    <p class="lede">On-site WUE is what the plant evaporates and bleeds off per kWh of IT. Total water adds the water evaporated to make the electricity. Updates with the calculator above.</p></div>
+  <div class="panel"><h3>Water by cooling system<span class="sub">L per kWh of IT on site, and m³ per MWh of IT in total.</span></h3>
+    <div class="tbl" id="ce-wtab"></div>
+    <div class="cols gap" style="margin-top:12px">
+      <div><h4 class="small" style="margin:0 0 6px">Why towers need ~2 L/kWh</h4><ul class="clean small">
+        <li>A tower evaporates about 1.2–1.5 L per kWh of heat, and it must reject IT heat plus chiller work (≈1.1–1.2 kWh per kWh of IT).</li>
+        <li>At 4 cycles of concentration, blowdown is evaporation ÷ 3. Make-up comes to about 1.9–2.3 L/kWh of IT, which confirms the atlas's 1.8 (Bengaluru) to 2.4 (humid coast).</li>
+        <li>Indian municipal water at 400–1,200 mg/L of dissolved solids limits cycles to about 3–5. Going from 3 to 6 cycles cuts make-up by ~20% and blowdown by ~50%.</li>
+        <li>Peak days reach ~2.2× the annual figure, so store 2–5 days of make-up (≈1,000 m³ for a 10 MW tower plant).</li>
+        <li>Reported: a large colocation provider 1.55 L/kWh for evaporative sites; water-cooled chillers in hot regions 2.3–2.8. <span class="ev r show" data-src="arXiv 2603.02705; ScienceDirect 2026">reported</span></li>
+        <li><b>Disagreement:</b> one Indian consultancy guide gives towers 0.6–1.5 L/kWh with a 0.82 worked example, but sizes the tower for 4 MW of heat instead of ~11–12 MW. Its tower figure is understated by about 2.5×; its adiabatic and dry figures are credible.</li></ul></div>
+      <div><h4 class="small" style="margin:0 0 6px">Power-station water</h4><ul class="clean small">
+        <li>MoEFCC norms: ≤3.5 m³/MWh for existing tower-cooled coal plants (2015); 3.0 for new plants (relaxed from 2.5 in 2018); seawater once-through exempt; amended again July 2025. <span class="ev r show" data-src="MoEFCC notifications">reported</span></li>
+        <li>Several plants exceed the norms: one consumed 87% more than the limit (CAG Chennai); Raichur and Ballari in Karnataka also exceed them.</li>
+        <li>With ~70–75% thermal generation, grid consumption at the plant works out to about 2.5–4.2 L/kWh depending on how hydro reservoir evaporation is counted (0 / net / gross gives 2.5 / 4.2 / 9.4 in the Scope 1/2/3 research). The atlas standard is 2.66 L/kWh at the plant for India (73% coal × 3.5 m³/MWh + nuclear and gas), ÷ 0.92 for the ~8% high-voltage network losses a data centre sees = <b>2.9 L/kWh at the meter</b>; state generation mixes use the same method (Karnataka 1.5, Tamil Nadu 2.1, Andhra Pradesh 2.6, Maharashtra 2.8, Telangana 3.1, Uttar Pradesh 3.3).</li>
+        <li><b>Result:</b> towers use more total water than air-cooled chillers unless grid water exceeds ~9 L/kWh, and direct-to-chip towers beat dry coolers only above ~35 L/kWh. Indirect evaporative and hybrid coolers are roughly neutral at 2–3 L/kWh.</li></ul></div>
+    </div>
+    <h4 class="small" style="margin:12px 0 6px">Water stress and disclosure in India</h4>
+    <ul class="clean small">
+      <li>Indian data centres are estimated to use ~150 billion litres in 2025, rising to ~358 billion by 2030 (market research, not metered). <span class="ev e show" data-src="Mordor Intelligence via WION">estimate</span> S&amp;P Global expects 60–80% of Indian data centres to face high water stress this decade.</li>
+      <li>Bengaluru Rural taluks (Devanahalli, Doddaballapura, Hoskote, Nelamangala) show the district's highest groundwater stress. BWSSB raised non-domestic rates by ₹9–19/kL in April 2025 and added 3% a year escalation.</li>
+      <li>Disclosure is thin and company-wide: CtrlS 409,037 kL (2023-24), saving ~119,662 kL a year by switching to air-cooled systems; Nxtra 306,916 kL (2024-25). <span class="ev r show" data-src="Down To Earth; company reports">reported</span></li>
+      <li>Karnataka's Sustainable Data Centre Policy 2026–31 (cabinet approval September 2026, ₹1,300.45 cr outlay) requires plant-wise PUE and WUE reporting, PUE-linked incentives and resource heat-mapping for siting.</li>
+      <li>Open towers need a Legionella regime (biocide, risk assessment, cleaning). Adiabatic coolers carry lower risk; dry coolers none.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="subch" id="cce3">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">6.3</span><span class="eyebrow">Model · Energy</span></div>
+    <h2>Energy: PUE, cooling power and carbon</h2>
+    <p class="lede">Cooling electricity per kWh of IT is PUE minus about 1.06 (the UPS, distribution and lighting share). Carbon at CEA's <span data-std="co2" data-d="3">0.675</span> t/MWh.</p></div>
+  <div class="panel"><h3>Energy by cooling system<span class="sub">PUE by climate; cooling energy and carbon for the hall in the calculator.</span></h3>
+    <div class="tbl" id="ce-etab"></div>
+    <div class="cols gap" style="margin-top:12px">
+      <div><h4 class="small" style="margin:0 0 6px">Dry-cooler hours without compressors (35 °C supply)</h4><div class="hbars" id="ce-fh"></div>
+        <p class="xs muted">At W40–W45 the coastal hours rise sharply. Consultancy estimate. <span class="ev e show" data-src="KVRM Engineering 2026">estimate</span></p></div>
+      <div><h4 class="small" style="margin:0 0 6px">Chiller efficiency</h4><ul class="clean small">
+        <li>Water-cooled centrifugal: COP 5.4–6.3, or 0.56–0.65 kW/TR (CPWD HVAC spec 2024). <span class="ev r show" data-src="CPWD 2024">reported</span></li>
+        <li>Magnetic-bearing centrifugal: 0.52 kW/ton at full load, 0.29 at part load (IPLV); studies find 29–67% higher average COP. <span class="ev v show" data-src="Daikin HXE; ScienceDirect 2024">vendor</span></li>
+        <li>At 35 °C outdoor: high-lift centrifugal 0.72 kW/ton, dry coolers + magnetic-bearing 0.55, air-cooled scroll 0.89. At 43 °C: 1.06, 0.89 and 1.32, which matters for Delhi NCR and Hyderabad summers.</li>
+        <li><b>PUE understates liquid cooling:</b> moving 75% of load to direct-to-chip cut facility power by 18.1% and total site power by 10.2%. Server fan power fell 80%, but PUE fell only 3.3%. <span class="ev r show" data-src="Vertiv/NVIDIA study">reported</span></li></ul></div>
+    </div>
+    <h4 class="small" style="margin:12px 0 6px">Benchmarks</h4>
+    <div class="tbl"><table class="aif-t"><thead><tr><th>Source</th><th>PUE</th><th>Note</th></tr></thead><tbody>
+      <tr><td>Uptime Institute global survey 2025 (800+ operators)</td><td>1.54</td><td>Flat for a sixth year; 1.48 for sites under 5 years old; ~1.44 above 20 MW</td></tr>
+      <tr><td>Google fleet, 2025</td><td>1.09</td><td>Annual average across its global fleet</td></tr>
+      <tr><td>Microsoft</td><td>—</td><td>WUE 0.49 → 0.30 L/kWh (2021–24); "zero water evaporated" designs for all new builds since Aug 2024, saving &gt;125 ML a year per site</td></tr>
+      <tr><td>MeitY AI-cloud tenders</td><td>&lt;1.35</td><td>Required PUE (SBI sector report 2026)</td></tr>
+      <tr><td>Yotta D1/D2 · NM1 · G1</td><td>1.4 · &lt;1.5 · ~1.6</td><td>Listing, IGBC and design values</td></tr>
+      <tr><td>Mumbai engineering model</td><td>1.70 / 1.45 / 1.33 / 1.08</td><td>CRAC / CRAH chilled water / in-row + economiser / immersion (estimate)</td></tr>
+    </tbody></table></div>
+    <p class="xs muted">Every 0.10 of PUE on a 50 MW hall at 78% load is about 34 GWh and 23,100 t of CO₂ a year. Grid factor: CEA v22.0 FY2025-26 0.675. <span class="ev r show" data-src="Uptime 2025; Google; Microsoft; CEA">reported</span></p>
+  </div>
+  <div class="panel inst"><h3>Every hour of a city's year on one chart<span class="sub">A psychrometric chart: temperature across, moisture up. Each dot is a typical hour; its colour says how a cooling system copes with that air.</span></h3>
+    <div class="ctrls" style="grid-template-columns:minmax(0,1fr)">
+      <div class="opt"><span class="fieldlbl">City</span><div class="seg" id="vz-psy-c" role="group" aria-label="City"><button data-v="blr" aria-pressed="true">Bengaluru</button><button data-v="pun" aria-pressed="false">Pune</button><button data-v="hyd" aria-pressed="false">Hyderabad</button><button data-v="noi" aria-pressed="false">Delhi NCR</button><button data-v="mum" aria-pressed="false">Mumbai</button><button data-v="che" aria-pressed="false">Chennai</button><button data-v="viz" aria-pressed="false">Visakhapatnam</button></div></div>
+      <div class="opt"><span class="fieldlbl">Cooling system</span><div class="seg" id="vz-psy-m" role="group" aria-label="Cooling system"><button data-v="dry" aria-pressed="true">Dry coolers (liquid)</button><button data-v="twr" aria-pressed="false">Cooling towers (liquid)</button><button data-v="iec" aria-pressed="false">Indirect evaporative (air, 24 °C)</button></div></div>
+      <div class="opt"><span class="fieldlbl">Climate</span><div class="seg" id="vz-psy-w" role="group" aria-label="Climate horizon"><button data-v="0" aria-pressed="true">1991–2020 normals</button><button data-v="1" aria-pressed="false">2040s (+1.0 °C)</button><button data-v="2" aria-pressed="false">2060s (+2.0 °C)</button></div></div>
+      <div class="opt" id="vz-ts"><span class="fieldlbl">Liquid supply temperature</span><div class="seg" id="vz-psy-t" role="group" aria-label="Supply temperature"><button data-v="32" aria-pressed="false">32 °C</button><button data-v="40" aria-pressed="true">40 °C</button><button data-v="45" aria-pressed="false">45 °C</button></div></div>
+    </div>
+    <div class="vz-scroll" style="margin-top:10px"><svg id="vz-psy" class="vz-svg" viewBox="0 0 640 390" role="img" aria-label="Psychrometric chart with typical hours for the chosen city"></svg></div>
+    <div class="vz-lg"><span class="xs"><b style="color:var(--good)">●</b> no compressor, no water</span>&nbsp;&nbsp;<span class="xs"><b style="color:var(--cold)">●</b> no compressor, uses water</span>&nbsp;&nbsp;<span class="xs"><b style="color:var(--warn)">●</b> compressor part of the time</span>&nbsp;&nbsp;<span class="xs"><b style="color:var(--hot)">●</b> compressor carries the load</span>&nbsp;&nbsp;<span class="xs">dashed black line: the limit for the chosen system · green box: ASHRAE recommended server inlet air</span></div>
+    <div class="read" id="vz-psy-r" style="margin-top:10px"></div>
+    <p class="xs muted">How to read it: dry coolers only care about dry-bulb temperature (left–right), so their limit is a vertical line; towers and evaporative units care about wet-bulb, so their limit slopes along the dashed wet-bulb lines. Hours come from the monthly means and daily ranges in the data-centre model (Chapter 14), at each city's altitude. The approach temperatures (6 °C for dry coolers, 5.5 °C for towers) are the same ones that model uses. <span class="ev m show" data-src="Atlas data centre model; IMD normals; ASHRAE TC 9.9">model</span></p>
+  </div>
+  <div class="panel" id="dx-wm-p"><h3>Design for the climate the plant will see<span class="sub">A cooling plant built in 2027 runs into the 2050s. Shift every typical hour by the warming below and see what dry coolers and towers can still do without compressors.</span></h3>
+    <div class="seg" id="dx-wm-s" role="group" aria-label="Warming"><button data-v="1" aria-pressed="true">2040s, +1.0 °C</button><button data-v="2" aria-pressed="false">2060s, +2.0 °C</button><button data-v="2.8" aria-pressed="false">2060s high, +2.8 °C</button></div>
+    <div class="tbl" id="dx-wm-t" style="margin-top:10px"></div>
+    <p class="small">Red design days pass the 34 °C limit at which dry coolers can still deliver 40 °C water without help. The psychrometric chart above has the same climate switch.</p>
+    <p class="xs muted">India has warmed about 0.7 °C since 1901; the Ministry of Earth Sciences projects up to +2.4 °C (RCP4.5) and +4.4 °C (RCP8.5) by 2100, with warm days up to 55% and heatwaves three to four times more frequent. The mid-century steps here are interpolated from those scenarios; wet-bulb is moved by 0.8 × the dry-bulb change. Hours come from the Chapter 14 climate model. <span class="ev e show" data-src="MoES, Assessment of Climate Change over the Indian Region, 2020; atlas interpolation">estimate</span></p>
+  </div>
+
+  <div class="panel"><h3>Climate fingerprints<span class="sub">Hourly PUE or water use for the same design in seven cities. Each block is a year: months down, hours across.</span></h3>
+    <div class="ctrls" style="grid-template-columns:minmax(0,1fr)">
+      <div class="opt"><span class="fieldlbl">Design</span><div class="seg" id="vz-fp-d" role="group" aria-label="Design"><button data-v="coloT" aria-pressed="true">Colo · towers</button><button data-v="coloA" aria-pressed="false">Colo · air-cooled chillers</button><button data-v="iec" aria-pressed="false">Colo · indirect evaporative</button><button data-v="aiD" aria-pressed="false">AI · dry coolers</button><button data-v="aiT" aria-pressed="false">AI · towers</button></div></div>
+      <div class="opt"><span class="fieldlbl">Colour shows</span><div class="seg" id="vz-fp-k" role="group" aria-label="Measure"><button data-v="pue" aria-pressed="true">PUE</button><button data-v="wue" aria-pressed="false">On-site water (WUE)</button></div></div>
+    </div>
+    <div class="vz-fpg" id="vz-fp"></div>
+    <div class="vz-lg" id="vz-fp-lg"></div>
+    <p class="small" id="vz-fp-n"></p>
+    <p class="xs muted">Each cell runs one hour of the Chapter 14 engine for a 10 MW hall at 80% load; the number beside each city is the annual value. Hover a cell for the hour. <span class="ev m show" data-src="Atlas data centre model">model</span></p>
+  </div>
+</div>
+
+<div class="subch" id="cce4">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">6.4</span><span class="eyebrow">Research · Evidence</span></div>
+    <h2>Where the numbers come from, and what changed</h2></div>
+  <div class="cols gap">
+    <div class="panel"><h3>Capex benchmarks<span class="sub">USD at ₹90, the atlas standard. No Indian contractor publishes per-MW cooling costs.</span></h3>
+      <div class="tbl"><table class="aif-t"><thead><tr><th>Item</th><th>Benchmark</th><th>₹</th></tr></thead><tbody>
+        <tr><td>Construction, Mumbai</td><td>US$6.64/W, second-cheapest of 52 markets</td><td>≈₹60 cr/MW</td></tr>
+        <tr><td>Liquid-cooled premium</td><td>+7–10% of construction</td><td>+₹4–6 cr/MW</td></tr>
+        <tr><td>Mechanical share</td><td>22% air · 33% liquid</td><td>≈₹13 · ₹21 cr/MW</td></tr>
+        <tr><td>India all-in, ex-land</td><td>Tier III · AI-ready</td><td>₹50–65 · ₹70–95 cr/MW</td></tr>
+        <tr><td>CDU installed</td><td>$230–630 per kW of cooling</td><td>₹2.1–5.7 cr/MW</td></tr>
+        <tr><td>Cold plates + manifolds</td><td>$5–10k per server, usually IT capex</td><td>₹4.5–9.0 lakh/server</td></tr>
+        <tr><td>Immersion, 1 MW block</td><td>$2.5–3.5 M</td><td>₹23–32 cr/MW</td></tr>
+        <tr><td>Indian chillers, equipment only</td><td>₹11,000–25,000 per TR</td><td>₹0.4–1.0 cr/MW</td></tr>
+      </tbody></table></div>
+      <p class="xs muted">Turner &amp; Townsend DCCI 2025–26; IMARC Engineering 2026; Cushman &amp; Wakefield 2026; rax.ae; Introl; Schneider WP282; dealer listings. Chiller equipment is only 10–25% of an installed heat-rejection plant; the rest is redundancy, pumps, piping, electrical, controls and civil work. <span class="ev e show" data-src="Mixed: reported benchmarks and estimates">estimate</span></p></div>
+    <div class="panel"><h3>Fluids and tariffs<span class="sub">The two inputs that move the answer most.</span></h3>
+      <div class="tbl"><table class="aif-t"><thead><tr><th>Immersion fluid</th><th>$/L</th><th>₹/L</th></tr></thead><tbody>
+        <tr><td>Mineral oil</td><td>3–6</td><td>270–540</td></tr><tr><td>PAO synthetic</td><td>12–20</td><td>1,080–1,800</td></tr><tr><td>Synthetic ester</td><td>8–14</td><td>720–1,260</td></tr><tr><td>Two-phase fluorinated / HFO</td><td>45–300 (sources disagree)</td><td>4,050–27,000</td></tr></tbody></table></div>
+      <p class="xs muted">3M completed its exit from PFAS manufacturing at the end of 2025; Chemours Opteon 2P50 (made with Navin Fluorine) is the main replacement.</p>
+      <div class="tbl"><table class="aif-t"><thead><tr><th>State</th><th>Energy + demand</th><th>All-in at 75% load</th></tr></thead><tbody>
+        <tr><td>Karnataka (HT-2(a), names data centres)</td><td>₹6.60 + ₹345/kVA</td><td>≈₹7.9–8.2</td></tr>
+        <tr><td>Maharashtra</td><td>₹7.48/kVAh + ₹0.62 wheeling + ₹555/kVA</td><td>≈₹9.0–9.2</td></tr>
+        <tr><td>Tamil Nadu</td><td>₹7.50 + ₹608/kVA; peak +25%</td><td>≈₹8.7–9.0</td></tr>
+        <tr><td>Telangana</td><td>₹7.15–7.65 + ₹500/kVA</td><td>≈₹8.1–8.6</td></tr>
+        <tr><td>Uttar Pradesh (Noida)</td><td>₹6.10–7.10/kVAh + ₹270–300/kVA</td><td>≈₹6.7–7.7</td></tr></tbody></table></div>
+      <p class="xs muted">FY2025-26 orders; Karnataka adds a ₹0.56 true-up from 2026. Maharashtra FY26 rates were under review. Each +₹1/kWh adds about ₹190/MWh to towers, ₹390 to air-cooled chillers and ₹640 to DX. <span class="ev r show" data-src="KERC; MERC; TNERC; TGERC; UPERC">reported</span></p></div>
+  </div>
+  
+</div>
+
+<div class="subch" id="cce5">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">6.5</span><span class="eyebrow">Research · Use</span></div>
+    <h2>Which system for which city</h2></div>
+  <div class="panel"><h3>Recommendations by city<span class="sub">Conventional ≤15 kW per rack; AI ≥40 kW per rack. This is the atlas’s one city-by-city recommendation; Chapter 19 turns it into rules by climate, and <a href="#cool-nav">Chapter 16</a> maps every cooling tool.</span></h3>
+    <div class="tbl"><table class="aif-t"><thead><tr><th>Location</th><th>Conventional</th><th>AI</th></tr></thead><tbody>
+      <tr><td><b>Bengaluru, Pune</b></td><td>Containment + free-cooling or magnetic-bearing chillers, or a hybrid plant. Towers only on contracted treated sewage.</td><td>Direct-to-chip W40 + dry coolers with trim (≈65–71% of hours compressor-free). Best location on cost and water.</td></tr>
+      <tr><td><b>Hyderabad, Delhi NCR</b></td><td>Free-cooling or magnetic-bearing chillers; indirect evaporative in NCR's dry season. Avoid direct evaporative (dust, monsoon humidity).</td><td>Direct-to-chip + adiabatic coolers; size for 43–45 °C peaks.</td></tr>
+      <tr><td><b>Mumbai, Chennai</b></td><td>Magnetic-bearing water-cooled chillers + towers where treated water is secured; otherwise free-cooling air-cooled chillers.</td><td>Direct-to-chip W40–W45 + towers on treated sewage, or hybrid coolers. Dry-only needs trim chillers much of the year at W32.</td></tr>
+      <tr><td><b>Visakhapatnam, Jamnagar</b></td><td>Seawater with titanium exchangers: cost and permits (CRZ, outfall) unproven; pilot first.</td><td>Direct-to-chip + seawater exchangers or hybrid coolers; desalinated make-up only with full lifecycle costing.</td></tr>
+      <tr><td><b>Immersion</b></td><td>Single-phase only for niches (edge, retrofits, harsh sites).</td><td>Do not specify two-phase immersion for new builds.</td></tr>
+    </tbody></table></div>
+    <ul class="clean small" style="margin-top:10px">
+      <li><b>50 MW AI hall, worked:</b> in Mumbai, towers save about ₹15 crore a year against W40 dry coolers but use ~750 ML a year more water, an implied water price of about ₹200/kL. That makes them rational only on contracted treated sewage. In Bengaluru the dry-cooler premium is about ₹10 crore a year, roughly 0.3% of a ₹3,500–4,750 crore project.</li>
+      <li><b>Water price rarely decides:</b> towers beat free-cooling chillers until water costs ~₹300–370/kL, and dry coolers in a liquid hall until ~₹240–260/kL, all above Indian tariffs of ₹20–131/kL. The case for dry cooling is availability, permits and risk.</li>
+      <li><b>Immersion vs direct-to-chip:</b> single-phase immersion wins only above about ₹14–19/kWh, or where the IT maker warrants immersion and all residual air plant is removed.</li>
+    </ul>
+    <p class="xs muted">Evidence is uneven: tariffs, MoEFCC, CEA, Uptime, operator reports and the Vertiv/NVIDIA study are reported; Schneider WP282, immersion PUEs and CDU savings are vendor claims; most per-MW capex and the Indian consultancy figures are estimates. Get one contractor bill of quantities per system before relying on capex better than ±30%.</p>
+  </div>
+</div>
+</section>

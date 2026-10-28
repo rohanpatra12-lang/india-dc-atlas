@@ -1,0 +1,16 @@
+{
+  "name": "india-dc-atlas",
+  "private": true,
+  "description": "Build tools for the India Data Centre Atlas",
+  "license": "MIT",
+  "scripts": {
+    "build": "python3 tools/build.py",
+    "check": "python3 tools/build.py --check"
+  },
+  "dependencies": {
+    "acorn": "^8.11.3"
+  },
+  "devDependencies": {
+    "playwright": "^1.47.0"
+  }
+}

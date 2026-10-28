@@ -1,0 +1,255 @@
+<section class="ch chw" id="c8" data-n="15">
+  <div class="chq">
+    <div class="chq-n" aria-hidden="true">15</div>
+    <div class="chq-b"><h2 class="chq-t">Where to build, and at what cost</h2>
+      <p class="chq-q"><span>The question</span>Which Indian hubs suit which data centres, and what does each cost to build and run?</p>
+      <p class="chq-a"><span>The short answer</span>Mumbai leads on connectivity; Hyderabad, Chennai and Visakhapatnam on land and power. A colocation hall costs about ₹56 crore per MW to build (₹50–62); an AI campus about ₹340 crore per MW with GPUs (₹310–490, mostly GPU prices).</p>
+      <nav class="chq-subs" aria-label="In this chapter"><a href="#where">15.1</a><a href="#economics">15.2</a></nav>
+    </div>
+  </div>
+<div class="subch" id="where">
+  <div class="ch-head">
+    <div class="ch-tag"><span class="ch-num" aria-hidden="true">15.1</span><span class="eyebrow"><a class="rep-l" href="#reports">Report 10</a> · Where to build</span></div>
+    <h2>Fifty cities, one ranking</h2>
+    <p class="lede">About 50 candidate cities in 23 states and union territories, scored on nine factors: power, connectivity, latency, water, climate, hazards, land, policy, and demand and talent. Hard filters rule cities out first. Every factor is then put on a 0–10 scale and weighted for your use case, and a 1,000-run Monte Carlo test checks how stable each ranking is. Tap a state on the map to see its districts and candidate cities.</p>
+  </div>
+  <div class="take">
+    <div><span class="v mono">7.2 / 10</span><span class="k">Hyderabad periphery: first or second under every weighting in Report 10 <span class="ev m show" data-src="Report 10 weighted model">model</span></span></div>
+    <div><span class="v mono">₹5.96 → ₹8.70</span><span class="k">Effective tariff spread, Odisha to Maharashtra, at 80% load factor <span class="ev r show" data-src="OERC FY27 RST order; MERC MYT order (Report 10)">reported</span></span></div>
+    <div><span class="v mono">0 of 15</span><span class="k">State transmission utilities that publish spare capacity per substation <span class="ev r show" data-src="Report 10 survey of STU disclosures">reported</span></span></div>
+  </div>
+
+  <div class="panel inst has-fx" id="wh-ctrl">
+    <button type="button" class="fx" aria-expanded="false" aria-controls="fx-wh" title="Show formulas and assumptions">ƒ<span class="sr">Formulas and assumptions: city ranking</span></button>
+    <h3>Ranking engine<span class="sub">Choose a use case or set your own weights. The filters, scores, map and table all update live.</span></h3>
+    <div class="fxbox" id="fx-wh" hidden>
+      <div class="fxh">How this is calculated · city ranking (Steps A–E)</div>
+      <ol class="fxf">
+        <li>A · Hard filters: keep a city only if seismic zone ≤ IV, nearest 220 kV+ substation ≤ your distance limit, not very-high cyclone or flood (if that filter is on), and groundwater not over-exploited unless treated water is assumed</li>
+        <li>Latency (ms) = mean over Mumbai, Delhi, Chennai, Bengaluru of 2 × great-circle km × 1.4 ÷ 200 = 0.014 × km</li>
+        <li>B · Min–max: s = 10 × (x − min) ÷ (max − min) over the cities that pass the filters; latency flipped: s = 10 × (max − x) ÷ (max − min)</li>
+        <li>B · Report rubric (alternative): factor scores as published in Report 10; latency = 10 × (26 − RTT) ÷ 16, clipped 0–10</li>
+        <li>C · Weighted sum: score = Σ wᵢ × sᵢ with Σ wᵢ = 1 (sliders are rescaled to sum to 1)</li>
+        <li>C · Geometric: score = Π max(sᵢ, 0.5)^wᵢ (floor 0.5 so a zero does not wipe out the city)</li>
+        <li>Tiers: A = top 30% of cities that pass, B = next 40%, C = rest; excluded cities shown separately</li>
+        <li>E · Monte Carlo: 1,000 runs; each weight × U(0.8, 1.2) then rescaled; each factor score × U(0.8, 1.2), clipped 0–10; count how often each city is top 3 in its state and top 10 nationally</li>
+      </ol>
+      <div class="fxa"><b>Assumptions</b><ul><li>Power score = 50% tariff + 50% grid and renewables judgement (Report 10). Connectivity, water, climate, hazards, land, policy and demand are Report 10 rubric scores (0–10).</li><li>Substation names and distances are estimates; spare capacity is unpublished everywhere.</li><li>Effective tariff = energy charge + demand charge ÷ 584 h (80% load factor).</li><li>Seismic zones follow IS 1893:2016 (the 2025 revision was withdrawn in March 2026).</li><li>The Monte Carlo uses a fixed seed, so results repeat until you press "Re-run".</li></ul></div>
+    </div>
+    <div class="seg" id="wh-pre" role="group" aria-label="Use case"><button data-p="def" aria-pressed="true">Balanced (default)</button><button data-p="ai">AI training campus</button><button data-p="ix">Interconnection colo</button><button data-p="sus">Sustainability-first</button></div>
+    <div class="ctrls" id="wh-w"></div>
+    <div class="cols3">
+      <div class="opt"><span class="fieldlbl">Combine scores (Step C)</span><div class="seg" id="wh-m" role="group" aria-label="Method"><button data-v="sum" aria-pressed="true">Weighted sum Σ</button><button data-v="geo">Geometric Π</button></div></div>
+      <div class="opt"><span class="fieldlbl">Normalise (Step B)</span><div class="seg" id="wh-n" role="group" aria-label="Normalisation"><button data-v="mm" aria-pressed="true">Min–max</button><button data-v="rub">Report rubric</button></div></div>
+      <div class="ctrl"><label for="wh-km">Hard filter: 220 kV+ substation within</label><output id="wh-km-o"></output><input id="wh-km" type="range" min="10" max="100" step="5" value="25"></div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px 22px">
+      <label class="switch"><input type="checkbox" id="wh-z5" checked> Exclude seismic zone V</label>
+      <label class="switch"><input type="checkbox" id="wh-tw" checked> Allow over-exploited groundwater with a treated-water contract</label>
+      <label class="switch"><input type="checkbox" id="wh-hz"> Exclude very-high cyclone or flood sites</label>
+    </div>
+  </div>
+
+  <div class="panel gap">
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center">
+      <h3 id="wh-map-h">India: candidate cities<span class="sub" id="wh-map-sub">Tap a state to drill down to its districts.</span></h3>
+      <div class="pinrow"><button class="btn" id="wh-back" type="button" hidden>← Back to India</button></div>
+    </div>
+    <div class="seg" id="wh-ly" role="group" aria-label="Map layers"><span class="xs muted" style="align-self:center;margin-right:4px">Layers:</span><button data-l="cls" aria-pressed="true">Subsea cable landings</button><button data-l="ix" aria-pressed="false">Internet exchanges (NIXI)</button><button data-l="rings" aria-pressed="false">Latency rings, 5 and 10 ms</button><button data-l="lab" aria-pressed="true">Labels</button></div>
+    <div class="mapwrap wh">
+      <div>
+        <div class="whmap" id="wh-map"></div>
+        <div class="mscale" id="wh-leg"></div>
+        <p class="xs muted" style="margin-top:6px">Official boundary of India (state and 818 district boundaries, Survey of India–based data via datta07/INDIAN-SHAPEFILES), including Pakistan-occupied Kashmir, Gilgit-Baltistan and Aksai Chin; Lambert conformal conic projection. States are shaded by their best qualifying city; dot size = score, colour = tier. Latency rings show where a site stays within 5 or 10 ms round trip of each hub.</p>
+      </div>
+      <div class="detail" id="wh-det" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel">
+      <h3>How stable is the ranking?<span class="sub">Share of 1,000 randomised runs (weights and scores each varied ±20%) in which a city lands in the national top 10.</span></h3>
+      <div class="chart tall"><canvas id="c-mc" aria-label="Monte Carlo stability"></canvas></div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="btn" id="wh-rerun" type="button">↻ Re-run with a new seed</button><span class="xs muted" id="wh-seed"></span></div>
+    </div>
+    <div class="panel">
+      <h3>Top picks by use case<span class="sub">Best city that passes your filters under each weighting.</span></h3>
+      <div id="wh-uc"></div>
+      <p class="note">Interconnection still means Navi Mumbai and Chennai, because that is where the subsea cables land. For new power-hungry campuses, inland grid-rich sites score better.</p>
+    </div>
+  </div>
+
+  <div class="panel gap">
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:end;justify-content:space-between">
+      <h3>Full ranking<span class="sub">Tap a row to show it on the map. Stability = share of runs in the state's top 3.</span></h3>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <div><label for="wh-st" class="fieldlbl">State</label><select id="wh-st"><option value="">All states</option></select></div>
+        <div><label for="wh-q" class="fieldlbl">Search</label><input id="wh-q" type="search" placeholder="City, strength…"></div>
+      </div>
+    </div>
+    <div class="tbl"><table><thead><tr><th class="n">#</th><th>City</th><th>State</th><th class="n">Score</th><th>Tier</th><th class="n">State top 3</th><th class="n">India top 10</th><th>Key strength</th><th>Key weakness</th></tr></thead><tbody id="wh-tb"></tbody></table></div>
+  </div>
+
+  <div class="do">
+    <h3>Before you shortlist a site</h3>
+    <div class="cols">
+      <ul class="clean small"><li><b>Grid headroom is the binding unknown.</b> Ask the state transmission utility (MSETCL, TANTRANSCO, KPTCL, TGTRANSCO, APTRANSCO, UPPTCL, HVPNL and so on) for a load-flow study, and CTUIL for interstate connectivity margins.</li><li><b>Water:</b> get the block-level category from IN-GRES (CGWB) and a signed treated-water offtake with the city water board before you rely on any water score.</li></ul>
+      <ul class="clean small"><li><b>Hazards:</b> check the plot against the NRSC Bhuvan flood atlas and NDMA cyclone zones; the ratings here are city-level.</li><li><b>Climate:</b> compute free-cooling hours from ISHRAE/ASHRAE typical-year files; the values here are approximations.</li><li><b>Announcements are not assets:</b> Vizag's 5 GW, the Digha cable landing and Jamnagar are plans.</li></ul>
+    </div>
+  </div>
+</div>
+<div class="subch" id="economics">
+  <div class="ch-head">
+    <div class="ch-tag"><span class="ch-num" aria-hidden="true">15.2</span><span class="eyebrow"><a class="rep-l" href="#reports">Report 7</a> · Unit economics</span></div>
+    <h2>What a data centre costs, per MW, per kWh, per GPU-hour</h2>
+    <p class="lede">India builds at about half the US cost, but rents are also about half, so margins are thin. For colocation the business is capital recovery. For AI the GPU is the business: electricity is under 5% of the cost of a GPU-hour, and utilisation decides everything.</p>
+  </div>
+  <div class="take">
+    <div><span class="v mono">US$6.64/W</span><span class="k">Mumbai build cost, 51st of 52 markets (Turner &amp; Townsend 2025)</span></div>
+    <div><span class="v mono">~9.5%</span><span class="k">Unlevered IRR on a new colo at ₹7,000/kW/month: about its cost of capital</span></div>
+    <div><span class="v mono">79%</span><span class="k">Share of a GB300 GPU-hour that is GPU and network capex</span></div>
+  </div>
+
+  <div class="cols">
+    <div class="panel">
+      <h3>Build cost around the world<span class="sub">Traditional air-cooled data centre, US$ per watt, construction only</span></h3>
+      <div class="chart tall"><canvas id="c-tt" aria-label="Construction cost index"></canvas></div>
+    </div>
+    <div class="panel"><h3>Capex by size and by part<span class="sub">The three cases again, drawn so that area is money: width is the campus size in MW, height is crore per MW.</span></h3>
+    <div class="seg" id="vz-mekko-t" role="group" aria-label="Include GPUs"><button data-v="0" aria-pressed="true">Facility only</button><button data-v="1" aria-pressed="false">Include IT / GPUs</button></div>
+    <div class="vz-scroll"><svg id="vz-mekko" class="vz-svg" viewBox="0 0 680 340" role="img" aria-label="Variable-width stacked bars of capex for three campus cases"></svg></div>
+    <p class="small" id="vz-mekko-n"></p>
+  </div>
+  </div>
+  
+
+  <div class="panel gap">
+    <h3>Line by line<span class="sub">Pick a case to see the full capex build-up.</span></h3>
+    <div class="seg" id="cx-case" role="group" aria-label="Case"><button data-c="0" aria-pressed="true">A · 20 MW Tier III colo</button><button data-c="1">B · 50 MW hyperscale BTS</button><button data-c="2">C · 100 MW AI campus</button></div>
+    <div class="tbl" id="cx-table"></div>
+    <p class="note" id="cx-note"></p>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel inst">
+      <h3>Levelised cost per IT-kWh<span class="sub"><button type="button" class="g" data-g="LCOD">LCOD</button> = (capex × <button type="button" class="g" data-g="CRF">CRF</button> + opex) ÷ IT energy delivered</span></h3>
+      <div class="seg" id="lc-presets" role="group" aria-label="Case"><button data-p="0" aria-pressed="true">A · colo</button><button data-p="1">B · hyperscale</button><button data-p="2">C · AI facility</button></div>
+      <div class="ctrls">
+        <div class="ctrl"><label for="l-cap">Capex (₹ cr/MW)</label><output id="l-cap-o"></output><input id="l-cap" type="range" min="25" max="90" step="0.1" value="61.1"></div>
+        <div class="ctrl"><label for="l-wacc">WACC</label><output id="l-wacc-o"></output><input id="l-wacc" type="range" min="6" max="15" step="0.5" value="11"></div>
+        <div class="ctrl"><label for="l-u">Average IT draw</label><output id="l-u-o"></output><input id="l-u" type="range" min="20" max="95" step="1" value="63"></div>
+        <div class="ctrl"><label for="l-pue">PUE</label><output id="l-pue-o"></output><input id="l-pue" type="range" min="1.1" max="1.8" step="0.01" value="1.5"></div>
+        <div class="ctrl"><label for="l-t">Energy tariff (₹/kWh)</label><output id="l-t-o"></output><input id="l-t" type="range" min="4" max="9" step="0.05" value="6.6"></div>
+        <div class="ctrl"><label for="l-o">Other opex (₹ cr/MW/yr)</label><output id="l-o-o"></output><input id="l-o" type="range" min="0.5" max="5" step="0.01" value="2.25"></div>
+      </div>
+      <div class="read" id="lc-read"></div>
+      <div class="flow" id="lc-flow"></div>
+      <div class="legend"><span><i style="background:var(--cold)"></i>Capex recovery</span><span><i style="background:var(--hot)"></i>Electricity</span><span><i style="background:var(--muted)"></i>Other opex</span></div>
+    </div>
+    <div class="stack">
+      <div class="panel">
+        <h3>What moves the colo's cost<span class="sub">Case A LCOD (₹/IT-kWh), base ₹29.7. Bars show low and high cases.</span></h3>
+        <div class="chart short"><canvas id="c-tornado" aria-label="Sensitivity tornado"></canvas></div>
+        <p class="note">Filling the building is worth more than any tariff negotiation.</p>
+      </div>
+      <div class="panel">
+        <h3>Where colo opex goes<span class="sub">Case A, ₹174 crore a year</span></h3>
+        <div class="chart short"><canvas id="c-opex" aria-label="Opex breakdown"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel inst hot">
+      <h3>GPU-hour cost in India<span class="sub">GPU + network capex, colo hosting at ₹7,000/kW/month, power at 80% draw, ₹70k/yr ops. Dashed lines are market prices.</span></h3>
+      <div class="ctrls">
+        <div><label class="fieldlbl" for="g-type">GPU</label><select id="g-type"><option value="h100">H100 (HGX, ~US$275k per 8)</option><option value="h200">H200 (HGX, ~US$315k per 8)</option><option value="b200">B200 (HGX, ~US$450k per 8)</option></select></div>
+        <div class="ctrl"><label for="g-cap">All-in capex per GPU (₹ lakh)</label><output id="g-cap-o"></output><input id="g-cap" type="range" min="15" max="80" step="0.1" value="36.5"></div>
+        <div class="ctrl"><label for="g-life">Economic life (years)</label><output id="g-life-o"></output><input id="g-life" type="range" min="3" max="7" step="1" value="5"></div>
+        <div class="ctrl"><label for="g-wacc">WACC</label><output id="g-wacc-o"></output><input id="g-wacc" type="range" min="6" max="16" step="0.5" value="11"></div>
+        <div class="ctrl"><label for="g-t">Tariff (₹/kWh)</label><output id="g-t-o"></output><input id="g-t" type="range" min="4" max="12" step="0.1" value="8"></div>
+        <div class="ctrl"><label for="g-u">GPU utilisation (share of hours sold)</label><output id="g-u-o"></output><input id="g-u" type="range" min="20" max="100" step="1" value="80"></div>
+      </div>
+      <div class="read" id="g-read"></div>
+      <div class="chart"><canvas id="c-gpu" aria-label="GPU-hour cost vs utilisation"></canvas></div>
+    </div>
+    <div class="stack">
+      <div class="panel">
+        <h3>Market prices, H100-class (Oct 2026)</h3>
+        <div class="tbl"><table>
+          <thead><tr><th>Offer</th><th class="n">₹/GPU-hr</th></tr></thead>
+          <tbody>
+            <tr><td>IndiaAI L1 rate (users pay ~₹92 after subsidy)</td><td class="n">150</td></tr>
+            <tr><td>JarvisLabs H100</td><td class="n">218</td></tr>
+            <tr><td>Global OCPI-H100 index (US$2.79)</td><td class="n">~251</td></tr>
+            <tr><td>E2E Networks on-demand</td><td class="n">255.55</td></tr>
+            <tr><td>Yotta Shakti dedicated / on-demand</td><td class="n">~269 / 356</td></tr>
+            <tr><td>Hyperscaler on-demand (US$6–12)</td><td class="n">540–1,080</td></tr>
+          </tbody></table></div>
+        <p class="note">Global H100 contract prices rose ~40% from Oct 2025 to Mar 2026; the "steady decline" story describes 2024–25.</p>
+      </div>
+      <div class="panel">
+        <h3>Returns by business model</h3>
+        <div class="tbl"><table>
+          <thead><tr><th></th><th>Colo (A)</th><th>Hyperscale (B)</th><th>AI neocloud (C)</th></tr></thead>
+          <tbody>
+            <tr><td>Capex/MW</td><td class="n">₹61 cr</td><td class="n">₹42 cr</td><td class="n">₹340 cr</td></tr>
+            <tr><td>EBITDA margin</td><td class="n">42%</td><td class="n">84% of rent</td><td class="n">90%</td></tr>
+            <tr><td>Payback</td><td class="n">9.6 yrs</td><td class="n">7.1 yrs</td><td class="n">3.2 yrs</td></tr>
+            <tr><td>Unlevered IRR</td><td class="n">~9.5%</td><td class="n">~14.7%</td><td class="n">21.5% → negative</td></tr>
+            <tr><td>Power share of cost</td><td class="n">39%</td><td class="n">48%</td><td class="n">~6%</td></tr>
+          </tbody></table></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel">
+      <h3>India vs US vs Singapore</h3>
+      <div class="tbl"><table>
+        <thead><tr><th></th><th class="n">India</th><th class="n">US</th><th class="n">Singapore</th></tr></thead>
+        <tbody>
+          <tr><td>Build (US$/W)</td><td class="n">6.64</td><td class="n">9.5–13.3</td><td class="n">14.5</td></tr>
+          <tr><td>Rent (US$/kW/mo)</td><td class="n">80–100</td><td class="n">160–225</td><td class="n">300–475</td></tr>
+          <tr><td>Electricity (US$ m/MW/yr)</td><td class="n">0.7–0.9</td><td class="n">~1.22</td><td class="n">~1.7</td></tr>
+          <tr><td>Cap rate</td><td class="n">7.5–8.5%</td><td class="n">4.5–6.5%</td><td class="n">5.0–6.5%</td></tr>
+        </tbody></table></div>
+      <p class="note">India wins on growth, data localisation, cheap land and labour, not on spread. Nxtra's March 2026 raise priced it near US$7 m per operating MW pre-money, close to replacement cost.</p>
+    </div>
+    <div class="panel">
+      <h3>Land and power, the inputs that vary most</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Hub</th><th class="n">₹ cr/acre</th><th class="n">HT energy ₹/kWh</th></tr></thead>
+        <tbody>
+          <tr><td>Navi Mumbai</td><td class="n">15–40 (in-fill ~80)</td><td class="n">7.27 (MH)</td></tr>
+          <tr><td>Chennai Ambattur / Oragadam</td><td class="n">8–15 / 3–8</td><td class="n">7.50 (TN)</td></tr>
+          <tr><td>Hyderabad</td><td class="n">2–6</td><td class="n">6.65 at 132 kV</td></tr>
+          <tr><td>Bengaluru Devanahalli/Hoskote</td><td class="n">4–10 (est.)</td><td class="n">~6.70 (KA)</td></tr>
+          <tr><td>RTC renewable (SECI tranche V)</td><td class="n">—</td><td class="n">5.25–5.26 at bus</td></tr>
+        </tbody></table></div>
+      <p class="note">Land is only 4–8% of capex. Renewables save ₹0.8–1.5/kWh against Maharashtra and Tamil Nadu grid supply, little against Telangana or Karnataka.</p>
+    </div>
+  <div class="panel" id="dx-ld-p"><h3>What land costs, from recent deals<span class="sub">Land is small next to GPUs but large next to the building in Mumbai. Implied cost assumes 0.25 acre per MW of IT for a multi-storey campus (0.5 for low-rise with dry coolers).</span></h3>
+    <div class="tbl"><table class="aif-t"><thead><tr><th>Deal or rate</th><th>Year</th><th>₹ crore per acre</th><th>Land per MW of IT</th><th>Share of a ₹74 crore/MW AI building</th></tr></thead><tbody>
+      <tr><td>Microsoft, 48 acres, Ranga Reddy district (Hyderabad), ₹267 crore</td><td>2024</td><td class="mono">5.6</td><td class="mono">₹1.4–2.8 cr</td><td class="mono">2–4%</td></tr>
+      <tr><td>Noida Authority industrial allotment rates, phases 2–3 (₹21,710–59,370 per m²)</td><td>2025</td><td class="mono">8.8–24</td><td class="mono">₹2.2–12 cr</td><td class="mono">3–16%</td></tr>
+      <tr><td>Google (reported talks), 22.5 acres, Juinagar, Navi Mumbai, ~₹850 crore</td><td>2025–26</td><td class="mono">~38</td><td class="mono">₹9.5–19 cr</td><td class="mono">13–26%</td></tr>
+      <tr><td>STT GDC, 3.5 acres with a building, MIDC TTC, Navi Mumbai, ₹282 crore</td><td>2026</td><td class="mono">~81 (incl. building)</td><td class="mono">₹20–40 cr</td><td class="mono">27–55%</td></tr>
+    </tbody></table></div>
+    <p class="small">Mumbai's land can add a quarter or more to the cost of the building, which is why new AI campuses go to the edges of the metro or to Hyderabad, Chennai and Visakhapatnam. Next to ₹266 crore/MW of GPUs it is still a few per cent.</p>
+    <p class="xs muted">Per-acre figures are computed from the reported totals; the STT figure includes an existing structure and so overstates land. <span class="ev r show" data-src="OfficeChai 2024; Noida Authority 2025; DCD; Free Press Journal 2026">reported</span></p>
+  </div>
+
+  </div>
+
+  <div class="do">
+    <h3>What the numbers say to do</h3>
+    <ul class="clean small">
+      <li><b>Colo developers</b>: underwrite to ₹7,700–8,200/kW/month or a facility cost ≤₹50 crore/MW; phase fit-out with leasing; push interconnection density.</li>
+      <li><b>Hyperscale build-to-suit</b> is the best risk-adjusted return (~14–15%); lock PUE caps and power pass-through in contracts.</li>
+      <li><b>GPU buyers</b>: don't buy without ≥60–70% contracted utilisation. Below ~55%, renting at ₹218–256/hr beats owning an H100. Model at your real WACC, and budget the IGST working-capital drag.</li>
+      <li><b>Investors</b>: pay up for secured power, land banks and pre-leases, the scarce inputs, not concrete and chillers.</li>
+    </ul>
+  </div>
+</div>
+</section>

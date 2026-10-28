@@ -1,0 +1,749 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atlas II · Growth explorer</title>
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f6f5f2; --surface:#fcfcfb; --surface-2:#f0efeb; --line:#e3e1db; --grid:#ebe9e4;
+  --ink:#0b0b0b; --ink-2:#52514e; --ink-3:#7a7974; --accent:#2a78d6;
+  --gp:#2a78d6; --inf:#eb6834; --trn:#1baf7a;
+  --bar:#8f8d86; --ghost:#52514e; --focus:#2a78d6;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#121211; --surface:#1a1a19; --surface-2:#232321; --line:#33322f; --grid:#2a2a28;
+    --ink:#f0efec; --ink-2:#c3c2b7; --ink-3:#8d8c84; --accent:#3987e5;
+    --gp:#3987e5; --inf:#d95926; --trn:#199e70; --bar:#7d7b74; --ghost:#c3c2b7; --focus:#3987e5;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#121211; --surface:#1a1a19; --surface-2:#232321; --line:#33322f; --grid:#2a2a28;
+  --ink:#f0efec; --ink-2:#c3c2b7; --ink-3:#8d8c84; --accent:#3987e5;
+  --gp:#3987e5; --inf:#d95926; --trn:#199e70; --bar:#7d7b74; --ghost:#c3c2b7; --focus:#3987e5;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1320px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:22px;margin:0 0 4px;letter-spacing:-.01em}
+h2{font-size:15px;margin:0 0 10px}
+h3{font-size:13px;margin:0 0 6px;color:var(--ink-2);font-weight:600}
+p{margin:0 0 8px}
+.sub{color:var(--ink-2);max-width:820px}
+.muted{color:var(--ink-3)}
+.small{font-size:12px}
+.num{font-variant-numeric:tabular-nums}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+/* control bar */
+.bar{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin:16px 0 12px}
+.seg{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:3px}
+.seg button{border:0;background:transparent;padding:6px 12px;border-radius:7px;cursor:pointer;color:var(--ink-2);white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12);font-weight:600}
+.ctl{display:inline-flex;align-items:center;gap:6px;color:var(--ink-2)}
+.ctl select{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:5px 8px}
+.btn{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer}
+.btn:hover{border-color:var(--ink-3)}
+.yearbox{display:flex;align-items:center;gap:10px;flex:1 1 260px;min-width:220px}
+.yearbox input[type=range]{flex:1}
+.yr{font-size:20px;font-weight:700;min-width:48px}
+
+/* layout */
+.main{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:16px;align-items:start}
+@media (max-width:960px){.main{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px}
+.lanes .lane{position:relative;padding:4px 0 2px}
+.lanes .lane + .lane{border-top:1px solid var(--grid)}
+.lanehead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:6px 2px 0}
+.lanehead b{font-size:13px}
+.lanehead .v{font-weight:700;font-size:15px}
+svg{display:block;overflow:visible}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;font-size:12px;color:var(--ink-2)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:6px}
+.ghostkey{display:inline-block;width:18px;border-top:2px dashed var(--ghost);vertical-align:3px;margin-right:6px}
+.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:12px;box-shadow:0 4px 14px rgba(0,0,0,.14);min-width:170px;z-index:5;display:none}
+.tip .r{display:flex;justify-content:space-between;gap:12px}
+.tip .t{font-weight:700;margin-bottom:4px}
+
+/* side panel */
+.side{position:sticky;top:12px;display:grid;gap:12px}
+@media (max-width:960px){.side{position:static}}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kpi{background:var(--surface-2);border-radius:10px;padding:10px}
+.kpi .l{font-size:11px;color:var(--ink-2);text-transform:uppercase;letter-spacing:.04em}
+.kpi .v{font-size:21px;font-weight:700;line-height:1.15;margin:2px 0}
+.kpi .n{font-size:11.5px;color:var(--ink-3)}
+.kpi.wide{grid-column:1/-1}
+.meter{height:6px;background:var(--grid);border-radius:4px;overflow:hidden;margin-top:6px}
+.meter i{display:block;height:100%;background:var(--ink-2);border-radius:4px}
+.cmp .row{display:grid;grid-template-columns:66px minmax(0,1fr) 70px;gap:8px;align-items:center;margin:3px 0;font-size:12px}
+.cmp .row .nm{color:var(--ink-2)}
+.cmp .row.sel .nm{color:var(--ink);font-weight:700}
+.cmp .row .val{text-align:right}
+.stk{display:flex;height:14px;gap:2px}
+.stk i{display:block;height:100%}
+.stk i:first-child{border-radius:4px 0 0 4px}.stk i:last-child{border-radius:0 4px 4px 0}
+.stk i:only-child{border-radius:4px}
+.cmpblk + .cmpblk{margin-top:10px}
+.brk .row{display:grid;grid-template-columns:118px minmax(0,1fr) 112px;gap:8px;align-items:center;font-size:12px;margin:4px 0}
+.brk .track{height:10px;background:var(--grid);border-radius:4px;overflow:hidden}
+.brk .track i{display:block;height:100%;background:var(--bar);border-radius:4px}
+.brk .row .val{text-align:right}
+
+/* params */
+.params{margin-top:16px}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+details.grp{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:0}
+details.grp>summary{cursor:pointer;padding:12px 14px;font-weight:650;list-style:none;display:flex;justify-content:space-between}
+details.grp>summary::-webkit-details-marker{display:none}
+details.grp>summary::after{content:"+";color:var(--ink-3)}
+details.grp[open]>summary::after{content:"–"}
+.grpbody{padding:0 14px 12px;display:grid;gap:12px}
+.prm .pl{display:flex;justify-content:space-between;gap:8px;font-size:12.5px}
+.prm .pl span:last-child{color:var(--ink-3)}
+.prm .src{font-size:11px;color:var(--ink-3);margin-top:2px}
+.cells{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.cell{flex:1 1 90px;min-width:0}
+.cell .cy{font-size:10.5px;color:var(--ink-3)}
+.cell .ci{display:flex;gap:6px;align-items:center}
+.cell input[type=range]{flex:1;min-width:0;accent-color:var(--accent)}
+.cell input[type=number]{width:68px;background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:3px 5px;text-align:right}
+.cell input.chg{border-color:var(--accent)}
+.presets{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.presets button{font-size:11.5px;padding:3px 8px;border-radius:999px;border:1px solid var(--line);background:var(--surface-2);cursor:pointer}
+.presets button:hover{border-color:var(--ink-3)}
+
+/* perspective */
+.phead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+#narr{margin:6px 0 12px;padding-left:20px;max-width:980px}
+#narr li{margin:6px 0}
+#narr b{font-weight:650}
+.ladders{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.ladder h3{margin-bottom:2px}
+/* cooling */
+.cgrid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:960px){.cgrid{grid-template-columns:minmax(0,1fr)}}
+.fleets{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}
+.fleet{background:var(--surface-2);border-radius:10px;padding:10px}
+.fleet h3{margin:0 0 6px;color:var(--ink)}
+.fleet h3 span{color:var(--ink-3);font-weight:400}
+.fleet label{display:block;font-size:11.5px;color:var(--ink-2);margin-top:6px}
+.fleet select{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:4px 6px;font-size:12.5px;margin-top:2px}
+.fleet .ci{display:flex;gap:6px;align-items:center}
+.fleet input[type=range]{flex:1;min-width:0;accent-color:var(--accent)}
+.fleet input[type=number]{width:58px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:3px 5px;text-align:right}
+.fres{margin-top:8px;font-size:12px;display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap}
+.fres b{font-size:13px}
+.warn{font-size:11.5px;color:var(--ink);margin-top:4px}
+.warn::before{content:"⚠ ";}
+.ctab input{width:54px;background:var(--surface-2);border:1px solid var(--line);border-radius:5px;padding:2px 4px;text-align:right;font-size:12px}
+.ctab input.chg{border-color:var(--accent)}
+.ctab td,.ctab th{padding:4px 6px}
+.ctab td:nth-child(2),.ctab th:nth-child(2){text-align:left;color:var(--ink-2)}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th,td{padding:6px 8px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--ink-2);font-weight:600}
+.tscroll{overflow-x:auto}
+.foot{margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px}
+.foot ul{margin:0;padding-left:18px}
+.foot li{margin:3px 0}
+a{color:var(--accent)}
+.tag{display:inline-block;font-size:10.5px;padding:1px 6px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);margin-left:6px;vertical-align:1px}
+
+/* atlas site header */
+.site{position:sticky;top:0;z-index:40;background:#0B1719;color:#DDEBEA;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;padding:8px 16px}
+@media(max-width:700px){.site{position:static}}
+.site a{color:inherit;text-decoration:none}.site .brand{font-family:"Archivo","Arial Narrow",Arial,sans-serif;font-weight:700;letter-spacing:.02em;margin-right:6px}
+.site .parts{display:flex;flex-wrap:wrap;gap:2px 4px;flex:1 1 auto}.site .parts a{font-size:.8rem;padding:4px 9px;border-radius:999px;opacity:.85}
+.site .parts a:hover{opacity:1;background:rgba(255,255,255,.08)}.site .parts a[aria-current="page"]{background:#DDEBEA;color:#0B1719;opacity:1}
+.crumb{font-size:12px;color:var(--ink-3);margin:0 0 6px}.crumb a{color:var(--ink-2)}
+.pg-next{display:flex;justify-content:space-between;gap:12px;margin:24px 0 0;flex-wrap:wrap}.pg-next a{padding:10px 14px;border:1px solid var(--line);border-radius:8px;text-decoration:none;color:var(--ink);background:var(--surface)}
+</style>
+</head>
+<body>
+<header class="site"><a class="brand" href="index.html">Data Centre Atlas II</a><nav class="parts" aria-label="Parts"><a href="index.html">Start</a><a href="part1.html">I Understand</a><a href="part2.html">II Measure</a><a href="part3.html">III Forecast</a><a href="growth.html" aria-current="page">Growth explorer</a><a href="part4.html">IV Choose</a><a href="part5.html">V Act</a><a href="reference.html">Reference</a><a href="changelog.html">Changelog</a></nav></header>
+<div class="wrap">
+  <p class="crumb"><a href="part3.html">Part III · Forecast</a> › Growth explorer · values from the atlas standards register v2026.10.5</p>
+  <h1>India data centre growth: capacity, energy, water and cost</h1>
+  <p class="sub">Projected IT capacity from 2026 to 2035 under three futures: all general-purpose, all AI, or a hybrid that shifts toward AI (training plus inference). Every number below is calculated from the parameters at the bottom of the page — change any of them and the charts recompute.</p>
+
+  <div class="bar" role="toolbar" aria-label="View controls">
+    <div class="seg" id="scen" role="group" aria-label="Scenario">
+      <button data-s="G">General-purpose only</button>
+      <button data-s="A">AI only</button>
+      <button data-s="H" aria-pressed="true">Hybrid</button>
+    </div>
+    <label class="ctl">Water <select id="wsel"><option value="all">On-site + power stations</option><option value="on">On-site only</option><option value="ps">Power stations only</option></select></label>
+    <label class="ctl">Cost <select id="csel"><option value="tco">Annual cost of ownership</option><option value="capex">Capex spent that year</option></select></label>
+    <label class="ctl"><input type="checkbox" id="ghost" checked> Outline other scenarios</label>
+  </div>
+
+  <div class="main">
+    <div class="card">
+      <div class="bar" style="margin:0 0 6px">
+        <div class="legend" id="legend"></div>
+        <div class="yearbox">
+          <button class="btn" id="play" aria-label="Play years">▶ Play</button>
+          <input type="range" id="year" min="2026" max="2035" step="1" value="2030" aria-label="Selected year">
+          <span class="yr num" id="yrlbl">2030</span>
+        </div>
+      </div>
+      <div class="lanes" id="lanes"></div>
+      <p class="small muted" style="margin-top:8px">Hover any chart to read a year; click or drag to select it. Bands stack bottom to top: general-purpose, AI inference, AI training. Dashed lines are the totals for the other two scenarios. 2031–2035 extends the published forecasts and is an assumption.</p>
+    </div>
+
+    <aside class="side">
+      <div class="card">
+        <h2 id="sidettl">Hybrid in 2030</h2>
+        <div class="kpis" id="kpis"></div>
+      </div>
+      <div class="card cmp">
+        <h2>Three futures, same capacity</h2>
+        <div id="cmp"></div>
+      </div>
+      <div class="card brk">
+        <h2 id="brkttl">Where the money goes</h2>
+        <div id="brk"></div>
+      </div>
+    </aside>
+  </div>
+
+  <section class="card" style="margin-top:16px" id="persp">
+    <div class="phead">
+      <div><h2 id="pttl" style="margin-bottom:2px">Put it in perspective</h2><p class="small muted" style="margin:0">Auto-written from the selected year and scenario. Benchmarks are editable under Parameters.</p></div>
+      <button class="btn" id="copyn">Copy narrative</button>
+    </div>
+    <ol id="narr"></ol>
+    <div class="ladders"><div class="ladder" id="lE"></div><div class="ladder" id="lW"></div><div class="ladder" id="lC"></div></div>
+    <p class="small muted" style="margin-top:8px">Log scale: each gridline is 10× the one before, so a small bar can still be a big number. Bold, highlighted bars are the data centre fleet.</p>
+  </section>
+
+  <section class="card" style="margin-top:16px" id="coolcard">
+    <h2 style="margin-bottom:2px">Cooling systems and heat rejection</h2>
+    <p class="small muted">Choose two systems per fleet and how they are shared. The 2026 fleet keeps its systems (less the retrofit rate); new capacity uses the new-build mix. PUE and on-site WUE are weighted by the climate mix: <span id="climtxt"></span>.</p>
+    <div class="cgrid">
+      <div class="fleets" id="fleets"></div>
+      <div><h3>All systems at this climate mix</h3><div id="scat"></div>
+        <p class="small muted">● air-cooled room · ■ direct-to-chip liquid · ◆ immersion. Highlighted points are the systems you picked. Hover a point for its name.</p></div>
+    </div>
+    <details style="margin-top:10px"><summary style="cursor:pointer;font-weight:600">Edit the cooling table (PUE and WUE by climate)</summary>
+      <div class="tscroll" style="margin-top:8px"><table class="ctab" id="ctab"></table></div>
+      <p class="small muted">Source: India Data Centre Atlas cooling research, Oct 2026 (Chapter CE). Cross-check: evaporative towers 1.8–4.0 L/kWh, adiabatic or hybrid 0.2–0.8, closed-loop dry ≈0 (Datacentres.com, 2026). Dry and liquid options keep 0.05 L/kWh for humidification and domestic use.</p>
+    </details>
+  </section>
+
+  <section class="params">
+    <div class="bar" style="justify-content:space-between">
+      <h2 style="margin:0">Parameters</h2>
+      <div style="display:flex;gap:8px"><button class="btn" id="openall">Open all</button><button class="btn" id="reset">Reset to defaults</button></div>
+    </div>
+    <div class="pgrid" id="pgrid"></div>
+  </section>
+
+  <section class="card" style="margin-top:16px">
+    <h2 id="tblttl">Year by year</h2>
+    <div class="tscroll"><table id="tbl"></table></div>
+  </section>
+
+  <section class="foot">
+    <div class="card">
+      <h2>How it is calculated</h2>
+      <ul class="small">
+        <li><b>Capacity</b> is live IT load. It grows at a constant annual rate between the 2026, 2030 and 2035 values. The workload split applies the AI share, then the training share within AI.</li>
+        <li><b>Energy</b> = IT MW × 8,760 h × utilisation × occupancy × PUE, for each workload.</li>
+        <li><b>Cooling</b>: each fleet (general-purpose or AI, existing or new-build) is a mix of two systems from the cooling table. A system's PUE and WUE are averaged over the climate mix. The 2026 fleet's share of a year's capacity = 2026 capacity × (1 − retrofit rate)^years ÷ that year's capacity; the rest uses the new-build mix.</li>
+        <li><b>On-site water</b> = IT energy × fleet WUE.</li>
+        <li><b>Power-station water</b> = grid share of facility energy × grid water intensity. Renewable supply bought under contract is counted as needing no water.</li>
+        <li><b>Carbon</b> = grid energy × grid emission factor.</li>
+        <li><b>Annual cost of ownership</b> = facility and land capex spread over the facility's life + IT hardware with import duty spread over the refresh cycle (both at the cost of capital, using a capital recovery factor) + electricity + water + O&amp;M + staff + insurance and property tax. All figures are in constant 2026 rupees.</li>
+        <li><b>Capex spent that year</b> = new MW × (facility + land + IT with duty) + IT refresh of the existing fleet (fleet ÷ refresh years).</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Sources</h2>
+      <ul class="small">
+        <li>Capacity 2026: Cushman &amp; Wakefield, H1 2026 (1,789 MW live). Savills, Jul 2026 (more than 7 GW by 2030). Morgan Stanley, May 2026 (10.5 GW by FY31, about 6.8 GW of it AI). Wood Mackenzie (12 GW, 2030). S&amp;P Global (6.5 GW, 55% AI, 2030). Axis Capital, CareEdge, Jefferies, India Data Centre Atlas base case.</li>
+        <li>Utilisation, PUE, WUE, grid water (2.9 L/kWh), grid CO₂ (0.675 kg/kWh, CEA), Karnataka all-in tariff (₹8/kWh), BWSSB water (₹99/kL), facility capex (₹56.1 and ₹74 crore/MW), GPU capex (₹266 crore/MW) and import duty (20%): India Data Centre Atlas standards register, v2026.10.5.</li>
+        <li>India electricity requirement: CEA midterm review of the National Electricity Plan (2,388 TWh in FY30; 2,703 TWh in FY32).</li>
+        <li>AI campus cost structure (servers about 60% of annual cost; about 5-year IT life): Epoch AI. Build-cost split, including land at about 5%: Umbrex.</li>
+        <li>Urban water norm of 135 L per person per day: CPHEEO.</li>
+        <li>Cooling systems, PUE and WUE by climate: Atlas cooling research (Chapter CE), cross-checked against Datacentres.com (2026) and Uptime Institute (Apr 2026, dry cooling).</li>
+        <li>Benchmarks: CEA General Review (sector shares, via CAG); S&amp;P Global (FY26 demand); CEA National Adequacy Plan (3,365 TWh, FY36); IEEFA (Delhi); NCIWRD via MoSPI (water demand); CGWB 2025 (groundwater); BWSSB and BMC (city supply); PRS India (Union Budget 2026-27); MoSPI (GDP); company announcements (Big Tech pledges).</li>
+        <li class="muted">Estimates you should challenge first: CPU server cost per MW, renewable tariff, staff cost, 2035 values and the 2035 grid paths.</li>
+      </ul>
+    </div>
+  </section>
+  <nav class="pg-next" aria-label="Pages"><a href="part3.html">← III Forecast</a><a href="part4.html">IV Choose →</a></nav>
+</div>
+
+<script>
+(()=>{
+const YRS=[];for(let y=2026;y<=2035;y++)YRS.push(y);
+const SEGS=[{k:'G',name:'General-purpose',css:'--gp'},{k:'I',name:'AI inference',css:'--inf'},{k:'T',name:'AI training',css:'--trn'}];
+const SCN={G:'General-purpose only',A:'AI only',H:'Hybrid'};
+
+/* ---------- parameters ---------- */
+const GROUPS=[
+ {g:'Capacity growth',open:true,rows:[
+  {label:'India live IT capacity',unit:'GW',keys:['cap26','cap30','cap35'],yrs:['2026','2030','2035'],v:[1.79,4.66,10.83],min:0.5,max:30,step:0.01,
+   src:'2026: C&W H1 2026. 2030 and 2035: the atlas forecast engine (Chapter 13) central case, 4.66 and 10.83 GW. Savills (>7 GW) and others are presets',presets:true}
+ ]},
+ {g:'Workload mix (Hybrid)',open:true,rows:[
+  {label:'AI share of capacity',unit:'%',keys:['ai26','ai30','ai35'],yrs:['2026','2030','2035'],v:[15,40,60],min:0,max:100,step:1,src:'Atlas forecast engine (Chapter 13): 15% → 40% → 60%. S&P Global puts 2030 at 55%; Morgan Stanley FY31 ≈65%'},
+  {label:'Training share of AI capacity',unit:'%',keys:['tr26','tr35'],yrs:['2026','2035'],v:[40,30],min:0,max:100,step:1,src:'Atlas reference mix 40/60; shifts to inference over time (estimate). Also used in AI only'}
+ ]},
+ {g:'Utilisation',rows:[
+  {label:'Average utilisation of IT capacity',unit:'%',keys:['uG','uI','uT'],yrs:['General-purpose','Inference','Training'],v:[65,70,90],min:20,max:100,step:1,src:'Atlas register: util.gp, util.inf, util.train'},
+  {label:'Occupancy of live capacity',unit:'%',keys:['occ'],yrs:['Leased and drawing load'],v:[85],min:40,max:100,step:1,src:'Atlas forecast engine (Chapter 13): 85%; colocation vacancy 14.9% (C&W H1 2026). With it, the fleet averages ~60% load in 2030, as in the engine'}
+ ]},
+ {g:'Climate and cooling fleet',rows:[
+  {label:'Where the capacity sits (climate)',unit:'% of IT MW',keys:['clP','clC','clH'],yrs:['Plateau','Humid coast','Hot-dry'],v:[15,65,20],min:0,max:100,step:1,src:'Estimate from city shares: Mumbai + Chennai + Kolkata ≈65%; Bengaluru + Pune ≈15%; Delhi NCR + Hyderabad ≈20%. Normalised to 100%'},
+  {label:'2026 fleet converted to new-build cooling each year',unit:'%/yr',keys:['rr'],yrs:['Retrofit'],v:[3],min:0,max:30,step:0.5,src:'Estimate; halls are re-equipped at major refurbishment'}
+ ]},
+ {g:'Grid: power, water, carbon',rows:[
+  {label:'Renewable supply under contract',unit:'% of energy',keys:['cl26','cl30','cl35'],yrs:['2026','2030','2035'],v:[30,43,60],min:0,max:100,step:1,src:'Atlas forecast engine (Chapter 13): 30% → 43% → 60%; operators target 50–100% renewable energy (RE) by 2030'},
+  {label:'Grid water intensity, 2026',unit:'L/kWh',keys:['gw26'],yrs:['2026'],v:[2.9],min:0,max:5,step:0.05,src:'Atlas gw.IN 2.9 (2.3–3.5). Later years scale with the emission factor (both follow the coal share), as in the forecast engine: 2.61 in 2030, 2.30 in 2035'},
+  {label:'Grid emission factor',unit:'kg CO₂/kWh',keys:['ef26','ef30','ef35'],yrs:['2026','2030','2035'],v:[0.675,0.607,0.535],min:0,max:1.1,step:0.001,src:'CEA 0.675 (Atlas co2). 2030 and 2035: the atlas forecast engine path (Chapter 13)'},
+  {label:'India electricity requirement',unit:'TWh',keys:['dem26','dem30','dem35'],yrs:['2026','2030','2035'],v:[1760,2388,3365],min:1000,max:5000,step:10,src:'FY26 actual 1,690 (CEA via S&P Global). 2030: CEA NEP midterm review 2,388. 2035: CEA National Adequacy Plan 3,365 (FY36)'}
+ ]},
+ {g:'Capital cost',rows:[
+  {label:'Facility capex (building, power, cooling)',unit:'₹ cr/MW',keys:['facG','facA'],yrs:['General-purpose','AI'],v:[56.1,74],min:20,max:150,step:0.5,src:'Atlas register: capex.colo 56.1 (50–62), capex.ai 74 (65–85)'},
+  {label:'Land',unit:'₹ cr/MW',keys:['land'],yrs:['All'],v:[3],min:0,max:20,step:0.5,src:'≈5% of build cost (Umbrex)'},
+  {label:'IT hardware',unit:'₹ cr/MW',keys:['itG','itA'],yrs:['CPU servers, storage, network','GPUs and network'],v:[110,266],min:20,max:600,step:1,src:'GPU: Atlas capex.gpu 266 (234–412). CPU: estimate (≈$12M/MW)'},
+  {label:'Import duty on IT hardware',unit:'%',keys:['dutyG','dutyA'],yrs:['CPU servers','GPU servers'],v:[10,20],min:0,max:40,step:1,src:'Atlas capex.duty 20% (0–28); GST is recoverable'},
+  {label:'IT cost change per year',unit:'%/yr',keys:['itTr'],yrs:['Real'],v:[0],min:-15,max:15,step:0.5,src:'0 = constant ₹/MW; negative if hardware gets cheaper per MW'},
+  {label:'Asset life',unit:'years',keys:['facLife','itLife'],yrs:['Facility','IT refresh'],v:[20,5],min:2,max:40,step:1,src:'Epoch AI: IT ≈5 yrs, facility 14+ yrs'},
+  {label:'Cost of capital (WACC)',unit:'%',keys:['wacc'],yrs:['Real'],v:[11],min:0,max:20,step:0.5,src:'Atlas register: disc 11%'}
+ ]},
+ {g:'Operating cost',rows:[
+  {label:'Electricity tariff',unit:'₹/kWh',keys:['tar','tarRE'],yrs:['Grid, all-in','Renewable, landed'],v:[8.0,6.5],min:2,max:15,step:0.1,src:'Grid: Atlas tariff.allin KA 8.0. RE open access: estimate'},
+  {label:'Water tariff (on-site)',unit:'₹/kL',keys:['wtar'],yrs:['All'],v:[99],min:0,max:300,step:1,src:'Atlas register: BWSSB non-domestic 99'},
+  {label:'O&M',unit:'% of capex/yr',keys:['omF','omI'],yrs:['Facility','IT'],v:[1.5,2],min:0,max:10,step:0.1,src:'Industry rule of thumb (estimate)'},
+  {label:'Staff and services',unit:'₹ cr/MW/yr',keys:['staff'],yrs:['All'],v:[0.3],min:0,max:3,step:0.05,src:'Estimate (security, ops, network)'},
+  {label:'Insurance and property tax',unit:'% of capex/yr',keys:['ins'],yrs:['All'],v:[0.5],min:0,max:3,step:0.1,src:'Estimate'},
+  {label:'Exchange rate',unit:'₹/US$',keys:['fx'],yrs:['All'],v:[90],min:70,max:110,step:0.5,src:'Atlas register: fx 90'},
+  {label:'Urban water norm',unit:'L/person/day',keys:['lpcd'],yrs:['All'],v:[135],min:40,max:300,step:5,src:'CPHEEO; used only for the “people” comparison'}
+ ]},
+ {g:'Benchmarks: energy',rows:[
+  {label:'India electricity demand, FY26',unit:'TWh',keys:['bE_in'],yrs:['Actual'],v:[1690],min:500,max:5000,step:10,src:'CEA data via S&P Global (Apr 2026)'},
+  {label:'Consumption by sector, FY23',unit:'TWh',keys:['bE_ind','bE_dom','bE_agr','bE_com'],yrs:['Industry','Homes','Agriculture','Commercial'],v:[593,353,243,117],min:0,max:2000,step:1,src:'CEA General Review shares (41.2 / 24.5 / 16.9 / 8.1% of 1,440 TWh), via CAG'},
+  {label:'Railway traction and public water works, FY23',unit:'TWh',keys:['bE_rail','bE_pww'],yrs:['Railways','Water pumping'],v:[30.2,31.7],min:0,max:200,step:0.1,src:'CEA General Review shares (2.1 / 2.2%), via CAG'},
+  {label:'Delhi, annual requirement FY26',unit:'TWh',keys:['bE_del'],yrs:['Delhi'],v:[38.5],min:0,max:200,step:0.1,src:'IEEFA, Aug 2026 (38,482 MU)'}
+ ]},
+ {g:'Benchmarks: water',rows:[
+  {label:'India water demand, 2025',unit:'bcm/yr',keys:['bW_in','bW_irr','bW_ind','bW_dom','bW_pow'],yrs:['Total','Irrigation','Industry','Drinking','Power'],v:[843,611,67,62,33],min:0,max:2000,step:1,src:'NCIWRD projection for 2025 (XI Plan; MoSPI Table 5.2)'},
+  {label:'Groundwater extracted, 2025',unit:'bcm/yr',keys:['bW_gw'],yrs:['All uses'],v:[247],min:0,max:600,step:1,src:'CGWB Dynamic Ground Water Resources Assessment 2025 (87% irrigation)'},
+  {label:'City supply',unit:'MLD',keys:['bW_mum','bW_blr'],yrs:['Mumbai','Bengaluru'],v:[4100,1935],min:0,max:10000,step:10,src:'Mumbai: BMC proposal (2026). Bengaluru: 1,935 MLD delivered (Karnataka Legislative Council, Aug 2026)'},
+  {label:'Thermal power water norm',unit:'m³/MWh',keys:['bW_tpp'],yrs:['New plants'],v:[3],min:0,max:10,step:0.1,src:'MoEFCC 2018 norm (3.5 for older plants); context only'}
+ ]},
+ {g:'Benchmarks: money',rows:[
+  {label:'India nominal GDP, FY26',unit:'₹ lakh cr',keys:['bC_gdp'],yrs:['GDP'],v:[346.4],min:50,max:1000,step:0.1,src:'MoSPI provisional estimates, via Outlook Business (May 2026)'},
+  {label:'Union Budget 2026-27',unit:'₹ lakh cr',keys:['bC_bud','bC_cap','bC_def'],yrs:['Total spending','Capex','Defence'],v:[53.47,12.22,7.85],min:0,max:200,step:0.01,src:'PRS India, Analysis of Expenditure 2026-27'},
+  {label:'Union Budget 2026-27 by ministry',unit:'₹ lakh cr',keys:['bC_road','bC_rail','bC_edu','bC_hlth','bC_jjm'],yrs:['Roads','Railways','Education','Health','Jal Jeevan'],v:[3.10,2.81,1.39,1.07,0.68],min:0,max:20,step:0.01,src:'PRS India, Analysis of Expenditure 2026-27'},
+  {label:'Big Tech India pledges',unit:'US$ bn',keys:['bC_tech'],yrs:['Amazon + Microsoft + Google'],v:[67.5],min:0,max:500,step:0.5,src:'Amazon $35bn to 2030, Microsoft $17.5bn 2026–29, Google $15bn Visakhapatnam (Dec 2025)'},
+  {label:'National missions',unit:'₹ crore',keys:['bC_ism','bC_ai'],yrs:['Semiconductor Mission','IndiaAI Mission'],v:[76000,10372],min:0,max:500000,step:100,src:'Cabinet approvals: ISM (Dec 2021), IndiaAI (Mar 2024), total outlays'}
+ ]}
+];
+const CLIM=['Plateau','Humid coast','Hot-dry'];
+const CLIMLONG=['Plateau (Bengaluru, Pune)','Humid coast (Mumbai, Chennai, Kolkata)','Hot-dry (Delhi NCR, Hyderabad)'];
+/* Atlas cooling table (Chapter CE, Oct 2026): room system + heat rejection; PUE and on-site WUE (L/kWh IT) for plateau / humid coast / hot-dry */
+const COOL=[
+ {id:'dx',n:'DX room units + condensers',sh:'DX units',rej:'Air-cooled condensers',max:10,liq:0,p:[1.70,1.80,1.80],w:[.05,.05,.05]},
+ {id:'crah',n:'CRAH, open aisles + air-cooled chillers',sh:'Open aisle + air chillers',rej:'Air-cooled chillers',max:12,liq:0,p:[1.50,1.60,1.55],w:[.05,.05,.05]},
+ {id:'acc',n:'CRAH + containment + air-cooled chillers',sh:'Air-cooled chillers',rej:'Air-cooled chillers',max:30,liq:0,p:[1.45,1.55,1.50],w:[.05,.05,.05]},
+ {id:'fcc',n:'CRAH + containment + free-cooling chillers',sh:'Free-cooling chillers',rej:'Free-cooling chillers',max:30,liq:0,p:[1.35,1.45,1.40],w:[.05,.05,.05]},
+ {id:'wcc',n:'CRAH + containment + water-cooled chillers + towers',sh:'Water chillers + towers',rej:'Cooling towers',max:30,liq:0,p:[1.25,1.35,1.30],w:[1.8,2.4,2.4]},
+ {id:'mag',n:'CRAH + containment + magnetic-bearing chillers + towers',sh:'Magnetic chillers + towers',rej:'Cooling towers',max:30,liq:0,p:[1.22,1.32,1.27],w:[1.8,2.4,2.4]},
+ {id:'hyb',n:'CRAH + containment + chillers + hybrid coolers',sh:'Hybrid coolers',rej:'Hybrid (wet/dry) coolers',max:30,liq:0,p:[1.30,1.35,1.35],w:[.45,.90,.60]},
+ {id:'iec',n:'Indirect evaporative units',sh:'Indirect evaporative',rej:'Indirect evaporative',max:30,liq:0,p:[1.20,1.30,1.25],w:[.55,.80,.80]},
+ {id:'rdh',n:'Rear-door coils + free-cooling chillers',sh:'Rear-door coils',rej:'Free-cooling chillers',max:50,liq:0,p:[1.33,1.43,1.38],w:[.05,.05,.05]},
+ {id:'dlc32',n:'Direct-to-chip W32 + dry coolers + trim',sh:'DLC W32 + dry',rej:'Dry coolers + trim chiller',max:250,liq:1,p:[1.17,1.21,1.20],w:[.05,.05,.05]},
+ {id:'dlc40',n:'Direct-to-chip W40 + dry coolers + trim',sh:'DLC W40 + dry',rej:'Dry coolers + trim chiller',max:250,liq:1,p:[1.15,1.18,1.17],w:[.05,.05,.05]},
+ {id:'dlca',n:'Direct-to-chip + adiabatic coolers',sh:'DLC + adiabatic',rej:'Adiabatic coolers',max:250,liq:1,p:[1.12,1.14,1.15],w:[.25,.40,.45]},
+ {id:'dlct',n:'Direct-to-chip + towers, no chillers',sh:'DLC + towers',rej:'Cooling towers',max:250,liq:1,p:[1.10,1.12,1.12],w:[1.8,2.2,2.2]},
+ {id:'im1',n:'Single-phase immersion + dry coolers',sh:'1-phase immersion',rej:'Dry coolers',max:150,liq:2,p:[1.08,1.09,1.10],w:[.05,.05,.05]},
+ {id:'im2',n:'Two-phase immersion + dry coolers',sh:'2-phase immersion',rej:'Dry coolers',max:250,liq:2,p:[1.06,1.07,1.08],w:[.05,.05,.05],warn:'PFAS fluids; not for new builds'}];
+const CI=id=>COOL.findIndex(c=>c.id===id);
+const FLEETS=[
+ {k:'gx',cls:'G',title:'General-purpose halls',vint:'Existing fleet (built by 2026)',A:'acc',B:'wcc',S:60},
+ {k:'gn',cls:'G',title:'General-purpose halls',vint:'New builds (2027 on)',A:'fcc',B:'wcc',S:50},
+ {k:'ax',cls:'A',title:'AI halls',vint:'Existing fleet (built by 2026)',A:'dlct',B:'dlc32',S:50},
+ {k:'an',cls:'A',title:'AI halls',vint:'New builds (2027 on)',A:'dlc40',B:'dlca',S:60}];
+const PRESETS=[['Axis Capital',3.6],['CareEdge',4.0],['Atlas base',4.66],['Savills',7.0],['Jefferies',8.0],['Govt report',9.2],['Morgan Stanley*',9.0],['Wood Mackenzie',12.0]];
+const DEF={};GROUPS.forEach(g=>g.rows.forEach(r=>r.keys.forEach((k,i)=>DEF[k]=r.v[i])));
+COOL.forEach(c=>{for(let j=0;j<3;j++){DEF['c_'+c.id+'_p'+j]=c.p[j];DEF['c_'+c.id+'_w'+j]=c.w[j]}});
+FLEETS.forEach(F=>{DEF[F.k+'A']=CI(F.A);DEF[F.k+'B']=CI(F.B);DEF[F.k+'S']=F.S});
+let P=Object.assign({},DEF);
+try{const s=JSON.parse(localStorage.getItem('indc-growth-p')||'null');if(s)for(const k in s)if(k in DEF&&isFinite(s[k]))P[k]=+s[k];}catch(e){}
+const save=()=>{try{localStorage.setItem('indc-growth-p',JSON.stringify(P))}catch(e){}};
+
+/* ---------- model ---------- */
+const lin=(a,y)=>{for(let i=0;i<a.length-1;i++){const[y0,v0]=a[i],[y1,v1]=a[i+1];if(y<=y1||i===a.length-2){const t=(y-y0)/(y1-y0);return v0+(v1-v0)*t}}};
+const geo=(a,y)=>{for(let i=0;i<a.length-1;i++){const[y0,v0]=a[i],[y1,v1]=a[i+1];if(y<=y1||i===a.length-2){const t=(y-y0)/(y1-y0);return v0*Math.pow(v1/v0,t)}}};
+const crf=(r,n)=>r<=0?1/n:r/(1-Math.pow(1+r,-n));
+
+function climW(){const a=[P.clP,P.clC,P.clH].map(v=>Math.max(0,v)),t=a[0]+a[1]+a[2]||1;return a.map(v=>v/t)}
+function tech(i){const c=COOL[i]||COOL[0],w=climW();let p=0,q=0;for(let j=0;j<3;j++){p+=w[j]*P['c_'+c.id+'_p'+j];q+=w[j]*P['c_'+c.id+'_w'+j]}return{p,w:q}}
+function fleetMix(k){const a=tech(P[k+'A']),b=tech(P[k+'B']),sh=Math.min(1,Math.max(0,P[k+'S']/100));return{p:sh*a.p+(1-sh)*b.p,w:sh*a.w+(1-sh)*b.w}}
+function model(s){
+  const out=[];let prev=null,cum=0,base=null;
+  const FX={G:fleetMix('gx'),A:fleetMix('ax')},FN={G:fleetMix('gn'),A:fleetMix('an')};
+  for(let y=2025;y<=2035;y++){
+    const cap=geo([[2026,P.cap26],[2030,P.cap30],[2035,P.cap35]],y)*1000; // MW
+    const yy=Math.max(y,2026);
+    const ai=s==='G'?0:s==='A'?1:Math.min(1,Math.max(0,lin([[2026,P.ai26],[2030,P.ai30],[2035,P.ai35]],yy)/100));
+    const tr=Math.min(1,Math.max(0,lin([[2026,P.tr26],[2035,P.tr35]],yy)/100));
+    const mw={G:cap*(1-ai),I:cap*ai*(1-tr),T:cap*ai*tr};
+    const u={G:P.uG/100,I:P.uI/100,T:P.uT/100};
+    const cls={G:mw.G,A:mw.I+mw.T};if(y===2026)base={G:cls.G,A:cls.A};
+    const ex={};for(const c of['G','A']){ex[c]=y<=2026||!base?1:(cls[c]>0?Math.min(1,base[c]*Math.pow(1-P.rr/100,y-2026)/cls[c]):0)}
+    const fl={};for(const c of['G','A'])fl[c]={p:ex[c]*FX[c].p+(1-ex[c])*FN[c].p,w:ex[c]*FX[c].w+(1-ex[c])*FN[c].w};
+    const pue={G:fl.G.p,I:fl.A.p,T:fl.A.p},wue={G:fl.G.w,I:fl.A.w,T:fl.A.w};
+    const cl=Math.min(1,Math.max(0,lin([[2026,P.cl26],[2030,P.cl30],[2035,P.cl35]],yy)/100));
+    const ef=Math.max(0,lin([[2026,P.ef26],[2030,P.ef30],[2035,P.ef35]],yy)),gw=P.ef26>0?P.gw26*ef/P.ef26:P.gw26;
+    const dem=geo([[2026,P.dem26],[2030,P.dem30],[2035,P.dem35]],yy);
+    const itF=Math.pow(1+P.itTr/100,yy-2026);
+    const W=P.wacc/100,cF=crf(W,P.facLife),cI=crf(W,P.itLife);
+    const r={y,cap,mw,dem,ai,tr,ex,e:{},eit:{},won:{},wps:{},co2:{},tco:{},capex:{},comp:{fac:0,it:0,elec:0,water:0,om:0,staff:0,ins:0}};
+    const blend=(1-cl)*P.tar+cl*P.tarRE;
+    for(const z of['G','I','T']){
+      const isA=z!=='G';
+      const itkWh=mw[z]*8760*u[z]*(P.occ/100)*1000;            // kWh IT
+      const fkWh=itkWh*pue[z];                       // kWh facility
+      const onL=itkWh*wue[z];
+      const psL=fkWh*(1-cl)*gw;
+      r.eit[z]=itkWh/1e9; r.e[z]=fkWh/1e9;           // TWh
+      r.won[z]=onL/1e9; r.wps[z]=psL/1e9;            // billion L
+      r.co2[z]=fkWh*(1-cl)*ef/1e9;                   // Mt
+      const fac=(isA?P.facA:P.facG)+P.land;          // ₹ cr/MW
+      const it=(isA?P.itA:P.itG)*itF*(1+(isA?P.dutyA:P.dutyG)/100);
+      const c={fac:mw[z]*fac*cF, it:mw[z]*it*cI, elec:fkWh*blend/1e7, water:onL/1000*P.wtar/1e7,
+               om:mw[z]*((isA?P.facA:P.facG)*P.omF+it*P.omI)/100, staff:mw[z]*P.staff, ins:mw[z]*(fac+it)*P.ins/100};
+      let t=0;for(const k in c){r.comp[k]+=c[k];t+=c[k]}
+      r.tco[z]=t; // ₹ crore/yr
+      const add=prev?Math.max(0,mw[z]-prev.mw[z]):0;
+      r.capex[z]=add*(fac+it)+(prev?prev.mw[z]/P.itLife*it:0);
+    }
+    if(y>=2026){cum+=sum(r.capex);r.cum=cum;out.push(r)}
+    prev=r;
+  }
+  return out;
+}
+const sum=o=>o.G+o.I+o.T;
+
+/* ---------- formatting ---------- */
+const f=(v,d=1)=>(+v).toLocaleString('en-IN',{minimumFractionDigits:d,maximumFractionDigits:d});
+const fs=v=>v>=100?f(v,0):v>=10?f(v,1):f(v,2);
+const LAKH=1e5; // crore per lakh crore
+
+/* ---------- lane definitions ---------- */
+const LANES=[
+ {id:'cap',title:'Capacity',unit:'GW of IT load',get:(r,z)=>r.mw[z]/1000,fmt:v=>f(v,1)+' GW'},
+ {id:'en',title:'Energy',unit:'TWh per year',get:(r,z)=>r.e[z],fmt:v=>fs(v)+' TWh'},
+ {id:'wa',title:'Water',unit:'billion litres per year',get:(r,z)=>wsel==='on'?r.won[z]:wsel==='ps'?r.wps[z]:r.won[z]+r.wps[z],fmt:v=>fs(v)+' bn L'},
+ {id:'co',title:'Cost',unit:'₹ lakh crore per year',get:(r,z)=>(csel==='tco'?r.tco[z]:r.capex[z])/LAKH,fmt:v=>'₹'+f(v,2)+' L cr'}
+];
+let scen='H',wsel='all',csel='tco',ghost=true,year=2030,hover=null;
+let DATA={},shown={}; // shown[lane]=[[G,I,T]...] currently drawn
+
+/* ---------- DOM ---------- */
+const $=s=>document.querySelector(s);
+const lanesEl=$('#lanes');
+const legend=$('#legend');
+legend.innerHTML=SEGS.slice().reverse().map(s=>`<span><i class="sw" style="background:var(${s.css})"></i>${s.name}</span>`).join('')+`<span id="ghostlg"><i class="ghostkey"></i>Other scenarios (total)</span>`;
+const laneEls={};
+LANES.forEach(L=>{
+  const d=document.createElement('div');d.className='lane';
+  d.innerHTML=`<div class="lanehead"><span><b>${L.title}</b> <span class="muted small">${L.unit}</span></span><span class="v num" data-v></span></div><div data-svg></div><div class="tip"></div>`;
+  lanesEl.appendChild(d);laneEls[L.id]={root:d,svgBox:d.querySelector('[data-svg]'),tip:d.querySelector('.tip'),v:d.querySelector('[data-v]')};
+});
+
+/* ---------- chart drawing ---------- */
+const NS='http://www.w3.org/2000/svg';
+function nice(max){if(max<=0)return{top:1,step:.5};const raw=max/3,p=Math.pow(10,Math.floor(Math.log10(raw))),m=raw/p;const st=(m<=1?1:m<=2?2:m<=2.5?2.5:m<=5?5:10)*p;return{top:Math.ceil(max/st)*st,step:st}}
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+let W=700;
+function drawLane(L,vals,ghosts){
+  const E=laneEls[L.id];
+  const H=132,m={l:40,r:W<520?64:92,t:8,b:20},iw=Math.max(120,W-m.l-m.r),ih=H-m.t-m.b;
+  let max=0;vals.forEach(v=>max=Math.max(max,v[0]+v[1]+v[2]));
+  if(ghost)ghosts.forEach(g=>g.vals.forEach(v=>max=Math.max(max,v)));
+  const nk=nice(max*1.04);
+  const x=i=>m.l+iw*i/(YRS.length-1),yv=v=>m.t+ih*(1-v/nk.top);
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" role="img" aria-label="${L.title} by workload, ${SCN[scen]}">`;
+  for(let t=0;t<=nk.top+1e-9;t+=nk.step){const yy=yv(t);s+=`<line x1="${m.l}" x2="${m.l+iw}" y1="${yy}" y2="${yy}" stroke="var(--grid)" />`+`<text x="${m.l-6}" y="${yy+4}" text-anchor="end" font-size="10.5" fill="var(--ink-3)">${f(t,nk.step<1?(nk.step<0.1?2:1):0)}</text>`}
+  YRS.forEach((y,i)=>{if(W<520&&i%2)return;s+=`<text x="${x(i)}" y="${H-5}" text-anchor="middle" font-size="10.5" fill="var(--ink-3)">${y}</text>`});
+  // stacked areas
+  const base=vals.map(()=>0),labs=[],li=YRS.length-1;
+  SEGS.forEach((S,si)=>{
+    const top=vals.map((v,i)=>base[i]+v[si]);
+    if(top.some((t,i)=>t-base[i]>1e-9)){
+      let d='M'+top.map((t,i)=>x(i)+','+yv(t)).join('L');
+      for(let i=YRS.length-1;i>=0;i--)d+='L'+x(i)+','+yv(base[i]);
+      s+=`<path d="${d}Z" fill="var(${S.css})" stroke="var(--surface)" stroke-width="2" stroke-linejoin="round"/>`;
+    }
+    // direct label at the end if the band is tall enough
+    const band=yv(base[li])-yv(top[li]);
+    if(band>=9)labs.push({y:(yv(base[li])+yv(top[li]))/2,t:S.name.replace('AI ',''),g:0});
+    top.forEach((t,i)=>base[i]=t);
+  });
+  // ghost totals
+  if(ghost)ghosts.forEach(g=>{
+    s+=`<path d="M${g.vals.map((v,i)=>x(i)+','+yv(v)).join('L')}" fill="none" stroke="var(--ghost)" stroke-width="1.5" stroke-dasharray="4 3" opacity=".8"/>`;
+  });
+  if(ghost){const ty=yv(vals[li][0]+vals[li][1]+vals[li][2]),seen=[];
+    ghosts.forEach(g=>{const gy=yv(g.vals[li]);if(Math.abs(gy-ty)<7)return;const d=seen.find(q=>Math.abs(q.y-gy)<7);if(d){d.t+=' · '+g.short;return}const o={y:gy,t:g.short,g:1};seen.push(o);labs.push(o)})}
+  labs.sort((a,b)=>a.y-b.y);
+  for(let i=1;i<labs.length;i++)if(labs[i].y-labs[i-1].y<11)labs[i].y=labs[i-1].y+11;
+  const over=labs.length?labs[labs.length-1].y-(m.t+ih-4):0;if(over>0)labs.forEach(l=>l.y-=over);
+  labs.forEach(l=>s+=`<text x="${m.l+iw+6}" y="${l.y+3.5}" font-size="10.5" fill="var(${l.g?'--ink-3':'--ink-2'})"${l.g?' font-style="italic"':''}>${l.t}</text>`);
+  // selected year and hover lines
+  const si=year-2026;
+  s+=`<line x1="${x(si)}" x2="${x(si)}" y1="${m.t}" y2="${m.t+ih}" stroke="var(--ink)" stroke-width="1.5"/>`;
+  const tot=vals[si][0]+vals[si][1]+vals[si][2];
+  s+=`<circle cx="${x(si)}" cy="${yv(tot)}" r="4.5" fill="var(--ink)" stroke="var(--surface)" stroke-width="2"/>`;
+  s+=`<line data-hov x1="0" x2="0" y1="${m.t}" y2="${m.t+ih}" stroke="var(--ink-3)" stroke-dasharray="2 3" visibility="hidden"/>`;
+  s+=`<rect x="${m.l-10}" y="0" width="${iw+20}" height="${H}" fill="transparent" data-hit style="cursor:crosshair;touch-action:pan-y"/>`;
+  s+='</svg>';
+  E.svgBox.innerHTML=s;
+  E.v.textContent=L.fmt(tot);E.x=x;setHover();
+  const hit=E.svgBox.querySelector('[data-hit]'),svg=E.svgBox.querySelector('svg');
+  const idx=ev=>{const b=svg.getBoundingClientRect(),px=(ev.clientX-b.left)*W/b.width;return Math.max(0,Math.min(YRS.length-1,Math.round((px-m.l)/iw*(YRS.length-1))))};
+  hit.onpointermove=ev=>{const i=idx(ev);if(ev.buttons===1)setYear(2026+i);hover=i;setHover();showTip(L,i,ev)};
+  hit.onpointerdown=ev=>{setYear(2026+idx(ev))};
+  hit.onpointerleave=()=>{hover=null;setHover();E.tip.style.display='none'};
+}
+function setHover(){LANES.forEach(L=>{const E=laneEls[L.id],l=E.svgBox.querySelector('[data-hov]');if(!l||!E.x)return;
+  if(hover===null||hover===year-2026){l.setAttribute('visibility','hidden');return}
+  l.setAttribute('x1',E.x(hover));l.setAttribute('x2',E.x(hover));l.setAttribute('visibility','visible')})}
+function showTip(L,i,ev){
+  const E=laneEls[L.id],r=DATA[scen][i],v=SEGS.map(S=>L.get(r,S.k));
+  const tot=v[0]+v[1]+v[2];
+  let h=`<div class="t">${YRS[i]} · ${SCN[scen]}</div>`;
+  SEGS.slice().reverse().forEach((S,j)=>{const val=v[2-j];if(val>1e-9)h+=`<div class="r"><span><i class="sw" style="background:var(${S.css})"></i>${S.name}</span><span class="num">${L.fmt(val)}</span></div>`});
+  h+=`<div class="r" style="border-top:1px solid var(--grid);margin-top:4px;padding-top:4px"><b>Total</b><b class="num">${L.fmt(tot)}</b></div>`;
+  if(ghost)['G','A','H'].filter(k=>k!==scen).forEach(k=>{const rr=DATA[k][i];h+=`<div class="r muted"><span>${SCN[k]}</span><span class="num">${L.fmt(SEGS.reduce((a,S)=>a+L.get(rr,S.k),0))}</span></div>`});
+  E.tip.innerHTML=h;E.tip.style.display='block';
+  const b=E.root.getBoundingClientRect(),tw=E.tip.offsetWidth;
+  let lx=ev.clientX-b.left+14;if(lx+tw>b.width)lx=ev.clientX-b.left-tw-14;
+  E.tip.style.left=Math.max(0,lx)+'px';E.tip.style.top='30px';
+}
+
+/* ---------- animation ---------- */
+let anim=null;
+function targets(){
+  const t={};LANES.forEach(L=>{t[L.id]=DATA[scen].map(r=>SEGS.map(S=>L.get(r,S.k)))});return t;
+}
+function ghostsFor(L){if(L.id==='cap')return[];return['G','A','H'].filter(k=>k!==scen).map(k=>({short:k==='G'?'GP only':k==='A'?'AI only':'Hybrid',vals:DATA[k].map(r=>SEGS.reduce((a,S)=>a+L.get(r,S.k),0))}))}
+function animateTo(){
+  const T=targets(),F={};LANES.forEach(L=>F[L.id]=shown[L.id]||T[L.id]);
+  const t0=performance.now(),dur=420;cancelAnimationFrame(anim);
+  const step=now=>{const p=Math.min(1,(now-t0)/dur),e=1-Math.pow(1-p,3);
+    LANES.forEach(L=>{shown[L.id]=T[L.id].map((row,i)=>row.map((v,j)=>F[L.id][i][j]+(v-F[L.id][i][j])*e))});
+    redrawAll(false);if(p<1)anim=requestAnimationFrame(step)};
+  anim=requestAnimationFrame(step);
+}
+function redrawAll(){LANES.forEach(L=>drawLane(L,shown[L.id],ghostsFor(L)));}
+
+/* ---------- side panel ---------- */
+function side(){
+  const i=year-2026,r=DATA[scen][i];
+  $('#sidettl').textContent=`${SCN[scen]} in ${year}`;
+  const cap=r.cap/1000,E=sum(r.e),won=sum(r.won),wps=sum(r.wps),wt=won+wps,co2=sum(r.co2),tco=sum(r.tco)/LAKH,cx=sum(r.capex)/LAKH;
+  const share=E/r.dem*100,mld=wt*1e9/365/1e6,people=wt*1e9/365/P.lpcd;
+  const usd=v=>f(v*LAKH*1e7/P.fx/1e9,0);
+  const mix=SEGS.map(S=>r.mw[S.k]/r.cap*100);
+  $('#kpis').innerHTML=`
+   <div class="kpi wide"><div class="l">Capacity</div><div class="v num">${f(cap,1)} GW</div>
+     <div class="stk" style="margin-top:4px" aria-label="Workload split">${SEGS.map((S,j)=>mix[j]>0.05?`<i style="width:${mix[j]}%;background:var(${S.css})" title="${S.name} ${f(mix[j],0)}%"></i>`:'').join('')}</div>
+     <div class="n">${SEGS.map((S,j)=>mix[j]>0.05?`${S.name} ${f(mix[j],0)}%`:'').filter(Boolean).join(' · ')}</div></div>
+   <div class="kpi"><div class="l">Energy</div><div class="v num">${fs(E)} TWh</div><div class="n">${f(share,1)}% of India's electricity requirement</div><div class="meter"><i style="width:${Math.min(100,share*10)}%"></i></div><div class="n" style="margin-top:2px">bar full = 10%</div></div>
+   <div class="kpi"><div class="l">Carbon</div><div class="v num">${fs(co2)} Mt</div><div class="n">CO₂ per year from grid power</div></div>
+   <div class="kpi"><div class="l">Water</div><div class="v num">${fs(wt)} bn L</div><div class="n">${f(mld,0)} MLD · ${f(won/wt*100||0,0)}% on site, ${f(wps/wt*100||0,0)}% at power stations</div></div>
+   <div class="kpi"><div class="l">Water equals</div><div class="v num">${people>=1e7?f(people/1e7,2)+' cr':f(people/1e5,1)+' lakh'}</div><div class="n">people's daily urban supply at ${P.lpcd} L/day</div></div>
+   <div class="kpi"><div class="l">Annual cost</div><div class="v num">₹${f(tco,2)} L cr</div><div class="n">≈ $${usd(tco)} bn/yr, all-in cost of ownership</div></div>
+   <div class="kpi"><div class="l">Cooling fleet</div><div class="v num">PUE ${f(E/sum(r.eit),2)}</div><div class="n">${f(won/sum(r.eit),2)} L/kWh on site · ${f(r.ex.G*100,0)}% of GP and ${f(r.ex.A*100,0)}% of AI capacity on 2026-era cooling</div></div>
+   <div class="kpi wide"><div class="l">Capex</div><div class="v num">₹${f(cx,2)} L cr</div><div class="n">spent in ${year} · ₹${f(r.cum/LAKH,1)} L cr since 2026 (≈ $${usd(r.cum/LAKH)} bn)</div></div>`;
+  // scenario comparison
+  const met=[
+    ['Energy',k=>sum(DATA[k][i].e),v=>fs(v)+' TWh',(rr,z)=>rr.e[z]],
+    ['Water',k=>{const q=DATA[k][i];return sum(q.won)+sum(q.wps)},v=>fs(v)+' bn L',(rr,z)=>rr.won[z]+rr.wps[z]],
+    ['Carbon',k=>sum(DATA[k][i].co2),v=>fs(v)+' Mt',(rr,z)=>rr.co2[z]],
+    [csel==='tco'?'Annual cost':'Capex that year',k=>sum(DATA[k][i][csel])/LAKH,v=>'₹'+f(v,2)+' L cr',(rr,z)=>rr[csel][z]/LAKH]
+  ];
+  $('#cmp').innerHTML=`<p class="small muted">${year}, all at ${f(cap,1)} GW. Bars share a scale within each measure.</p>`+met.map(([nm,tot,fmt,part])=>{
+    const mx=Math.max(...['G','A','H'].map(tot))||1;
+    return `<div class="cmpblk"><h3>${nm}</h3>`+['G','A','H'].map(k=>{
+      const rr=DATA[k][i],t=tot(k);
+      return `<div class="row ${k===scen?'sel':''}"><span class="nm">${k==='G'?'GP only':k==='A'?'AI only':'Hybrid'}</span><div class="stk" style="width:${Math.max(2,t/mx*100)}%">${SEGS.map(S=>{const p=part(rr,S.k)/(t||1)*100;return p>0.05?`<i style="width:${p}%;background:var(${S.css})"></i>`:''}).join('')}</div><span class="val num">${fmt(t)}</span></div>`}).join('')+'</div>';
+  }).join('');
+  // breakdown
+  const C=r.comp,lab={fac:'Facility + land',it:'IT hardware + duty',elec:'Electricity',water:'Water',om:'O&M',staff:'Staff & services',ins:'Insurance & tax'};
+  const ct=Object.values(C).reduce((a,b)=>a+b,0)||1,cm=Math.max(...Object.values(C))||1;
+  $('#brkttl').textContent=`Where the money goes, ${year}`;
+  $('#brk').innerHTML=`<p class="small muted">Annual cost of ownership for ${SCN[scen]}: ₹${f(ct/LAKH,2)} lakh crore. Capex is spread over each asset's life at ${P.wacc}%.</p>`+
+    Object.keys(lab).map(k=>`<div class="row"><span>${lab[k]}</span><div class="track"><i style="width:${C[k]/cm*100}%"></i></div><span class="val num">₹${C[k]/LAKH>=0.1?f(C[k]/LAKH,2)+' L cr':f(C[k],0)+' cr'} <span class="muted">${f(C[k]/ct*100,0)}%</span></span></div>`).join('');
+}
+
+/* ---------- table ---------- */
+function table(){
+  $('#tblttl').textContent=`Year by year: ${SCN[scen]}`;
+  const rows=DATA[scen];
+  let h='<thead><tr><th>Year</th><th>GW</th><th>AI share</th><th>TWh</th><th>% of India</th><th>Water bn L</th><th>MLD</th><th>CO₂ Mt</th><th>Cost ₹ L cr/yr</th><th>Capex ₹ L cr</th><th>Avg PUE</th><th>On-site WUE</th><th>L/kWh (all water)</th></tr></thead><tbody>';
+  rows.forEach(r=>{const E=sum(r.e),w=sum(r.won)+sum(r.wps),pue=E/sum(r.eit);
+    h+=`<tr${r.y===year?' style="font-weight:700"':''}><td>${r.y}</td><td>${f(r.cap/1000,2)}</td><td>${f((r.mw.I+r.mw.T)/r.cap*100,0)}%</td><td>${fs(E)}</td><td>${f(E/r.dem*100,2)}%</td><td>${fs(w)}</td><td>${f(w*1e3/365,0)}</td><td>${fs(sum(r.co2))}</td><td>${f(sum(r.tco)/LAKH,2)}</td><td>${f(sum(r.capex)/LAKH,2)}</td><td>${f(pue,2)}</td><td>${f(sum(r.won)/sum(r.eit),2)}</td><td>${f(w/E,2)}</td></tr>`});
+  $('#tbl').innerHTML=h+'</tbody>';
+}
+
+/* ---------- params UI ---------- */
+function buildParams(){
+  const g=$('#pgrid');g.innerHTML='';
+  GROUPS.forEach(G=>{
+    const d=document.createElement('details');d.className='grp';if(G.open)d.open=true;
+    d.innerHTML=`<summary>${G.g}</summary><div class="grpbody"></div>`;
+    const body=d.querySelector('.grpbody');
+    G.rows.forEach(R=>{
+      const p=document.createElement('div');p.className='prm';
+      p.innerHTML=`<div class="pl"><span>${R.label}</span><span>${R.unit}</span></div><div class="cells">${R.keys.map((k,i)=>`<div class="cell"><div class="cy">${R.yrs[i]}</div><div class="ci"><input type="range" min="${R.min}" max="${R.max}" step="${R.step}" data-k="${k}" aria-label="${R.label}, ${R.yrs[i]}"><input type="number" min="${R.min}" max="${R.max}" step="${R.step}" data-k="${k}" aria-label="${R.label}, ${R.yrs[i]}"></div></div>`).join('')}</div><div class="src">${R.src}</div>`+
+        (R.presets?`<div class="presets">${PRESETS.map(([n,v])=>`<button data-pre="${v}" title="Sets 2030 to ${v} GW and 2035 to about 2× that">${n} ${v}</button>`).join('')}</div><div class="src">*Morgan Stanley's 10.5 GW is for FY31; 9.0 GW in 2030 is the matching path.</div>`:'');
+      body.appendChild(p);
+    });
+    g.appendChild(d);
+  });
+  bindK(g);
+  g.querySelectorAll('[data-pre]').forEach(b=>b.onclick=()=>{const v=+b.dataset.pre;P.cap30=v;P.cap35=v===4.66?10.83:Math.round(v*2*2)/2;syncInputs();recalc()});
+  syncInputs();
+}
+function bindK(root){root.querySelectorAll('[data-k]').forEach(inp=>{if(inp._b)return;inp._b=1;const k=inp.dataset.k;
+  inp.addEventListener(inp.tagName==='SELECT'?'change':'input',()=>{const v=parseFloat(inp.value);if(!isFinite(v))return;P[k]=v;syncInputs(k,inp);recalc()})})}
+function syncInputs(only,src){
+  document.querySelectorAll('[data-k]').forEach(i=>{const k=i.dataset.k;if(only&&k!==only)return;if(i===src)return;i.value=P[k];});
+  document.querySelectorAll('input[type=number][data-k]').forEach(i=>i.classList.toggle('chg',Math.abs(P[i.dataset.k]-DEF[i.dataset.k])>1e-9));
+}
+
+/* ---------- cooling UI ---------- */
+function buildCool(){
+  $('#fleets').innerHTML=FLEETS.map(F=>`<div class="fleet" data-f="${F.k}"><h3>${F.title} <span>· ${F.vint}</span></h3>
+    <label>System A<select data-k="${F.k}A" aria-label="${F.title}, ${F.vint}, system A"></select></label>
+    <label>Share on system A</label><div class="ci"><input type="range" min="0" max="100" step="5" data-k="${F.k}S" aria-label="Share on system A"><input type="number" min="0" max="100" step="5" data-k="${F.k}S" aria-label="Share on system A, %"><span class="small muted">%</span></div>
+    <label>System B (the rest)<select data-k="${F.k}B" aria-label="${F.title}, ${F.vint}, system B"></select></label>
+    <div class="fres"><span>Fleet result</span><span class="num" data-res></span></div><div data-warn></div></div>`).join('');
+  const hd=`<thead><tr><th>System</th><th>Heat rejection</th><th>Max kW/rack</th>${CLIM.map(c=>`<th>PUE ${c}</th>`).join('')}${CLIM.map(c=>`<th>WUE ${c}</th>`).join('')}</tr></thead>`;
+  $('#ctab').innerHTML=hd+'<tbody>'+COOL.map(c=>`<tr><td>${c.n}${c.warn?` <span class="tag">${c.warn}</span>`:''}</td><td>${c.rej}</td><td>${c.max}</td>${[0,1,2].map(j=>`<td><input type="number" step="0.01" min="1" max="3" data-k="c_${c.id}_p${j}" aria-label="${c.n} PUE ${CLIM[j]}"></td>`).join('')}${[0,1,2].map(j=>`<td><input type="number" step="0.05" min="0" max="6" data-k="c_${c.id}_w${j}" aria-label="${c.n} WUE ${CLIM[j]}"></td>`).join('')}</tr>`).join('')+'</tbody>';
+  bindK($('#coolcard'));
+}
+function refreshCool(){
+  const w=climW();$('#climtxt').textContent=CLIM.map((c,j)=>`${c} ${f(w[j]*100,0)}%`).join(', ');
+  const T=COOL.map((c,i)=>tech(i));
+  const grp=[[0,'Air-cooled rooms'],[1,'Direct-to-chip liquid'],[2,'Immersion']];
+  const opts=grp.map(([lq,lab])=>`<optgroup label="${lab}">`+COOL.map((c,i)=>c.liq===lq?`<option value="${i}">${c.sh} · PUE ${f(T[i].p,2)} · ${f(T[i].w,2)} L/kWh · ≤${c.max} kW</option>`:'').join('')+'</optgroup>').join('');
+  FLEETS.forEach(F=>{const el=$(`.fleet[data-f="${F.k}"]`);
+    el.querySelectorAll('select').forEach(sel=>{sel.innerHTML=opts;sel.value=P[sel.dataset.k]});
+    const m=fleetMix(F.k);el.querySelector('[data-res]').innerHTML=`PUE <b>${f(m.p,2)}</b> · on-site WUE <b>${f(m.w,2)}</b> L/kWh`;
+    const wn=[];[P[F.k+'A'],P[F.k+'B']].forEach(i=>{const c=COOL[i];if(!c)return;if(F.cls==='A'&&c.max<50)wn.push(`${c.sh} tops out at ${c.max} kW per rack; AI racks run 50–130 kW`);if(c.warn)wn.push(`${c.sh}: ${c.warn}`)});
+    el.querySelector('[data-warn]').innerHTML=[...new Set(wn)].map(t=>`<div class="warn">${t}</div>`).join('');
+  });
+  // scatter
+  const box=$('#scat'),Wd=Math.max(260,box.clientWidth||360),H=250,m={l:40,r:12,t:10,b:34},iw=Wd-m.l-m.r,ih=H-m.t-m.b;
+  const xm=Math.max(2.6,...T.map(t=>t.w))*1.05,y0=1.0,y1=Math.max(1.85,...T.map(t=>t.p))+0.02;
+  const X=v=>m.l+iw*v/xm,Y=v=>m.t+ih*(1-(v-y0)/(y1-y0));
+  const chosen=new Set();FLEETS.forEach(F=>{if(P[F.k+'S']>0)chosen.add(P[F.k+'A']);if(P[F.k+'S']<100)chosen.add(P[F.k+'B'])});
+  let sv=`<svg viewBox="0 0 ${Wd} ${H}" width="100%" height="${H}" role="img" aria-label="PUE against on-site WUE for each cooling system">`;
+  for(let v=0;v<=xm;v+=0.5)sv+=`<line x1="${X(v)}" x2="${X(v)}" y1="${m.t}" y2="${m.t+ih}" stroke="var(--grid)"/><text x="${X(v)}" y="${m.t+ih+14}" font-size="10.5" text-anchor="middle" fill="var(--ink-3)">${f(v,1)}</text>`;
+  for(let v=1.0;v<=y1+1e-9;v+=0.2)sv+=`<line x1="${m.l}" x2="${m.l+iw}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--grid)"/><text x="${m.l-6}" y="${Y(v)+4}" font-size="10.5" text-anchor="end" fill="var(--ink-3)">${f(v,1)}</text>`;
+  sv+=`<text x="${m.l+iw/2}" y="${H-3}" font-size="11" text-anchor="middle" fill="var(--ink-2)">On-site WUE, L/kWh IT →</text><text x="12" y="${m.t+ih/2}" font-size="11" text-anchor="middle" fill="var(--ink-2)" transform="rotate(-90 12 ${m.t+ih/2})">PUE →</text>`;
+  const labs=[];
+  COOL.forEach((c,i)=>{const x=X(T[i].w),y=Y(T[i].p),on=chosen.has(i),fill=on?'var(--ink)':'var(--ink-3)',r=on?6:4.5;
+    const shape=c.liq===0?`<circle cx="${x}" cy="${y}" r="${r}"`:c.liq===1?`<rect x="${x-r}" y="${y-r}" width="${2*r}" height="${2*r}" rx="1.5"`:`<rect x="${x-r}" y="${y-r}" width="${2*r}" height="${2*r}" transform="rotate(45 ${x} ${y})"`;
+    sv+=`<g>${shape} fill="${fill}" stroke="var(--surface)" stroke-width="2" opacity="${on?1:.75}"/><title>${c.n}: PUE ${f(T[i].p,2)}, WUE ${f(T[i].w,2)} L/kWh</title></g>`;
+    if(on)labs.push({x,y,t:c.sh});
+  });
+  labs.sort((a,b)=>a.y-b.y);const used=[];
+  labs.forEach(l=>{let ly=l.y-9;while(used.some(u=>Math.abs(u.y-ly)<12&&Math.abs(u.x-l.x)<120))ly+=12;used.push({x:l.x,y:ly});
+    const anchor=l.x>m.l+iw*0.6?'end':'start';sv+=`<text x="${l.x+(anchor==='end'?-8:8)}" y="${ly}" font-size="10.5" text-anchor="${anchor}" fill="var(--ink)">${l.t}</text>`});
+  box.innerHTML=sv+'</svg>';
+}
+
+/* ---------- perspective ---------- */
+function ratioTxt(a,b){const r=a/b;return r>=1.1?`${f(r,r>=10?0:1)} times`:r>=0.9?'about the same as':`${f(r*100,r<0.1?1:0)}% of`}
+function ladder(el,title,fmt,items){
+  const Wd=Math.max(280,el.clientWidth||320),rh=24,m={l:Wd<380?138:170,r:Wd<380?64:78,t:6,b:20},H=m.t+m.b+rh*items.length,iw=Wd-m.l-m.r;
+  items=items.filter(i=>i.v>0).sort((a,b)=>b.v-a.v);
+  const lo=Math.pow(10,Math.floor(Math.log10(Math.min(...items.map(i=>i.v))))),hi=Math.pow(10,Math.ceil(Math.log10(Math.max(...items.map(i=>i.v)))));
+  const X=v=>m.l+iw*(Math.log10(v)-Math.log10(lo))/(Math.log10(hi)-Math.log10(lo)||1);
+  let sv=`<svg viewBox="0 0 ${Wd} ${m.t+m.b+rh*items.length}" width="100%" role="img" aria-label="${title}">`;
+  const nd=Math.round(Math.log10(hi/lo))||1,skip=iw/nd<26?2:1;let di=0;
+  for(let d=lo;d<=hi*1.0001;d*=10,di++)sv+=`<line x1="${X(d)}" x2="${X(d)}" y1="${m.t}" y2="${m.t+rh*items.length}" stroke="var(--grid)"/>`+(di%skip?'':`<text x="${X(d)}" y="${m.t+rh*items.length+13}" font-size="10" text-anchor="middle" fill="var(--ink-3)">${d>=1e6?d/1e6+'M':d>=1e3?d/1e3+'k':d}</text>`);
+  items.forEach((it,k)=>{const y=m.t+k*rh;
+    sv+=`<text x="${m.l-8}" y="${y+rh/2+4}" font-size="11.5" text-anchor="end" fill="var(${it.dc?'--ink':'--ink-2'})"${it.dc?' font-weight="650"':''}>${it.n}</text>`;
+    sv+=`<rect x="${m.l}" y="${y+5}" width="${Math.max(2,X(it.v)-m.l)}" height="${rh-10}" rx="3" fill="var(${it.dc?'--ink':'--bar'})" opacity="${it.dc?1:.55}"><title>${it.n}: ${fmt(it.v)}</title></rect>`;
+    sv+=`<text x="${Math.max(2,X(it.v))+6}" y="${y+rh/2+4}" font-size="11" fill="var(--ink-2)" class="num">${fmt(it.v)}</text>`});
+  el.innerHTML=`<h3>${title}</h3>`+sv+'</svg>';
+}
+let NARR=[];
+function perspective(){
+  const i=year-2026,r=DATA[scen][i],cap=r.cap/1000,E=sum(r.e),won=sum(r.won),wps=sum(r.wps),wt=won+wps,co2=sum(r.co2),tco=sum(r.tco)/LAKH,cx=sum(r.capex)/LAKH,cum=r.cum/LAKH;
+  const mix=SEGS.map(S=>`${S.name.replace('General','general')} ${f(r.mw[S.k]/r.cap*100,0)}%`).filter((t,j)=>r.mw[SEGS[j].k]>0.5).join(', ');
+  const blrBn=P.bW_blr*365/1000,mumBn=P.bW_mum*365/1000,people=wt*1e9/365/P.lpcd,tech=P.bC_tech*P.fx/1000;
+  const pueF=E/sum(r.eit),wueF=won*1e9/(sum(r.eit)*1e9);
+  const g=DATA.G[i],a=DATA.A[i],cg=sum(g.tco),ca=sum(a.tco),eg=sum(g.e),ea=sum(a.e),wg=sum(g.won)+sum(g.wps),wa=sum(a.won)+sum(a.wps);
+  const dpct=(x,y)=>{const d=(x-y)/y*100;return Math.abs(d)<1?'about the same':`${f(Math.abs(d),0)}% ${d>0?'more':'less'}`};
+  const ppl=people>=1e7?f(people/1e7,1)+' crore':f(people/1e5,0)+' lakh';
+  NARR=[
+   `In <b>${year}</b>, India's data centres run <b>${f(cap,1)} GW</b> of IT load (${SCN[scen]}: ${mix}).`,
+   `They use <b>${fs(E)} TWh</b> of electricity a year, <b>${f(E/r.dem*100,1)}%</b> of India's projected demand. That is ${ratioTxt(E,P.bE_del)} Delhi's annual use, ${ratioTxt(E,P.bE_rail)} what Indian Railways uses for traction, and ${ratioTxt(E,P.bE_pww)} the electricity India spends pumping public drinking water.`,
+   `They consume <b>${fs(wt)} billion litres</b> of water a year (${f(wt*1e3/365,0)} MLD): ${f(won/wt*100,0)}% on site for cooling and ${f(wps/wt*100,0)}% at the power stations that supply them. That is ${ratioTxt(wt,blrBn)} Bengaluru's entire city supply (${ratioTxt(wt,mumBn)} Mumbai's), or the daily urban supply for ${ppl} people. Nationally it is small: ${f(wt/(P.bW_ind*1000)*100,1)}% of India's industrial water demand and ${f(wt/(P.bW_in*1000)*100,2)}% of all water demand. The problem is local, where campuses cluster.`,
+   `Grid power adds <b>${fs(co2)} Mt of CO₂</b> a year, with ${f(lin([[2026,P.cl26],[2030,P.cl30],[2035,P.cl35]],year),0)}% of supply contracted from renewables.`,
+   `Owning and running the fleet costs <b>₹${f(tco,2)} lakh crore a year</b> (≈ $${f(tco*1e12/P.fx/1e9,0)} bn), ${f(tco/P.bC_gdp*100,1)}% of India's FY26 GDP. Capex in ${year} alone is <b>₹${f(cx,2)} lakh crore</b>, ${ratioTxt(cx,P.bC_cap)} the Union government's 2026-27 capital budget and ${ratioTxt(cx,P.bC_def)} the defence budget. Since 2026 the build-out has absorbed ₹${f(cum,1)} lakh crore, ${ratioTxt(cum,tech)} the $${f(P.bC_tech,1)} bn that Amazon, Microsoft and Google pledged to India.`,
+   `At the same ${f(cap,1)} GW, an all-AI build would cost <b>${f(ca/cg,1)} times</b> an all general-purpose one (₹${f(ca/LAKH,2)} vs ₹${f(cg/LAKH,2)} lakh crore a year), yet use ${dpct(ea,eg)} energy and ${dpct(wa,wg)} water${Math.abs(ea-eg)/eg<0.1?": AI's higher utilisation cancels most of its better PUE":''}.${a.comp.it/ca>0.5?' GPUs, not power or water, drive the bill.':''}`,
+   `The cooling fleet averages PUE <b>${f(pueF,2)}</b> and <b>${f(wueF,2)} L/kWh</b> on site. ${wps>won?`Because ${f(wps/wt*100,0)}% of the water is consumed at power stations, buying renewable power saves more water than changing the cooling system.`:`On-site cooling is the bigger water lever here: moving new builds to dry or liquid cooling cuts it most.`}`
+  ];
+  $('#pttl').textContent=`Put it in perspective: ${SCN[scen]}, ${year}`;
+  $('#narr').innerHTML=NARR.map(t=>`<li>${t}</li>`).join('');
+  const dcE=`DC fleet ${year}`;
+  ladder($('#lE'),'Electricity, TWh per year',v=>fs(v),[
+    {n:dcE,v:E,dc:1},{n:`India demand ${year} (proj.)`,v:r.dem},{n:'India demand FY26',v:P.bE_in},{n:'Industry (FY23)',v:P.bE_ind},{n:'Homes (FY23)',v:P.bE_dom},{n:'Agriculture (FY23)',v:P.bE_agr},{n:'Commercial (FY23)',v:P.bE_com},{n:'Delhi (FY26)',v:P.bE_del},{n:'Water pumping (FY23)',v:P.bE_pww},{n:'Railway traction (FY23)',v:P.bE_rail}]);
+  ladder($('#lW'),'Water, billion litres per year',v=>v>=1000?f(v/1000,v>=1e4?0:1)+' bcm':fs(v)+' bn L',[
+    {n:dcE+', total',v:wt,dc:1},{n:dcE+', on site',v:won,dc:1},{n:'India, all uses (2025)',v:P.bW_in*1000},{n:'Irrigation',v:P.bW_irr*1000},{n:'Groundwater extracted',v:P.bW_gw*1000},{n:'Industry',v:P.bW_ind*1000},{n:'Drinking water',v:P.bW_dom*1000},{n:'Power sector',v:P.bW_pow*1000},{n:'Mumbai city supply',v:mumBn},{n:'Bengaluru city supply',v:blrBn}]);
+  ladder($('#lC'),'Money, ₹ lakh crore',v=>v>=10?f(v,0):v>=1?f(v,1):f(v,2),[
+    {n:`DC annual cost ${year}`,v:tco,dc:1},{n:`DC capex in ${year}`,v:cx,dc:1},{n:`DC capex 2026–${year}`,v:cum,dc:1},{n:'GDP FY26',v:P.bC_gdp},{n:'Union Budget 26-27',v:P.bC_bud},{n:'Union capex 26-27',v:P.bC_cap},{n:'Defence 26-27',v:P.bC_def},{n:'Big Tech pledges',v:tech},{n:'Roads 26-27',v:P.bC_road},{n:'Railways 26-27',v:P.bC_rail},{n:'Health 26-27',v:P.bC_hlth},{n:'Semiconductor Mission',v:P.bC_ism/LAKH},{n:'IndiaAI Mission',v:P.bC_ai/LAKH}]);
+}
+$('#copyn').onclick=async()=>{const t=NARR.map(x=>x.replace(/<[^>]+>/g,'')).join('\n\n');try{await navigator.clipboard.writeText(t);$('#copyn').textContent='Copied'}catch(e){$('#copyn').textContent='Select the text to copy'}setTimeout(()=>$('#copyn').textContent='Copy narrative',1800)};
+
+/* ---------- wiring ---------- */
+function recalc(anim=true){
+  DATA={G:model('G'),A:model('A'),H:model('H')};
+  if(anim)animateTo();else{const T=targets();LANES.forEach(L=>shown[L.id]=T[L.id]);redrawAll()}
+  side();table();refreshCool();perspective();save();
+  $('#ghostlg').style.display=ghost?'':'none';
+}
+function setYear(y){if(y===year)return;year=y;$('#year').value=y;$('#yrlbl').textContent=y;redrawAll();side();table();perspective()}
+document.querySelectorAll('#scen button').forEach(b=>b.onclick=()=>{scen=b.dataset.s;document.querySelectorAll('#scen button').forEach(x=>x.setAttribute('aria-pressed',x===b));recalc()});
+$('#wsel').onchange=e=>{wsel=e.target.value;recalc()};
+$('#csel').onchange=e=>{csel=e.target.value;recalc()};
+$('#ghost').onchange=e=>{ghost=e.target.checked;recalc(false)};
+$('#year').oninput=e=>setYear(+e.target.value);
+$('#reset').onclick=()=>{P=Object.assign({},DEF);syncInputs();recalc()};
+$('#openall').onclick=e=>{const ds=document.querySelectorAll('details.grp'),open=[...ds].some(d=>!d.open);ds.forEach(d=>d.open=open);e.target.textContent=open?'Close all':'Open all'};
+let playT=null;
+$('#play').onclick=()=>{
+  if(playT){clearInterval(playT);playT=null;$('#play').textContent='▶ Play';return}
+  $('#play').textContent='❚❚ Pause';if(year>=2035)setYear(2026);
+  playT=setInterval(()=>{if(year>=2035){clearInterval(playT);playT=null;$('#play').textContent='▶ Play';return}setYear(year+1)},700);
+};
+const ro=new ResizeObserver(()=>{const w=Math.round(lanesEl.clientWidth);if(w&&Math.abs(w-W)>2){W=w;redrawAll()}});
+ro.observe(lanesEl);
+W=Math.round(lanesEl.clientWidth)||700;
+buildParams();buildCool();syncInputs();recalc(false);
+let rT=null;window.addEventListener('resize',()=>{clearTimeout(rT);rT=setTimeout(()=>{refreshCool();perspective()},150)});
+})();
+</script>
+</body>
+</html>

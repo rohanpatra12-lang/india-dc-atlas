@@ -1,0 +1,315 @@
+<section class="ch chw" id="cai" data-n="10">
+  <div class="chq">
+    <div class="chq-n" aria-hidden="true">10</div>
+    <div class="chq-b"><h2 class="chq-t">AI or conventional: what India is building, and what it will drink</h2>
+      <p class="chq-q"><span>The question</span>How different is an AI data centre from a conventional one, how much of India's capacity is AI today, and what happens to water if the coming capacity is mostly AI?</p>
+      <p class="chq-a"><span>The short answer</span>Per megawatt, the two use similar water for the same cooling; AI packs 10–50× more power into each rack and builds 5–20× bigger sites. India today is overwhelmingly conventional (AI hardware is roughly 2–3% of live IT load), but forecasters expect AI to be over half of capacity by 2030. If the atlas's central ~3 GW of new capacity, three-quarters AI, is cooled with towers on grid power, India's data centres would use as much water as about six integrated steel plants (KPMG's 5.5 GW: about nine and a half); with liquid cooling to dry coolers and 90% clean power, under one.</p>
+      <nav class="chq-subs" aria-label="In this chapter"><a href="#cai1">10.1</a><a href="#cai2">10.2</a><a href="#cai3">10.3</a><a href="#vs">10.4</a></nav>
+    </div>
+  </div>
+
+<div class="subch" id="cai1">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">10.1</span><span class="eyebrow">Research · Side by side</span></div>
+    <h2>Conventional and AI data centres, line by line</h2>
+    <p class="lede">The same building type, two different machines. The table sets out what changes; the panel below runs both through the same physics so the water comparison is fair.</p></div>
+  <div class="panel">
+    <h3>What changes when a hall is built for AI<span class="sub">Ranges for India where available, otherwise global. Sources under the table.</span></h3>
+    <div class="tbl"><table class="aif-t cai-t"><thead><tr><th>Item</th><th>Conventional (enterprise, colocation, cloud)</th><th>AI (training and large inference)</th><th>Why it matters for water</th></tr></thead><tbody>
+      <tr><td><b>Power per rack</b></td><td>4–12 kW (India: 4–8 kW AEEE; 8–12 kW KPMG)</td><td>50–60 kW in India's AI halls today; 132–142 kW for GB200/GB300 NVL72; up to 246 kW Vera Rubin; ~600 kW Kyber (2027)</td><td>Heat per rack decides whether air can still cool it</td></tr>
+      <tr><td><b>How busy the servers are</b></td><td>~60% of the time</td><td>~75–80%, near flat</td><td>Fuller halls turn each MW into more heat, so more water per MW</td></tr>
+      <tr><td><b>Load shape</b></td><td>Daily swing, 30–60%</td><td>Plateau with synchronised dips during training</td><td>Water demand is steady all day; no night-time relief for storage</td></tr>
+      <tr><td><b>Heat removal at the rack</b></td><td>Air (CRAC/CRAH units); containment to ~15 kW, rear-door coils to ~40 kW</td><td>Direct-to-chip liquid takes ~85–90% of heat; immersion for the densest racks</td><td>Liquid allows warm water loops that can be cooled without evaporation</td></tr>
+      <tr><td><b>Heat rejection outdoors</b></td><td>Chilled water with cooling towers, or air-cooled chillers</td><td>Warm water to dry or adiabatic coolers; towers or seawater also used</td><td>This choice, not the rack, decides on-site water</td></tr>
+      <tr><td><b>PUE</b></td><td>India average ~1.5–1.6; leaders 1.4–1.5</td><td>Design targets below 1.3; IndiaAI tender cap 1.35</td><td>Lower PUE means less electricity, so less power-station water</td></tr>
+      <tr><td><b>On-site WUE</b></td><td>Towers ~1.8 L/kWh; air-cooled chillers ~0–0.1</td><td>Liquid + dry ~0.03–0.1; liquid + towers 1.0–2.0</td><td>Same physics per kWh of heat</td></tr>
+      <tr><td><b>Typical site</b></td><td>5–50 MW</td><td>100 MW to over 1 GW</td><td>Concentration: one site can equal a town's demand</td></tr>
+      <tr><td><b>Grid connection</b></td><td>33–220 kV</td><td>132–400 kV</td><td>Large AI campuses are power-plant-scale customers</td></tr>
+      <tr><td><b>Building cost</b></td><td>₹50–56 crore per MW (Tier III, air-cooled)</td><td>₹72–75 crore per MW building; ~₹266 crore per MW more for GPUs</td><td>GPU cost makes water look small per rupee, not per litre</td></tr>
+    </tbody></table></div>
+    <p class="xs muted">Sources: KPMG, India data centre opportunity (Jul 2026); AEEE via CBRE coverage (2026); Schneider Electric India (Jul 2026); SBI sector report (Apr 2026); IndiaAI GPU tender; atlas standards for utilisation, WUE and capex (Chapters 4, 7 and 15). <span class="ev r show" data-src="KPMG Jul 2026; AEEE; Schneider Electric Jul 2026; SBI Apr 2026; atlas standards">reported</span></p>
+  </div>
+  <div class="panel inst hot gap" id="cai-p1">
+    <h3>Same megawatts, two kinds of hall<span class="sub">100 MW of IT run as conventional halls or as AI halls, same city and power. Change the cooling to see that the gap is in the design, not the workload.</span></h3>
+    <div class="vs-ctrls">
+      <div class="opt"><span class="fieldlbl">Heat rejection (both)</span><div class="seg" id="cai-hr" role="group" aria-label="Heat rejection"><button data-v="t" aria-pressed="true">Cooling towers</button><button data-v="h">Adiabatic</button><button data-v="d">Dry (air-cooled)</button></div></div>
+      <div class="opt"><span class="fieldlbl">AI rack</span><div class="seg" id="cai-rk" role="group" aria-label="AI rack"><button data-v="0">50 kW · air + rear door</button><button data-v="1" aria-pressed="true">132 kW · NVL72</button><button data-v="2">190 kW · Vera Rubin</button><button data-v="3">600 kW · Kyber</button></div></div>
+      <div class="opt"><span class="fieldlbl">Power</span><div class="seg" id="cai-pw" role="group" aria-label="Power"><button data-v="2.9" aria-pressed="true">India grid</button><button data-v="1.19">60% RTC + India grid</button><button data-v="0.34">90% clean</button></div></div>
+    </div>
+    <div class="cai-two" id="cai-two"></div>
+    <p class="small" id="cai-two-n"></p>
+  </div>
+</div>
+
+<div class="subch" id="cai2">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">10.2</span><span class="eyebrow">Research · India today</span></div>
+    <h2>What India's data centres are today</h2>
+    <p class="lede">Mostly conventional colocation and cloud halls, cooled by air or chilled water. AI arrives as GPU clusters inside existing campuses and as a handful of announced AI parks.</p></div>
+  <div class="kpis cai-k" id="cai-k">
+    <div class="kpi"><span class="v">~1.75–1.9 GW</span><span class="k">live IT capacity, mid-2026 (CBRE 1.75; KPMG 1.9 for FY26)</span></div>
+    <div class="kpi"><span class="v">17,000+</span><span class="k">GPUs installed under IndiaAI by June 2025; 38,000+ onboarded by 2026</span></div>
+    <div class="kpi"><span class="v">~2–3%</span><span class="k">of live IT load is AI hardware (atlas estimate: 38,000 GPUs × ~1.2–1.5 kW each ≈ 45–57 MW)</span></div>
+    <div class="kpi"><span class="v">25–30%</span><span class="k">of existing capacity can be upgraded to AI standards (KPMG)</span></div>
+    <div class="kpi"><span class="v">55% → 65%</span><span class="k">AI share of capacity expected by FY30 and FY35 (KPMG)</span></div>
+    <div class="kpi"><span class="v">&gt;15%</span><span class="k">of investment commitments since 2021 linked to AI (CBRE)</span></div>
+  </div>
+  <div class="cols gap">
+    <p class="small xref">What Indian operators say about their cooling is now in <a href="#cscope4">9.4</a>, beside what they report.</p>
+    
+  </div>
+</div>
+
+<div class="subch" id="cai3">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">10.3</span><span class="eyebrow">Model · If the next gigawatts are AI</span></div>
+    <h2>If the coming capacity is mostly AI: water, cooling and racks</h2>
+    <p class="lede">Set how much new capacity arrives, how much of it is AI, what racks it uses and how it rejects heat. The panel adds it to today's fleet and sets the result beside India's thirstiest factories.</p></div>
+  <div class="panel inst hot gap" id="cai-p3">
+    <h3>Upcoming capacity, AI-heavy, against India's factories<span class="sub">Today's ~1.79 GW is kept as conventional; the new capacity is split between AI and conventional halls as you choose. Bars compare the fleet's water a day with large Indian plants (their direct water only).</span></h3>
+    <div class="ctrls">
+      <div class="ctrl"><label for="cai-gw">New capacity by 2030 (IT)</label><output id="cai-gw-o"></output><input id="cai-gw" type="range" min="1" max="12" step="0.25" value="2.9"></div>
+      <div class="ctrl"><label for="cai-ai">AI share of the new capacity</label><output id="cai-ai-o"></output><input id="cai-ai" type="range" min="0" max="100" step="5" value="75"></div>
+    </div>
+    <div class="vs-ctrls" style="margin-top:8px">
+      <div class="opt"><span class="fieldlbl">AI rack</span><div class="seg" id="cai3-rk" role="group" aria-label="AI rack"><button data-v="0">50 kW · air + rear door</button><button data-v="1" aria-pressed="true">132 kW · NVL72</button><button data-v="2">190 kW · Vera Rubin</button><button data-v="3">600 kW · Kyber</button></div></div>
+      <div class="opt"><span class="fieldlbl">AI heat rejection</span><div class="seg" id="cai3-ai" role="group" aria-label="AI heat rejection"><button data-v="t">Cooling towers</button><button data-v="h" aria-pressed="true">Adiabatic</button><button data-v="d">Dry coolers</button></div></div>
+      <div class="opt"><span class="fieldlbl">Conventional halls</span><div class="seg" id="cai3-cv" role="group" aria-label="Conventional halls"><button data-v="t" aria-pressed="true">Chilled water + towers</button><button data-v="d">Air-cooled chillers</button></div></div>
+      <div class="opt"><span class="fieldlbl">Power</span><div class="seg" id="cai3-pw" role="group" aria-label="Power"><button data-v="2.9" aria-pressed="true">India grid</button><button data-v="1.19">60% RTC + India grid</button><button data-v="0.34">90% clean</button></div></div>
+    </div>
+    <div class="vs-ctrls" style="margin-top:8px"><div class="opt"><span class="fieldlbl">Presets</span><div class="seg" id="cai3-pre" role="group" aria-label="Presets"><button data-p="bau">Business as usual</button><button data-p="ai">AI on towers</button><button data-p="best">AI done right</button></div></div></div>
+    <div class="read" id="cai3-r" style="margin-top:12px"></div>
+    <div class="aif-cmp" id="cai3-cmp" style="margin-top:10px"></div>
+    <p class="small" id="cai3-n"></p>
+    <details class="aif-det"><summary>Assumptions</summary><ul class="clean xs muted" style="margin-top:6px">
+      <li>Today's fleet: 1.79 GW live (Cushman &amp; Wakefield H1 2026), conventional, 65% load, using the conventional-hall cooling you pick. New conventional halls: 65% load. AI halls: 78% load (atlas reference: 40% training at 90% + 60% inference at 70%).</li>
+      <li>Cooling paths as in the factories panel: liquid-captured heat (share by rack: 50 kW air + rear door 0, NVL72 0.85, Vera Rubin 0.9, Kyber 1.0) and air-side heat each have their own WUE and overhead; electrical losses 0.08. Towers 1.8–1.9 L/kWh; adiabatic 0.25 (liquid) to 0.55 (air); dry 0.05.</li>
+      <li>Power-station water: India grid 2.9 L/kWh (coal 3.5 m³/MWh, MoEFCC limits and measured averages); 60% round-the-clock clean + India grid 0.6 × 0.05 + 0.4 × 2.9 = 1.19; 90% clean 0.9 × 0.05 + 0.1 × 2.9 = 0.34. Factories' own power-station water is not added, which flatters them.</li>
+      <li>New capacity default 2.9 GW = the atlas base case (4.66 GW in 2030) minus today. KPMG's demand case (7.0–7.5 GW by FY30) implies about 5.5 GW new.</li></ul></details>
+  </div>
+</div>
+<div class="subch" id="vs">
+  <div class="ch-head">
+    <div class="ch-tag"><span class="ch-num" aria-hidden="true">10.4</span><span class="eyebrow"><a class="rep-l" href="#reports">Report 13</a> · Conventional vs AI data centres</span></div>
+    <h2>Same efficiency, five times the footprint</h2>
+    <p class="lede">An AI campus is not a wasteful data centre. Per megawatt of IT it uses about the same energy as a good colocation hall, and often less water on site. What changes is scale and density: racks ten times hotter, campuses five to fifty times bigger. In India, most of the water it uses is evaporated at coal plants, so the power contract matters more than the cooling plant.</p>
+  </div>
+  <div class="take">
+    <div><span class="v mono">≈1.0× · 5×</span><span class="k">AI campus vs conventional colo: energy per MW of IT, then energy and water per site (100 MW vs 20 MW) <span class="ev m show" data-src="Report 13 comparison model (section 5); assumptions in the ƒ drawer">model</span></span></div>
+    <div><span class="v mono">120–142 kW</span><span class="k">Power of one GB200/GB300 NVL72 rack, against 5–15 kW for a typical colo rack <span class="ev r show" data-src="NVIDIA reference design; HPE GB200 NVL72 spec; Uptime Institute 2025 survey">reported</span></span></div>
+    <div><span class="v mono">76–99%</span><span class="k">Share of a site's total water that is evaporated at power plants, in every case modelled, at 2.9 L/kWh of grid water <span class="ev m show" data-src="Report 13 section 5.2, re-run at the atlas grid water of 2.9 L/kWh at the meter (73% coal × 3.5 m³/MWh ÷ 0.92)">model</span></span></div>
+    <div><span class="v mono">0.24 Wh · 0.26 mL</span><span class="k">Energy and on-site water for Google's median Gemini text prompt, May 2025 <span class="ev r show" data-src="Google technical paper, Aug 2025 (company-reported, not independently audited)">reported</span></span></div>
+  </div>
+
+  <!-- 1 HERO: two buildings -->
+  <div class="panel inst hot has-fx">
+    <button type="button" class="fx" aria-expanded="false" aria-controls="fx-vs1" title="Show formulas and assumptions">ƒ<span class="sr">Formulas and assumptions: two buildings</span></button>
+    <h3>Two buildings, side by side<span class="sub">A 20 MW conventional colocation hall and a 100 MW AI training campus, run in India. Switch between whole-site and per-megawatt views, wet and dry cooling, and change how clean the power is.</span></h3>
+    <div class="fxbox" id="fx-vs1" hidden>
+      <div class="fxh">How this is calculated · two buildings</div>
+      <ol class="fxf">
+        <li>IT energy (MWh) = IT MW × load factor × 8,760 · colo 20 MW × 60% · AI 100 MW × 75%</li>
+        <li>Facility energy = IT energy × PUE · wet: colo 1.30, AI 1.12 · dry: colo 1.48, AI 1.17 (atlas cooling reference at part load)</li>
+        <li>On-site water (ML) = IT energy (GWh) × WUE · wet: colo 1.8, AI 1.8 L/kWh · dry: colo 0.05, AI 0.05 L/kWh</li>
+        <li>Grid water (ML) = facility energy (GWh) × (1 − clean share) × grid water intensity</li>
+        <li>CO₂ (kt) = facility energy (GWh) × 0.675 × (1 − clean share)</li>
+        <li>Per-MW view divides every figure by IT capacity (20 or 100 MW)</li>
+      </ol>
+      <div class="fxa"><b>Assumptions</b><ul><li>All values are Report 13's modelled archetypes [model], not measurements of a real site.</li><li>AI load factor (75%) sits between LBNL's mixed-workload central case (~60% of rated: busy 80% of hours at ~70% of rated power, idle at 20% otherwise) and measured training (~78% of rated). All atlas chapters use load factor = average IT power ÷ rated IT capacity.</li><li>Grid water is 2.9 L/kWh at the meter for the India grid: about 2.66 L/kWh evaporated at the plant (73% coal × 3.5 m³/MWh, the MoEFCC limit and close to measured cooling-tower averages, plus nuclear and gas), divided by 0.92 for the ~8% network losses on a high-voltage connection. State generation mixes (Karnataka 1.5 to Uttar Pradesh 3.3) are a sensitivity. Facility energy is measured at the meter, so the meter value is the right multiplier; it is the same factor Chapter 8 uses. Hydro reservoir evaporation is excluded.</li><li>Clean power (solar, wind) is counted at zero operating water and zero CO₂. Grid factor <span data-std="co2" data-d="3">0.675</span> tCO₂/MWh (CEA v22.0, FY2025-26).</li></ul></div>
+    </div>
+    <div class="vs-ctrls">
+      <div class="opt"><span class="fieldlbl">View</span><div class="seg" id="vs1-n" role="group" aria-label="Normalise"><button data-v="site" aria-pressed="true">Whole site</button><button data-v="mw" aria-pressed="false">Per MW of IT</button></div></div>
+      <div class="opt"><span class="fieldlbl">Cooling</span><div class="seg" id="vs1-c" role="group" aria-label="Cooling"><button data-v="wet" aria-pressed="true">Wet: cooling towers</button><button data-v="dry" aria-pressed="false">Dry: air-cooled / closed loop</button></div></div>
+      <div class="ctrl"><label for="vs1-g">Grid water intensity (at the meter)</label><output id="vs1-g-o"></output><input id="vs1-g" type="range" min="1.5" max="6.5" step="0.1" value="2.9"></div>
+      <div class="ctrl"><label for="vs1-s">Clean power share</label><output id="vs1-s-o"></output><input id="vs1-s" type="range" min="0" max="100" step="5" value="0"></div>
+    </div>
+    <div class="vs-duel" id="vs1"></div>
+    <div class="vs-ratio" id="vs1-r" aria-live="polite"></div>
+    <p class="note" id="vs1-note"></p>
+  </div>
+
+  <!-- 2 Archetypes -->
+
+  <!-- WHY AI USES MORE WATER: calculation -->
+  <div class="panel inst hot gap has-fx" id="wy-p">
+    <button type="button" class="fx" aria-expanded="false" aria-controls="fx-wy" title="Show formulas and assumptions">ƒ<span class="sr">Formulas and assumptions: why AI data centres use more water</span></button>
+    <h3>Why an AI data centre uses more water: the calculation in five steps<span class="sub">Per kWh of heat, AI and conventional halls need the same water, and per MW of capacity they come out about equal. The gap opens per rack and per site, because AI packs more power into each rack, runs it almost flat out, and is built at far larger scale. Move the sliders and every number below is recalculated.</span></h3>
+    <div class="fxbox" id="fx-wy" hidden>
+      <div class="fxh">How this is calculated · why AI data centres use more water</div>
+      <ol class="fxf">
+        <li>Water per kWh of heat, fully evaporated = 3.6 MJ ÷ 2.43 MJ/kg (latent heat at ~30 °C) = 1.48 L</li>
+        <li>Cooling tower: ~80% of heat leaves by evaporation (1.19 L/kWh); blowdown = evaporation ÷ (cycles of concentration − 1) = 0.40 L at 4 cycles; total 1.58 L per kWh of heat rejected</li>
+        <li>Air-cooled hall on chillers: the tower also rejects the chiller's compressor heat, × (1 + 1/COP 6) = 1.84 → WUE 1.8 L/kWh of IT. Warm-water direct-to-chip runs without chillers most of the year, so the tower rejects about the IT heat alone → WUE 1.5</li>
+        <li>IT load factor = idle share × (1 − compute utilisation) + busy power share × compute utilisation (LBNL 2024 server model)</li>
+        <li>Per MW per year: IT energy = load factor × 8,760 MWh; on-site water = IT energy × WUE ÷ 1,000 (ML); power-station water = IT energy × PUE × grid water ÷ 1,000 (ML)</li>
+        <li>Per rack per day: rack kW × load factor × 24 h × (WUE + PUE × grid water) ÷ 1,000 for kL; on-site only uses WUE alone</li>
+        <li>Per site: per-MW totals × site MW</li>
+        <li>Ratio at each level = AI value ÷ conventional value</li>
+      </ol>
+      <div class="fxa"><b>Assumptions</b><ul>
+        <li>Conventional: idle 36% of maximum power, 100% when busy (LBNL 2024, 2023 values); default compute utilisation 30% (LBNL colocation 21–35%); ~10 kW per rack (Uptime 2024 average ~8 kW).</li>
+        <li>AI: idle 20% of rated power, 78% of rated when training (LBNL 2024; measured 8-GPU H100 node 1.86 kW idle, ~8.4 kW peak, arXiv 2412.08602); default utilisation 80%; 135 kW per rack (GB300 NVL72 132–142 kW, Lenovo/HPE specifications).</li>
+        <li>PUE and WUE from the atlas cooling reference (Chapter 6, Bengaluru; the simulator and Chapter 16 use the same values): towers — conventional 1.25 / 1.8, AI 1.10 / 1.8; dry — conventional air-cooled chillers 1.45 / 0.05, AI liquid + dry coolers 1.15 / 0.05.</li>
+        <li>Grid water at the meter: India grid 2.9 L/kWh at the meter (CEA publishes one national grid; carbon uses the same boundary); marginal 3.8.</li>
+        <li>Chip manufacturing water is not included; no site discloses it.</li>
+      </ul></div>
+    </div>
+    <div class="vs-ctrls">
+      <div class="opt"><span class="fieldlbl">Cooling for both halls</span><div class="seg" id="wy-c" role="group" aria-label="Cooling"><button data-v="tw" aria-pressed="true">Cooling towers</button><button data-v="dry" aria-pressed="false">Dry: no evaporation on site</button></div></div>
+    </div>
+    <div class="ctrls">
+      <div class="ctrl"><label for="wy-uc">Conventional: share of time busy</label><output id="wy-uc-o"></output><input id="wy-uc" type="range" min="10" max="90" step="5" value="30"></div>
+      <div class="ctrl"><label for="wy-ua">AI: share of time busy</label><output id="wy-ua-o"></output><input id="wy-ua" type="range" min="30" max="100" step="5" value="80"></div>
+      <div class="ctrl"><label for="wy-rc">Conventional rack</label><output id="wy-rc-o"></output><input id="wy-rc" type="range" min="4" max="20" step="1" value="10"></div>
+      <div class="ctrl"><label for="wy-ra">AI rack</label><output id="wy-ra-o"></output><input id="wy-ra" type="range" min="40" max="250" step="5" value="135"></div>
+      <div class="ctrl"><label for="wy-mc">Conventional site</label><output id="wy-mc-o"></output><input id="wy-mc" type="range" min="5" max="100" step="5" value="20"></div>
+      <div class="ctrl"><label for="wy-ma">AI site</label><output id="wy-ma-o"></output><input id="wy-ma" type="range" min="20" max="1000" step="10" value="100"></div>
+      <div class="ctrl"><label for="wy-g">Grid water at the meter</label><output id="wy-g-o"></output><input id="wy-g" type="range" min="1.5" max="6.5" step="0.1" value="2.9"></div>
+    </div>
+    <div class="wy-lad" id="wy-lad" aria-label="AI divided by conventional at four levels"></div>
+    <div class="tbl"><table class="wy-t"><thead><tr><th>Step</th><th>Conventional</th><th>AI</th><th class="n">AI ÷ conv.</th></tr></thead><tbody id="wy-tb"></tbody></table></div>
+    <p class="small" id="wy-n"></p>
+  </div>
+
+  <div class="cols gap">
+    <div class="panel"><h3>Five reasons the AI site uses more water<span class="sub">None of them is that a GPU's heat is harder to remove than a CPU's.</span></h3>
+      <ol class="clean small wy-ol">
+        <li><b>Density.</b> One GB300 rack carries the heat of about fourteen conventional racks, so one hall, one town supply and one substation carry what used to be spread over many sites.</li>
+        <li><b>It runs flat out.</b> Training keeps GPUs busy around 80% of the time at close to full power, so water demand does not dip at night or at weekends. Peak-day demand stays near the average, with the summer evaporation peak on top.</li>
+        <li><b>Scale.</b> AI campuses are 100 MW to 1 GW where a colocation hall is 5–20 MW. The IEA expects AI to drive about half of the growth in world data-centre electricity to 2030.</li>
+        <li><b>The electricity behind it.</b> In India about 70% of the total is evaporated at power stations, roughly 3 L for every kWh bought. More electricity means more water, wherever the site is.</li>
+        <li><b>Towers are the cheapest way to dump heat at scale.</b> Many AI builds choose evaporative towers for cost, even though warm-water liquid cooling could run on dry coolers.</li>
+      </ol></div>
+    <div class="panel"><h3>And what it does not mean<span class="sub">Three common misreadings of "AI is thirsty".</span></h3>
+      <ul class="clean small">
+        <li><b>Not more water per kWh.</b> Evaporating water absorbs 2.43 MJ per kg whatever produced the heat. AI halls on liquid cooling often use slightly less per kWh, because warm water needs no chiller.</li>
+        <li><b>Not more water per MW.</b> AI's higher load factor (about 66% against 55%) is mostly offset by its lower PUE (about 1.10 against 1.25 on towers), so a megawatt of AI capacity uses only about 10% more water a year than a megawatt of colocation.</li>
+        <li><b>Not fixed.</b> On dry coolers, a 100 MW AI campus cuts on-site water by about 98%, but total water only by about 28%, because the power-station water barely moves. Clean, hour-matched power is the bigger lever (Chapters 16 and 18).</li>
+      </ul></div>
+  </div>
+
+  <div class="panel gap">
+    <h3>Five kinds of data centre<span class="sub">Rack density, size and the shape of the load. The small traces are illustrative 48-hour load profiles; the numbers come from LBNL, Uptime and vendors.</span></h3>
+    <div class="vs-arch" id="vs2"></div>
+    <p class="note">AI training loads swing together: LBNL measured a "square-wave" pattern when eight H100 nodes paused to synchronise, from ~78% of rated power down towards idle (~18%). Grid operators feel these swings; a colo hall's slow, flat load barely registers.</p>
+  </div>
+
+  <!-- 3 Rack density -->
+  <div class="cols gap">
+    <div class="panel has-fx">
+      <button type="button" class="fx" aria-expanded="false" aria-controls="fx-vs3" title="Show formulas and assumptions">ƒ<span class="sr">Formulas and assumptions: rack density</span></button>
+      <h3>How hot is one rack?<span class="sub">kW per rack on a log scale. Solid bars are reported, pale bars estimates, hatched bars design targets.</span></h3>
+      <div class="fxbox" id="fx-vs3" hidden>
+        <div class="fxh">How this is calculated · rack density</div>
+        <ol class="fxf"><li>Bars span the reported low–high kW per rack; log scale 1–1,000 kW</li><li>Equivalent racks = AI rack kW ÷ conventional rack kW (rounded)</li></ol>
+        <div class="fxa"><b>Assumptions</b><ul><li>GB200 NVL72: 120 kW (NVIDIA reference) to 132 kW (HPE: 115 kW liquid + 17 kW air). GB300 up to 142 kW. Fairwater built for ~140 kW per rack.</li><li>Vera Rubin VR200 ~190–230 kW is a third-party estimate; NVIDIA has not disclosed it. Kyber 600 kW is a vendor roadmap statement for 2027.</li></ul></div>
+      </div>
+      <div id="vs3" class="wpsvg" role="img" aria-label="Rack power by data-centre type, log scale"></div>
+    </div>
+    <div class="panel">
+      <h3>One AI rack, in colo racks<span class="sub">Pick an AI rack and a conventional rack size, and count how many conventional racks draw the same power.</span></h3>
+      <div class="vs-ctrls">
+        <div><label for="vs4-a" class="fieldlbl">AI rack</label><select id="vs4-a"><option value="40">H100 air-cooled (~40 kW)</option><option value="120" selected>GB200 NVL72 (~120 kW)</option><option value="142">GB300 NVL72 (~142 kW)</option><option value="210">Vera Rubin NVL72 (~210 kW, est.)</option><option value="600">Rubin Ultra Kyber (600 kW, 2027)</option></select></div>
+        <div class="ctrl"><label for="vs4-c">Conventional rack</label><output id="vs4-c-o"></output><input id="vs4-c" type="range" min="4" max="15" step="1" value="8"></div>
+      </div>
+      <div id="vs4" class="vs-racks" aria-live="polite"></div>
+      <p class="note">Heat follows power. A 120 kW rack in a space the size of a fridge cannot be cooled by moving air; that is why AI halls run liquid to the chip, and why the cooling choice outside the building decides the water.</p>
+    </div>
+  </div>
+
+  <!-- 4 PUE ladder -->
+  <p class="small xref">Where operators sit on PUE and on WUE (two charts) is now with the rest of the disclosure evidence in <a href="#cscope4">9.4</a>.</p>
+
+  <!-- 5 Per query -->
+  
+
+  <!-- 6 Energy breakdown + where energy goes -->
+  <div class="cols gap">
+    <div class="panel">
+      <h3>Where the facility's energy goes<span class="sub">Each bar is 100 units of electricity entering the site. Grey is overhead: cooling, power conversion, lighting.</span></h3>
+      <div class="hbars" id="vs7"></div>
+      <p class="note">At the survey average, a third of the electricity never reaches a server. At a hyperscale PUE it is under a tenth. Inside the IT share, servers take around 60% in a modern site (IEA); storage and networking take the rest.</p>
+    </div>
+    
+  </div>
+
+  <!-- 7 Liquid cooling verdict -->
+  <div class="panel inst gap has-fx">
+    <button type="button" class="fx" aria-expanded="false" aria-controls="fx-vs9" title="Show formulas and assumptions">ƒ<span class="sr">Formulas and assumptions: going dry</span></button>
+    <h3>Does liquid cooling save water? Run the trade<span class="sub">Liquid cooling lets heat leave through dry coolers instead of evaporating it. That costs extra electricity, and in India extra electricity carries coal-plant water and CO₂. Move the sliders to see who wins.</span></h3>
+    <div class="fxbox" id="fx-vs9" hidden>
+      <div class="fxh">How this is calculated · going dry</div>
+      <ol class="fxf">
+        <li>IT energy (GWh) = MW × load factor × 8.76</li>
+        <li>On-site water saved (ML) = IT GWh × (WUE wet − WUE dry)</li>
+        <li>Extra electricity (GWh) = IT GWh × PUE penalty</li>
+        <li>Extra grid water (ML) = extra GWh × (1 − clean share) × grid L/kWh · extra CO₂ (kt) = extra GWh × 0.675 × (1 − clean share)</li>
+        <li>Net water = saved − extra grid water</li>
+        <li>Break-even grid intensity (L/kWh) = (WUE wet − WUE dry) ÷ PUE penalty; going dry saves water whenever the grid is below this</li>
+      </ol>
+      <div class="fxa"><b>Assumptions</b><ul><li>Defaults reproduce Report 13 section 4: 100 MW AI at 78% load, WUE 1.0 → 0.05 L/kWh, PUE penalty 0.10, grid 2.9 L/kWh at the meter: about −649 ML on site, +198 ML at power plants, net −451 ML, +46 kt CO₂ (Report 13 used 2.6 L/kWh at the plant: +171 ML, net −453 ML).</li><li>Dry WUE fixed at 0.05 L/kWh (closed loop, small top-up).</li></ul></div>
+    </div>
+    <div class="vs-ctrls">
+      <div class="opt"><span class="fieldlbl">Site</span><div class="seg" id="vs9-s" role="group" aria-label="Site"><button data-v="ai" aria-pressed="true">100 MW AI campus</button><button data-v="co" aria-pressed="false">20 MW colo</button></div></div>
+      <div class="ctrl"><label for="vs9-w">Wet design WUE</label><output id="vs9-w-o"></output><input id="vs9-w" type="range" min="0.5" max="2.0" step="0.05" value="1.0"></div>
+      <div class="ctrl"><label for="vs9-p">PUE penalty for going dry</label><output id="vs9-p-o"></output><input id="vs9-p" type="range" min="0.02" max="0.25" step="0.01" value="0.10"></div>
+      <div class="ctrl"><label for="vs9-g">Grid water intensity (at the meter)</label><output id="vs9-g-o"></output><input id="vs9-g" type="range" min="1.5" max="6.5" step="0.1" value="2.9"></div>
+      <div class="ctrl"><label for="vs9-r">Clean power share</label><output id="vs9-r-o"></output><input id="vs9-r" type="range" min="0" max="100" step="5" value="0"></div>
+    </div>
+    <div id="vs9" class="wpsvg" role="img" aria-label="Water and carbon effect of switching from evaporative to dry cooling"></div>
+    <div class="read" id="vs9-r2"></div>
+    <p class="note" id="vs9-n"></p>
+  </div>
+
+  <!-- 8 WUE spectrum -->
+  
+
+  <!-- 9 Iceberg -->
+  <div class="cols gap">
+    <div class="panel">
+      <h3>The water you don't see<span class="sub">Heights are to scale. Above the line is the water used on site; below is water evaporated to make the electricity, then the water used to make the chips.</span></h3>
+      <div class="opt"><div class="seg" id="vs11-m" role="group" aria-label="Dataset"><button data-v="meta" aria-pressed="true">Meta, 2024 (reported)</button><button data-v="glob" aria-pressed="false">All data centres (estimate)</button><button data-v="ai" aria-pressed="false">100 MW AI campus, India</button></div></div>
+      <div id="vs11" class="wpsvg" role="img" aria-label="Iceberg of direct and indirect water"></div>
+      <p class="note" id="vs11-n"></p>
+    </div>
+    
+  </div>
+
+  <!-- 10 India -->
+  <div class="panel inst hot gap">
+    <h3>India: from mostly conventional to mostly AI<span class="sub">Operational capacity (Wood Mackenzie) and data-centre electricity (S&amp;P Global). Squares are 100 MW each; amber squares are AI-dedicated capacity.</span></h3>
+    <div class="vs-ind" id="vs13"></div>
+    <p class="note">Capacity figures disagree because they count different things: 1.4 GW of IT load (S&amp;P 451, Q2 2025) against 2.2 GW operational (Wood Mackenzie, 2025). Elsewhere the atlas anchors on Cushman &amp; Wakefield's <span data-std="cap.india" data-d="0">1,789</span> MW of operational IT capacity (H1 2026). 2030 projections run from ~8 GW to 12 GW and beyond. Treat all of them as scenarios.</p>
+  </div>
+
+  <!-- 11 City fit -->
+  
+
+  <!-- 12 Projects, policy, disclosure -->
+  <div class="cols gap">
+    
+    <div class="stack">
+      
+      <div class="panel">
+        <h3>Policy hooks<span class="sub">The two rules that touch AI efficiency and water.</span></h3>
+        <ul class="clean small vs-pol">
+          <li><b>IndiaAI GPU tender (MeitY corrigendum, Sept 2024):</b> bidders affirm PUE "not greater than 1.35". Industry said legacy sites could not meet it. There is no WUE counterpart.</li>
+          <li><b>Karnataka Sustainable DC Policy 2026–31:</b> ₹1,300.45 crore outlay, 1 GW by 2031, incentives tied to power and water efficiency, PUE and WUE monitoring, treated water, zones outside Bengaluru. Before it, neither BWSSB nor KSPCB tracked data-centre water.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 13 Gaps -->
+  <div class="panel gap">
+    <h3>What nobody knows yet<span class="sub">The disputes and data gaps behind every number in this chapter.</span></h3>
+    <div class="vs-gaps" id="vs17"></div>
+  </div>
+
+  <div class="do">
+    <h3>What the comparison says to do</h3>
+    <div class="cols">
+      <ul class="clean small"><li><b>Report three waters, never WUE alone:</b> on-site, grid (2.9 L/kWh at the meter for India, from MoEFCC limits and measured plant averages; range 2.3–3.5; 3.8 at the margin; Karnataka) and the total.</li><li><b>Compare per MW of IT, with the load factor stated.</b> Per-site comparisons mostly measure size.</li><li><b>Buy clean power first.</b> In India, moving from coal to solar and wind saves more water than any cooling technology.</li></ul>
+      <ul class="clean small"><li><b>Coastal AI sites: dry or seawater by default.</b> Flag any Bengaluru, Hyderabad or NCR proposal that relies on evaporative cooling or groundwater.</li><li><b>Add WUE to the IndiaAI PUE &lt; 1.35 rule,</b> and ask Karnataka to publish facility-level PUE and WUE.</li><li><b>Disclose the AI campuses.</b> Not one of the world's flagship AI sites has published an operating PUE or WUE.</li></ul>
+    </div>
+  </div>
+</div>
+</section>
+

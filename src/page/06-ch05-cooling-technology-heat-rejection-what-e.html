@@ -1,0 +1,177 @@
+<section class="ch chw" id="ccx" data-n="5">
+  <div class="chq">
+    <div class="chq-n" aria-hidden="true">5</div>
+    <div class="chq-b"><h2 class="chq-t">Cooling technology × heat rejection: what each combination really uses, and where it belongs</h2>
+      <p class="chq-q"><span>The question</span>A data centre's cooling has two layers: how heat leaves the server, and how it leaves the building. Which combinations work, what PUE and WUE do they reach in practice, and where and when should each be used in India?</p>
+      <p class="chq-a"><span>The short answer</span>The heat-rejection plant sets the water; the cooling technology sets the temperature that decides which plant is possible. Warm-water direct-to-chip or immersion cooling with dry or adiabatic coolers gives the lowest total water and carbon in Bengaluru, even after counting the extra grid electricity. Open cooling towers save a few points of PUE but use the most total water at any Indian grid intensity: towers only break even where grid water exceeds about 9–18 L/kWh (chilled-water halls, against air-cooled or free-cooling chillers) or 35 L/kWh (direct-to-chip); India's grid is 2.9 (3.8 at the margin). Use them only on treated wastewater.</p>
+      <nav class="chq-subs" aria-label="In this chapter"><a href="#ccx1">5.1</a><a href="#ccx2">5.2</a><a href="#ccx3">5.3</a><a href="#ccx4">5.4</a><a href="#ccx5">5.5</a><a href="#ccx6">5.6</a></nav>
+    </div>
+  </div>
+
+<div class="subch" id="ccx1">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">5.1</span><span class="eyebrow">Research · Two layers</span></div>
+    <h2>Two layers, and which one drinks</h2>
+    <p class="lede">Every data centre answers two questions: how does heat leave the chip, and how does it leave the site? Only the second usually evaporates water. But the first decides how warm the water is when it reaches the second, and that decides how often evaporation is needed at all.</p></div>
+  <div class="cti-two">
+    <div class="cai-card cv"><h4>Layer 1 · Cooling technology (server and room)</h4>
+      <ul class="clean small"><li><b>Room air:</b> refrigerant (DX) units or chilled-water air handlers (CRAH)</li><li><b>Evaporative air:</b> outside air through wet pads (direct), or air-to-air exchangers wetted on the outside (indirect, IEC)</li><li><b>Close-coupled:</b> rear-door coils and in-row coolers fed by chilled water</li><li><b>Liquid:</b> cold plates on the chip (direct-to-chip, DLC) at 30–45 °C; single- or two-phase immersion</li></ul>
+      <p class="small" style="margin:6px 0 0">Closed loops: almost no water. They set the <b>supply temperature</b>: 7–24 °C for air halls, 30–45 °C for liquid.</p></div>
+    <div class="cai-card ai"><h4>Layer 2 · Heat rejection (plant)</h4>
+      <ul class="clean small"><li><b>Dry:</b> air-cooled condensers, air-cooled chillers (with or without free-cooling coils), dry coolers</li><li><b>Wet when hot:</b> adiabatic or hybrid coolers that spray only on hot hours</li><li><b>Evaporative:</b> open cooling towers, with or without chillers</li><li><b>Other sinks:</b> seawater once-through, desalinated make-up, heat reuse</li></ul>
+      <p class="small" style="margin:6px 0 0">This is where water evaporates, and so it sets <b>WUE</b>. Evaporating 1 kWh of heat takes ~1.5 L plus blowdown.</p></div>
+  </div>
+  <div class="panel gap"><h3>The master matrix: technical envelope<span class="sub">Which pairings exist in practice, their rack range, coolant temperature, refrigerant and relative cost of the cooling plant.</span></h3>
+    <div class="tbl"><table class="aif-t cai-t"><thead><tr><th>#</th><th>Cooling technology</th><th>Heat rejection</th><th>Works in India?</th><th>Rack kW</th><th>Supply temperature</th><th>Refrigerant</th><th>Plant capex</th></tr></thead><tbody id="cx-env"></tbody></table></div>
+    <p class="xs muted">Research synthesis from ASHRAE TC9.9, vendor data (Vertiv, Schneider, Munters) and operator disclosures. Capex is relative to the cooling plant only; liquid cooling adds ~7–10% to total build cost (Turner &amp; Townsend 2025, US data), and a retrofit ~$2 M/MW (STL Partners). <span class="ev e show" data-src="Research synthesis; T&amp;T 2025; STL Partners 2026">estimate</span></p></div>
+</div>
+
+<div class="subch" id="ccx2">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">5.2</span><span class="eyebrow">Model · Pick a combination</span></div>
+    <h2>Pick a cooling technology and a heat rejection</h2>
+    <p class="lede">Choose the two layers and the climate. The panel shows only the pairings that are used in practice, then gives PUE, on-site WUE, total water and carbon per MWh of IT, a year's figures for the size you set, and where the combination belongs.</p></div>
+  <div class="panel inst hot gap" id="cx-p2">
+    <h3>Cooling combination picker<span class="sub">Total water per MWh IT = on-site WUE + PUE × grid litres per kWh; CO₂ = PUE × grid factor. Values are annualised Bengaluru-class estimates calibrated to operator, vendor and modelled anchors.</span></h3>
+    <div class="vs-ctrls">
+      <div class="opt"><span class="fieldlbl">Cooling technology</span><div class="seg" id="cx-ct" role="group" aria-label="Cooling technology"></div></div>
+    </div>
+    <div class="vs-ctrls" style="margin-top:8px">
+      <div class="opt"><span class="fieldlbl">Heat rejection</span><div class="seg" id="cx-hr" role="group" aria-label="Heat rejection"></div></div>
+      <div class="opt"><span class="fieldlbl">Climate</span><div class="seg" id="cx-cl" role="group" aria-label="Climate"><button data-v="b" aria-pressed="true">Bengaluru (temperate)</button><button data-v="c">Hot-humid coast</button><button data-v="d">Hot-dry / composite</button></div></div>
+    </div>
+    <div class="ctrls" style="margin-top:8px"><div class="ctrl"><label for="cxp-mw">IT capacity for the yearly figures</label><output id="cxp-mw-o"></output><input id="cxp-mw" type="range" min="10" max="1000" step="10" value="100"></div></div>
+    <div class="read" id="cxp-r" style="margin-top:12px"></div>
+    <div class="tbl" style="margin-top:10px"><table class="aif-t" id="cx-spec"></table></div>
+    <p class="small" id="cx-n"></p>
+    <details class="aif-det"><summary>Assumptions</summary><ul class="clean xs muted" style="margin-top:6px">
+      <li>PUE and WUE are annualised engineering estimates (labelled E in the research) for each climate class, calibrated to operator disclosures (Google, Microsoft, AWS, Equinix, NTT), vendor case studies (Munters, Firmus) and models (LBNL 2024, University of Michigan 2026). No Indian operator publishes site WUE.</li>
+      <li>Grid water: India 2.9 L/kWh at the meter, 3.8 at the margin. Grid CO₂: CEA v22.0 all-India 0.675 t/MWh (FY2025-26), operating margin 0.963.</li>
+      <li>Yearly figures use 78% average IT load (the atlas AI campus). The break-even grid intensity compares the chosen plant with the best dry option for the same cooling technology.</li>
+      <li>Tower WUE depends on cycles of concentration: Indian borewell water at 3 cycles can push towers to 2.3–2.6 L/kWh; RO-treated make-up at 5–6 cycles gives ~1.2–1.8.</li></ul></details>
+  </div>
+</div>
+
+<div class="subch" id="ccx3">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">5.3</span><span class="eyebrow">Research · In practice</span></div>
+    <h2>What operators actually report</h2>
+    <p class="lede">Fleet averages hide the mix of technologies and climates, but the "evaporative sites only" figures some operators publish are the best real-world anchor for cooling towers: about 1.2–1.6 L/kWh after optimisation, near 3 before.</p></div>
+  <div class="cols gap">
+    <p class="small xref">Operators’ published PUE and WUE are now with the rest of the disclosure evidence in <a href="#cscope4">9.4</a>.</p>
+    <div class="panel"><h3>What models say<span class="sub">Same direction, similar size.</span></h3>
+      <ul class="clean small">
+        <li><b>University of Michigan (2026), 200 MW site:</b> water-cooled → air-cooled chillers cut direct water 97% (6.45 → 0.21 million m³) and raised electricity 32% (3.08 → 4.06 TWh); total water still fell 44% (10.93 → 6.12 million m³). A hybrid economiser had the lowest electricity, but economised only a quarter of the year.</li>
+        <li><b>LBNL (2024):</b> US average PUE ~1.40 in 2023; average site WUE "just over 0.36 L/kWh".</li>
+        <li><b>PUE flatters air:</b> liquid cooling removes server fans, which lowers IT power and can raise measured PUE even when total power falls. Compare total kWh per unit of compute, not PUE alone.</li>
+        <li><b>Water treatment matters as much as the plant:</b> makeup = evaporation × cycles ÷ (cycles − 1). Going from 3 to 6 cycles cuts make-up ~20%; hard Indian borewell water caps cycles at 2–3 without softening or RO.</li>
+      </ul>
+      <p class="xs muted">arXiv 2609.25437 (U. Michigan); Shehabi et al., LBNL 2024; SemiAnalysis. <span class="ev m show" data-src="U. Michigan 2026; LBNL 2024">model</span></p></div>
+  </div>
+</div>
+
+<div class="subch" id="ccx4">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">5.4</span><span class="eyebrow">Research · Climate</span></div>
+    <h2>Which Indian cities can cool without chillers</h2>
+    <p class="lede">The coldest a plant can make its water depends on the outdoor air: dry coolers follow dry-bulb, evaporation follows wet-bulb. Bengaluru has 5–6 °C more evaporative headroom than the coastal metros and the coolest dry-bulb peaks, which makes it India's best major hub for chiller-free warm-water cooling.</p></div>
+  <div class="panel gap"><h3>Design conditions and chiller-free limits<span class="sub">0.4% annual design values from IS 7896:2001 (ISHRAE/TERI lineage). Derived columns are estimates: dry-cooler fluid ≈ dry-bulb + 5 K; adiabatic ≈ wet-bulb + 0.15 × (dry − wet) + 5 K; tower water ≈ wet-bulb + 4 K.</span></h3>
+    <div class="tbl"><table class="aif-t"><thead><tr><th>City</th><th>Zone</th><th>Dry-bulb / coincident wet-bulb (°C)</th><th>Evaporation wet-bulb (°C)</th><th>Dry-cooler fluid at peak</th><th>Adiabatic fluid at humid peak</th><th>Tower water at peak</th><th>Chiller-free liquid cooling?</th><th>Direct evaporative air?</th></tr></thead><tbody>
+      <tr class="sel"><td><b>Bengaluru</b></td><td>Temperate</td><td>34.7 / 19.6</td><td>23.5 (~25 in practice)</td><td>~39.7 → W40 fully dry</td><td>~29–31 → W32 OK</td><td>~27.5</td><td><b>Yes: W32 adiabatic, W40 dry</b></td><td>Partly (dry season)</td></tr>
+      <tr><td>Pune</td><td>Warm-humid (often called temperate)</td><td>38.4 / 20.5</td><td>24.8</td><td>~43.4 → W45</td><td>~30.7 → W32</td><td>~28.8</td><td>Yes (W32 adiabatic)</td><td>Partly</td></tr>
+      <tr><td>Hyderabad</td><td>Composite</td><td>40.4 / 22.5</td><td>25.6</td><td>~45.4 → W45 marginal</td><td>~31.8 → W32 marginal</td><td>~29.6</td><td>Yes at W35+ or with trim</td><td>Mar–May only</td></tr>
+      <tr><td>Mumbai</td><td>Warm-humid</td><td>35.3 / 22.8</td><td>27.9</td><td>~40.3 → W40 marginal</td><td>~33.5 → W35–W40</td><td>~31.9</td><td>Yes at W40</td><td>No</td></tr>
+      <tr><td>Chennai</td><td>Warm-humid</td><td>38.4 / 26.2</td><td>29.1</td><td>~43.4 → W45</td><td>~34.8 → W40</td><td>~33.1</td><td>Yes at W40–W45</td><td>No</td></tr>
+      <tr><td>Kolkata</td><td>Warm-humid</td><td>37.2 / 25.4</td><td>29.5</td><td>~42.2 → W45</td><td>~34.8 → W40</td><td>~33.5</td><td>Yes at W40–W45</td><td>No</td></tr>
+      <tr><td>Visakhapatnam</td><td>Warm-humid</td><td>36.4 / 26.5</td><td>29.2</td><td>~41.4 → W45</td><td>~34.9 → W40</td><td>~33.2</td><td>Yes at W40–W45</td><td>No</td></tr>
+      <tr><td>Delhi NCR</td><td>Composite</td><td>41.8 / 23.6</td><td>28.4</td><td>~46.8 → <b>not dry at W45</b></td><td>~34.1 → W40</td><td>~32.4</td><td>W40 with adiabatic trim</td><td>Pre-monsoon only</td></tr>
+      <tr><td>Ahmedabad / Jamnagar</td><td>Hot-dry</td><td>42.3 / 24.1</td><td>28.7</td><td>~47.3 → not dry</td><td>~34.5 → W40</td><td>~32.7</td><td>W40 with adiabatic trim</td><td>Pre-monsoon only</td></tr>
+    </tbody></table></div>
+    <p class="small">W32, W40, W45 are ASHRAE liquid-cooling classes: the warmest facility water the IT accepts. In humid coastal cities a tower makes water only ~1 °C colder than an adiabatic cooler at peak, so the water it spends buys little. Delhi and Gujarat are the only hubs where dry coolers fail at the design peak even at W45, which is exactly where a few hundred hours of adiabatic trim earn their keep.</p>
+    <p class="xs muted">IS 7896:2001; Simha (ISHRAE journal) notes these wet-bulbs may read 1–1.5 K low for Bengaluru and the coasts. Jamnagar's published evaporation wet-bulb (39.2 °C) is a misprint, so Ahmedabad is used. <span class="ev r show" data-src="IS 7896:2001; ISHRAE">reported</span> <span class="ev e show" data-src="Derived limits are estimates">estimate</span></p></div>
+  <div class="cols gap">
+    <div class="panel"><h3>Bengaluru's wet-bulb hours<span class="sub">Hours a year at or below each wet-bulb (Simha 2016, WeDCo data; may overstate free cooling).</span></h3>
+      <div class="hbars" id="cx-wb"></div>
+      <p class="small">A tower-fed economiser for an air hall at 24 °C chilled water needs wet-bulb ≤ ~18–19 °C: roughly 3,000–3,500 full free-cooling hours. Towers serving W32 liquid loops need ≤ ~26–27 °C: all 8,760 hours. That is why tower water buys far more in liquid plants, and why a dry or adiabatic plant gets almost the same result in Bengaluru without the water.</p></div>
+    <div class="panel"><h3>Free-cooling hours elsewhere<span class="sub">Only sourced figures; gaps flagged.</span></h3>
+      <div class="tbl"><table class="aif-t"><thead><tr><th>City</th><th>Metric</th><th>Hours/yr</th><th>Quality</th></tr></thead><tbody>
+        <tr><td>Delhi NCR</td><td>Below 20 °C</td><td>~2,400</td><td>IBM/IIT Delhi case study (2019)</td></tr>
+        <tr><td>Delhi NCR</td><td>Water-side economiser at 26/19 °C</td><td>1,173 full + 3,619 partial</td><td>Same study</td></tr>
+        <tr><td>Delhi / Pune / Mumbai</td><td>Dry cooler at ~35 °C fluid</td><td>~5,200 / 5,800 / 2,400</td><td>Unsourced blog; low</td></tr>
+        <tr><td>Chennai, Hyderabad, Kolkata, Vizag, Jamnagar</td><td colspan="2">Not found</td><td>Compute from ISHRAE hourly files</td></tr>
+      </tbody></table></div></div>
+  </div>
+</div>
+
+<div class="subch" id="ccx5">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">5.5</span><span class="eyebrow">Guide · Where and when</span></div>
+    <h2>Where and when to use each combination</h2>
+    <p class="lede">Decide by workload first (it sets rack density and the coolant temperature), then by water source, then by climate and land. In Bengaluru, run dry by default and add water only on the hottest hours, and only non-potable water.</p></div>
+  <div class="panel gap"><h3>Total water and carbon per MWh of IT<span class="sub">Bengaluru values. Bars: total water at the India grid's 2.9 L/kWh (on site dark, power stations light). The ranking holds at the marginal 3.8 and at every state mix.</span></h3>
+    <div class="aif-cmp" id="cx-tot"></div>
+    <div class="tbl" style="margin-top:10px"><table class="aif-t cti-vs" id="cx-tott"></table></div>
+    <p class="small">Against free-cooling air-cooled chillers, a tower saves ~0.10 PUE but costs ~1.75 L/kWh on site, so it only wins on total water above ~17.5 L/kWh of grid water, far above any Indian figure. Its carbon edge is small: ~0.03–0.07 t CO₂ per MWh IT, and close to zero with renewable power.</p></div>
+  <div class="cols gap">
+    <div class="panel"><h3>By workload<span class="sub">Defaults for India.</span></h3>
+      <div class="tbl"><table class="aif-t cai-t"><thead><tr><th>Workload</th><th>Use</th><th>Avoid</th></tr></thead><tbody>
+        <tr><td><b>Colocation / enterprise</b> (5–15 kW)</td><td>Free-cooling air-cooled chillers at 18–22 °C with containment; IEC in Bengaluru, Pune, Hyderabad</td><td>New DX halls; towers on potable or borewell water</td></tr>
+        <tr><td><b>Cloud / hyperscale</b> (10–30 kW)</td><td>IEC, or free-cooling chillers with provision for CDUs and rear doors</td><td>Direct evaporative air on the coasts</td></tr>
+        <tr><td><b>AI training</b> (80–140 kW)</td><td>DLC + adiabatic hybrid; DLC + dry at W40+ in Bengaluru</td><td>Air only; rear doors as a permanent fix above ~50 kW</td></tr>
+        <tr><td><b>AI inference</b> (20–60 kW, mixed)</td><td>Rear doors as a bridge to DLC + dry/adiabatic; one shared facility loop at 24–32 °C</td><td>Separate chilled-water and warm-water plants</td></tr>
+        <tr><td><b>Edge</b> (&lt;500 kW)</td><td>Free-cooling chillers or packaged IEC</td><td>Towers (they need treatment staff)</td></tr>
+      </tbody></table></div>
+      <h4 class="cti-h4" style="margin-top:10px">By water source</h4>
+      <ul class="clean small">
+        <li><b>Only drinking water or borewells:</b> dry first (free-cooling chillers, DLC + dry, immersion). Adiabatic trim only with a metered cap, e.g. ≤0.3 L/kWh a year.</li>
+        <li><b>Treated wastewater</b> (e.g. Hoskote's 60 MLD): adiabatic hybrids qualify; towers only with tertiary/RO polishing, ≥5 cycles and a Legionella plan.</li>
+        <li><b>Seawater</b> (Mumbai, Chennai, Vizag, Jamnagar): once-through condensers with titanium exchangers; 28–31 °C sea limits it to warm-water loops; coastal permits dominate.</li>
+        <li><b>Land:</b> dry coolers need ~2–3× the plant area of towers and are noisier; adiabatic pre-cooling shrinks the peak-day footprint.</li>
+      </ul></div>
+    <div class="panel"><h3>Bengaluru, place by place<span class="sub">And how to run the plant through the year.</span></h3>
+      <div class="tbl"><table class="aif-t cai-t"><thead><tr><th>Area</th><th>Recommended</th><th>Note</th></tr></thead><tbody>
+        <tr><td><b>Whitefield</b></td><td>Free-cooling chillers + rear doors (retrofit); DLC + dry for new AI pods</td><td>No new towers; target WUE ≤0.3</td></tr>
+        <tr><td><b>Electronic City</b></td><td>Replace DX rooms with free-cooling chillers or IEC</td><td>PUE ~1.7 → ~1.3</td></tr>
+        <tr><td><b>Hoskote</b> (500 MW park)</td><td>DLC W32–W40 + adiabatic hybrids on treated water; DLC + dry for W40+ halls</td><td>Best fit for the policy's PUE 1.00–1.20 band</td></tr>
+        <tr><td><b>Devanahalli</b></td><td>DLC + dry, adiabatic trim on stored treated or rain water</td><td>Design for W40 so trim runs only a few hundred hours</td></tr>
+      </tbody></table></div>
+      <h4 class="cti-h4" style="margin-top:10px">Operating modes through the year</h4>
+      <ul class="clean small">
+        <li><b>Liquid plant (W32):</b> fully dry when dry-bulb ≤ ~26 °C (Oct–Feb nights, most monsoon hours); adiabatic sprays at ~26–35 °C (Mar–May afternoons), a few hundred to ~1,500 hours, ≈0.1–0.3 L/kWh; above ~35 °C or with no water, let supply float to 35–40 °C or run a trim chiller for the air share.</li>
+        <li><b>Air hall (20/30 °C chilled water):</b> partial free cooling below ~28 °C dry-bulb (most of the year), full only below ~14–16 °C (rare). Raise supply air toward 26–27 °C: each +1 °C saves 2–5% of cooling energy (Singapore SS 697).</li>
+        <li><b>Existing towers:</b> treated water only, ≥5 cycles, economiser when wet-bulb ≤ ~18–19 °C (~3,000+ h), or convert to hybrid coils and run towers as trim.</li>
+      </ul></div>
+  </div>
+</div>
+
+<div class="subch" id="ccx6">
+  <div class="ch-head"><div class="ch-tag"><span class="ch-num" aria-hidden="true">5.6</span><span class="eyebrow">Policy · Benchmarks</span></div>
+    <h2>Rules elsewhere, and which combinations meet them</h2>
+    <p class="lede">Most PUE caps now sit at 1.2–1.4. Air halls on air-cooled chillers fail all of them; liquid cooling with dry or hybrid rejection passes all of them. Karnataka's WUE incentive band, as reported, rewards neither the driest nor the wettest designs.</p></div>
+  <div class="cols gap">
+    <div class="panel"><h3>Policy benchmarks<span class="sub">Row numbers refer to the master matrix.</span></h3>
+      <div class="tbl"><table class="aif-t cai-t"><thead><tr><th>Where</th><th>Rule</th><th>Combinations that comply</th></tr></thead><tbody>
+        <tr><td><b>Karnataka 2026–31</b></td><td>PUE/WUE reporting; ₹20 cr for PUE 1.00–1.20 held 3 years; treated-water reimbursement up to ₹8 lakh/yr; WUE 0.7–1.3 band up to ₹30 lakh/yr (secondary source)</td><td>PUE band: 6, 7 (best case), 9–13. WUE band: 5 and 10 on treated water; towers (1.8) and dry (0.05) both fall outside</td></tr>
+        <tr><td><b>MeitY AI-cloud tenders</b></td><td>PUE &lt;1.35</td><td>3 (marginal), 4–13</td></tr>
+        <tr><td><b>Singapore</b></td><td>PUE ≤1.3 roadmap; new capacity allocated at 1.25; SS 697 pushes ≥26 °C</td><td>4, 7, 9–13</td></tr>
+        <tr><td><b>Malaysia (MIDA)</b></td><td>Design PUE ≤1.4 hyperscale; WUE ≤2.2 (→2.0)</td><td>All but 1–2</td></tr>
+        <tr><td><b>Johor</b></td><td>WUE 1.8 (one source 1.4); reclaimed water for new builds; ~30% of applications rejected</td><td>Towers only on reclaimed water; 5, 7, 9–13</td></tr>
+        <tr><td><b>Germany EnEfG</b></td><td>New sites PUE ≤1.2 from July 2026 (draft amendment 1.3); heat-reuse 10/15/20%</td><td>9–13; towers (4, 11) borderline</td></tr>
+        <tr><td><b>EU EED</b></td><td>24 indicators including WUE for sites ≥500 kW; EU-weighted PUE 1.27</td><td>Disclosure only</td></tr>
+        <tr><td><b>China</b></td><td>New large sites PUE ≤1.25 (some sources 1.3)</td><td>7, 9–13</td></tr>
+      </tbody></table></div>
+      <p class="small"><b>Gap to close in Karnataka:</b> a 0.7–1.3 L/kWh band pays neither fully dry plants (~0.05) nor towers (~1.8). Add a top tier for ≤0.3, require metered WUE by water source, and make the treated-water reimbursement conditional on ≥5 cycles. Confirm the band against the gazetted text first.</p>
+      <p class="xs muted">MediaNama, TNM, Deccan Herald (Karnataka); SBI (MeitY); IMDA; MIDA; Johor reporting; Orrick and Cundall (Germany); EU Delegated Regulation 2024/1364. <span class="ev r show" data-src="Policy documents and summaries">reported</span></p></div>
+    <div class="panel"><h3>Beyond PUE and WUE<span class="sub">Trade-offs that decide real projects.</span></h3>
+      <ul class="clean small">
+        <li><b>Legionella:</b> open towers and adiabatic sprays are risks; adiabatic systems wet only for hours, which lowers but does not remove it. India has no data-centre code; adopt an ASHRAE 188-style plan.</li>
+        <li><b>Refrigerants:</b> DX and chiller plants carry HFCs (R-410A GWP ~2,088; R-134a ~1,430); low-GWP options are R-32, R-454B, R-513A, R-1234ze. India's Kigali schedule freezes HFC use around 2028. Chiller-less liquid designs largely remove the issue; two-phase immersion fluids raise PFAS concerns.</li>
+        <li><b>Reliability:</b> dry and adiabatic plants avoid depending on water supply, a real risk in Chennai 2019 and Bengaluru's tanker summers. Liquid loops add leak detection and CDU redundancy.</li>
+        <li><b>Heat reuse:</b> DLC returns at 45–60 °C are reusable (Germany mandates it), but India's low heat demand makes this a future option: absorption chilling or industrial preheat.</li>
+        <li><b>Footprint and noise:</b> dry coolers need more roof or land and run more fans; a consideration in dense Whitefield and Electronic City.</li>
+      </ul></div>
+  </div>
+  <details class="aif-det"><summary>Where the sources disagree, and what is uncertain</summary><ul class="clean xs muted" style="margin-top:6px">
+    <li>WUE definitions differ (withdrawal vs consumption); fleet figures mix technologies and climates, and single-year values move a lot (NTT 0.72 → 0.38).</li>
+    <li>IS 7896 wet-bulbs may be 1–1.5 K low for Bengaluru and the coasts; Jamnagar's value is a misprint; Pune's official zone conflicts with common use.</li>
+    <li>Johor's WUE threshold appears as 1.8 and 1.4; China's limit as 1.25 and 1.3; Germany's 1.2 may become 1.3; Karnataka's WUE band is from a secondary tracker.</li>
+    <li>Most PUE/WUE values in the matrix are calibrated engineering estimates; IEC and immersion pPUEs are vendor case studies; no Indian measured value exists for any combination.</li>
+    <li>The atlas's 1.8 L/kWh tower value suits treated make-up; at 3 cycles on hard borewell water, towers may use 2.3–2.6 L/kWh.</li></ul></details>
+</div>
+</section>
+

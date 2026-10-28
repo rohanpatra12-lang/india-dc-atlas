@@ -1,0 +1,16 @@
+
+/* ---------- SIGNATURE 3: TIME-LAPSE MAP OF INDIA ---------- */
+const HIST={2020:375,2021:510,2022:693,2023:942,2024:1133,2025:1520};
+const REZ=[['Khavda RE park',69.7,23.9],['Bhadla solar',71.9,27.5],['Pavagada solar',77.3,14.1],['Kurnool–Anantapur',78.0,15.3],['Tirunelveli wind',77.6,8.6]];
+const WSTRESS=['Bengaluru','Chennai','Hyderabad','NCR'];
+V2.map=()=>{const box=document.getElementById('v2-map');if(!box||!window.__GEO||!window.__proj||!window.__FCD)return;const F=window.__FCD();const R=F.cities(F.det,F.S_);const y=+document.getElementById('v2-yr').value;
+ const C=F.CITY;const base=C.reduce((a,c)=>a+c[1],0);
+ const mwOf=c=>y<2026?HIST[y]*c[1]/base:(R[c[0]][F.YRS.indexOf(y)]||0);
+ if(!box.dataset.b){box.innerHTML=`<svg viewBox="0 0 548 628" role="img" aria-label="Map of India with data-centre capacity by city over time"><g class="fst">${Object.values(window.__GEO.p).map(d=>`<path d="${d}"></path>`).join('')}</g><g class="rez">${REZ.map(([n,lo,la])=>{const p=window.__proj(lo,la);return `<g transform="translate(${p[0].toFixed(1)},${p[1].toFixed(1)})"><circle r="5" class="rez-c"/><title>${n}: renewable zone</title></g>`}).join('')}</g><g class="bub"></g><text class="map-yr" x="20" y="60"></text><text class="map-tot" x="20" y="88"></text></svg>`;box.dataset.b=1}
+ const mx=18800*.42;let tot=0,h='';C.slice().sort((a,b)=>mwOf(b)-mwOf(a)).forEach(c=>{const mw=mwOf(c);tot+=mw;if(!mw)return;const p=window.__proj(c[4],c[3]);const r=Math.max(2.5,Math.sqrt(mw/mx)*58);const st=WSTRESS.includes(c[0]);
+  h+=`<g transform="translate(${p[0].toFixed(1)},${p[1].toFixed(1)})">${st?`<circle r="${(r+5).toFixed(1)}" class="ws-ring"/>`:''}<circle r="${r.toFixed(1)}" class="bub-c"><title>${c[0]}: ${fmt(mw)} MW${st?' · water-stressed':''}</title></circle>${mw>150?`<text class="bub-t" ${c[0]==='Bengaluru'?`x="${(-r-6).toFixed(1)}" text-anchor="end"`:`x="${(r+6).toFixed(1)}"`} y="4">${c[0]==='NCR'?'Delhi NCR':c[0]} ${fmt(mw)}</text>`:''}</g>`});
+ box.querySelector('.bub').innerHTML=h;box.querySelector('.map-yr').textContent=y;box.querySelector('.map-tot').textContent=`${fmt(tot)} MW of IT${y<2026?' (estimated city split)':y>=2026?' (atlas forecast engine, base case, end of year)':''}`;
+ document.getElementById('v2-yr-o').textContent=y;
+ document.getElementById('v2-map-n').innerHTML=y>=2031?`<b>And the grid queue:</b> the Ministry of Power projects <b>26.3 GW</b> of additional AI data-centre load by 2031-32 — grid load, about ${fmt(26300/Math.max(1,tot),1)}× the IT capacity on this map.`:y<2026?'History: MeitY puts India at ~375 MW in 2020 and ~1.5 GW in 2025; the split by city is estimated from today\'s shares.':'Bubbles: IT capacity by city. Red rings: cities with stressed water. Amber dots: large renewable zones, mostly far from the load.'};
+document.addEventListener('input',e=>{if(e.target.id==='v2-yr')V2.map()});
+document.addEventListener('click',e=>{if(e.target.id!=='v2-play')return;const s=document.getElementById('v2-yr');if(V2.pl){clearInterval(V2.pl);V2.pl=null;e.target.textContent='▶ Play';return}if(+s.value>=2035)s.value=2020;e.target.textContent='❚❚ Pause';V2.pl=setInterval(()=>{s.value=+s.value+1;V2.map();if(+s.value>=2035){clearInterval(V2.pl);V2.pl=null;e.target.textContent='▶ Play'}},750)});
