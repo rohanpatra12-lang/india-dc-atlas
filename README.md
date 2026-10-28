@@ -1,8 +1,8 @@
 # India Data Centre Atlas
 
-An open, interactive atlas of how India's data centres are built, powered, cooled, paid for, made green and regulated: 19 chapters, more than 90 calculators, and the 15-part research series behind them. Every headline figure carries a source and a range. Every calculator can show its formulas with the numbers currently on screen.
+An open, interactive atlas of how India's data centres are built, powered, cooled, paid for, made green and regulated: 19 chapters, more than 90 calculators, and the 32-part research series behind them. Every headline figure carries a source and a range. Every calculator can show its formulas with the numbers currently on screen.
 
-**Read it:** open `site/index.html` in any browser, or visit the published copy at `https://<your-username>.github.io/<repo-name>/` once GitHub Pages is switched on (see below).
+**Read it:** https://rohanpatra12-lang.github.io/india-dc-atlas/ (or open `site/index.html` in any browser).
 
 **Use it:** copy any figure, chart or calculation, with credit (see [Licence](#licence)). The standards register can be downloaded as open data: [`site/data/standards.csv`](site/data/standards.csv) and [`site/data/chips.csv`](site/data/chips.csv).
 
@@ -17,7 +17,7 @@ An open, interactive atlas of how India's data centres are built, powered, coole
 | `site/` | The built atlas: nine self-contained pages (Start, Parts I–V, Growth explorer, Reference, Changelog) plus `data/`. This folder is what GitHub Pages serves. |
 | `src/` | The editable source. One file per chapter (`src/page/`), one per script module (`src/scripts/main/`), the stylesheet, the changelog, the growth explorer, and **`src/data/standards.js`, the one place every shared number lives**. |
 | `tools/` | The build (`build.py`), the page check (`check.js`), the open-data export, and the optimisation model behind Chapter 16.2 (`tools/models/karnataka_dc_model.py`). |
-| `research/` | The research reports, in Markdown. |
+| `research/` | The 32 research reports and four related studies, in Markdown, each with its numbered source list ([index](research/README.md)). |
 | `archive/` | Earlier outputs kept for the record. They carry values from before the October 2026 corrections; do not cite them. |
 | `docs/` | How the build and the atlas's conventions work ([ARCHITECTURE.md](docs/ARCHITECTURE.md)). |
 
@@ -58,7 +58,7 @@ Evidence tags on every figure say how solid it is: **reported** (published by a 
 - **Code** (everything in `tools/` and the JavaScript and CSS in `src/`): [MIT](LICENSE).
 - **Content** (the atlas text, figures, data, the standards register and everything in `research/`): [Creative Commons Attribution 4.0 International (CC BY 4.0)](LICENSE-CONTENT.md). You may share and adapt it for any purpose, including commercially, as long as you give credit and say what you changed.
 
-Suggested credit: *India Data Centre Atlas (2026), CC BY 4.0, https://github.com/&lt;your-username&gt;/&lt;repo-name&gt;*.
+Suggested credit: *India Data Centre Atlas (2026), CC BY 4.0, https://github.com/rohanpatra12-lang/india-dc-atlas*.
 
 Third-party material (Chart.js, web fonts, map boundaries and the many sources the atlas cites) keeps its own terms; see [NOTICE.md](NOTICE.md).
 

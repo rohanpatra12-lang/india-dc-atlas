@@ -8,3 +8,5 @@ version: "v33"
 date-released: "2026-10-28"
 license: CC-BY-4.0
 keywords: [data centres, India, water, energy, carbon, cooling, AI infrastructure]
+repository-code: "https://github.com/rohanpatra12-lang/india-dc-atlas"
+url: "https://rohanpatra12-lang.github.io/india-dc-atlas/"
