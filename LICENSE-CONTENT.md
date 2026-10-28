@@ -19,3 +19,5 @@ As long as you:
 ## What this licence does not cover
 
 The atlas cites and quotes hundreds of third-party sources (government documents, company reports, research papers, news articles). Those sources keep their own copyright; the atlas uses short quotations and figures with attribution. Facts and numbers are not owned by anyone, but if you reuse a quotation or a chart that reproduces someone else's work, follow that source's terms. See `NOTICE.md` for bundled third-party software and data.
+
+**Map boundaries are excluded.** The state and district outlines in the map chapters come from a third-party dataset with no stated licence (see `NOTICE.md`), so they are not licensed under CC BY 4.0 here.
