@@ -19,7 +19,7 @@ const TC_={ev:'--cold',hy:'--good',dr:'--hot',sw:'--chill'},TCN={ev:'Evaporative
 const FLEET=[['Microsoft global FY25',0.27,1.17,9,16,'start'],['Microsoft Asia-Pacific FY25',0.25,1.28,9,12,'start'],['NTT DATA portfolio FY24',0.72,1.38,9,16,'start'],['US average 2023 (LBNL)',0.36,1.40,9,-7,'start'],['Google (PUE 2025, WUE 2024)',1.15,1.09,9,4,'start']];
 let m1='site',sel1=0;
 function wp1(){
- const E=val('wp1-e'),src=m1==='src';out('wp1-e',E.toFixed(1)+' L/kWh');$('#wp1-e').disabled=!src;$('#wp1-e').closest('.ctrl').style.opacity=src?1:.45;
+ const E=val('wp1-e'),src=m1==='src';out('wp1-e',E.toFixed(1)+' L/kWh');$('#wp1-e').disabled=!src;{const c=$('#wp1-e').closest('.ctrl');if(c)c.style.opacity=src?1:.45}
  const W=Math.max(330,Math.min(640,$('#wp1').clientWidth||640)),H=W<500?330:380,L=44,R=12,Tp=12,B=40,pw=W-L-R,ph=H-Tp-B;
  const bx=TECH.map(t=>{let x0=t[2],x1=t[3];if(src){x0=t[2]+t[4]*E;x1=t[3]+t[5]*E}return {t,x0,x1,y0:t[4],y1:t[5]}});
  const xmax=src?Math.ceil(Math.max(...bx.map(b=>b.x1),...FLEET.map(f=>f[1]+f[2]*E))+.5):3;

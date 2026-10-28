@@ -16,7 +16,8 @@ const LOC={
  hyd:{n:'Hyderabad',st:'Telangana',c:2,tar:8.3,dem:500,tod:2.0,gwS:3.11,pw:80,tDes:40.4,tMean:26.5,stress:'Medium',src:'TGSPDCL HT-I(A): demand ₹500, time-of-day +1.50/−0.50 (FY2026-27); water estimate'},
  ncr:{n:'Delhi NCR (Noida)',st:'Uttar Pradesh',c:2,tar:7.2,dem:450,tod:2.0,gwS:3.28,pw:80,tDes:41.8,tMean:25.0,stress:'Extremely high',src:'UPPCL HV-2 all-in ₹7.2; demand ₹450; water and time-of-day spread estimates'},
  kol:{n:'Kolkata',st:'West Bengal',c:1,tar:8.0,dem:475,tod:1.5,gwS:3.45,pw:80,tDes:37.2,tMean:26.8,stress:'Medium',src:'Tariff estimate (energy charge ₹7.20 + demand ₹475); water estimate'},
- viz:{n:'Visakhapatnam',st:'Andhra Pradesh',c:1,tar:7.9,dem:475,tod:1.5,gwS:2.60,pw:80,tDes:36.4,tMean:28.0,stress:'Medium',src:'Tariff estimate (energy charge ₹7.20 + demand ₹475); water estimate'}
+ viz:{n:'Visakhapatnam',st:'Andhra Pradesh',c:1,tar:7.9,dem:475,tod:1.5,gwS:2.60,pw:80,tDes:36.4,tMean:28.0,stress:'Medium',src:'Tariff estimate (energy charge ₹7.20 + demand ₹475); water estimate'},
+rez:{n:'Remote renewable zone (inland Andhra, e.g. Anantapur–Kurnool)',st:'Andhra Pradesh',c:2,tar:7.9,dem:475,tod:1.5,gwS:2.60,pw:40,tDes:41.0,tMean:27.5,stress:'High',src:'Atlas estimate for a remote site: Andhra Pradesh tariff and grid water; hot-dry climate like Kurnool (design ~41 °C); drought-prone, so water is scarce; water price assumes an industrial or canal supply'}
 };
 /* atlas cooling table: PUE / on-site WUE by climate, rack ceiling; heat rejection type, chiller unit MW, liquid fraction, cost (₹ cr/MW, 14.2 tables), loop supply °C for dry coolers */
 const COOL=[
@@ -43,9 +44,10 @@ const GPU={h100:_g('h100','H100 SXM (HGX/DGX)',2885),h200:_g('h200','H200 SXM (H
 const RUNS={gpt3:['GPT-3 175B (2020)',1287,null],l70:['Llama 3.1 70B',null,7.0e6],l405:['Llama 3.1 405B',null,30.84e6],custom:['Custom',null,null]};
 /* energy per run on the chosen GPU: Meta's H100 GPU-hours × (H100 BF16 989 TFLOPS ÷ this GPU's BF16) × this GPU's all-in kW */
 const eRunFor=(run,gpu)=>{const R=RUNS[run];if(!R)return null;if(R[2]){const G=GPU[gpu]||GPU.h100;return Math.round(R[2]*989/G.bf16*G.kw/1000)}return R[1]};
-const DEF0={"itMW": 50, "loc": "blr", "shT": 40, "shI": 40, "uT": 90, "uI": 70, "uG": 65, "red": "N+1", "dT": 130, "cT": "dlc40", "dI": 60, "cI": "dlca", "dG": 12, "cG": "fcc", "ovr": false, "pT": 1.18, "wT": 0.05, "pI": 1.14, "wI": 0.4, "pG": 1.45, "wG": 0.05, "gpu": "b200", "kwGPU": 2.0, "tps": 12500, "der": 10, "tpq": 500, "run": "l70", "eRun": 9800, "gridCap": 0, "land": 0, "alloc": 0, "dieselH": 48, "re": 45, "ciB": "avg", "gwB": "nat", "tar": 8.0, "tarRE": 6.5, "pot": 50, "pw": 99, "tw": 40, "ewGPU": 2.6, "s3": true, "bMWh": 10, "bDur": 2, "bCost": 135, "bCyc": 1, "bRTE": 90, "bDoD": 90, "peak": 5, "spk": 10, "dem": 365, "tod": 1.5, "dr": 0, "flex": 60, "win": 4, "ciCut": 20, "facA": 74, "facG": 56.1, "itA": 266, "itG": 110, "dutyA": 0, "dutyG": 0, "landC": 3, "wplant": 1.2, "cont": 7, "wacc": 11, "lifeF": 20, "lifeI": 5, "lifeB": 12, "omF": 1.5, "omI": 2, "staff": 0.3, "ins": 0, "fx": 90, "kGW": 1, "kCI": 1};DEF0.fx=FX0;
+const DEF0={"itMW": 50, "loc": "blr", "shT": 40, "shI": 40, "uT": 90, "uI": 70, "uG": 65, "cmp": 12, "idl": 20, "red": "N+1", "dT": 130, "cT": "dlc40", "dI": 60, "cI": "dlca", "dG": 12, "cG": "fcc", "ovr": false, "pT": 1.18, "wT": 0.05, "pI": 1.14, "wI": 0.4, "pG": 1.45, "wG": 0.05, "gpu": "b200", "kwGPU": 2.0, "tps": 12500, "der": 10, "tpq": 500, "run": "l70", "eRun": 9800, "gridCap": 0, "land": 0, "alloc": 0, "dieselH": 48, "re": 45, "ciB": "avg", "gwB": "nat", "tar": 8.0, "tarRE": 6.5, "pot": 50, "pw": 99, "tw": 40, "ewGPU": 2.6, "s3": true, "bMWh": 10, "bDur": 2, "bCost": 135, "bCyc": 1, "bRTE": 90, "bDoD": 90, "peak": 5, "spk": 10, "dem": 365, "tod": 1.5, "dr": 0, "flex": 60, "win": 4, "ciCut": 20, "facA": 74, "facG": 56.1, "itA": 266, "itG": 110, "dutyA": 0, "dutyG": 0, "landC": 3, "wplant": 1.2, "cont": 7, "wacc": 11, "lifeF": 20, "lifeI": 5, "lifeB": 12, "omF": 1.5, "omI": 2, "staff": 0.3, "ins": 0, "fx": 90, "kGW": 1, "kCI": 1};DEF0.fx=FX0;
 const PRESETS={ai50:{},
  edge10:{itMW:10,loc:'mum',shT:0,shI:75,dT:60,dI:40,dG:10,cT:'dlc32',cI:'rdh',cG:'acc',gpu:'h200',run:'gpt3',re:30,bMWh:4,peak:2,uI:60},
+ remote300:{itMW:300,loc:'rez',shT:100,shI:0,uT:92,cmp:12,idl:20,dT:140,cT:'dlc40',red:'N',gpu:'b300',run:'l405',re:85,tarRE:5.6,landC:0.6,pw:40,pot:100,bMWh:80,bDur:2,peak:30,spk:25,flex:0,win:0,dieselH:12},
  hyper200:{itMW:200,loc:'viz',shT:75,shI:20,dT:130,dI:120,dG:15,cT:'dlc40',cI:'dlc40',cG:'fcc',gpu:'gb200',run:'l405',re:60,bMWh:80,bDur:4,peak:20,red:'N+1'},
  flex50:{itMW:50,loc:'che',shT:50,shI:40,cT:'dlc40',cI:'dlca',cG:'iec',gpu:'b200',re:50,bMWh:30,bDur:2,bCyc:2,peak:15,spk:20,flex:80,win:6},
  colo20:{itMW:20,loc:'mum',shT:0,shI:0,dG:10,cG:'wcc',re:20,bMWh:0,peak:0,red:'2N',pot:30}};
@@ -67,7 +69,8 @@ function compute(S){
   const L=LOC[S.loc],RD=REDM[S.red]||REDM['N+1'];
   const rT=Math.max(0,S.shT),rI=Math.max(0,S.shI),over=rT+rI>100,sum=over?rT+rI:100;
   const sh={T:rT/sum,I:rI/sum,G:Math.max(0,100-rT-rI)/sum};
-  const u={T:S.uT/100,I:S.uI/100,G:S.uG/100},dens={T:S.dT,I:S.dI,G:S.dG};
+  const uTb=S.uT/100,cm=clamp(S.cmp==null?12:S.cmp,1,12)/12,uTe=cm*uTb+(1-cm)*clamp(S.idl==null?20:S.idl,0,100)/100;
+  const u={T:uTe,I:S.uI/100,G:S.uG/100},dens={T:S.dT,I:S.dI,G:S.dG};
   const ci=(S.ciB==='marg'?0.963:CO2)*S.kCI,gw=(S.gwB==='state'?L.gwS:2.9)*S.kGW,re=clamp(S.re,0,100)/100,dT=L.tDes-L.tMean;
   const Z={};let it=0,fac=0,s1=0,s2=0,co2=0,peak=0,itPk=0;
   for(const z of['T','I','G']){const cool=coolOf(S['c'+z]),mw=S.itMW*sh[z],pue=S['p'+z],wue=S['w'+z],itMWh=mw*8760*u[z],facMWh=itMWh*pue;
@@ -82,7 +85,8 @@ function compute(S){
   /* inference and training */
   const tpsEff=S.tps*S.der/100,capTps=Z.I.gpus*tpsEff,servedTps=capTps*Z.I.u,qps=servedTps/S.tpq,qDay=qps*86400,qYr=qDay*365;
   const whQ=qYr>0?Z.I.facMWh*1e6/qYr:0,mlQ=qYr>0?(Z.I.w1+Z.I.w2)*1000/qYr:0,gQ=qYr>0?Z.I.co2*1e6/qYr:0;
-  const runs=S.eRun>0?Z.T.itMWh/S.eRun:0,hRun=Z.T.mw>0?S.eRun/(Z.T.mw*Z.T.u):0;
+  Z.T.uBusy=uTb;Z.T.cm=cm;Z.T.busyMWh=Z.T.mw*8760*uTb*cm;
+  const runs=S.eRun>0?Z.T.busyMWh/S.eRun:0,hRun=Z.T.mw>0?S.eRun/(Z.T.mw*uTb):0;
   /* battery and load shifting */
   const bPow=S.bMWh>0?S.bMWh/S.bDur:0,dYr=S.bMWh*S.bDoD/100*S.bCyc*365,avgFac=fac/8760,shaveable=avgFac*S.spk/100,peakCut=Math.min(S.peak,bPow,shaveable);
   const demSave=peakCut*1000*S.dem*12/1e7,lossCost=dYr*1000*(1/(S.bRTE/100)-1)*S.tar/1e7,todGross=dYr*1000*S.tod/1e7,todSave=Math.max(0,todGross-lossCost),drRev=bPow*S.dr/1e7;
@@ -113,7 +117,7 @@ function compute(S){
   const opex=elec+wCost+om+staff+insC+bOM-(demSave+todSave+drRev)-shiftSave,tco=annFac+annIT+annB+opex;
   const zc={};for(const z of['T','I','G']){const isA=z!=='G',fc=facZ[z]+Z[z].mw*(S.landC+S.wplant),ic=Z[z].mw*(isA?S.itA*(1+S.dutyA/100):S.itG*(1+S.dutyG/100));
     zc[z]=fc*(1+S.cont/100)*cF+ic*cI+Z[z].facMWh*1000*blend/1e7+(facZ[z]*S.omF+ic*S.omI)/100+(S.itMW>0?S.itMW*S.staff*Z[z].mw/S.itMW:0)+(facZ[z]+ic)*S.ins/100+Z[z].w1/1000*(S.pot/100*S.pw+(1-S.pot/100)*S.tw)/1e7}
-  const rsQ=qYr>0?zc.I*1e7/qYr:0,gpuH=(Z.T.gpus*Z.T.u+Z.I.gpus*Z.I.u)*8760,rsGH=gpuH>0?(zc.T+zc.I)*1e7/gpuH:0;
+  const rsQ=qYr>0?zc.I*1e7/qYr:0,gpuH=(Z.T.gpus*Z.T.uBusy*Z.T.cm+Z.I.gpus*Z.I.u)*8760,rsGH=gpuH>0?(zc.T+zc.I)*1e7/gpuH:0;
   return {S,L,RD,sh,over,Z,zs,it,fac,s1,s2,s3,water,co2,pueF,wueF,ci,gw,re,ciDel,peak,itPk,gpusAI,tpsEff,capTps,servedTps,qps,qDay,qYr,whQ,mlQ,gQ,runs,hRun,
    bPow,dYr,avgFac,shaveable,peakCut,demSave,lossCost,todGross,todSave,drRev,bCapex,bOM,bNet,bPay,flexMW,want,room,shiftYr,shiftSave,shiftCO2,
    mva,volt,txN,mainN,genN,fuelKL,liqMW,airMW,cduN,rejN,chillN,racks,gT,gI,leafT,spineT,coreT,leafI,spineI,fe,switches,fabric,dayKL,pf,peakKL,freshPk,evap,trainTxt,
@@ -244,7 +248,7 @@ function render(){
    `<tr><td><b>Campus</b></td><td class="n"><b>${nf(S.itMW,1)}</b></td><td class="n">${Math.round(r.it/(S.itMW*8760)*100)}%</td><td class="n">${fMWh(r.it)}</td><td class="n">100%</td><td class="n">${r.pueF.toFixed(2)}</td><td class="n">${r.wueF.toFixed(2)}</td><td class="n">${nf(r.racks)}</td><td class="n">${nf(r.gpusAI)}</td><td class="n">${fL(r.s1)}</td><td class="n">${fL(r.s2)}</td><td class="n">${fL(r.s3)}</td><td class="n">${fT(r.co2)}</td></tr></tbody></table></div>`;
   $h('hy-inf').innerHTML=Z.I.mw>0?bs([['Inference GPUs',nf(Z.I.gpus)],['Peak throughput',fN(r.capTps)+' tokens/s'],[`Average served (× ${Math.round(Z.I.u*100)}%)`,fN(r.servedTps)+' tokens/s'],['Queries per day',fN(r.qDay)],['Energy per query',r.whQ.toFixed(3)+' Wh'],['Water per query',r.mlQ.toFixed(2)+' mL'],['Carbon per query',r.gQ.toFixed(2)+' g CO₂'],['Cost per 1,000 queries','₹'+nf(r.rsQ*1000,1)]])+
     `<p class="note">Google measured 0.24 Wh and 0.26 mL for a median Gemini prompt. ${r.whQ<0.05?'This design is far below that: check the serving efficiency or tokens per query.':r.whQ>3?'This design is well above that: check the serving efficiency.':'This design is in the same range.'}</p>`:'<p class="note">No inference zone in this design.</p>';
-  $h('hy-trn').innerHTML=Z.T.mw>0?bs([['Training GPUs',nf(Z.T.gpus)],['Training IT energy a year',fMWh(Z.T.itMWh)],['Energy per run',nf(S.eRun)+' MWh'],['Runs per year',nf(r.runs,1)],['Wall-clock per run',nf(r.hRun,0)+' h ≈ '+nf(r.hRun/24,1)+' days'],['Carbon per run',fT(S.eRun*Z.T.pue*(1-r.re)*r.ci)],['Water per run',fL(S.eRun*1000*(Z.T.wue+Z.T.pue*((1-r.re)*r.gw+r.re*0.05)))]])+
+  $h('hy-trn').innerHTML=Z.T.mw>0?bs([['Training GPUs',nf(Z.T.gpus)],['Training IT energy a year',fMWh(Z.T.itMWh)],['Energy per run',nf(S.eRun)+' MWh'],['Campaign',Z.T.cm<1?`busy ${nf(Z.T.cm*12,0)} months a year at ${Math.round(Z.T.uBusy*100)}%; idle ${nf(12-Z.T.cm*12,0)} months at ${S.idl}% power → ${Math.round(Z.T.u*100)}% average`:`busy all year at ${Math.round(Z.T.uBusy*100)}%`],['Runs per year',nf(r.runs,1)],['Wall-clock per run',nf(r.hRun,0)+' h ≈ '+nf(r.hRun/24,1)+' days'],['Carbon per run',fT(S.eRun*Z.T.pue*(1-r.re)*r.ci)],['Water per run',fL(S.eRun*1000*(Z.T.wue+Z.T.pue*((1-r.re)*r.gw+r.re*0.05)))]])+
     `<p class="note">${RUNS[S.run][0]}. Energy per run scales Meta\'s H100 GPU-hours (Llama 3.1 405B: 30.84 million) to the chosen GPU by its BF16 speed and server power.</p>`:'<p class="note">No training zone in this design.</p>';
   const W=r.water,pc=x=>W>0?x/W*100:0,ppl=W/365/135;
   $h('hy-water').innerHTML=`<div class="hy-stk" style="height:24px">${[['--cold',r.s1],['--heat',r.s2],['--muted',r.s3]].map(([c,x])=>pc(x)>0.3?`<i style="width:${pc(x)}%;background:var(${c})"></i>`:'').join('')}</div>

@@ -1,5 +1,10 @@
 [
  {
+  "version": "v35",
+  "date": "2026-10-28",
+  "changes": "Training time in 14.6. The design check now has a training campaign setting: how many months a year the training hall is busy, and how much power it draws while idle between runs (about 20% of rated). Runs per year now count only busy months, while energy, water and carbon include the idle months. A new example design, \"300 MW remote training campus\", sets up a training-only site in an inland renewable zone in Andhra Pradesh: 100% training, N redundancy, B300 GPUs, warm-water liquid cooling with dry coolers, 85% renewable power and cheap land. A new city option, \"Remote renewable zone\", carries its climate, tariff and grid water."
+ },
+ {
   "version": "v34",
   "date": "2026-10-28",
   "changes": "Easier to read. Every abbreviation and technical term is defined where it is first used in each section: about 270 short forms (PUE, CGWB, W40, NVL72, FY25…) and 40 terms (blowdown, wet-bulb, open access, colocation…) are underlined with dots; hover, tap or tab to one for its meaning. The Reference page has a searchable list of all of them. Sixty-eight tables and fact panels that had no explanation now have a \"How to read this\" guide saying what the table shows, how to read it, what it tells you and what to be careful about, so every chart, table and calculator in the atlas now carries an interpretation."
