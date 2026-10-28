@@ -201,6 +201,42 @@
       <li>Energy: tertiary + RO 1.0 kWh/m³ (0.3 without RO), pumping 0.05 kWh/m³ per km; compared with the campus's facility energy from 12.4.</li>
       <li>The Hoskote preset uses a 3 km tap off the KC Valley main, against a BWSSB allocation of 60 MLD.</li></ul></details>
   </div>
+<div class="panel inst hot gap" id="bw-p7">
+    <h3>Is treated water cheaper than drinking water? Distance and volume decide<span class="sub">Yearly cost of moving a campus's on-site water from BWSSB drinking water to treated sewage. Net cost = pipe capital × recovery factor + treatment + treated water bought + pumping + monitoring − the drinking-water bill avoided. Below zero, treated water saves money.</span></h3>
+    <div class="vs-ctrls">
+      <div class="opt"><span class="fieldlbl">Example</span><div class="seg" id="bw-be-ex" role="group" aria-label="Example"><button data-v="a" aria-pressed="true">50 MW, low-water cooling (WUE 0.30)</button><button data-v="t">50 MW on cooling towers (WUE 1.8)</button><button data-v="w">100 MW AI on towers, Whitefield</button></div></div>
+    </div>
+    <div class="ctrls" style="margin-top:8px">
+      <div class="ctrl"><label for="bw-be-mw">Campus IT capacity</label><output id="bw-be-mw-o"></output><input id="bw-be-mw" type="range" min="10" max="500" step="10" value="50"></div>
+      <div class="ctrl"><label for="bw-be-u">Average IT load</label><output id="bw-be-u-o"></output><input id="bw-be-u" type="range" min="40" max="95" step="5" value="75"></div>
+      <div class="ctrl"><label for="bw-be-w">On-site water use (WUE)</label><output id="bw-be-w-o"></output><input id="bw-be-w" type="range" min="0.1" max="2" step="0.05" value="0.3"></div>
+      <div class="ctrl"><label for="bw-be-km">Pipe length to the treatment plant</label><output id="bw-be-km-o"></output><input id="bw-be-km" type="range" min="0" max="30" step="1" value="5"></div>
+      <div class="ctrl"><label for="bw-be-ck">Pipe cost per km</label><output id="bw-be-ck-o"></output><input id="bw-be-ck" type="range" min="0.5" max="3" step="0.1" value="1.3"></div>
+    </div>
+    <div class="vs-ctrls" style="margin-top:8px">
+      <div class="opt"><span class="fieldlbl">Treatment before use</span><div class="seg" id="bw-be-q" role="group" aria-label="Treatment"><button data-v="f" aria-pressed="true">Filtration + softening (₹7.5/kL)</button><button data-v="ro">Reverse osmosis to TDS &lt;70 ppm</button></div></div>
+      <div class="opt"><span class="fieldlbl">Paying for the pipe</span><div class="seg" id="bw-be-f" role="group" aria-label="Finance"><button data-v="a" aria-pressed="true">10% over 15 years</button><button data-v="s">Straight line, 10 years, no interest</button></div></div>
+      <div class="opt"><span class="fieldlbl">Drinking-water price</span><div class="seg" id="bw-be-pp" role="group" aria-label="Drinking-water price"><button data-v="99" aria-pressed="true">₹99/kL (top slab)</button><button data-v="110">₹110/kL (industry quote)</button></div></div>
+    </div>
+    <div class="read" id="bw-be-r" style="margin-top:12px"></div>
+    <div class="chart short" style="margin-top:10px"><canvas id="c-bw-be" aria-label="Net yearly cost of treated water against pipe length"></canvas></div>
+    <p class="small" id="bw-be-n"></p>
+    <div class="callout" style="margin-top:10px"><b class="t">Checking a common costing.</b> A widely shared estimate for a 50 MW Bengaluru campus (75% load, WUE 0.30) finds treated water cheaper when the plant is within 6–7 km. The arithmetic holds: 98,550 kL a year, 270 kL a day. Five points need correcting or a caveat.
+      <ul class="clean" style="margin-top:6px">
+        <li><b>Drinking-water price.</b> ₹110/kL is an industry quote; the BWSSB water charge in the top slab is ₹99/kL (12.1). The same estimate's "₹0.90–1.10 per litre" is ten times too high: ₹110/kL is ₹0.11 a litre.</li>
+        <li><b>Treatment cost.</b> ₹7.5/kL has no source. It may cover filtration and softening. Water at TDS &lt;70 ppm and hardness &lt;20 ppm, the targets one Bengaluru supplier uses, needs reverse osmosis. RO uses about 1 kWh/m³, and Chennai's plants run at about ₹18/kL before capital.</li>
+        <li><b>Interest.</b> Spreading the pipe evenly over 10 years ignores the cost of money. At 10% over 15 years, a ₹1.3 crore kilometre costs ₹17 lakh a year, not ₹13 lakh. That pulls the break-even from 6.6 km to 5.0 km, or about 4.3 km at ₹99.</li>
+        <li><b>Blending.</b> A 50/50 mix does not halve the result. The pipe costs the same, so a blend halves the saving and roughly halves the break-even distance.</li>
+        <li><b>Prices we could not confirm.</b> BWSSB's ₹10/kL for secondary-treated water is confirmed. A ₹8/kL price for water from apartment plants, with a ₹2 board margin, is not.</li>
+      </ul>
+      <p class="small" style="margin-top:6px">Confirmed as stated: Karnataka's 2026–31 policy repays treated-water charges up to ₹8 lakh a year for five years, and a pipe at ₹1.3 crore/km sits inside the atlas range of ₹1–3 crore. The missing lesson is volume. A campus on cooling towers uses six times the water, so the same pipe pays back over about six times the distance.</p></div>
+    <details class="aif-det"><summary>Assumptions and sources</summary><ul class="clean xs muted" style="margin-top:6px">
+      <li>Water a year (kL) = IT MW × load × 8,760 h × WUE. Pipe cost a year = km × ₹/km × recovery factor (0.131 at 10% over 15 years, or 0.10 straight line). Break-even km = (drinking-water bill − treated-water running costs) ÷ pipe cost per km a year.</li>
+      <li>Filtration + softening: ₹7.5/kL treatment, treated water bought at ₹10/kL. Reverse osmosis: 75% recovery, so a third more feed water is bought; ₹18/kL O&amp;M and energy; plant ₹5.5 crore per MLD of feed, as in the supply model above.</li>
+      <li>Pumping ₹1/kL; monitoring and testing ₹5 lakh a year. The pipe cost per km is held flat; a larger flow needs a wider, dearer pipe, so very large campuses should raise it.</li>
+      <li>The ₹8 lakh reimbursement is shown separately because it lasts only five years.</li>
+      <li>Sources: BWSSB tariff order, April 2025; Deccan Herald on Boson White Water and industrial tariffs (KASSIA); The News Minute on Karnataka's data centre policy, 30 September 2026; The Hindu on BWSSB treated-water sales, March 2024.</li></ul></details>
+  </div>
 <div class="panel inst hot gap" id="sm-p">
     <h3>Treated sewage for Bengaluru's data centres<span class="sub">Each data centre is matched to the nearest BWSSB sewage treatment plant with spare treated water, the method of Wang et al. (2026) applied to one city. Orange squares group the data centres by area; blue circles are treatment plants with spare treated water; white circles are plants whose water is already committed to lake-filling or industry; green lines are the pipes. Only plants that would supply a data centre are named; hover any circle for details, and the tables below give distances and volumes.</span></h3>
     <div class="vs-ctrls">

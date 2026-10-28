@@ -1,5 +1,10 @@
 [
  {
+  "version": "v36",
+  "date": "2026-10-28",
+  "changes": "Treated water break-even in 12.6. A new calculator asks whether treated sewage is cheaper than BWSSB drinking water for a campus, given its size, load, water use, the pipe length to the treatment plant, the treatment grade and how the pipe is financed. It plots the yearly saving or extra cost against distance and gives the break-even pipe length, with and without Karnataka's ₹8 lakh a year reimbursement. A callout checks a widely shared costing for a 50 MW Bengaluru campus: its arithmetic holds, but it uses ₹110/kL drinking water (top-slab water charge is ₹99), an unsourced ₹7.5/kL treatment cost that cannot reach cooling-tower grade without reverse osmosis, and interest-free pipe amortisation; it also wrongly says a 50/50 blend halves the result. Corrected, its 6–7 km break-even falls to about 4–5 km, or about 2–3 km with reverse osmosis. On cooling towers the same pipe pays back over about six times the distance."
+ },
+ {
   "version": "v35",
   "date": "2026-10-28",
   "changes": "Training time in 14.6. The design check now has a training campaign setting: how many months a year the training hall is busy, and how much power it draws while idle between runs (about 20% of rated). Runs per year now count only busy months, while energy, water and carbon include the idle months. A new example design, \"300 MW remote training campus\", sets up a training-only site in an inland renewable zone in Andhra Pradesh: 100% training, N redundancy, B300 GPUs, warm-water liquid cooling with dry coolers, 85% renewable power and cheap land. A new city option, \"Remote renewable zone\", carries its climate, tariff and grid water. In 14.6, settings for a zone with no capacity are now greyed out (a training-only design shows its inference and general-purpose settings as not used), and the Visakhapatnam example is renamed \"200 MW AI hub (75% training)\" because it deliberately mixes training, inference and general-purpose halls."
