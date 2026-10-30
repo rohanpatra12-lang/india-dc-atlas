@@ -1,7 +1,8 @@
 
 /* ---------- 5 CARBON ---------- */
 const mxL=['India grid avg (+8% losses)','Karnataka mix','Marginal coal, evening peak','24/7 RE + battery (90% CFE)','France (nuclear)','Norway (hydro)','Nuclear with towers','Gas CCGT'];
-const mxC=[.77,.54,1.09,.11,.045,.025,.009,.49],mxW=[4.5,1.8,6.7,.3,1.75,null,2.6,.75];let mxMode='co2';
+const _n=(v,d)=>typeof v==='number'&&isFinite(v)?v:d,_L=_n(STD.loss,.92);
+const mxC=[+(_n(STD.co2,.675)/_L).toFixed(3),.54,+(_n(STD.co2om,.963)/_L).toFixed(3),.11,.045,.025,.009,.49],mxW=[_n(STD.gw&&STD.gw.India,2.9),_n(STD.gwMix&&STD.gwMix.Karnataka,1.54),_n(STD.gwM,3.8),.3,1.75,null,2.6,.75];let mxMode='co2';
 reg('c-matrix',()=>{const d=mxMode==='co2'?mxC:mxW;const c=mxMode==='co2'?T('--heat'):T('--cold');return {type:'bar',data:{labels:mxL,datasets:[{data:d,backgroundColor:d.map((v,i)=>i===2?T('--bad'):i===3?T('--good'):c),borderRadius:4}]},options:base({indexAxis:'y',scales:{x:{title:{display:true,text:mxMode==='co2'?'Mt CO₂ per TWh':'billion litres consumed per TWh'},grid:grid()},y:{grid:{display:false}}}})}});
 seg('mx-toggle',d=>{mxMode=d.m;build('c-matrix')});
 const hrs=[580,580,575,575,570,565,560,500,420,330,270,240,220,215,225,260,330,430,540,600,610,600,590,585];

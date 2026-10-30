@@ -1752,7 +1752,8 @@ try{hbars($('#est-bars'),[['DTE: permitted volumes',2.2,'mut','~2.2'],['Karnatak
 
 /* ---------- 5 CARBON ---------- */
 var mxL;try{mxL=['India grid avg (+8% losses)','Karnataka mix','Marginal coal, evening peak','24/7 RE + battery (90% CFE)','France (nuclear)','Norway (hydro)','Nuclear with towers','Gas CCGT'];}catch(__e){window.__ISO&&window.__ISO.push(String(__e&&__e.message))}
-var mxC,mxW;try{mxC=[.77,.54,1.09,.11,.045,.025,.009,.49];mxW=[4.5,1.8,6.7,.3,1.75,null,2.6,.75];}catch(__e){window.__ISO&&window.__ISO.push(String(__e&&__e.message))}var mxMode;try{mxMode='co2';}catch(__e){window.__ISO&&window.__ISO.push(String(__e&&__e.message))}
+var _n,_L;try{_n=(v,d)=>typeof v==='number'&&isFinite(v)?v:d;_L=_n(STD.loss,.92);}catch(__e){window.__ISO&&window.__ISO.push(String(__e&&__e.message))}
+var mxC,mxW;try{mxC=[+(_n(STD.co2,.675)/_L).toFixed(3),.54,+(_n(STD.co2om,.963)/_L).toFixed(3),.11,.045,.025,.009,.49];mxW=[_n(STD.gw&&STD.gw.India,2.9),_n(STD.gwMix&&STD.gwMix.Karnataka,1.54),_n(STD.gwM,3.8),.3,1.75,null,2.6,.75];}catch(__e){window.__ISO&&window.__ISO.push(String(__e&&__e.message))}var mxMode;try{mxMode='co2';}catch(__e){window.__ISO&&window.__ISO.push(String(__e&&__e.message))}
 try{reg('c-matrix',()=>{const d=mxMode==='co2'?mxC:mxW;const c=mxMode==='co2'?T('--heat'):T('--cold');return {type:'bar',data:{labels:mxL,datasets:[{data:d,backgroundColor:d.map((v,i)=>i===2?T('--bad'):i===3?T('--good'):c),borderRadius:4}]},options:base({indexAxis:'y',scales:{x:{title:{display:true,text:mxMode==='co2'?'Mt CO₂ per TWh':'billion litres consumed per TWh'},grid:grid()},y:{grid:{display:false}}}})}});
 }catch(__e){window.__ISO&&window.__ISO.push(String(__e&&__e.message))}
 try{seg('mx-toggle',d=>{mxMode=d.m;build('c-matrix')});
@@ -6959,7 +6960,7 @@ sk:{'losses':'losses MU = IT MU × loss fraction','other loads':'other MU = IT M
 'fx-ka3':{'*':'₹/kL = (portfolio ₹ cr − cheapest ₹ cr) × 10⁷ ÷ ((water_cheapest − water) ML × 1,000); pass if ≤ water price'},
 'fx-rc1':{'hub':'selected hub','score':'score = Σ (score × weight) ÷ Σ weights','*':'points = score (1–5) × weight'},
 'fx-rc3':{'target lookup':'targets by workload and climate','pue':'pass if PUE ≤ target','wue':'pass if WUE ≤ target','hourly clean power':'pass if CFE ≥ target','cue':'CUE = PUE × 0.675 × (1 − CFE); pass if ≤ target'},
-'c-matrix':{'*':'Mt CO₂ = TWh × t/MWh'},
+'c-matrix':{'*':()=>mxMode==='co2'?'Mt CO₂ = TWh × t/MWh (1 t/MWh = 1 Mt per TWh)':'bn L = TWh × L/kWh (1 L/kWh = 1 billion litres per TWh)'},
 'c-cities':{'total':'total = Σ city MW','*':'share = city MW ÷ total MW'},
 'c-density':{'*':'racks per MW = 1,000 kW ÷ kW per rack · floor density = kW per rack ÷ 2.6 m² per rack'},
 'c-capex':{'*':'₹ cr = Σ cost lines (₹ cr/MW) × MW'},

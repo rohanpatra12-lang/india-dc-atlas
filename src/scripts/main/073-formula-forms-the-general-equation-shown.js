@@ -38,7 +38,7 @@ sk:{'losses':'losses MU = IT MU × loss fraction','other loads':'other MU = IT M
 'fx-ka3':{'*':'₹/kL = (portfolio ₹ cr − cheapest ₹ cr) × 10⁷ ÷ ((water_cheapest − water) ML × 1,000); pass if ≤ water price'},
 'fx-rc1':{'hub':'selected hub','score':'score = Σ (score × weight) ÷ Σ weights','*':'points = score (1–5) × weight'},
 'fx-rc3':{'target lookup':'targets by workload and climate','pue':'pass if PUE ≤ target','wue':'pass if WUE ≤ target','hourly clean power':'pass if CFE ≥ target','cue':'CUE = PUE × 0.675 × (1 − CFE); pass if ≤ target'},
-'c-matrix':{'*':'Mt CO₂ = TWh × t/MWh'},
+'c-matrix':{'*':()=>mxMode==='co2'?'Mt CO₂ = TWh × t/MWh (1 t/MWh = 1 Mt per TWh)':'bn L = TWh × L/kWh (1 L/kWh = 1 billion litres per TWh)'},
 'c-cities':{'total':'total = Σ city MW','*':'share = city MW ÷ total MW'},
 'c-density':{'*':'racks per MW = 1,000 kW ÷ kW per rack · floor density = kW per rack ÷ 2.6 m² per rack'},
 'c-capex':{'*':'₹ cr = Σ cost lines (₹ cr/MW) × MW'},

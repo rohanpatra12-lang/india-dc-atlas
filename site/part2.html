@@ -1641,7 +1641,7 @@ body{margin:0}
     <h2>Which system for which city</h2></div>
   <div class="panel"><h3>Recommendations by city<span class="sub">Conventional ≤15 kW per rack; AI ≥40 kW per rack. This is the atlas’s one city-by-city recommendation; Chapter 19 turns it into rules by climate, and <a href="part4.html#cool-nav">Chapter 16</a> maps every cooling tool.</span></h3>
     <div class="tbl"><table class="aif-t"><thead><tr><th>Location</th><th>Conventional</th><th>AI</th></tr></thead><tbody>
-      <tr><td><b>Bengaluru, Pune</b></td><td>Containment + free-cooling or magnetic-bearing chillers, or a hybrid plant. Towers only on contracted treated sewage.</td><td>Direct-to-chip W40 + dry coolers with trim (≈65–71% of hours compressor-free). Best location on cost and water.</td></tr>
+      <tr><td><b>Bengaluru, Pune</b></td><td>Containment + free-cooling or magnetic-bearing chillers, or a hybrid plant. Towers only on contracted treated sewage.</td><td>Direct-to-chip W40 + dry coolers with a small trim chiller (compressor-free in nearly every typical hour at 40 °C water; ≈66–71% of hours at 35 °C). Best location on cost and water.</td></tr>
       <tr><td><b>Hyderabad, Delhi NCR</b></td><td>Free-cooling or magnetic-bearing chillers; indirect evaporative in NCR's dry season. Avoid direct evaporative (dust, monsoon humidity).</td><td>Direct-to-chip + adiabatic coolers; size for 43–45 °C peaks.</td></tr>
       <tr><td><b>Mumbai, Chennai</b></td><td>Magnetic-bearing water-cooled chillers + towers where treated water is secured; otherwise free-cooling air-cooled chillers.</td><td>Direct-to-chip W40–W45 + towers on treated sewage, or hybrid coolers. Dry-only needs trim chillers much of the year at W32.</td></tr>
       <tr><td><b>Visakhapatnam, Jamnagar</b></td><td>Seawater with titanium exchangers: cost and permits (CRZ, outfall) unproven; pilot first.</td><td>Direct-to-chip + seawater exchangers or hybrid coolers; desalinated make-up only with full lifecycle costing.</td></tr>
@@ -1676,7 +1676,7 @@ body{margin:0}
     <p class="lede">The carbon and water behind a kilowatt-hour depend on five things: source, timing, location, carbon intensity and water intensity. One TWh can mean about 10,000 tCO₂ or about 1,000,000 tCO₂. Where, when and from what you buy power matters more than almost any efficiency gain inside the building.</p>
   </div>
   <div class="take">
-    <div><span class="v mono">0.77 Mt</span><span class="k">CO₂ per TWh on the Indian grid, once ~8% network losses are counted</span></div>
+    <div><span class="v mono">0.73 Mt</span><span class="k">CO₂ per TWh on the Indian grid, once ~8% network losses are counted</span></div>
     <div><span class="v mono">174 GW</span><span class="k">Fossil generation at 7 pm vs ~125 GW at 1 pm (Ember, H1 2026)</span></div>
     <div><span class="v mono">−80–90%</span><span class="k">CO₂ and water from hourly-matched renewables plus batteries</span></div>
   </div>
@@ -1748,7 +1748,7 @@ body{margin:0}
       <div class="tbl"><table>
         <thead><tr><th>Case</th><th class="n">kgCO₂/IT-kWh</th></tr></thead>
         <tbody>
-          <tr><td>PUE 1.5 on Indian grid (0.77 at meter)</td><td class="n">1.16</td></tr>
+          <tr><td>PUE 1.5 on Indian grid (0.73 at meter)</td><td class="n">1.10</td></tr>
           <tr><td>PUE 1.5 on Karnataka mix (0.50)</td><td class="n">0.75</td></tr>
           <tr><td>PUE 1.5 with 90% hourly clean energy</td><td class="n">0.17</td></tr>
           <tr><td>Same compute in France</td><td class="n">~0.05–0.09</td></tr>
@@ -3775,7 +3775,8 @@ try{hbars($('#est-bars'),[['DTE: permitted volumes',2.2,'mut','~2.2'],['Karnatak
 
 /* ---------- 5 CARBON ---------- */
 var mxL;try{mxL=['India grid avg (+8% losses)','Karnataka mix','Marginal coal, evening peak','24/7 RE + battery (90% CFE)','France (nuclear)','Norway (hydro)','Nuclear with towers','Gas CCGT'];}catch(__e){window.__ISO&&window.__ISO.push(String(__e&&__e.message))}
-var mxC,mxW;try{mxC=[.77,.54,1.09,.11,.045,.025,.009,.49];mxW=[4.5,1.8,6.7,.3,1.75,null,2.6,.75];}catch(__e){window.__ISO&&window.__ISO.push(String(__e&&__e.message))}var mxMode;try{mxMode='co2';}catch(__e){window.__ISO&&window.__ISO.push(String(__e&&__e.message))}
+var _n,_L;try{_n=(v,d)=>typeof v==='number'&&isFinite(v)?v:d;_L=_n(STD.loss,.92);}catch(__e){window.__ISO&&window.__ISO.push(String(__e&&__e.message))}
+var mxC,mxW;try{mxC=[+(_n(STD.co2,.675)/_L).toFixed(3),.54,+(_n(STD.co2om,.963)/_L).toFixed(3),.11,.045,.025,.009,.49];mxW=[_n(STD.gw&&STD.gw.India,2.9),_n(STD.gwMix&&STD.gwMix.Karnataka,1.54),_n(STD.gwM,3.8),.3,1.75,null,2.6,.75];}catch(__e){window.__ISO&&window.__ISO.push(String(__e&&__e.message))}var mxMode;try{mxMode='co2';}catch(__e){window.__ISO&&window.__ISO.push(String(__e&&__e.message))}
 try{reg('c-matrix',()=>{const d=mxMode==='co2'?mxC:mxW;const c=mxMode==='co2'?T('--heat'):T('--cold');return {type:'bar',data:{labels:mxL,datasets:[{data:d,backgroundColor:d.map((v,i)=>i===2?T('--bad'):i===3?T('--good'):c),borderRadius:4}]},options:base({indexAxis:'y',scales:{x:{title:{display:true,text:mxMode==='co2'?'Mt CO₂ per TWh':'billion litres consumed per TWh'},grid:grid()},y:{grid:{display:false}}}})}});
 }catch(__e){window.__ISO&&window.__ISO.push(String(__e&&__e.message))}
 try{seg('mx-toggle',d=>{mxMode=d.m;build('c-matrix')});
@@ -8982,7 +8983,7 @@ sk:{'losses':'losses MU = IT MU × loss fraction','other loads':'other MU = IT M
 'fx-ka3':{'*':'₹/kL = (portfolio ₹ cr − cheapest ₹ cr) × 10⁷ ÷ ((water_cheapest − water) ML × 1,000); pass if ≤ water price'},
 'fx-rc1':{'hub':'selected hub','score':'score = Σ (score × weight) ÷ Σ weights','*':'points = score (1–5) × weight'},
 'fx-rc3':{'target lookup':'targets by workload and climate','pue':'pass if PUE ≤ target','wue':'pass if WUE ≤ target','hourly clean power':'pass if CFE ≥ target','cue':'CUE = PUE × 0.675 × (1 − CFE); pass if ≤ target'},
-'c-matrix':{'*':'Mt CO₂ = TWh × t/MWh'},
+'c-matrix':{'*':()=>mxMode==='co2'?'Mt CO₂ = TWh × t/MWh (1 t/MWh = 1 Mt per TWh)':'bn L = TWh × L/kWh (1 L/kWh = 1 billion litres per TWh)'},
 'c-cities':{'total':'total = Σ city MW','*':'share = city MW ÷ total MW'},
 'c-density':{'*':'racks per MW = 1,000 kW ÷ kW per rack · floor density = kW per rack ÷ 2.6 m² per rack'},
 'c-capex':{'*':'₹ cr = Σ cost lines (₹ cr/MW) × MW'},
