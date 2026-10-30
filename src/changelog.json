@@ -2,7 +2,7 @@
  {
   "version": "v37",
   "date": "2026-10-30",
-  "changes": "Fixes in chapter 7 and 6.5. The “1 TWh, seven ways” chart now shows the water formula (bn L = TWh × L/kWh) in water mode instead of the carbon one, and reads its India, Karnataka and marginal-coal values from the standards register: grid water 2.9, 1.54 and 3.8 L/kWh (was a stale 4.5, 1.8 and 6.7 from before the October audit) and grid carbon 0.734 and 1.047 t/MWh at the meter (was 0.77 and 1.09). The CUE table and headline tile now use 0.73 t/MWh. In 6.5 the Bengaluru AI recommendation no longer attaches the 65–71% compressor-free figure to 40 °C water: that figure is for 35 °C supply; at 40 °C dry coolers are compressor-free in nearly every typical hour."
+  "changes": "Fixes in chapter 7 and 6.5. The “1 TWh, seven ways” chart now shows the water formula (bn L = TWh × L/kWh) in water mode instead of the carbon one, and reads its India, Karnataka and marginal-coal values from the standards register: grid water 2.9, 1.54 and 3.8 L/kWh (was a stale 4.5, 1.8 and 6.7 from before the October audit) and grid carbon 0.734 and 1.047 t/MWh at the meter (was 0.77 and 1.09). The CUE table and headline tile now use 0.73 t/MWh. In 6.5 the Bengaluru AI recommendation no longer attaches the 65–71% compressor-free figure to 40 °C water: that figure is for 35 °C supply; at 40 °C dry coolers are compressor-free in nearly every typical hour. In 9.5 the saving from each 10 points of clean power for a 50 MW AI hall is now about 115,000 kL a year at 2.9 L/kWh (was 170,000 kL, from the old 4.5)."
  },
  {
   "version": "v36",
