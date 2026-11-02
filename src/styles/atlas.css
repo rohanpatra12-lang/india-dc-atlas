@@ -1214,3 +1214,31 @@ abbr.ab:focus-visible{outline:2px solid var(--cold);outline-offset:1px;border-ra
 abbr.ab-t{border-bottom-style:dotted;border-bottom-color:color-mix(in srgb,var(--cold) 55%,transparent)}
 
 .hy-off{opacity:.42}.hy-off input,.hy-off select{cursor:not-allowed}.hy-offn{display:block;color:var(--muted);margin-top:2px}
+/* 4.2 cooling systems, how they work */
+.ck-svg{width:100%;min-width:640px;height:auto;display:block}
+.ck-zone{fill:var(--sunk);opacity:.45}.ck-zt{fill:var(--muted);font:600 11px var(--f-body);letter-spacing:.06em;text-transform:uppercase}
+.ck-flow{animation:ckf 1.6s linear infinite}.ck-air{animation-duration:2.4s}
+@keyframes ckf{to{stroke-dashoffset:-28}}
+.ck-fanr{fill:var(--surface);stroke:var(--line)}.ck-fan path{fill:var(--muted)}.ck-fan.on{animation:ckspin .9s linear infinite;transform-box:fill-box;transform-origin:center}.ck-fan.on path{fill:var(--cold)}
+@keyframes ckspin{to{transform:rotate(360deg)}}
+.ck-comp circle{fill:var(--surface);stroke:var(--line);stroke-width:2}.ck-comp path{fill:var(--muted)}
+.ck-comp.on circle{fill:var(--hot-soft);stroke:var(--heat);animation:ckpulse 1s ease-in-out infinite}.ck-comp.on path{fill:var(--heat)}
+.ck-comp.part circle{fill:var(--hot-soft);stroke:var(--warn)}.ck-comp.part path{fill:var(--warn)}
+@keyframes ckpulse{50%{stroke-width:5}}
+.ck-coil{fill:none;stroke:var(--muted);stroke-width:1.5;stroke-dasharray:3 3}.ck-coil.on{stroke:var(--cold)}
+.ck-pad{fill:var(--sunk);stroke:var(--line)}.ck-pad.on{fill:var(--cold-soft);stroke:var(--cold)}
+.ck-drops circle{fill:var(--cold);animation:ckdrop 1s ease-in infinite}
+@keyframes ckdrop{0%{transform:translateY(-6px);opacity:0}30%{opacity:1}100%{transform:translateY(10px);opacity:0}}
+.ck-rise path{fill:none;stroke:var(--heat);stroke-width:2;opacity:.55;animation:ckrise 2.4s ease-out infinite}
+@keyframes ckrise{0%{transform:translateY(8px);opacity:0}40%{opacity:.6}100%{transform:translateY(-10px);opacity:0}}
+.ck-fill{fill:none;stroke:var(--line);stroke-dasharray:2 4}
+.ck-srv{fill:var(--surface);stroke:var(--line)}.ck-plate{fill:var(--cold-soft);stroke:var(--cold)}
+.ck-door{fill:var(--cold-soft);stroke:var(--cold);stroke-width:2}.ck-oil{fill:var(--hot-soft);opacity:.7}
+.ck-hx path{fill:none;stroke:var(--line);stroke-width:1.5}
+.ck-pump circle{fill:var(--surface);stroke:var(--cold);stroke-width:2}.ck-pump path{fill:var(--cold)}
+.ck-step circle{fill:var(--ink)}.ck-step text{fill:var(--surface);font:700 11px var(--f-body)}
+.ck-btns{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.ck-steps{margin:6px 0 0 18px;padding:0;font-size:.9rem;line-height:1.45}.ck-steps li{margin-bottom:6px}
+.ck-strip{width:100%;max-width:420px;height:auto}.ck-strip rect[data-i]{cursor:pointer}.ck-strip rect.cur{stroke:var(--ink);stroke-width:2}
+.ck-tbl tr[data-k]{cursor:pointer}.ck-tbl tr.on td{background:var(--cold-soft);font-weight:600}
+@media (prefers-reduced-motion:reduce){.ck-flow,.ck-fan.on,.ck-comp.on circle,.ck-drops circle,.ck-rise path{animation:none}}

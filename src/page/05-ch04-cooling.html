@@ -39,6 +39,39 @@
     </div>
   </div>
 
+  <div class="panel inst gap" id="ckw">
+    <h3>How each cooling system works, hour by hour<span class="sub">Pick a system and a city, then move through a typical year. The schematic shows what runs at that hour: pipes are coloured by temperature (teal cold, red hot), fans spin, the compressor lights up when it is needed and spray appears when water evaporates. Numbers are from a simple engineering model of 1 kW of IT heat.</span></h3>
+    <div class="vs-ctrls">
+      <div class="opt"><span class="fieldlbl">Cooling system</span><div class="seg" id="ck-sys" role="group" aria-label="Cooling system"><button data-v="crac" aria-pressed="false">DX room units</button><button data-v="twr" aria-pressed="false">Chiller + cooling tower</button><button data-v="acc" aria-pressed="false">Air-cooled chiller</button><button data-v="iec" aria-pressed="false">Indirect evaporative</button><button data-v="rdhx" aria-pressed="false">Rear-door coils</button><button data-v="dlc" aria-pressed="true">Direct-to-chip liquid</button><button data-v="imm" aria-pressed="false">Immersion</button></div></div>
+      <div class="opt"><span class="fieldlbl">City</span><div class="seg" id="ck-city" role="group" aria-label="City"><button data-v="blr" aria-pressed="true">Bengaluru</button><button data-v="pun" aria-pressed="false">Pune</button><button data-v="hyd" aria-pressed="false">Hyderabad</button><button data-v="noi" aria-pressed="false">Delhi NCR</button><button data-v="mum" aria-pressed="false">Mumbai</button><button data-v="che" aria-pressed="false">Chennai</button><button data-v="viz" aria-pressed="false">Visakhapatnam</button></div></div>
+      <div class="opt" id="ck-ts-w"><span class="fieldlbl">Facility water supply</span><div class="seg" id="ck-ts" role="group" aria-label="Facility water supply temperature"><button data-v="32" aria-pressed="false">W32 (32 °C)</button><button data-v="40" aria-pressed="true">W40 (40 °C)</button><button data-v="45" aria-pressed="false">W45 (45 °C)</button></div><span class="fieldlbl" style="margin-top:6px">On hot hours</span><div class="seg" id="ck-adi" role="group" aria-label="Hot-hour assist"><button data-v="1" aria-pressed="true">Adiabatic pads, then trim chiller</button><button data-v="0" aria-pressed="false">Trim chiller only (no water)</button></div></div>
+    </div>
+    <div class="ctrls" style="margin-top:8px">
+      <div class="ctrl"><label for="ck-m">Month</label><output id="ck-m-o"></output><input id="ck-m" type="range" min="0" max="11" step="1" value="4"></div>
+      <div class="ctrl"><label for="ck-h">Hour of day</label><output id="ck-h-o"></output><input id="ck-h" type="range" min="0" max="23" step="1" value="15"></div>
+    </div>
+    <div class="ck-btns"><button class="btn" id="ck-play" aria-pressed="false">▶ Play a year</button><button class="btn" id="ck-hot">Jump to the hottest hour</button><span class="small muted" id="ck-when"></span></div>
+    <div class="vz-scroll" style="margin-top:8px"><svg id="ck-svg" class="ck-svg" viewBox="0 0 900 360" role="img" aria-label="Animated schematic of the selected cooling system at the chosen hour"></svg></div>
+    <div class="read" id="ck-r" style="margin-top:10px"></div>
+    <div class="cols gap" style="margin-top:12px">
+      <div><p class="fieldlbl">How it works</p><ol class="ck-steps" id="ck-steps"></ol></div>
+      <div><p class="fieldlbl">The whole year at a glance: month across, hour down (click a cell)</p>
+        <svg id="ck-strip" class="ck-strip" viewBox="0 0 345 240" role="img" aria-label="Operating mode for every typical hour of the year"></svg>
+        <div class="legend xs" id="ck-ann"></div></div>
+    </div>
+    <div class="tbl" style="margin-top:12px"><table id="ck-tbl" class="ck-tbl"></table></div>
+    <p class="note">Same city, same model, all seven systems. Click a row to show it. Liquid systems use the facility-water temperature and hot-hour setting above. For direct-to-chip, compressor-free hours count the main liquid loop; the 20% of heat left in air still needs a small chiller, which is in the PUE.</p>
+    <details class="aif-det"><summary>Assumptions and sources</summary><ul class="clean xs muted" style="margin-top:6px">
+      <li><b>Weather.</b> The atlas's typical hours: monthly normal dry-bulb and wet-bulb with a daily swing (the same hours as the psychrometric chart in 6.3). Real years have hotter extremes.</li>
+      <li><b>Compressors.</b> Efficiency (COP) = 45% of the ideal (Carnot) value for the evaporating and condensing temperatures, capped at 2–9. Air-cooled condensing at outdoor + 15 °C (DX room units + 18 °C); water-cooled at tower water + 6 °C.</li>
+      <li><b>Free cooling.</b> Tower water leaves at wet-bulb + 4 K (approach), plus 2 K across the plate heat exchanger. Dry coolers and free-cooling coils leave at dry-bulb + 5–6 K. Free cooling is partial when that water is between supply and return temperature.</li>
+      <li><b>Water.</b> Tower: 85% of rejected heat leaves by evaporation (1.48 L per kWh), × 4/3 for blowdown at 4 cycles of concentration. Adiabatic pads: 0.148 L per kWh of heat per K of pre-cooling (10 K air rise across the coil), plus 15% bleed; pre-cooling limited to 80% of the gap to wet-bulb. Indirect evaporative: hot-aisle 36 °C, supply 24 °C, heat-exchanger effectiveness 0.7, spray reaching 85% of the wet-bulb gap.</li>
+      <li><b>Fans and pumps</b> (share of IT): air handlers 4%, pumps 1.5–2%, tower and dry-cooler fans 1–2.5%, DX room units 6% + condenser 2%, CDU and facility pumps 2%. Direct-to-chip: 80% of heat to liquid, 20% via rear doors on 20 °C chilled water. PUE adds 6% for UPS, distribution and lighting.</li>
+      <li>Sources: <a href="https://www.upsite.com/blog/major-changes-to-ashraes-fifth-edition-of-thermal-guidelines-part-3-liquid-cooling-chapter-updates/" target="_blank" rel="noopener">ASHRAE W17–W45 classes (Upsite)</a>; <a href="https://www.power-eng.com/operations-maintenance/understanding-the-basics-of-cooling-tower-heat-transfer/" target="_blank" rel="noopener">cooling tower approach, evaporation and blowdown (Power Engineering)</a>; <a href="https://www.csemag.com/indirect-cooling-technologies/" target="_blank" rel="noopener">indirect evaporative modes and 70–80% wet-bulb effectiveness (CSE)</a>; <a href="https://www.datacenterdynamics.com/en/opinions/adiabatic-cooling-best-of-both-worlds/" target="_blank" rel="noopener">adiabatic coolers (DCD)</a>; <a href="https://www.motivaircorp.com/uploads/files/brochures/CDU%202026%20Motivair%20by%20SE.pdf" target="_blank" rel="noopener">CDU capacities and loop temperatures (Motivair)</a>; <a href="https://naddod.com/blog/single-phase-vs-two-phase-immersion-cooling-in-data-centers" target="_blank" rel="noopener">single- and two-phase immersion (NADDOD)</a>.</li>
+      <li>This is a teaching model. The reference PUE and WUE values used elsewhere in the atlas come from the standards register and the cooling table in chapter 6.</li>
+    </ul></details>
+  </div>
+
   <div class="cols gap">
     <div class="panel">
       <h3>Why liquid wins<span class="sub">Heat a cubic metre of fluid carries per degree (kJ/m³·K), log scale.</span></h3>
