@@ -25,7 +25,7 @@ HCSS='''
 chk(g.count('</style>')==1,'style');g=g.replace('</style>',HCSS+'</style>')
 hdr='<header class="site"><a class="brand" href="index.html">Data Centre Atlas II</a><nav class="parts" aria-label="Parts">'+''.join(f'<a href="{k}.html"{" aria-current=\"page\"" if k=="growth" else ""}>{n}</a>' for k,n in LINKS)+'</nav></header>'
 chk(g.count('<body>\n<div class="wrap">')==1,'body')
-g=g.replace('<body>\n<div class="wrap">','<body>\n'+hdr+'\n<div class="wrap">\n  <p class="crumb"><a href="part3.html">Part III · Forecast</a> › Growth explorer · values from the atlas standards register v2026.10.5</p>')
+g=g.replace('<body>\n<div class="wrap">','<body>\n'+hdr+'\n<div class="wrap">\n  <p class="crumb"><a href="part3.html">Part III · Forecast</a> › Growth explorer · values from the atlas standards register v2026.10.6</p>')
 chk(g.count('</section>\n</div>\n\n<script>')==1,'tail')
 g=g.replace('</section>\n</div>\n\n<script>','</section>\n  <nav class="pg-next" aria-label="Pages"><a href="part3.html">← III Forecast</a><a href="part4.html">IV Choose →</a></nav>\n</div>\n\n<script>')
 open(D+'growth.html','w').write(g)

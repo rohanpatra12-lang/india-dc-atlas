@@ -1,5 +1,10 @@
 [
  {
+  "version": "v39",
+  "date": "2026-11-02",
+  "changes": "Consistency audit. Fixed stale grid-water values: 8.4 said the India grid is ~5 L/kWh (now 2.9 at the meter); 9.2's Llama 3.1 405B training estimate used 5 L/kWh (now about 68 million litres at 2.9); the cooling combination picker said India's grid is 2–5 (now 2.9, 3.8 at the margin); the per-prompt explanation used 2.6 (now 2.9, giving 0.96 mL). 8.4's Bengaluru line now uses the chapter 12 supply figures (1,935 MLD delivered against ~2,600 demand) instead of ~2,000 against 3,000. Chapter 12 now gives BWSSB treatment capacity as 1,348.5–1,381.5 MLD, since its two sources differ. Chapter 1's value of the ₹8 lakh treated-water cap corrected from ~₹3/kL to about ₹8/kL for a 10 MW tower site (under ₹1/kL at 100 MW). The cooling-power matrix now labels grid water as the India average used for the chosen state. Chapter 2's per-prompt panel now explains why 9.2 gives 0.78 mL against its 0.83 mL. Chapter 13 now explains why its 2030 case (PUE 1.43, about 73 billion litres) differs from the growth explorer's hybrid case (PUE 1.30, 64.5 billion litres). The 4.2 cooling-systems model is recalibrated so its Bengaluru results sit within about 0.03 PUE of the chapter 6 cooling table (DX units, indirect evaporative and rear-door coils were too efficient)."
+ },
+ {
   "version": "v38",
   "date": "2026-11-02",
   "changes": "New panel in chapter 4: “How each cooling system works, hour by hour”. Animated schematics for seven systems (DX room units, chiller + cooling tower, air-cooled chiller with free-cooling coil, indirect evaporative, rear-door coils, direct-to-chip liquid with dry coolers, single-phase immersion), each with numbered steps. A typical-year model for seven cities shows, for any hour, which parts run, the compressor share, cooling electricity and water, plus a month × hour strip of operating modes and a comparison of annual PUE and on-site WUE for all seven systems. Engineering assumptions and sources are listed under the panel."

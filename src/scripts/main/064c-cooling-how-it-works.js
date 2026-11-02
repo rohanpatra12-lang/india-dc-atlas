@@ -24,8 +24,8 @@ function liqPlant(h,ts,adi){const ret=ts+10,dry=h.DB+6;let pre=0,src=dry;
 
 const SYS={
  crac:{n:'Room air units (DX, refrigerant)',short:'DX room units',
-  run(h){const fans=.06,cf=.02,c=(1+fans)/cop(8,h.DB+18);
-   return {comp:1,water:0,cool:fans+cf+c,cop:cop(8,h.DB+18),t:{sa:18,ra:32,cond:h.DB+18}}}},
+  run(h){const fans=.09,cf=.03,cp=Math.max(1.8,.6*cop(8,h.DB+18)),c=(1+fans)/cp;
+   return {comp:1,water:0,cool:fans+cf+c,cop:cp,t:{sa:18,ra:32,cond:h.DB+18}}}},
  twr:{n:'Air handlers + water-cooled chiller + cooling tower',short:'Chiller + tower',
   run(h){const sup=18,ret=26,tw=h.WB+4,f=cl((ret-(tw+2))/(ret-sup),0,1),cp=cop(sup-2,tw+6),c=(1-f)/cp,ov=.04+.015+.015+.01;
    const q=1+ov+c,water=EVAP*LAT*q*BLOW;
@@ -36,15 +36,15 @@ const SYS={
  iec:{n:'Indirect evaporative cooling units',short:'Indirect evaporative',
   run(h){const R=36,S=24,e=.7,dry=R-e*(R-h.DB);let pre=0,sa=dry,trim=0;
    if(dry>S){const need=h.DB-(R-(R-S)/e),max=.85*(h.DB-h.WB);pre=cl(need,0,max);const tw=h.DB-pre;sa=R-e*(R-tw);if(sa>S)trim=cl((sa-S)/(R-S),0,1)}
-   const cp=cop(12,h.DB-pre+15),ov=.05+(pre>0?.005:0);
-   return {comp:trim,water:PAD*pre,cool:ov+trim/cp,cop:cp,pre,t:{sa:Math.min(sa,S),hx:sa,ra:R,sec:h.DB-pre,ex:h.DB-pre+(R-sa)*.8}}}},
+   const cp=cop(12,h.DB-pre+15),ov=.09+(pre>0?.005:0);
+   return {comp:trim,water:PAD*.8*pre,cool:ov+trim/cp,cop:cp,pre,t:{sa:Math.min(sa,S),hx:sa,ra:R,sec:h.DB-pre,ex:h.DB-pre+(R-sa)*.8}}}},
  dlc:{n:'Direct-to-chip liquid cooling + dry coolers',short:'Direct-to-chip',liq:1,
   run(h,o){const L=.8,p=liqPlant(h,o.ts,o.adi),a=accPlant(h,20,28),ov=L*(.01+.01+.02)+(1-L)*(.03+.02);
    return {comp:L*(1-p.f)+(1-L)*(1-a.f),water:L*PAD*p.pre,cool:ov+L*p.c+(1-L)*a.c,main:1-p.f,res:1-a.f,cop:cop(o.ts-2,h.DB+12),pre:p.pre,liqF:p.f,airF:a.f,
     t:{tcs:o.ts+3,tcsr:o.ts+13,ts:o.ts,tr:p.ret,src:p.src,dry:p.dry,sup:20,ret:28}}}},
  rdhx:{n:'Rear-door heat exchangers on chilled water',short:'Rear-door coils',
-  run(h){const p=accPlant(h,20,28),ov=.02+.025;
-   return {comp:1-p.f,water:0,cool:ov+p.c,cop:cop(18,h.DB+15),t:{sup:20,ret:28,ra:36,ex:24,fc:p.tfc,mid:Math.min(28,p.tfc+2)}}}},
+  run(h){const p=accPlant(h,16,24),ov=.03+.02+.03;
+   return {comp:1-p.f,water:0,cool:ov+p.c,cop:cop(14,h.DB+15),t:{sup:16,ret:24,ra:36,ex:24,fc:p.tfc,mid:Math.min(24,p.tfc+2)}}}},
  imm:{n:'Single-phase immersion tanks',short:'Immersion',liq:1,
   run(h,o){const p=liqPlant(h,o.ts,o.adi),ov=.015+.01+.02;
    return {comp:1-p.f,water:PAD*p.pre,cool:ov+p.c,cop:cop(o.ts-2,h.DB+12),pre:p.pre,liqF:p.f,t:{oil:o.ts+15,oilr:o.ts+5,ts:o.ts,tr:p.ret,src:p.src,dry:p.dry}}}}
@@ -149,7 +149,7 @@ const STEPS={
  acc:['Racks are cooled by air handlers, as with a tower plant.','Pumps send chilled-water return (about 26 °C) up to the roof.','When outdoor air is cool, the free-cooling coil in front of the chiller pre-cools the water, partly or fully.','The chiller compressor removes whatever heat is left and rejects it to outdoor air with fans. No water evaporates, but the compressor works harder on hot afternoons.'],
  iec:['Hot-aisle air (about 36 °C) is ducted to a unit on the outside wall.','It passes through one side of an air-to-air heat exchanger and comes back at 24 °C.','Outdoor air flows through the other side and carries the heat away; the two air streams never mix.','On hot hours, water is sprayed into the outdoor-air channels; evaporation drops their temperature towards the wet-bulb.','On the hottest, most humid hours a small refrigerant (DX) coil trims the supply air.'],
  dlc:['Cold plates sit directly on the GPUs and CPUs; liquid flows through micro-channels.','A coolant distribution unit (CDU) pumps the chip loop and passes its heat to facility water through a heat exchanger (2–4 K approach).','Facility water returns warm, about 10 K above supply.','Dry coolers reject that heat to outdoor air with fans. Warm water (W40–W45) is above outdoor temperature most hours, so no compressor is needed.','On the hottest hours, adiabatic pads pre-cool the inlet air, or a trim chiller tops up.','About 20% of the heat still leaves in air (memory, power supplies, network gear) and needs a small chilled-water loop, here with rear-door coils.'],
- rdhx:['A water coil replaces the rack\'s rear door; server fans push their hot exhaust through it.','The door coil cools the air back to room temperature before it leaves the rack, so the room stays neutral.','Chilled water at about 20 °C feeds the doors and returns about 8 K warmer.','The plant on the roof uses a free-cooling coil when outdoor air is cool and a chiller for the rest. Doors handle 40–75 kW per rack, a bridge for AI racks in existing halls.'],
+ rdhx:['A water coil replaces the rack\'s rear door; server fans push their hot exhaust through it.','The door coil cools the air back to room temperature before it leaves the rack, so the room stays neutral.','Chilled water at about 16 °C feeds the doors and returns about 8 K warmer.','The plant on the roof uses a free-cooling coil when outdoor air is cool and a chiller for the rest. Doors handle 40–75 kW per rack, a bridge for AI racks in existing halls.'],
  imm:['Servers sit fully submerged in a tank of dielectric oil, which carries away all of their heat.','A pump circulates the warm oil (about 15 K above facility water) to a plate heat exchanger.','The heat exchanger passes the heat to facility water.','Dry coolers reject it outside; adiabatic pads or a trim chiller help on the hottest hours.','There is no residual air load. In two-phase immersion the fluid boils at about 49–50 °C instead and condenses on a coil above the tank, but those fluorinated fluids face PFAS restrictions.']
 };
 

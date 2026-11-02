@@ -138,7 +138,7 @@ function detail(){
  <li><b>Part-load PUE</b> = 1 + ${F2(r.O)} × (fixed share ${F2(r.phi)} × ${F0(r.wk.L0*100)}% ÷ ${F1(r.L*100)}% + variable share ${F2(1-r.phi)}) = <b>${F2(r.pue)}</b></li>
  <li><b>Facility energy</b> = ${F0(r.eit)} × ${F2(r.pue)} = <b>${F0(r.efac)} MWh</b></li>
  <li><b>Direct water</b> = IT energy × WUE ${F2(r.wue)} L/kWh ÷ 1,000 = <b>${F0(r.dir)} ML</b></li>
- <li><b>Water per kWh bought</b> = ${s.id==='grid'?`${c.st} grid ${F2(c.gw)} L/kWh`:`${F0(r.cover*100)}% × source ${F2(r.ws)} L/kWh${r.cover<1?` + ${F0((1-r.cover)*100)}% × ${c.st} grid ${F2(c.gw)} L/kWh`:''}`} = <b>${F2(r.wmix)} L/kWh</b>${s.rem?' (plant water ÷ 0.92 for transmission losses)':''}</li>
+ <li><b>Water per kWh bought</b> = ${s.id==='grid'?`grid ${F2(c.gw)} L/kWh (India average, used for ${c.st})`:`${F0(r.cover*100)}% × source ${F2(r.ws)} L/kWh${r.cover<1?` + ${F0((1-r.cover)*100)}% × ${c.st} grid ${F2(c.gw)} L/kWh`:''}`} = <b>${F2(r.wmix)} L/kWh</b>${s.rem?' (plant water ÷ 0.92 for transmission losses)':''}</li>
  <li><b>Indirect water</b> = ${F0(r.efac)} MWh × ${F2(r.wmix)} ÷ 1,000 = <b>${F0(r.ind)} ML</b></li>
  <li><b>Electricity price</b> = ${sp} = <b>₹${F2(r.price)}/kWh</b> → ${F0(r.efac)} MWh × ₹${F2(r.price)} ÷ 10,000 = <b>₹${F1(r.pwr)} cr</b></li>
  <li><b>Water bill</b> = ${F0(r.dir)} ML × ₹${c.wp}/kL ÷ 10,000 = <b>₹${F2(r.wat)} cr</b></li>
